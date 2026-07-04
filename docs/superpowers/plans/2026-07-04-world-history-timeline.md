@@ -2600,6 +2600,7 @@ const barHeight = (name: RegExp) =>
 
 test('拡大ボタンでバーが高くなる', async () => {
   render(<TimelinePage dataset={testDataset} />)
+  fireEvent.scroll(screen.getByTestId('timeline-scroll'), { target: { scrollTop: 1000 } })
   const before = barHeight(/エドワード1世/)
   await userEvent.click(screen.getByRole('button', { name: '拡大' }))
   expect(barHeight(/エドワード1世/)).toBeGreaterThan(before)
@@ -2628,6 +2629,7 @@ test('全体表示ボタンで初期スケールに戻る', async () => {
 
 test('Ctrl+ホイールでズームする', () => {
   render(<TimelinePage dataset={testDataset} />)
+  fireEvent.scroll(screen.getByTestId('timeline-scroll'), { target: { scrollTop: 1000 } })
   const before = barHeight(/エドワード1世/)
   fireEvent.wheel(screen.getByTestId('timeline-scroll'), {
     deltaY: -100,
