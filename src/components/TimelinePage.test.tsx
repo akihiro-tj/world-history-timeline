@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, expect, test, vi } from 'vitest'
 import { testDataset } from '../test/fixtures'
@@ -86,4 +86,21 @@ test('Ctrl+ホイールでズームする', () => {
     clientY: 400,
   })
   expect(barHeight(/エドワード1世/)).toBeGreaterThan(before)
+})
+
+test('バーをクリックすると詳細パネルが開き、閉じるで消える', async () => {
+  render(<TimelinePage dataset={testDataset} />)
+  await userEvent.click(screen.getByRole('button', { name: /エドワード1世/ }))
+  expect(screen.getByRole('complementary', { name: '詳細' })).toBeInTheDocument()
+  expect(screen.getByText('テスト用エントリ。')).toBeInTheDocument()
+  await userEvent.click(screen.getByRole('button', { name: '閉じる' }))
+  expect(screen.queryByRole('complementary', { name: '詳細' })).not.toBeInTheDocument()
+})
+
+test('同時代リンクで選択が移動する', async () => {
+  render(<TimelinePage dataset={testDataset} />)
+  await userEvent.click(screen.getByRole('button', { name: /エドワード1世/ }))
+  const list = screen.getByRole('list', { name: '同時代' })
+  await userEvent.click(within(list).getByRole('button', { name: /フビライ・ハン/ }))
+  expect(screen.getByRole('heading', { name: 'フビライ・ハン' })).toBeInTheDocument()
 })

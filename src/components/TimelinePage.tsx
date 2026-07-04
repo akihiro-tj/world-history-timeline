@@ -11,6 +11,7 @@ import { packLane } from '../domain/packing'
 import { createScale } from '../domain/scale'
 import { maxVisibleImportance, visibleEntries } from '../domain/visibility'
 import { minPxPerYear, type ZoomState, zoomAt } from '../domain/zoom'
+import { DetailPanel } from './DetailPanel'
 import { TimelineView } from './TimelineView'
 import { ZoomControls } from './ZoomControls'
 
@@ -50,6 +51,27 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
       setZoom((prev) => zoomAt(prev, factor, anchorOffset, totalYears, viewportHeight))
     },
     [totalYears, viewportHeight],
+  )
+
+  const selectedEntry = useMemo(
+    () => entries.find((e) => e.id === selectedId) ?? null,
+    [entries, selectedId],
+  )
+
+  const jumpToEntry = useCallback(
+    (id: string) => {
+      const entry = entries.find((e) => e.id === id)
+      if (!entry) return
+      setSelectedId(id)
+      setZoom((prev) => ({
+        ...prev,
+        scrollTop: Math.max(
+          0,
+          (entry.start - config.minYear) * prev.pxPerYear - viewportHeight / 2,
+        ),
+      }))
+    },
+    [entries, config.minYear, viewportHeight],
   )
 
   const scale = useMemo(
@@ -135,6 +157,14 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
           setZoom({ pxPerYear: minPxPerYear(totalYears, viewportHeight), scrollTop: 0 })
         }
       />
+      {selectedEntry && (
+        <DetailPanel
+          entry={selectedEntry}
+          dataset={dataset}
+          onSelect={jumpToEntry}
+          onClose={() => setSelectedId(null)}
+        />
+      )}
     </div>
   )
 }
