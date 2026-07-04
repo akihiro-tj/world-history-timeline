@@ -12,6 +12,7 @@ import { createScale } from '../domain/scale'
 import { maxVisibleImportance, visibleEntries } from '../domain/visibility'
 import { minPxPerYear, type ZoomState, zoomAt } from '../domain/zoom'
 import { DetailPanel } from './DetailPanel'
+import { SearchBar } from './SearchBar'
 import { TimelineView } from './TimelineView'
 import { ZoomControls } from './ZoomControls'
 
@@ -74,6 +75,16 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     [entries, config.minYear, viewportHeight],
   )
 
+  const jumpToYear = useCallback(
+    (year: number) => {
+      setZoom((prev) => ({
+        ...prev,
+        scrollTop: Math.max(0, (year - config.minYear) * prev.pxPerYear - viewportHeight / 2),
+      }))
+    },
+    [config.minYear, viewportHeight],
+  )
+
   const scale = useMemo(
     () => createScale(config.minYear, config.maxYear, zoom.pxPerYear),
     [config, zoom.pxPerYear],
@@ -130,6 +141,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
 
   return (
     <div onPointerDown={handlePointerDown} onPointerMove={handlePointerMove}>
+      <SearchBar entries={entries} onJumpToYear={jumpToYear} onSelectEntry={jumpToEntry} />
       <TimelineView
         containerRef={containerRef}
         dataset={dataset}

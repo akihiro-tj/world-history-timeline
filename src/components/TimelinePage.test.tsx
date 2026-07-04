@@ -107,3 +107,10 @@ test('同時代リンクで選択が移動する', async () => {
     (1260 - -700) * (2000 / 2800) - 400,
   )
 })
+
+test('検索候補の選択で詳細パネルが開く', async () => {
+  render(<TimelinePage dataset={testDataset} />)
+  await userEvent.type(screen.getByRole('searchbox', { name: '検索' }), 'マルコ')
+  await userEvent.click(screen.getByRole('option', { name: /マルコ・ポーロ/ }))
+  expect(screen.getByRole('heading', { name: 'マルコ・ポーロ' })).toBeInTheDocument()
+})
