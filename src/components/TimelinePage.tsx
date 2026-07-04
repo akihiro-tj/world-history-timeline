@@ -74,6 +74,9 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
   }, [tierEntries, scale, zoom, viewportHeight, maxImportance])
 
   const handlePointerDown = (e: ReactPointerEvent) => {
+    if (e.currentTarget.setPointerCapture) {
+      e.currentTarget.setPointerCapture(e.pointerId)
+    }
     pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
   }
   const handlePointerMove = (e: ReactPointerEvent) => {
