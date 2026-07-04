@@ -1,4 +1,4 @@
-import type { ReactNode, RefObject, UIEvent, WheelEvent } from 'react'
+import type { ReactNode, RefObject, UIEvent } from 'react'
 import type { Dataset } from '../data/schema'
 import type { LaneLayout } from '../domain/packing'
 import type { Scale } from '../domain/scale'
@@ -17,7 +17,6 @@ type Props = {
   selectedId: string | null
   onSelect: (id: string) => void
   onScroll: (e: UIEvent<HTMLDivElement>) => void
-  onWheel: (e: WheelEvent<HTMLDivElement>) => void
   viewportTopY: number
   children?: ReactNode
 }
@@ -31,7 +30,6 @@ export function TimelineView({
   selectedId,
   onSelect,
   onScroll,
-  onWheel,
   viewportTopY,
   children,
 }: Props) {
@@ -49,8 +47,8 @@ export function TimelineView({
       ref={containerRef}
       data-testid="timeline-scroll"
       className="h-dvh overflow-auto"
+      style={{ touchAction: 'pan-x pan-y' }}
       onScroll={onScroll}
-      onWheel={onWheel}
     >
       <LaneHeaders regions={regions} widths={widths} />
       <div className="flex w-max">

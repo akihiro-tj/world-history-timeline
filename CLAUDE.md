@@ -14,7 +14,7 @@ served from Cloudflare Workers static assets.
 | `pnpm typecheck` / `pnpm lint` / `pnpm format` | tsc / Biome check / Biome format |
 | `pnpm validate-data` | Validate timeline data against schemas |
 | `pnpm build` | validate-data + typecheck + vite build |
-| `pnpm deploy` | Build and deploy to Cloudflare Workers |
+| `pnpm deploy:cf` | Build and deploy to Cloudflare Workers |
 
 ## Architecture
 

@@ -18,7 +18,7 @@ pnpm dev
 | `pnpm test` | Run tests |
 | `pnpm validate-data` | Validate timeline data |
 | `pnpm build` | Validate data, type-check, and build |
-| `pnpm deploy` | Build and deploy to Cloudflare Workers |
+| `pnpm deploy:cf` | Build and deploy to Cloudflare Workers |
 
 ## Adding data
 

@@ -90,10 +90,14 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     [config, zoom.pxPerYear],
   )
   const maxImportance = maxVisibleImportance(zoom.pxPerYear)
-  const tierEntries = useMemo(
-    () => entries.filter((e) => e.importance <= maxImportance),
-    [entries, maxImportance],
-  )
+  const tierEntries = useMemo(() => {
+    const visible = entries.filter((e) => e.importance <= maxImportance)
+    if (selectedId && !visible.some((e) => e.id === selectedId)) {
+      const selected = entries.find((e) => e.id === selectedId)
+      if (selected) visible.push(selected)
+    }
+    return visible
+  }, [entries, maxImportance, selectedId])
   const laneLayouts = useMemo(
     () =>
       new Map(regions.map((r) => [r.id, packLane(tierEntries.filter((e) => e.region === r.id))])),
@@ -103,8 +107,11 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     const marginYears = viewportHeight / zoom.pxPerYear
     const topYear = scale.yToYear(zoom.scrollTop) - marginYears
     const bottomYear = scale.yToYear(zoom.scrollTop + viewportHeight) + marginYears
-    return new Set(visibleEntries(tierEntries, topYear, bottomYear, maxImportance).map((e) => e.id))
-  }, [tierEntries, scale, zoom, viewportHeight, maxImportance])
+    const effectiveMaxImportance = Math.max(maxImportance, selectedEntry?.importance ?? 0)
+    return new Set(
+      visibleEntries(tierEntries, topYear, bottomYear, effectiveMaxImportance).map((e) => e.id),
+    )
+  }, [tierEntries, scale, zoom, viewportHeight, maxImportance, selectedEntry])
 
   const handlePointerDown = (e: ReactPointerEvent) => {
     pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
@@ -139,6 +146,19 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     }
   }, [])
 
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+    const handleWheel = (e: WheelEvent) => {
+      if (!e.ctrlKey && !e.metaKey) return
+      e.preventDefault()
+      const rect = container.getBoundingClientRect()
+      applyZoom(e.deltaY < 0 ? WHEEL_ZOOM_FACTOR : 1 / WHEEL_ZOOM_FACTOR, e.clientY - rect.top)
+    }
+    container.addEventListener('wheel', handleWheel, { passive: false })
+    return () => container.removeEventListener('wheel', handleWheel)
+  }, [applyZoom])
+
   return (
     <div onPointerDown={handlePointerDown} onPointerMove={handlePointerMove}>
       <SearchBar entries={entries} onJumpToYear={jumpToYear} onSelectEntry={jumpToEntry} />
@@ -153,12 +173,6 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
         onScroll={(e) => {
           const scrollTop = e.currentTarget.scrollTop
           setZoom((prev) => (prev.scrollTop === scrollTop ? prev : { ...prev, scrollTop }))
-        }}
-        onWheel={(e) => {
-          if (!e.ctrlKey && !e.metaKey) return
-          e.preventDefault()
-          const rect = e.currentTarget.getBoundingClientRect()
-          applyZoom(e.deltaY < 0 ? WHEEL_ZOOM_FACTOR : 1 / WHEEL_ZOOM_FACTOR, e.clientY - rect.top)
         }}
         viewportTopY={zoom.scrollTop}
       />

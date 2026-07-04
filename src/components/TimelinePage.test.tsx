@@ -114,3 +114,11 @@ test('検索候補の選択で詳細パネルが開く', async () => {
   await userEvent.click(screen.getByRole('option', { name: /マルコ・ポーロ/ }))
   expect(screen.getByRole('heading', { name: 'マルコ・ポーロ' })).toBeInTheDocument()
 })
+
+test('検索で選択した非表示階層のエントリもハイライトされる', async () => {
+  render(<TimelinePage dataset={testDataset} />)
+  expect(screen.queryByRole('button', { name: /北条時宗/ })).not.toBeInTheDocument()
+  await userEvent.type(screen.getByRole('searchbox', { name: '検索' }), '北条')
+  await userEvent.click(screen.getByRole('option', { name: /北条時宗/ }))
+  expect(screen.getByRole('button', { name: '北条時宗 1268年〜1284年' })).toBeInTheDocument()
+})
