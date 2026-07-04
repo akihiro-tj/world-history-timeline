@@ -1,4 +1,5 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { afterEach, expect, test, vi } from 'vitest'
 import { testDataset } from '../test/fixtures'
 import { TimelinePage } from './TimelinePage'
@@ -6,6 +7,9 @@ import { TimelinePage } from './TimelinePage'
 afterEach(() => {
   vi.unstubAllGlobals()
 })
+
+const barHeight = (name: RegExp) =>
+  Number(screen.getByRole('button', { name }).getAttribute('height'))
 
 test('地域ヘッダーを order 順に表示する', () => {
   render(<TimelinePage dataset={testDataset} />)
@@ -41,4 +45,43 @@ test('年目盛を表示する', () => {
   render(<TimelinePage dataset={testDataset} />)
   expect(screen.getAllByText('前500年').length).toBeGreaterThan(0)
   expect(screen.getAllByText('1000年').length).toBeGreaterThan(0)
+})
+
+test('拡大ボタンでバーが高くなる', async () => {
+  render(<TimelinePage dataset={testDataset} />)
+  const before = barHeight(/エドワード1世/)
+  await userEvent.click(screen.getByRole('button', { name: '拡大' }))
+  expect(barHeight(/エドワード1世/)).toBeGreaterThan(before)
+})
+
+test('拡大してその時代へスクロールすると importance 2 のエントリが現れる', async () => {
+  render(<TimelinePage dataset={testDataset} />)
+  expect(screen.queryByRole('button', { name: /北条時宗/ })).not.toBeInTheDocument()
+  const zoomIn = screen.getByRole('button', { name: '拡大' })
+  for (let i = 0; i < 10; i++) {
+    await userEvent.click(zoomIn)
+  }
+  fireEvent.scroll(screen.getByTestId('timeline-scroll'), {
+    target: { scrollTop: (1268 - -700) * 8 - 400 },
+  })
+  expect(screen.getByRole('button', { name: /北条時宗/ })).toBeInTheDocument()
+})
+
+test('全体表示ボタンで初期スケールに戻る', async () => {
+  render(<TimelinePage dataset={testDataset} />)
+  const before = barHeight(/エドワード1世/)
+  await userEvent.click(screen.getByRole('button', { name: '拡大' }))
+  await userEvent.click(screen.getByRole('button', { name: '全体表示' }))
+  expect(barHeight(/エドワード1世/)).toBeCloseTo(before)
+})
+
+test('Ctrl+ホイールでズームする', () => {
+  render(<TimelinePage dataset={testDataset} />)
+  const before = barHeight(/エドワード1世/)
+  fireEvent.wheel(screen.getByTestId('timeline-scroll'), {
+    deltaY: -100,
+    ctrlKey: true,
+    clientY: 400,
+  })
+  expect(barHeight(/エドワード1世/)).toBeGreaterThan(before)
 })
