@@ -1,0 +1,171 @@
+[
+  {
+    "id": "alexander-3",
+    "type": "ruler",
+    "region": "east-europe",
+    "group": "macedonia",
+    "groupName": "マケドニア",
+    "title": "アレクサンドロス大王",
+    "start": -336,
+    "end": -323,
+    "importance": 1,
+    "description": "東方遠征でアケメネス朝を滅ぼし、ギリシアからインダス川に至る大帝国を築いた。"
+  },
+  {
+    "id": "genghis-khan",
+    "type": "ruler",
+    "region": "central-eurasia",
+    "group": "mongol",
+    "groupName": "モンゴル帝国",
+    "title": "チンギス・ハン",
+    "start": 1206,
+    "end": 1227,
+    "importance": 1,
+    "description": "モンゴル諸部族を統一し、ユーラシアにまたがる大帝国の基礎を築いた。"
+  },
+  {
+    "id": "mongol-empire-founding",
+    "type": "event",
+    "region": "central-eurasia",
+    "title": "モンゴル帝国成立",
+    "start": 1206,
+    "importance": 1,
+    "description": "クリルタイでテムジンがチンギス・ハンとして即位した。"
+  },
+  {
+    "id": "henry-3-england",
+    "type": "ruler",
+    "region": "west-europe",
+    "group": "england",
+    "groupName": "イングランド",
+    "title": "ヘンリ3世",
+    "start": 1216,
+    "end": 1272,
+    "importance": 3,
+    "description": "在位中にシモン・ド・モンフォールの乱が起こり、議会の起源が生まれた。"
+  },
+  {
+    "id": "edward-1",
+    "type": "ruler",
+    "region": "west-europe",
+    "group": "england",
+    "groupName": "イングランド",
+    "title": "エドワード1世",
+    "start": 1272,
+    "end": 1307,
+    "importance": 2,
+    "description": "ウェールズを征服し、模範議会を招集。スコットランド遠征中に病没。"
+  },
+  {
+    "id": "philippe-4",
+    "type": "ruler",
+    "region": "west-europe",
+    "group": "france",
+    "groupName": "フランス",
+    "title": "フィリップ4世",
+    "start": 1285,
+    "end": 1314,
+    "importance": 1,
+    "description": "三部会を初招集し、教皇ボニファティウス8世と争った。アナーニ事件・教皇のバビロン捕囚を引き起こす。"
+  },
+  {
+    "id": "boniface-8",
+    "type": "ruler",
+    "region": "west-europe",
+    "group": "papacy",
+    "groupName": "ローマ教皇",
+    "title": "ボニファティウス8世",
+    "start": 1294,
+    "end": 1303,
+    "importance": 2,
+    "description": "教皇権の絶頂を主張したがフィリップ4世と衝突し、アナーニ事件で憤死した。"
+  },
+  {
+    "id": "anagni",
+    "type": "event",
+    "region": "west-europe",
+    "title": "アナーニ事件",
+    "start": 1303,
+    "importance": 2,
+    "description": "フィリップ4世がボニファティウス8世をアナーニで捕縛した事件。"
+  },
+  {
+    "id": "andronikos-2",
+    "type": "ruler",
+    "region": "east-europe",
+    "group": "byzantine",
+    "groupName": "ビザンツ帝国",
+    "title": "アンドロニコス2世",
+    "start": 1282,
+    "end": 1328,
+    "importance": 3,
+    "description": "衰退期のビザンツ皇帝。オスマン勢力の台頭に直面した。"
+  },
+  {
+    "id": "ghazan-khan",
+    "type": "ruler",
+    "region": "middle-east",
+    "group": "ilkhanate",
+    "groupName": "イルハン朝",
+    "title": "ガザン・ハン",
+    "start": 1295,
+    "end": 1304,
+    "importance": 2,
+    "description": "イルハン朝の君主。イスラームに改宗し、ラシード・アッディーンに『集史』を編纂させた。"
+  },
+  {
+    "id": "alauddin-khalji",
+    "type": "ruler",
+    "region": "south-asia",
+    "group": "delhi-sultanate",
+    "groupName": "デリー・スルタン朝",
+    "title": "アラーウッディーン・ハルジー",
+    "start": 1296,
+    "end": 1316,
+    "importance": 2,
+    "description": "ハルジー朝の最盛期を築き、モンゴル軍の侵入を撃退した。"
+  },
+  {
+    "id": "kublai-khan",
+    "type": "ruler",
+    "region": "east-asia",
+    "group": "yuan",
+    "groupName": "元",
+    "title": "フビライ・ハン",
+    "start": 1260,
+    "end": 1294,
+    "importance": 1,
+    "description": "大都に遷都し国号を元とした。南宋を滅ぼし、日本へ二度遠征軍を送った。"
+  },
+  {
+    "id": "marco-polo",
+    "type": "person",
+    "region": "east-asia",
+    "title": "マルコ・ポーロ",
+    "start": 1271,
+    "end": 1295,
+    "importance": 2,
+    "description": "ヴェネツィア出身。元のフビライに仕え、帰国後『世界の記述（東方見聞録）』を口述した。"
+  },
+  {
+    "id": "hojo-tokimune",
+    "type": "ruler",
+    "region": "japan",
+    "group": "kamakura",
+    "groupName": "鎌倉幕府",
+    "title": "北条時宗",
+    "start": 1268,
+    "end": 1284,
+    "importance": 2,
+    "description": "鎌倉幕府8代執権。二度の元寇（文永・弘安の役）を退けた。"
+  },
+  {
+    "id": "tenochtitlan",
+    "type": "event",
+    "region": "americas",
+    "title": "テノチティトラン建設",
+    "start": 1325,
+    "importance": 2,
+    "description": "アステカ人がテスココ湖上に都を建設した。"
+  }
+]
