@@ -8,7 +8,7 @@
 
 ## MVP スコープ
 
-- 公開の静的 Web アプリ（GitHub Pages）。スマホ・PC の両方で利用できる
+- 公開の静的 Web アプリ（Cloudflare Workers の静的アセット配信）。スマホ・PC の両方で利用できる
 - 時代範囲は古代〜現代までを最初から扱い、データは薄く始めて後から密にする
 - 縦軸タイムライン（上→下に時間が流れる）× 地域単位の固定レーン（左右に並ぶ列）
 - エントリ種別は統治者（ruler）・人物（person）・事件（event）の3種
@@ -38,7 +38,7 @@
 | 状態管理 | React 標準（useState / useReducer）。外部ライブラリなし |
 | Lint / Format | Biome |
 | テスト | Vitest + React Testing Library |
-| CI/CD | GitHub Actions → GitHub Pages |
+| CI/CD | GitHub Actions → Cloudflare Workers（静的アセット） |
 | パッケージ管理 | pnpm |
 
 タイムライン描画は既存ライブラリを使わず自作する。主要なタイムラインライブラリは横軸前提であり、本アプリの核である「縦軸・地域レーン・連続ズーム」に適合しないため。
@@ -66,7 +66,8 @@ world-history-timeline/
 │   └── ...
 ├── scripts/
 │   └── validate-data.ts # zod によるデータ検証（ビルド前・CI で実行）
-└── .github/workflows/   # CI（typecheck → test → build）と Pages デプロイ
+├── wrangler.jsonc       # Cloudflare Workers デプロイ設定（リポジトリで管理）
+└── .github/workflows/   # CI（typecheck → test → build）と Cloudflare デプロイ
 ```
 
 - サーバー・API は持たない。JSON は `public/data/` に置き、アプリ起動時に並列 fetch する。JS バンドルとデータを分離することで、データが数千件に増えてもバンドルサイズと JS パース時間に影響しない。ブラウザキャッシュも JS と別々に効く
@@ -270,11 +271,18 @@ App
 | 主要動線 | React Testing Library | タップ→詳細パネル表示、検索→ジャンプ、同時代リンクで選択移動、データ取得失敗時のエラー表示 |
 | データ | validate-data | スキーマ違反で CI が落ちること |
 
-## CI/CD
+## CI/CD・ホスティング
 
+- ホスティングは Cloudflare Workers の静的アセット配信を使う。Worker スクリプトを持たない「アセットのみの Worker」としてデプロイでき、静的アセットへのリクエストは無料・無制限。Cloudflare Pages も静的サイトを配信できるが、機能開発の主軸は Workers に移っており（公式に Pages → Workers の移行ガイドが提供されている）、新規プロジェクトでは Workers を選ぶ
+- デプロイ設定はリポジトリ内の `wrangler.jsonc` に集約する（`name` / `compatibility_date` / `assets.directory` / `assets.not_found_handling`）。ダッシュボード側に設定を持たせず、Cloudflare 側に置くのは認証情報のみとして再現性を保つ
 - PR ごと: データ検証 → typecheck → lint → test → build を GitHub Actions で実行
-- main マージ: 上記に加えて GitHub Pages へ自動デプロイ
-- Vite の `base` はリポジトリ名に合わせて設定する
+- main マージ: 上記に加えて `cloudflare/wrangler-action` で `wrangler deploy` を実行し自動デプロイ。認証は GitHub Secrets の `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID`
+- Vite の `base` はデフォルト（ルート配信）のまま
+
+## 開発ドキュメント
+
+- `README.md` は英語で記述する（概要・開発コマンド・データ追加手順）
+- リポジトリ直下に `CLAUDE.md` を置き、コーディングエージェント向けにコマンド・アーキテクチャ・規約を簡潔にまとめる
 
 ## 初期データ方針
 

@@ -6,7 +6,7 @@
 
 **Architecture:** Vite + React + TypeScript の静的 SPA。年→座標変換・レーン内パッキングなどのロジックは `src/domain/` の純粋関数に分離し、SVG で描画する。データは `public/data/` の JSON を起動時に fetch し、zod スキーマ（アプリと検証スクリプトで共用）で parse する。
 
-**Tech Stack:** Vite / React / TypeScript (strict) / SVG / zod / Tailwind CSS v4 / Biome / Vitest + React Testing Library / pnpm / GitHub Actions → GitHub Pages
+**Tech Stack:** Vite / React / TypeScript (strict) / SVG / zod / Tailwind CSS v4 / Biome / Vitest + React Testing Library / pnpm / GitHub Actions → Cloudflare Workers（静的アセット）
 
 **Spec:** `docs/superpowers/specs/2026-07-04-world-history-timeline-design.md`
 
@@ -17,7 +17,8 @@
 - TypeScript は `strict: true`
 - スタイリングは Tailwind CSS v4（`@tailwindcss/vite` プラグイン、トークンは `src/index.css` の `@theme`）。SVG 内のデータ由来の色・座標は inline 属性
 - Lint / Format は Biome、テストは Vitest（環境 jsdom）+ React Testing Library
-- Vite の `base` は `'/world-history-timeline/'`。データ fetch は `import.meta.env.BASE_URL` 経由のパスを使う
+- デプロイ先は Cloudflare Workers の静的アセット（アセットのみの Worker）。デプロイ設定は `wrangler.jsonc` でリポジトリ管理し、ダッシュボードに設定を持たせない（Cloudflare 側は認証情報のみ）
+- Vite の `base` はデフォルト（`/`）。データ fetch は `import.meta.env.BASE_URL` 経由のパスを使う
 - 年は整数のみ（月日なし）。紀元前は負数（前300年 → `-300`）。表示は `formatYear` で「前300年」形式に変換
 - UI 文言は日本語
 - コードにコメントを書かない（ビジネスルール上の Why / 変更すると壊れる Warning のみ許可）
@@ -60,7 +61,10 @@
 | `src/test/setup.ts` | テストセットアップ（jest-dom） |
 | `src/test/factory.ts` | テスト用エントリファクトリ |
 | `src/test/fixtures.ts` | RTL 用データセットと fetch スタブ |
-| `.github/workflows/ci.yml` | CI + Pages デプロイ |
+| `wrangler.jsonc` | Cloudflare Workers デプロイ設定 |
+| `.github/workflows/ci.yml` | CI + Cloudflare Workers デプロイ |
+| `README.md` | プロジェクト概要（英語） |
+| `CLAUDE.md` | エージェント向け開発ガイド |
 
 ---
 
@@ -109,7 +113,6 @@ import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
-  base: '/world-history-timeline/',
   plugins: [react(), tailwindcss()],
   test: {
     environment: 'jsdom',
@@ -3336,16 +3339,55 @@ Run: `pnpm dev`
 
 ---
 
-### Task 20: CI・GitHub Pages デプロイ・README
+
+### Task 20: CI・Cloudflare Workers デプロイ
 
 **Files:**
-- Create: `.github/workflows/ci.yml`, `README.md`
+- Create: `.github/workflows/ci.yml`, `wrangler.jsonc`
+- Modify: `package.json`
 
 **Interfaces:**
 - Consumes: `pnpm validate-data` / `pnpm typecheck` / `pnpm lint` / `pnpm test` / `pnpm build`（Task 1・3）
-- Produces: PR ごとの CI、main マージでの GitHub Pages 自動デプロイ
+- Produces: PR ごとの CI、main マージでの Cloudflare Workers 自動デプロイ、`pnpm deploy`（ローカルからの手動デプロイ）
 
-- [ ] **Step 1: ワークフローを書く**
+ホスティングは Cloudflare Workers の静的アセット配信（Worker スクリプトを持たないアセットのみの Worker）。デプロイ設定は `wrangler.jsonc` に集約し、Cloudflare 側に置くのは認証情報のみとする。
+
+- [ ] **Step 1: wrangler を追加し設定ファイルを書く**
+
+```bash
+pnpm add -D wrangler
+```
+
+`wrangler.jsonc`:
+
+```jsonc
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "world-history-timeline",
+  "compatibility_date": "2026-07-04",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}
+```
+
+`package.json` の scripts に追加:
+
+```json
+{
+  "scripts": {
+    "deploy": "pnpm build && wrangler deploy"
+  }
+}
+```
+
+- [ ] **Step 2: dry-run でデプロイ設定を検証する**
+
+Run: `pnpm build && pnpm wrangler deploy --dry-run`
+Expected: dist のアセットが認識され、`--dry-run: exiting now.` で正常終了する（認証不要）
+
+- [ ] **Step 3: ワークフローを書く**
 
 `.github/workflows/ci.yml`:
 
@@ -3374,77 +3416,168 @@ jobs:
       - run: pnpm test
       - run: pnpm build
       - if: github.ref == 'refs/heads/main'
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
+          name: dist
           path: dist
 
   deploy:
     if: github.ref == 'refs/heads/main'
     needs: check
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+      - uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 ```
+
+`cloudflare/wrangler-action` の `command` はデフォルトで `deploy`（= `wrangler deploy`）。deploy ジョブの checkout は `wrangler.jsonc` を参照するために必要。
 
 `pnpm/action-setup@v4` はバージョン指定なしで `package.json` の `packageManager` フィールドを参照するため、`package.json` に `packageManager`（例: `"packageManager": "pnpm@10.0.0"`、ローカルの `pnpm --version` に合わせる）があることを確認し、なければ追加する。
 
-- [ ] **Step 2: README を書く**
+- [ ] **Step 4: ローカルで全チェックを流してコミット・プッシュ**
+
+Run: `pnpm validate-data && pnpm typecheck && pnpm lint && pnpm test && pnpm build`
+Expected: すべて成功
+
+```bash
+git add .github wrangler.jsonc package.json pnpm-lock.yaml
+git commit -m "ci: add github actions workflow with cloudflare workers deploy"
+git push -u origin main
+```
+
+- [ ] **Step 5: Cloudflare 認証情報の設定とデプロイ確認（要ユーザー対話）**
+
+リポジトリ側で管理できない唯一の要素が認証情報。ユーザーに以下を依頼する:
+
+1. Cloudflare ダッシュボード → My Profile → API Tokens で「Edit Cloudflare Workers」テンプレートからトークンを作成
+2. アカウント ID を確認（ダッシュボードの Workers & Pages 概要ページ、または `pnpm wrangler whoami`）
+3. GitHub Secrets に登録:
+
+```bash
+gh secret set CLOUDFLARE_API_TOKEN
+gh secret set CLOUDFLARE_ACCOUNT_ID
+```
+
+Actions の実行が成功したら `https://world-history-timeline.<アカウントのサブドメイン>.workers.dev` を開き、タイムラインが表示されること・`data/*.json` の fetch が成功することを確認する。
+
+独自ドメインを使う場合も `wrangler.jsonc` の `routes`（`custom_domain: true`）で設定ファイル管理できる（MVP では workers.dev のままでよい）。
+
+---
+
+### Task 21: README（英語）と CLAUDE.md
+
+**Files:**
+- Create: `README.md`, `CLAUDE.md`
+
+**Interfaces:**
+- Consumes: これまでの全タスクの成果（コマンド・ディレクトリ構成・規約）
+- Produces: 英語の README、エージェント向け開発ガイド CLAUDE.md（いずれも英語）
+
+- [ ] **Step 1: README を書く**
 
 `README.md`:
 
 ```markdown
-# 世界史タイムライン
+# World History Timeline
 
-世界史の「誰が・いつ・どこで」を直感的に掴むための年表アプリ。
-地域ごとのレーンを共通の縦時間軸に並べ、統治者・人物・事件の同時代性を一目で把握できる。
+A timeline app for grasping the "who, when, where" of world history at a glance.
+Regional lanes share a single vertical time axis, so you can see what was
+happening across the world at the same moment — rulers, notable figures, and
+events side by side.
 
-## 開発
+## Development
 
 ​```bash
 pnpm install
 pnpm dev
 ​```
 
-| コマンド | 内容 |
+| Command | Description |
 | --- | --- |
-| `pnpm dev` | 開発サーバー |
-| `pnpm test` | テスト実行 |
-| `pnpm validate-data` | 年表データの検証 |
-| `pnpm build` | データ検証 + 型チェック + ビルド |
+| `pnpm dev` | Start the dev server |
+| `pnpm test` | Run tests |
+| `pnpm validate-data` | Validate timeline data |
+| `pnpm build` | Validate data, type-check, and build |
+| `pnpm deploy` | Build and deploy to Cloudflare Workers |
 
-## データの追加
+## Adding data
 
-`public/data/entries.json` にエントリを追記し、`pnpm validate-data` で検証する。
-スキーマは `src/data/schema.ts`、設計は `docs/superpowers/specs/` を参照。
+Add entries to `public/data/entries.json` and run `pnpm validate-data`.
+The schema lives in `src/data/schema.ts`. Years are integers; BC years are
+negative (300 BC → `-300`). Design docs are under `docs/superpowers/specs/`.
+
+## Deployment
+
+Deployed to Cloudflare Workers as an assets-only Worker. All deploy
+configuration lives in `wrangler.jsonc`; CI deploys on every push to `main`
+via `cloudflare/wrangler-action` (requires `CLOUDFLARE_API_TOKEN` and
+`CLOUDFLARE_ACCOUNT_ID` in GitHub Secrets).
 ```
 
 （README 内のコードフェンスは通常のバッククォート3つで書く）
 
-- [ ] **Step 3: ローカルで全チェックを流す**
+- [ ] **Step 2: CLAUDE.md を書く**
 
-Run: `pnpm validate-data && pnpm typecheck && pnpm lint && pnpm test && pnpm build`
-Expected: すべて成功
+`CLAUDE.md`（コマンド → アーキテクチャ → 規約の順で、簡潔に保つ）:
 
-- [ ] **Step 4: コミットとプッシュ**
+```markdown
+# CLAUDE.md
 
-```bash
-git add .github README.md package.json
-git commit -m "ci: add github actions workflow with pages deploy"
-git push -u origin main
+Timeline app that visualizes the synchronicity of world history: regional
+lanes on a shared vertical time axis. Static SPA (Vite + React + TypeScript)
+served from Cloudflare Workers static assets.
+
+## Commands
+
+| Command | Description |
+| --- | --- |
+| `pnpm dev` | Dev server |
+| `pnpm test` | Run all tests (Vitest) |
+| `pnpm vitest run <path>` | Run a single test file |
+| `pnpm typecheck` / `pnpm lint` / `pnpm format` | tsc / Biome check / Biome format |
+| `pnpm validate-data` | Validate timeline data against schemas |
+| `pnpm build` | validate-data + typecheck + vite build |
+| `pnpm deploy` | Build and deploy to Cloudflare Workers |
+
+## Architecture
+
+- `src/domain/` — pure functions with no React dependency (scale, group
+  packing, ticks, importance filtering, query parsing, contemporaries,
+  zoom math). Start logic changes from the tests here.
+- `src/components/` — SVG rendering and UI. All state is orchestrated in
+  `TimelinePage`.
+- `src/data/` — zod schemas (`schema.ts` is the single source of truth for
+  types), cross-dataset validation, fetching.
+- `public/data/*.json` — the timeline data itself. `scripts/validate-data.ts`
+  validates it in CI and before every build.
+
+## Conventions
+
+- Years are integers only; BC years are negative (300 BC → `-300`). All
+  display formatting goes through `src/domain/format.ts`.
+- Entries: `ruler` / `person` require `end`; only `event` may omit it
+  (point event). `group` requires `groupName`.
+- Color ownership: region colors are data (`public/data/regions.json`);
+  UI colors are design tokens (`DESIGN.md` → `@theme` in `src/index.css`).
+  Do not blur this boundary.
+- UI copy is Japanese; commit messages are English (conventional commits).
+- Domain modules always get unit tests; UI is covered by RTL tests on the
+  main flows.
 ```
 
-- [ ] **Step 5: リポジトリ設定とデプロイ確認（要ユーザー対話）**
+- [ ] **Step 3: コミット**
 
-GitHub リポジトリの Settings → Pages で Source を「GitHub Actions」に設定する（`gh api -X PUT repos/{owner}/{repo}/pages --field build_type=workflow` でも可。権限がなければユーザーに依頼する）。
-
-Actions の実行が成功したら `https://<owner>.github.io/world-history-timeline/` を開き、タイムラインが表示されること・データ fetch が成功すること（base パス配下で `data/*.json` が取れていること）を確認する。
+```bash
+git add README.md CLAUDE.md
+git commit -m "docs: add english readme and claude.md"
+```
 
 ---
 
@@ -3452,5 +3585,6 @@ Actions の実行が成功したら `https://<owner>.github.io/world-history-tim
 
 - Task 1〜12 は依存順（1 → 2 → 3 → …）。Task 4〜11 のドメイン層は相互独立なので並列実行も可
 - Task 13（デザイン）は Task 1 完了後ならいつでも着手できるが、Task 14 より前に完了していること（Task 14 以降の UI がトークンを参照するため）
-- Task 13 Step 5 と Task 20 Step 5 はユーザー対話が必要（Claude Design レビュー / GitHub Pages 設定）
+- Task 13 Step 5（Claude Design レビュー）と Task 20 Step 5（Cloudflare 認証情報の設定）はユーザー対話が必要
+- Task 21（README・CLAUDE.md）は最後に実施する（全タスクの成果を反映するため）
 - 各タスク完了時に `pnpm typecheck && pnpm lint && pnpm test` が通っていることをコミット前に確認する
