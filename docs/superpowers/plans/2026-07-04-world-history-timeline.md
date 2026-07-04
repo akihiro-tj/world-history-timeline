@@ -3356,7 +3356,7 @@ Run: `pnpm dev`
 
 **Interfaces:**
 - Consumes: `pnpm validate-data` / `pnpm typecheck` / `pnpm lint` / `pnpm test` / `pnpm build`（Task 1・3）
-- Produces: PR ごとの CI、main マージでの Cloudflare Workers 自動デプロイ、`pnpm deploy`（ローカルからの手動デプロイ）
+- Produces: PR ごとの CI、main マージでの Cloudflare Workers 自動デプロイ、`pnpm deploy:cf`（ローカルからの手動デプロイ。`deploy` という script 名は pnpm 組み込みコマンドに握られるため使わない）
 
 ホスティングは Cloudflare Workers の静的アセット配信（Worker スクリプトを持たないアセットのみの Worker）。デプロイ設定は `wrangler.jsonc` に集約し、Cloudflare 側に置くのは認証情報のみとする。
 
@@ -3385,7 +3385,7 @@ pnpm add -D wrangler
 ```json
 {
   "scripts": {
-    "deploy": "pnpm build && wrangler deploy"
+    "deploy:cf": "pnpm build && wrangler deploy"
   }
 }
 ```
@@ -3513,7 +3513,7 @@ pnpm dev
 | `pnpm test` | Run tests |
 | `pnpm validate-data` | Validate timeline data |
 | `pnpm build` | Validate data, type-check, and build |
-| `pnpm deploy` | Build and deploy to Cloudflare Workers |
+| `pnpm deploy:cf` | Build and deploy to Cloudflare Workers |
 
 ## Adding data
 
@@ -3552,7 +3552,7 @@ served from Cloudflare Workers static assets.
 | `pnpm typecheck` / `pnpm lint` / `pnpm format` | tsc / Biome check / Biome format |
 | `pnpm validate-data` | Validate timeline data against schemas |
 | `pnpm build` | validate-data + typecheck + vite build |
-| `pnpm deploy` | Build and deploy to Cloudflare Workers |
+| `pnpm deploy:cf` | Build and deploy to Cloudflare Workers |
 
 ## Architecture
 
