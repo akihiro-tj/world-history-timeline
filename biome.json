@@ -16,7 +16,11 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "preset": "recommended"
+      "preset": "recommended",
+      "a11y": {
+        "useSemanticElements": "off",
+        "useFocusableInteractive": "off"
+      }
     }
   },
   "javascript": {
