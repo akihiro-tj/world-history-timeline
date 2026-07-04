@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+@theme {
+  --color-surface: #fafaf9;
+  --color-panel: #ffffff;
+  --color-ink: #1a1c1e;
+  --color-muted: #6b7280;
+  --color-line: #e5e4e0;
+  --color-accent: #4a90d9;
+  --color-ruler: #3b6fb0;
+  --color-person: #7a5cb8;
+  --color-event: #c2571f;
+}
+
+body {
+  font-family: system-ui, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  color: var(--color-ink);
+  background: var(--color-surface);
+}
