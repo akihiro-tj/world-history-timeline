@@ -74,9 +74,6 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
   }, [tierEntries, scale, zoom, viewportHeight, maxImportance])
 
   const handlePointerDown = (e: ReactPointerEvent) => {
-    if (e.currentTarget.setPointerCapture) {
-      e.currentTarget.setPointerCapture(e.pointerId)
-    }
     pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
   }
   const handlePointerMove = (e: ReactPointerEvent) => {
@@ -96,17 +93,21 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
       applyZoom(distanceAfter / distanceBefore, anchorOffset)
     }
   }
-  const handlePointerEnd = (e: ReactPointerEvent) => {
-    pointers.current.delete(e.pointerId)
-  }
+
+  useEffect(() => {
+    const removePointer = (e: PointerEvent) => {
+      pointers.current.delete(e.pointerId)
+    }
+    window.addEventListener('pointerup', removePointer)
+    window.addEventListener('pointercancel', removePointer)
+    return () => {
+      window.removeEventListener('pointerup', removePointer)
+      window.removeEventListener('pointercancel', removePointer)
+    }
+  }, [])
 
   return (
-    <div
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerEnd}
-      onPointerCancel={handlePointerEnd}
-    >
+    <div onPointerDown={handlePointerDown} onPointerMove={handlePointerMove}>
       <TimelineView
         containerRef={containerRef}
         dataset={dataset}
