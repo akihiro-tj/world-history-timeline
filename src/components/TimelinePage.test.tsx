@@ -103,4 +103,7 @@ test('同時代リンクで選択が移動する', async () => {
   const list = screen.getByRole('list', { name: '同時代' })
   await userEvent.click(within(list).getByRole('button', { name: /フビライ・ハン/ }))
   expect(screen.getByRole('heading', { name: 'フビライ・ハン' })).toBeInTheDocument()
+  expect(screen.getByTestId('timeline-scroll').scrollTop).toBeCloseTo(
+    (1260 - -700) * (2000 / 2800) - 400,
+  )
 })

@@ -9,7 +9,7 @@ const buttonClass =
 
 export function ZoomControls({ onZoomIn, onZoomOut, onFitAll }: Props) {
   return (
-    <div className="fixed right-4 bottom-4 z-30 flex flex-col gap-2">
+    <div className="fixed left-4 bottom-4 z-30 flex flex-col gap-2">
       <button type="button" aria-label="拡大" className={buttonClass} onClick={onZoomIn}>
         ＋
       </button>
