@@ -2661,7 +2661,7 @@ const buttonClass =
 
 export function ZoomControls({ onZoomIn, onZoomOut, onFitAll }: Props) {
   return (
-    <div className="fixed right-4 bottom-4 z-30 flex flex-col gap-2">
+    <div className="fixed left-4 bottom-4 z-30 flex flex-col gap-2">
       <button type="button" aria-label="拡大" className={buttonClass} onClick={onZoomIn}>
         ＋
       </button>
@@ -3009,6 +3009,9 @@ test('同時代リンクで選択が移動する', async () => {
   const list = screen.getByRole('list', { name: '同時代' })
   await userEvent.click(within(list).getByRole('button', { name: /フビライ・ハン/ }))
   expect(screen.getByRole('heading', { name: 'フビライ・ハン' })).toBeInTheDocument()
+  expect(screen.getByTestId('timeline-scroll').scrollTop).toBeCloseTo(
+    (1260 - -700) * (2000 / 2800) - 400,
+  )
 })
 ```
 
