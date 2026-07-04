@@ -12,7 +12,8 @@
 
 ## Global Constraints
 
-- パッケージ管理は pnpm、Node.js 22
+- パッケージ管理は pnpm、Node.js は 24（現行のアクティブ LTS）
+- 依存パッケージは現時点の最新安定版を `pnpm add` で導入し、lockfile で固定する
 - TypeScript は `strict: true`
 - スタイリングは Tailwind CSS v4（`@tailwindcss/vite` プラグイン、トークンは `src/index.css` の `@theme`）。SVG 内のデータ由来の色・座標は inline 属性
 - Lint / Format は Biome、テストは Vitest（環境 jsdom）+ React Testing Library
@@ -3364,7 +3365,7 @@ jobs:
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm validate-data
