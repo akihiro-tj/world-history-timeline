@@ -49,7 +49,7 @@ export function TimelineView({
     <div
       ref={containerRef}
       data-testid="timeline-scroll"
-      className="h-dvh overflow-auto"
+      className="mt-12 h-[calc(100dvh-3rem)] overflow-auto"
       style={{ touchAction: 'pan-x pan-y' }}
       onScroll={onScroll}
     >

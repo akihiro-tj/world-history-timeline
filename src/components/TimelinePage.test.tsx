@@ -11,6 +11,14 @@ afterEach(() => {
 const barHeight = (name: RegExp) =>
   Number(screen.getByRole('button', { name }).getAttribute('height'))
 
+test('トップバーにタイトルと検索ボックスを表示する', () => {
+  render(<TimelinePage dataset={testDataset} />)
+  expect(screen.getByRole('heading', { name: '世界史タイムライン' })).toBeInTheDocument()
+  expect(screen.getByRole('banner')).toContainElement(
+    screen.getByRole('searchbox', { name: '検索' }),
+  )
+})
+
 test('地域ヘッダーを order 順に表示する', () => {
   render(<TimelinePage dataset={testDataset} />)
   const headers = screen.getAllByRole('columnheader').map((h) => h.textContent)

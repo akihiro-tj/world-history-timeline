@@ -18,7 +18,7 @@ export function SearchBar({ entries, onJumpToYear, onSelectEntry }: Props) {
   )
 
   return (
-    <div className="fixed top-2 left-1/2 z-30 w-72 -translate-x-1/2">
+    <div className="relative w-full">
       <input
         type="search"
         aria-label="検索"
@@ -37,7 +37,7 @@ export function SearchBar({ entries, onJumpToYear, onSelectEntry }: Props) {
         <div
           role="listbox"
           aria-label="検索候補"
-          className="mt-1 overflow-hidden rounded-md border border-line bg-panel shadow-lg"
+          className="absolute inset-x-0 top-full mt-1 overflow-hidden rounded-md border border-line bg-panel shadow-lg"
         >
           {candidates.map((entry) => (
             <div key={entry.id}>

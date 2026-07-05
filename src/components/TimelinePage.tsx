@@ -13,8 +13,8 @@ import { maxVisibleImportance, visibleEntries } from '../domain/visibility'
 import { dataYearRange } from '../domain/yearRange'
 import { minPxPerYear, type ZoomState, zoomAt } from '../domain/zoom'
 import { DetailPanel } from './DetailPanel'
-import { SearchBar } from './SearchBar'
 import { TimelineView } from './TimelineView'
+import { TopBar } from './TopBar'
 import { ZoomControls } from './ZoomControls'
 
 const FALLBACK_VIEWPORT_HEIGHT = 800
@@ -163,7 +163,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
 
   return (
     <div onPointerDown={handlePointerDown} onPointerMove={handlePointerMove}>
-      <SearchBar entries={entries} onJumpToYear={jumpToYear} onSelectEntry={jumpToEntry} />
+      <TopBar entries={entries} onJumpToYear={jumpToYear} onSelectEntry={jumpToEntry} />
       <TimelineView
         containerRef={containerRef}
         dataset={dataset}
