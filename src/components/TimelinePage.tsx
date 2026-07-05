@@ -19,6 +19,7 @@ import {
   COLUMN_WIDTH,
   DESKTOP_MEDIA_QUERY,
   FALLBACK_VIEWPORT_WIDTH,
+  HEADER_HEIGHT,
   LANE_PADDING,
   laneWidth,
   PANEL_HEIGHT_RATIO,
@@ -65,6 +66,13 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
       setZoom((prev) => zoomAt(prev, factor, anchorOffset, totalYears, viewportHeight))
     },
     [totalYears, viewportHeight],
+  )
+
+  const applyZoomAtContainerOffset = useCallback(
+    (factor: number, containerOffset: number) => {
+      applyZoom(factor, containerOffset - HEADER_HEIGHT)
+    },
+    [applyZoom],
   )
 
   const selectedEntry = useMemo(
@@ -192,7 +200,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     if (distanceBefore > 0) {
       const rect = containerRef.current?.getBoundingClientRect()
       const anchorOffset = (a2.y + b2.y) / 2 - (rect?.top ?? 0)
-      applyZoom(distanceAfter / distanceBefore, anchorOffset)
+      applyZoomAtContainerOffset(distanceAfter / distanceBefore, anchorOffset)
     }
   }
 
@@ -215,11 +223,14 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
       if (!e.ctrlKey && !e.metaKey) return
       e.preventDefault()
       const rect = container.getBoundingClientRect()
-      applyZoom(e.deltaY < 0 ? WHEEL_ZOOM_FACTOR : 1 / WHEEL_ZOOM_FACTOR, e.clientY - rect.top)
+      applyZoomAtContainerOffset(
+        e.deltaY < 0 ? WHEEL_ZOOM_FACTOR : 1 / WHEEL_ZOOM_FACTOR,
+        e.clientY - rect.top,
+      )
     }
     container.addEventListener('wheel', handleWheel, { passive: false })
     return () => container.removeEventListener('wheel', handleWheel)
-  }, [applyZoom])
+  }, [applyZoomAtContainerOffset])
 
   return (
     <div onPointerDown={handlePointerDown} onPointerMove={handlePointerMove}>
@@ -243,8 +254,8 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
         viewportTopY={zoom.scrollTop}
       />
       <ZoomControls
-        onZoomIn={() => applyZoom(BUTTON_ZOOM_FACTOR, viewportHeight / 2)}
-        onZoomOut={() => applyZoom(1 / BUTTON_ZOOM_FACTOR, viewportHeight / 2)}
+        onZoomIn={() => applyZoomAtContainerOffset(BUTTON_ZOOM_FACTOR, viewportHeight / 2)}
+        onZoomOut={() => applyZoomAtContainerOffset(1 / BUTTON_ZOOM_FACTOR, viewportHeight / 2)}
         onFitAll={() =>
           setZoom({ pxPerYear: minPxPerYear(totalYears, viewportHeight), scrollTop: 0 })
         }
