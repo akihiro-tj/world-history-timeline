@@ -22,7 +22,7 @@ export function SearchBar({ entries, onJumpToYear, onSelectEntry }: Props) {
       <input
         type="search"
         aria-label="検索"
-        placeholder="名前か年（例: 1300 / 前300）"
+        placeholder="名前または年（例: 信長 / 1600）"
         className="w-full rounded-md border border-line bg-panel px-3 py-2 text-sm shadow-sm"
         value={input}
         onChange={(e) => setInput(e.target.value)}

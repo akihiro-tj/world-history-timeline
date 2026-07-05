@@ -54,3 +54,10 @@ test('候補選択後は入力と候補がクリアされる', async () => {
   expect(input).toHaveValue('')
   expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
 })
+
+test('プレースホルダーに名前と年の例を示す', () => {
+  render(
+    <SearchBar entries={testDataset.entries} onJumpToYear={() => {}} onSelectEntry={() => {}} />,
+  )
+  expect(screen.getByPlaceholderText('名前または年（例: 信長 / 1600）')).toBeInTheDocument()
+})
