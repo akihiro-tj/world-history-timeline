@@ -44,7 +44,7 @@ export function EventMarker({ entry, laneX, column, scale, selected, onSelect, s
         stroke={selected ? 'var(--color-ink)' : 'none'}
         strokeWidth={selected ? 2 : 0}
       />
-      <text x={x + LABEL_OFFSET_X} y={y + 4} className="pointer-events-none fill-ink text-[11px]">
+      <text x={x + LABEL_OFFSET_X} y={y + 4} className="fill-ink text-[11px]">
         {truncateLabel(entry.title, labelMaxWidth, LABEL_FONT_SIZE_PX)}
       </text>
     </g>
