@@ -6,16 +6,12 @@ import { defineConfig } from 'vitest/config'
 // window.localStorage を注入する仕組みと衝突して localStorage が undefined になる。
 // Node 24 以前には存在しない挙動なので、該当バージョンでのみ無効化する。
 const nodeMajorVersion = Number(process.versions.node.split('.')[0])
-if (nodeMajorVersion >= 25) {
-  process.env.NODE_OPTIONS = [process.env.NODE_OPTIONS, '--no-experimental-webstorage']
-    .filter(Boolean)
-    .join(' ')
-}
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   test: {
     environment: 'jsdom',
     setupFiles: './src/test/setup.ts',
+    execArgv: nodeMajorVersion >= 25 ? ['--no-experimental-webstorage'] : [],
   },
 })
