@@ -1,0 +1,185 @@
+# UX改善・PRプレビュー環境 設計
+
+MVP リリース後の改善一式の設計。対象は (1) PR プレビュー環境の整備、(2) 表示・レイアウトの不具合修正、(3) 操作性の改善、(4) 検索の強化、(5) オンボーディングと情報設計の追加、および設定まわりの残課題。
+
+## 背景と課題
+
+### 表示・レイアウト
+
+- 年軸が `config.json` の `maxYear: 2100` まで描かれるが、実データの最大年は 1953。データの無い未来年（2050 など）が表示される
+- エントリラベル（人名・イベント名）に幅制限がなく、カラム幅や SVG 右端をはみ出す（`EntryBar` / `EventMarker` とも）
+- ズームボタンが `fixed 左下` で、左端の年軸ラベルと重なる
+- 検索ボックスが `fixed 上部中央` で、レーンヘッダー（地域名）を覆い隠す
+- 詳細パネルが fixed オーバーレイ（PC: 右 320px / SP: 下 50dvh）のため、右端・下端のエントリがパネルに隠れて到達できない
+- パネル内の同時代リンクをクリックしたとき、縦方向のみ・ビューポート全高基準でセンタリングするため、対象エントリがパネルの裏や画面外（横方向）に来ることがある
+- ズームアンカーの座標計算がヘッダー高さを補正していない
+- 初期ズーム倍率が実測前のフォールバック値（800px）で決まり、実測後に再導出されない
+- ビューポート高が 400px 未満だと最大ズームが importance 3 の表示しきい値（4px/年）に届かず、詳細 tier に到達できない
+
+### 操作性
+
+- インタラクティブ要素（閉じるボタン・同時代リンク・ズームボタン・検索候補）に `cursor: pointer` が無い
+- 選択枠が黒（`--color-ink`）で、バー色の上で視認しづらい
+- ドラッグでのパン操作ができない（ネイティブスクロールのみ）
+- トラックパッドのピンチズームが `deltaY` の大きさを無視した一律 1.2 倍刻みで、一気に拡大縮小されすぎる
+
+### 検索
+
+- タイトルの素の部分一致のみで、ひらがな入力でカタカナ名（あ → アレクサンドロス）も漢字名（おだ → 織田信長）も引けない。読み仮名データは存在しない
+- プレースホルダー「名前か年（例: 1300 / 前300）」に名前の例が無い
+- 候補リストがキーボード（↑↓ / Enter / Escape）で操作できない
+
+### 情報設計
+
+- 初見のユーザーに操作体系（スクロール・ズームで詳細化・クリックで解説・検索）が伝わらない
+- 初期表示で右・下にコンテンツが続いていることが分かりづらい
+- ズームで国・王朝のカラムが増えても、どの縦ラインがどの国か表示されない（`groupName` はデータに存在するが未表示）
+
+### CI・設定
+
+- PR 時にプレビュー環境が無く、マージ前に画面確認できない
+- `package.json` に `engines` と `private: true` が無い。`@types/node` のメジャーが CI の Node 24 と不一致
+- `biome.json` の `linter.rules.preset` は無効なキー（`linter.rules.recommended: true` が正）
+- CI の wrangler バージョンが devDependencies と一元化されていない
+- deploy ジョブに concurrency group が無く、連続 push で並行デプロイし得る
+- CLAUDE.md からデザイン原則（DESIGN.md）への参照が無い
+
+## 全体方針
+
+設計はこの 1 本に集約し、実装はテーマ別の 5 PR に分割して順に進める。PR① を最初に行うことで、以降の PR はすべてプレビュー URL で画面確認できる。複数 PR が同一ファイル（`TimelinePage.tsx` 等）を触るため、②→③→④→⑤ は直列に進める。
+
+| PR | ブランチ | 内容 |
+| --- | --- | --- |
+| ① | `ci/pr-preview-and-config` | PR プレビュー環境 + 設定改善（engines / private / biome / wrangler 版一元化 / concurrency / CLAUDE.md 追記） |
+| ② | `fix/layout` | 年範囲のデータ導出 / ラベル省略 / ズームボタン位置 / トップバー化 / パネル余白とジャンプ補正 / ズームアンカー補正 / 初期ズーム再導出 / 小画面の最大ズーム保証 |
+| ③ | `feat/interaction` | cursor 監査 / 選択スタイル変更 / ドラッグパン / ホイールズーム感度 |
+| ④ | `feat/search` | reading フィールド + 201 件付与 / かな正規化検索 / プレースホルダー / キーボード操作 |
+| ⑤ | `feat/onboarding` | ウェルカムオーバーレイ / 国名 2 段ヘッダー / 画面端フェード |
+
+テストカバレッジの既知の不足（境界値など）は、該当コードを触る PR に含めて補強する。
+
+## 1. PR プレビュー環境と設定改善（PR①）
+
+### プレビュー環境
+
+Cloudflare Workers の Preview URLs（`wrangler versions upload`）を使う。本番 Worker `world-history-timeline` にデプロイしないバージョンをアップロードすると、`<alias>-world-history-timeline.<subdomain>.workers.dev` 形式の公開 URL が発行される。PR ごとに Worker を増やす方式と異なり後片付けが不要。
+
+- `wrangler.jsonc` に `"preview_urls": true` を明示する
+- `ci.yml` の `check` ジョブは dist アーティファクトを PR 時にもアップロードする（現在は main のみ）
+- 新設の `preview` ジョブ: `pull_request` かつ same-repo（fork は secrets が無いためスキップ）で実行。dist をダウンロードし、`cloudflare/wrangler-action` で `versions upload --preview-alias pr-<PR番号>` を実行する。エイリアスにより追加 push 後も URL が変わらない（wrangler 4.21+ / devDependencies は 4.107 系）
+- プレビュー URL は wrangler-action の `deployment-url` output から取得し、`actions/github-script` でマーカー付きコメントを PR に作成・以降は更新する（sticky 方式）。ジョブに `permissions: pull-requests: write` を付与する
+
+制約: Preview URL は公開される（本アプリは公開静的データのみのため問題なし）。Durable Objects 使用時は生成されないが本 Worker は対象外。
+
+### 設定改善
+
+- `package.json`: `engines.node >= 24` と `private: true` を追加。`@types/node` を Node 24 系メジャーに揃える
+- `biome.json`: `linter.rules.preset` を削除し `linter.rules.recommended: true` に修正。修正後 `pnpm lint` で新たな指摘が出ないことを確認（出た場合は個別に対処）
+- `ci.yml`: deploy / preview ジョブの wrangler バージョンを devDependencies と一致させる（`wrangler-action` の `wranglerVersion` を明示）。deploy ジョブに `concurrency` group を設定し古い実行をキャンセルする
+- `CLAUDE.md`: 規約セクションに「UI・ビジュアルの変更時は DESIGN.md（デザイントークン・Do/Don't）に従う」を追記
+
+## 2. 表示・レイアウト修正（PR②）
+
+### 年軸範囲のデータ導出
+
+domain に `dataYearRange(entries): { minYear, maxYear }` を新設する。データの最小 start・最大年（end 優先、無ければ start）を 100 年単位に外側へ丸める（-3000 → -3000、1953 → 2000）。軸目盛・スケール・ズーム範囲はこの値を使う。`config.json` の `minYear` / `maxYear` はエントリ年の検証境界としてのみ使い続ける。データが将来増えれば軸も自動で追従する。
+
+### ラベルの省略
+
+domain に `truncateLabel(text, maxWidthPx, fontSizePx): string` を新設する。文字幅は近似で見積もる（全角 ≒ 1em、半角 ≒ 0.55em）。超過時は末尾を削って「…」を付ける。
+
+- `EntryBar`: 使用可能幅 = カラム幅（88px）− 左右パディング
+- `EventMarker`: 使用可能幅 = ◆ の右から SVG（レーン領域）右端まで
+- 両者とも SVG `<title>` で全文をホバー表示する
+
+### ズームボタン位置
+
+左下配置のまま、`left` を年軸幅（64px）+ 8px にオフセットして年ラベルとの重なりを解消する。右下配置は PC の詳細パネル（右 320px）と衝突するため採らない。
+
+### トップバー
+
+高さ 48px の固定トップバー（`fixed top-0`、背景 = panel 色、下罫線）を新設し、アプリタイトル（SP では省略）・検索ボックス・ヘルプボタン（機能は PR⑤、配置枠のみ先行）を収容する。スクロールコンテナは高さ `calc(100dvh - 48px)` でトップバーの下から始まり、レーンヘッダーはコンテナ内で sticky のまま隠れなくなる。
+
+### パネル余白とジャンプ補正
+
+- パネル表示中はスクロールコンテナに余白を追加する（PC: `padding-right: 320px` / SP: `padding-bottom: 50dvh`）。これで右端・下端のエントリにもスクロールで到達できる
+- `jumpToEntry`: 「トップバーとパネルを除いた可視領域」の中心に、縦 = エントリの start 年、横 = エントリのカラム中心、の両方を合わせる（`scrollTop` と `scrollLeft`）。`jumpToYear` も同じ可視領域基準に揃える
+
+### 残課題の修正
+
+- ズームアンカー: `zoomAt` に渡すアンカーオフセットからトップバー高さを補正する
+- 初期ズーム: 実測の viewport 高さが得られた時点で、ユーザーがまだズーム操作をしていなければ全体表示倍率を再導出する
+- 小画面: 最大ズーム倍率を `max(viewportHeight / 100, 5)` px/年 とし、importance 3 のしきい値（4px/年）へ常に到達できることを保証する
+
+## 3. 操作性（PR③）
+
+### cursor
+
+`index.css` にグローバルで `button { cursor: pointer }` を設定する（Tailwind v4 の preflight は button を `cursor: default` にするため）。SVG の `role="button"` 要素（EntryBar / EventMarker）は既存の `cursor-pointer` を維持。閉じるボタン・同時代リンク・ズームボタン・検索候補が対象になることを確認する。
+
+### 選択スタイル
+
+選択枠を ink（黒）流用から「accent 青 `#4a90d9` の枠 2.5px + 白の外側ハロー」に変更する。統治者バー（`#3b6fb0`）は accent と色相が近いため、白ハローが視認性を担保する。SVG では二重描画（白の外側 rect + accent の内側 stroke）または `paint-order` で実現する。DESIGN.md の Colors に accent の用途（選択枠）を追記する。
+
+### ドラッグパン
+
+マウス（`pointerType === 'mouse'`）限定でドラッグパンを追加する。
+
+- キャンバス上の pointerdown からの移動が 5px を超えたらパン開始とし、`scrollLeft` / `scrollTop` を差分更新する。5px 未満で pointerup ならクリック（エントリ選択）として扱う
+- カーソルは通常時 `grab`、ドラッグ中 `grabbing`。ドラッグ中はテキスト選択を抑止する
+- 既存のピンチ処理（2 ポインタ）が始まったらドラッグパンは中断する。タッチは従来どおりネイティブスクロール
+
+### ホイールズーム感度
+
+`ctrlKey || metaKey` 付き wheel のズーム係数を、固定 1.2 倍から `exp(-deltaY × 0.008)` に変更する（1 イベントあたり [0.8, 1.25] にクランプ）。トラックパッドのピンチ量に比例した連続的なズームになる。domain に `wheelZoomFactor(deltaY): number` を新設する。ズームボタン（1.4 倍）とタッチピンチ（距離比そのまま）は変更しない。
+
+## 4. 検索（PR④）
+
+### reading フィールド
+
+- `schema.ts` のエントリに `reading`（ひらがな読み）を必須追加する。許容文字はひらがな・長音「ー」・中黒「・」・空白（`^[ぁ-ゖー・\s]+$`）
+- `entries.json` の全 201 件に読みを付与する。教科書標準の読みのみ使い、確信が持てない読みは辞典類で確認してから記載する
+- `scripts/validate-data.ts` が形式を検証する
+
+### かな正規化検索
+
+domain の `query.ts` に `toHiragana(text): string`（カタカナ→ひらがな変換 + 英字小文字化）を新設し、`searchEntries` を「正規化タイトル or reading にクエリの正規化形が部分一致」に変更する。「あ」→ アレクサンドロス、「おだ」→ 織田信長、「織田」→ 織田信長 のすべてが引ける。年解釈（`1300` / `前300`）は従来どおり。
+
+### プレースホルダー
+
+`名前または年（例: 信長 / 1600）` に変更する。
+
+### キーボード操作
+
+候補リストに roving を実装する。↑↓ でアクティブ候補を移動、Enter で決定、Escape でリストを閉じて入力に戻る。`aria-activedescendant` と動的な `aria-selected` を設定する。
+
+## 5. オンボーディング・情報設計（PR⑤）
+
+### ウェルカムオーバーレイ
+
+- 初回訪問時（`localStorage` のフラグ未設定時）に半透明スクリム + 白カードのオーバーレイを表示する。内容は 4 項目: 「スクロールで時代を移動」「ピンチ・±ボタンでズーム。拡大するほど詳しい人物・事件が現れる」「バーや ◆ をクリックすると解説と同時代の出来事を表示」「名前や年号で検索してジャンプ」
+- 「はじめる」ボタン・スクリムクリック・Escape で閉じ、フラグを保存する
+- トップバーのヘルプボタン「?」でいつでも再表示できる
+- 見た目は DESIGN.md に従う（panel 白・ink/muted のテキスト・radius 6px・装飾なし）
+
+### 国名 2 段ヘッダー
+
+ズームで国・王朝のカラムが表示されているレーンでは、地域名の下に 2 段目として各カラムの `groupName` を sticky 表示する。group の無いカラムは空欄。ラベルは muted 色、`truncateLabel` で省略する。group カラムが 1 つも無いズームレベルでは 2 段目自体を描画しない。
+
+### 画面端フェード
+
+スクロール残量がある方向（上下左右）の画面端に、surface 色への淡いフェード（約 24px）を表示し、コンテンツの続きを示唆する。スクロールが端に達した方向のフェードは消す。scroll イベントで各方向の残量を判定する。
+
+## テスト方針
+
+- domain 新設関数（`dataYearRange` / `truncateLabel` / `toHiragana` / `wheelZoomFactor` / 最大ズーム下限）はテストファーストで単体テストを書く。境界値（100 年丸め・全角半角混在・クランプ端）を含める
+- RTL: トップバー表示 / ジャンプ補正の `scrollTop`・`scrollLeft` / オンボーディングの初回表示・再訪非表示・ヘルプ再表示 / 検索のキーボード操作を検証する
+- 各 PR で `pnpm test` / `typecheck` / `lint` / `validate-data` を通し、プレビュー URL で実画面を目視確認する。PR① はプレビュー環境自体の動作検証を兼ねる
+
+## 検討した代替案
+
+- **PR ごとの独立 Worker デプロイ**: URL は分かりやすいが Worker の後片付けが必要になるため、Preview URLs 方式を採用
+- **かな変換のみ（reading なし）**: 実装は小さいが漢字名がひらがなで引けないため、reading 追加を採用
+- **ズームボタンの右下移動**: PC の詳細パネルと衝突するため、左下のまま年軸分オフセットを採用
+- **国名表示をカラム上端のインラインラベルにする案**: スクロール中に見えなくなるため、sticky 2 段ヘッダーを採用
+- **ステップ式コーチマーク**: 実装コストとスキップされやすさから、ウェルカムオーバーレイを採用
