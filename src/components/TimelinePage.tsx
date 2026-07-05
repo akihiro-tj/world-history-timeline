@@ -7,26 +7,39 @@ import {
   useState,
 } from 'react'
 import type { Dataset } from '../data/schema'
-import { packLane } from '../domain/packing'
+import { columnGroupNames, packLane } from '../domain/packing'
 import { createScale } from '../domain/scale'
 import { maxVisibleImportance, visibleEntries } from '../domain/visibility'
 import { dataYearRange, padYearRange } from '../domain/yearRange'
-import { minPxPerYear, wheelZoomFactor, type ZoomState, zoomAt } from '../domain/zoom'
+import {
+  clampPxPerYear,
+  INITIAL_FOCUS_YEAR,
+  initialPxPerYear,
+  minPxPerYear,
+  wheelZoomFactor,
+  type ZoomState,
+  zoomAt,
+} from '../domain/zoom'
 import { DetailPanel } from './DetailPanel'
+import { computeEdgeFades, type EdgeFades } from './edgeFades'
 import {
   AXIS_WIDTH,
   COLUMN_GAP,
   COLUMN_WIDTH,
   DESKTOP_MEDIA_QUERY,
   FALLBACK_VIEWPORT_WIDTH,
+  GROUP_HEADER_HEIGHT,
   HEADER_HEIGHT,
   LANE_PADDING,
   laneWidth,
   PANEL_HEIGHT_RATIO,
   PANEL_WIDTH_PX,
+  TOP_BAR_HEIGHT,
 } from './layout'
+import { hasSeenOnboarding, markOnboardingSeen } from './onboardingStorage'
 import { TimelineView } from './TimelineView'
 import { TopBar } from './TopBar'
+import { WelcomeOverlay } from './WelcomeOverlay'
 import { ZoomControls } from './ZoomControls'
 
 const FALLBACK_VIEWPORT_HEIGHT = 800
@@ -41,10 +54,37 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
   const totalYears = scaleRange.maxYear - scaleRange.minYear
   const containerRef = useRef<HTMLDivElement>(null)
   const [viewportHeight, setViewportHeight] = useState(FALLBACK_VIEWPORT_HEIGHT)
-  const [zoom, setZoom] = useState<ZoomState>({
-    pxPerYear: minPxPerYear(totalYears, FALLBACK_VIEWPORT_HEIGHT),
-    scrollTop: 0,
+  const [zoom, setZoom] = useState<ZoomState>(() => {
+    const pxPerYear = clampPxPerYear(
+      initialPxPerYear(FALLBACK_VIEWPORT_HEIGHT),
+      totalYears,
+      FALLBACK_VIEWPORT_HEIGHT,
+    )
+    return {
+      pxPerYear,
+      scrollTop: Math.max(
+        0,
+        (INITIAL_FOCUS_YEAR - scaleRange.minYear) * pxPerYear - FALLBACK_VIEWPORT_HEIGHT / 2,
+      ),
+    }
   })
+  const [edgeFades, setEdgeFades] = useState<EdgeFades>({
+    top: false,
+    bottom: false,
+    left: false,
+    right: false,
+  })
+  const updateEdgeFades = useCallback((container: HTMLDivElement) => {
+    setEdgeFades((prev) => {
+      const next = computeEdgeFades(container)
+      return prev.top === next.top &&
+        prev.bottom === next.bottom &&
+        prev.left === next.left &&
+        prev.right === next.right
+        ? prev
+        : next
+    })
+  }, [])
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const pointers = useRef(new Map<number, { x: number; y: number }>())
   const hasUserZoomedRef = useRef(false)
@@ -58,18 +98,26 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
   const suppressClickRef = useRef(false)
   const isDraggingRef = useRef(false)
   const [isDragging, setIsDragging] = useState(false)
+  const [isHelpOpen, setIsHelpOpen] = useState(() => !hasSeenOnboarding())
+  const closeHelp = useCallback(() => {
+    markOnboardingSeen()
+    setIsHelpOpen(false)
+  }, [])
 
   useEffect(() => {
     isDraggingRef.current = isDragging
   }, [isDragging])
 
   useEffect(() => {
-    const measure = () =>
-      setViewportHeight(containerRef.current?.clientHeight || FALLBACK_VIEWPORT_HEIGHT)
+    const measure = () => {
+      const container = containerRef.current
+      setViewportHeight(container?.clientHeight || FALLBACK_VIEWPORT_HEIGHT)
+      if (container) updateEdgeFades(container)
+    }
     measure()
     window.addEventListener('resize', measure)
     return () => window.removeEventListener('resize', measure)
-  }, [])
+  }, [updateEdgeFades])
 
   useEffect(() => {
     const container = containerRef.current
@@ -81,7 +129,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
   useEffect(() => {
     if (hasUserZoomedRef.current) return
     setZoom((prev) => {
-      const pxPerYear = minPxPerYear(totalYears, viewportHeight)
+      const pxPerYear = clampPxPerYear(initialPxPerYear(viewportHeight), totalYears, viewportHeight)
       if (pxPerYear === prev.pxPerYear) return prev
       return { pxPerYear, scrollTop: (prev.scrollTop / prev.pxPerYear) * pxPerYear }
     })
@@ -95,13 +143,6 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     [totalYears, viewportHeight],
   )
 
-  const applyZoomAtContainerOffset = useCallback(
-    (factor: number, containerOffset: number) => {
-      applyZoom(factor, containerOffset - HEADER_HEIGHT)
-    },
-    [applyZoom],
-  )
-
   const selectedEntry = useMemo(
     () => entries.find((e) => e.id === selectedId) ?? null,
     [entries, selectedId],
@@ -112,6 +153,9 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     if (panelOpen) return
     const container = containerRef.current
     if (!container) return
+    // Why: レイアウト未計測（scrollHeight/clientHeight とも 0）の間は
+    // コンテンツ範囲が不明なので、クランプで初期スクロール位置を潰さない
+    if (container.scrollHeight === 0 && container.clientHeight === 0) return
     const maxScrollLeft = Math.max(0, container.scrollWidth - container.clientWidth)
     const maxScrollTop = Math.max(0, container.scrollHeight - container.clientHeight)
     if (container.scrollLeft > maxScrollLeft) container.scrollLeft = maxScrollLeft
@@ -152,6 +196,32 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     }
     return offsets
   }, [laneWidths])
+  const groupLabels = useMemo(() => {
+    const topYear = scale.yToYear(zoom.scrollTop)
+    const bottomYear = scale.yToYear(zoom.scrollTop + viewportHeight)
+    return regions.map((r) =>
+      columnGroupNames(
+        laneLayouts.get(r.id) ?? { columnCount: 1, positioned: [] },
+        topYear,
+        bottomYear,
+      ),
+    )
+  }, [regions, laneLayouts, scale, zoom.scrollTop, viewportHeight])
+  const showGroupRow = maxImportance >= 2 && groupLabels.some((lane) => lane.some(Boolean))
+  const headerHeightPx = HEADER_HEIGHT + (showGroupRow ? GROUP_HEADER_HEIGHT : 0)
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: zoom / laneWidths / viewportHeight は DOM のスクロール寸法が変わった後に再計測するためのトリガー
+  useEffect(() => {
+    const container = containerRef.current
+    if (container) updateEdgeFades(container)
+  }, [zoom, laneWidths, viewportHeight, updateEdgeFades])
+
+  const applyZoomAtContainerOffset = useCallback(
+    (factor: number, containerOffset: number) => {
+      applyZoom(factor, containerOffset - headerHeightPx)
+    },
+    [applyZoom, headerHeightPx],
+  )
 
   const [pendingJump, setPendingJump] = useState<{ id: string; mode: 'center' | 'reveal' } | null>(
     null,
@@ -268,6 +338,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
   }, [tierEntries, scale, zoom, viewportHeight, maxImportance, selectedEntry])
 
   const handlePointerDown = (e: ReactPointerEvent) => {
+    if (isHelpOpen) return
     pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
     if (pointers.current.size >= 2) {
       dragOrigin.current = null
@@ -285,6 +356,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     }
   }
   const handlePointerMove = (e: ReactPointerEvent) => {
+    if (isHelpOpen) return
     const drag = dragOrigin.current
     if (drag && drag.pointerId === e.pointerId && pointers.current.size < 2) {
       const dx = e.clientX - drag.clientX
@@ -357,7 +429,12 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
         }
       }}
     >
-      <TopBar entries={entries} onJumpToYear={jumpToYear} onSelectEntry={jumpToEntry} />
+      <TopBar
+        entries={entries}
+        onJumpToYear={jumpToYear}
+        onSelectEntry={jumpToEntry}
+        onOpenHelp={() => setIsHelpOpen(true)}
+      />
       <TimelineView
         containerRef={containerRef}
         dataset={dataset}
@@ -366,17 +443,53 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
         laneLayouts={laneLayouts}
         laneWidths={laneWidths}
         laneOffsets={laneOffsets}
+        groupLabels={groupLabels}
+        showGroupRow={showGroupRow}
         panelOpen={panelOpen}
         dragging={isDragging}
         inView={inView}
         selectedId={selectedId}
         onSelect={selectEntry}
         onScroll={(e) => {
-          const scrollTop = e.currentTarget.scrollTop
-          setZoom((prev) => (prev.scrollTop === scrollTop ? prev : { ...prev, scrollTop }))
+          const el = e.currentTarget
+          setZoom((prev) =>
+            prev.scrollTop === el.scrollTop ? prev : { ...prev, scrollTop: el.scrollTop },
+          )
+          updateEdgeFades(el)
         }}
         viewportTopY={zoom.scrollTop}
       />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-x-0 bottom-0 z-20"
+        style={{ top: TOP_BAR_HEIGHT + headerHeightPx }}
+      >
+        {edgeFades.top && (
+          <div
+            data-testid="fade-top"
+            className="absolute inset-x-0 top-0 h-6 bg-gradient-to-b from-surface to-transparent"
+          />
+        )}
+        {edgeFades.bottom && (
+          <div
+            data-testid="fade-bottom"
+            className="absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-surface to-transparent"
+          />
+        )}
+        {edgeFades.left && (
+          <div
+            data-testid="fade-left"
+            className="absolute inset-y-0 w-6 bg-gradient-to-r from-surface to-transparent"
+            style={{ left: AXIS_WIDTH }}
+          />
+        )}
+        {edgeFades.right && (
+          <div
+            data-testid="fade-right"
+            className="absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-surface to-transparent"
+          />
+        )}
+      </div>
       <ZoomControls
         onZoomIn={() => applyZoomAtContainerOffset(BUTTON_ZOOM_FACTOR, viewportHeight / 2)}
         onZoomOut={() => applyZoomAtContainerOffset(1 / BUTTON_ZOOM_FACTOR, viewportHeight / 2)}
@@ -394,6 +507,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
           onClose={() => setSelectedId(null)}
         />
       )}
+      {isHelpOpen && <WelcomeOverlay onClose={closeHelp} />}
     </div>
   )
 }

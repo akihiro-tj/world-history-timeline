@@ -16,6 +16,8 @@ type Props = {
   laneLayouts: Map<string, LaneLayout>
   laneWidths: number[]
   laneOffsets: number[]
+  groupLabels: (string | null)[][]
+  showGroupRow: boolean
   panelOpen: boolean
   dragging: boolean
   inView: Set<string>
@@ -34,6 +36,8 @@ export function TimelineView({
   laneLayouts,
   laneWidths,
   laneOffsets,
+  groupLabels,
+  showGroupRow,
   panelOpen,
   dragging,
   inView,
@@ -56,7 +60,12 @@ export function TimelineView({
       style={{ touchAction: 'pan-x pan-y' }}
       onScroll={onScroll}
     >
-      <LaneHeaders regions={regions} widths={laneWidths} />
+      <LaneHeaders
+        regions={regions}
+        widths={laneWidths}
+        groupLabels={groupLabels}
+        showGroupRow={showGroupRow}
+      />
       <div className="flex w-max" style={{ paddingRight: 64 }}>
         <TimeAxis scale={scale} minYear={yearRange.minYear} maxYear={yearRange.maxYear} />
         <svg width={svgWidth} height={scale.totalHeight} aria-label="年表">

@@ -4,7 +4,10 @@ export const COLUMN_WIDTH = 88
 export const COLUMN_GAP = 8
 export const LANE_PADDING = 12
 export const AXIS_WIDTH = 64
+// TopBar の h-12 / TimelineView の mt-12 h-[calc(100dvh-3rem)] と連動。変えるときは全部変える
+export const TOP_BAR_HEIGHT = 48
 export const HEADER_HEIGHT = 40
+export const GROUP_HEADER_HEIGHT = 20
 export const LABEL_MIN_HEIGHT = 16
 // DetailPanel の md:w-80 / max-h-[50dvh] と連動。変えるときは両方変える
 export const PANEL_WIDTH_PX = 320

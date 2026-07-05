@@ -78,3 +78,18 @@ export function packLane(entries: Entry[]): LaneLayout {
   }
   return { columnCount: Math.max(columnEnds.length, 1), positioned }
 }
+
+export function columnGroupNames(
+  layout: LaneLayout,
+  topYear: number,
+  bottomYear: number,
+): (string | null)[] {
+  const names: (string | null)[] = new Array(layout.columnCount).fill(null)
+  for (const { entry, column } of layout.positioned) {
+    if (entry.groupName === undefined || names[column] !== null) continue
+    if (entry.start <= bottomYear && (entry.end ?? entry.start) >= topYear) {
+      names[column] = entry.groupName
+    }
+  }
+  return names
+}

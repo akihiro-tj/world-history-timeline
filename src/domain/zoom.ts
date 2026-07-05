@@ -11,6 +11,9 @@ const FIT_ALL_SCREENS = 2.5
 const CENTURY_YEARS = 100
 const TIER3_GUARANTEE_PX_PER_YEAR = 5
 
+export const INITIAL_FOCUS_YEAR = 1500
+const INITIAL_VIEW_YEARS = 500
+
 export function wheelZoomFactor(deltaY: number): number {
   const factor = Math.exp(-deltaY * WHEEL_ZOOM_SENSITIVITY)
   return Math.min(Math.max(factor, WHEEL_FACTOR_MIN), WHEEL_FACTOR_MAX)
@@ -18,6 +21,10 @@ export function wheelZoomFactor(deltaY: number): number {
 
 export function minPxPerYear(totalYears: number, viewportHeight: number): number {
   return (viewportHeight * FIT_ALL_SCREENS) / totalYears
+}
+
+export function initialPxPerYear(viewportHeight: number): number {
+  return viewportHeight / INITIAL_VIEW_YEARS
 }
 
 export function maxPxPerYear(viewportHeight: number): number {

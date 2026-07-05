@@ -1,5 +1,12 @@
 import { describe, expect, test } from 'vitest'
-import { clampPxPerYear, maxPxPerYear, minPxPerYear, wheelZoomFactor, zoomAt } from './zoom'
+import {
+  clampPxPerYear,
+  initialPxPerYear,
+  maxPxPerYear,
+  minPxPerYear,
+  wheelZoomFactor,
+  zoomAt,
+} from './zoom'
 
 describe('clampPxPerYear', () => {
   test('下限は全時代が2.5画面に収まるスケール', () => {
@@ -20,6 +27,13 @@ describe('clampPxPerYear', () => {
     expect(maxPxPerYear(300)).toBe(5)
     expect(maxPxPerYear(400)).toBe(5)
     expect(maxPxPerYear(800)).toBe(8)
+  })
+})
+
+describe('initialPxPerYear', () => {
+  test('約500年が1画面に収まる倍率を返す', () => {
+    expect(initialPxPerYear(800)).toBe(1.6)
+    expect(initialPxPerYear(500)).toBe(1)
   })
 })
 
