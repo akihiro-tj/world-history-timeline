@@ -35,7 +35,7 @@ export function WelcomeOverlay({ onClose }: Props) {
         className="w-full max-w-sm rounded-md bg-panel p-6 shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-base font-semibold">世界史タイムラインへようこそ</h2>
+        <h2 className="text-base font-semibold">つかいかた</h2>
         <ul className="mt-4 space-y-3">
           {GUIDE_ITEMS.map((item) => (
             <li key={item.text} className="flex items-start gap-3 text-sm leading-relaxed">
