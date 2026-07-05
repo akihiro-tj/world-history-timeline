@@ -11,7 +11,7 @@ import { packLane } from '../domain/packing'
 import { createScale } from '../domain/scale'
 import { maxVisibleImportance, visibleEntries } from '../domain/visibility'
 import { dataYearRange, padYearRange } from '../domain/yearRange'
-import { minPxPerYear, type ZoomState, zoomAt } from '../domain/zoom'
+import { minPxPerYear, wheelZoomFactor, type ZoomState, zoomAt } from '../domain/zoom'
 import { DetailPanel } from './DetailPanel'
 import {
   AXIS_WIDTH,
@@ -31,7 +31,6 @@ import { ZoomControls } from './ZoomControls'
 
 const FALLBACK_VIEWPORT_HEIGHT = 800
 const BUTTON_ZOOM_FACTOR = 1.4
-const WHEEL_ZOOM_FACTOR = 1.2
 const REVEAL_MARGIN_PX = 16
 const DRAG_THRESHOLD_PX = 5
 
@@ -340,10 +339,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
       if (!e.ctrlKey && !e.metaKey) return
       e.preventDefault()
       const rect = container.getBoundingClientRect()
-      applyZoomAtContainerOffset(
-        e.deltaY < 0 ? WHEEL_ZOOM_FACTOR : 1 / WHEEL_ZOOM_FACTOR,
-        e.clientY - rect.top,
-      )
+      applyZoomAtContainerOffset(wheelZoomFactor(e.deltaY), e.clientY - rect.top)
     }
     container.addEventListener('wheel', handleWheel, { passive: false })
     return () => container.removeEventListener('wheel', handleWheel)

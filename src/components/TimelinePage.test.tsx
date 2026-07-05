@@ -101,7 +101,7 @@ test('ホイールズームのアンカーはヘッダー高さを補正する',
   const scroll = screen.getByTestId('timeline-scroll')
   fireEvent.scroll(scroll, { target: { scrollTop: 1000 } })
   fireEvent.wheel(scroll, { deltaY: -100, ctrlKey: true, clientY: 400 })
-  expect(scroll.scrollTop).toBeCloseTo(1360 * 1.2 - 360)
+  expect(scroll.scrollTop).toBeCloseTo(1360 * 1.25 - 360)
 })
 
 test('バーをクリックすると詳細パネルが開き、閉じるで消える', async () => {

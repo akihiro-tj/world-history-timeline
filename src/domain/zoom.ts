@@ -3,9 +3,18 @@ export type ZoomState = {
   scrollTop: number
 }
 
+const WHEEL_ZOOM_SENSITIVITY = 0.008
+const WHEEL_FACTOR_MIN = 0.8
+const WHEEL_FACTOR_MAX = 1.25
+
 const FIT_ALL_SCREENS = 2.5
 const CENTURY_YEARS = 100
 const TIER3_GUARANTEE_PX_PER_YEAR = 5
+
+export function wheelZoomFactor(deltaY: number): number {
+  const factor = Math.exp(-deltaY * WHEEL_ZOOM_SENSITIVITY)
+  return Math.min(Math.max(factor, WHEEL_FACTOR_MIN), WHEEL_FACTOR_MAX)
+}
 
 export function minPxPerYear(totalYears: number, viewportHeight: number): number {
   return (viewportHeight * FIT_ALL_SCREENS) / totalYears
