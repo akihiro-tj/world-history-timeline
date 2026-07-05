@@ -5,13 +5,15 @@ export type ZoomState = {
 
 const FIT_ALL_SCREENS = 2.5
 const CENTURY_YEARS = 100
+const TIER3_GUARANTEE_PX_PER_YEAR = 5
 
 export function minPxPerYear(totalYears: number, viewportHeight: number): number {
   return (viewportHeight * FIT_ALL_SCREENS) / totalYears
 }
 
 export function maxPxPerYear(viewportHeight: number): number {
-  return viewportHeight / CENTURY_YEARS
+  // 5 = visibility.ts の TIER3_MIN_PX_PER_YEAR(4) を確実に超える下限
+  return Math.max(viewportHeight / CENTURY_YEARS, TIER3_GUARANTEE_PX_PER_YEAR)
 }
 
 export function clampPxPerYear(

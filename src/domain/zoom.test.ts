@@ -15,6 +15,12 @@ describe('clampPxPerYear', () => {
   test('範囲内はそのまま', () => {
     expect(clampPxPerYear(2, 5100, 800)).toBe(2)
   })
+
+  test('小さい viewport でも importance 3 のしきい値(4px/年)に届く上限を保証する', () => {
+    expect(maxPxPerYear(300)).toBe(5)
+    expect(maxPxPerYear(400)).toBe(5)
+    expect(maxPxPerYear(800)).toBe(8)
+  })
 })
 
 describe('zoomAt', () => {
