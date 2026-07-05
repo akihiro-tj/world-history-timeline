@@ -25,8 +25,10 @@ import {
   PANEL_HEIGHT_RATIO,
   PANEL_WIDTH_PX,
 } from './layout'
+import { hasSeenOnboarding, markOnboardingSeen } from './onboardingStorage'
 import { TimelineView } from './TimelineView'
 import { TopBar } from './TopBar'
+import { WelcomeOverlay } from './WelcomeOverlay'
 import { ZoomControls } from './ZoomControls'
 
 const FALLBACK_VIEWPORT_HEIGHT = 800
@@ -58,6 +60,11 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
   const suppressClickRef = useRef(false)
   const isDraggingRef = useRef(false)
   const [isDragging, setIsDragging] = useState(false)
+  const [isHelpOpen, setIsHelpOpen] = useState(() => !hasSeenOnboarding())
+  const closeHelp = useCallback(() => {
+    markOnboardingSeen()
+    setIsHelpOpen(false)
+  }, [])
 
   useEffect(() => {
     isDraggingRef.current = isDragging
@@ -357,7 +364,12 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
         }
       }}
     >
-      <TopBar entries={entries} onJumpToYear={jumpToYear} onSelectEntry={jumpToEntry} />
+      <TopBar
+        entries={entries}
+        onJumpToYear={jumpToYear}
+        onSelectEntry={jumpToEntry}
+        onOpenHelp={() => setIsHelpOpen(true)}
+      />
       <TimelineView
         containerRef={containerRef}
         dataset={dataset}
@@ -394,6 +406,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
           onClose={() => setSelectedId(null)}
         />
       )}
+      {isHelpOpen && <WelcomeOverlay onClose={closeHelp} />}
     </div>
   )
 }

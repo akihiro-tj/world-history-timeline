@@ -1,8 +1,12 @@
 import { fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { afterEach, expect, test, vi } from 'vitest'
+import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 import { testDataset } from '../test/fixtures'
 import { TimelinePage } from './TimelinePage'
+
+beforeEach(() => {
+  localStorage.setItem('whtl:onboarding:v1', 'done')
+})
 
 afterEach(() => {
   vi.unstubAllGlobals()
@@ -252,4 +256,23 @@ test('ドラッグ直後のクリックはエントリ選択にならない', as
   expect(screen.queryByRole('complementary', { name: '詳細' })).not.toBeInTheDocument()
   await userEvent.click(bar)
   expect(screen.getByRole('complementary', { name: '詳細' })).toBeInTheDocument()
+})
+
+test('初回訪問時はウェルカムオーバーレイを表示し、閉じると次回は出ない', async () => {
+  localStorage.clear()
+  const { unmount } = render(<TimelinePage dataset={testDataset} />)
+  expect(screen.getByRole('dialog', { name: 'つかいかた' })).toBeInTheDocument()
+  await userEvent.click(screen.getByRole('button', { name: 'はじめる' }))
+  expect(screen.queryByRole('dialog', { name: 'つかいかた' })).not.toBeInTheDocument()
+  unmount()
+  render(<TimelinePage dataset={testDataset} />)
+  expect(screen.queryByRole('dialog', { name: 'つかいかた' })).not.toBeInTheDocument()
+})
+
+test('ヘルプボタンでオーバーレイを再表示できる', async () => {
+  localStorage.setItem('whtl:onboarding:v1', 'done')
+  render(<TimelinePage dataset={testDataset} />)
+  expect(screen.queryByRole('dialog', { name: 'つかいかた' })).not.toBeInTheDocument()
+  await userEvent.click(screen.getByRole('button', { name: 'つかいかた' }))
+  expect(screen.getByRole('dialog', { name: 'つかいかた' })).toBeInTheDocument()
 })
