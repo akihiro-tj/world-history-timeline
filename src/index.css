@@ -17,3 +17,7 @@ body {
   color: var(--color-ink);
   background: var(--color-surface);
 }
+
+button {
+  cursor: pointer;
+}
