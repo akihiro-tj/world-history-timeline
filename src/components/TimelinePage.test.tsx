@@ -220,3 +220,36 @@ test('選択中エントリにアクセント色のリングが付く', async ()
   await userEvent.click(screen.getByRole('button', { name: /エドワード1世/ }))
   expect(container.querySelector('rect[stroke="var(--color-accent)"]')).toBeInTheDocument()
 })
+
+test('マウスドラッグでスクロールする', () => {
+  render(<TimelinePage dataset={testDataset} />)
+  const scroll = screen.getByTestId('timeline-scroll')
+  fireEvent.pointerDown(scroll, {
+    pointerId: 1,
+    pointerType: 'mouse',
+    button: 0,
+    clientX: 200,
+    clientY: 300,
+  })
+  fireEvent.pointerMove(scroll, { pointerId: 1, pointerType: 'mouse', clientX: 200, clientY: 250 })
+  expect(scroll.scrollTop).toBe(50)
+})
+
+test('ドラッグ直後のクリックはエントリ選択にならない', async () => {
+  render(<TimelinePage dataset={testDataset} />)
+  const scroll = screen.getByTestId('timeline-scroll')
+  const bar = screen.getByRole('button', { name: /エドワード1世/ })
+  fireEvent.pointerDown(scroll, {
+    pointerId: 1,
+    pointerType: 'mouse',
+    button: 0,
+    clientX: 200,
+    clientY: 300,
+  })
+  fireEvent.pointerMove(scroll, { pointerId: 1, pointerType: 'mouse', clientX: 200, clientY: 250 })
+  fireEvent.pointerUp(window, { pointerId: 1 })
+  fireEvent.click(bar)
+  expect(screen.queryByRole('complementary', { name: '詳細' })).not.toBeInTheDocument()
+  await userEvent.click(bar)
+  expect(screen.getByRole('complementary', { name: '詳細' })).toBeInTheDocument()
+})
