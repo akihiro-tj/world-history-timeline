@@ -317,6 +317,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
   }, [tierEntries, scale, zoom, viewportHeight, maxImportance, selectedEntry])
 
   const handlePointerDown = (e: ReactPointerEvent) => {
+    if (isHelpOpen) return
     pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
     if (pointers.current.size >= 2) {
       dragOrigin.current = null
@@ -334,6 +335,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     }
   }
   const handlePointerMove = (e: ReactPointerEvent) => {
+    if (isHelpOpen) return
     const drag = dragOrigin.current
     if (drag && drag.pointerId === e.pointerId && pointers.current.size < 2) {
       const dx = e.clientX - drag.clientX

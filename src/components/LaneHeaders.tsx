@@ -3,9 +3,9 @@ import {
   AXIS_WIDTH,
   COLUMN_GAP,
   COLUMN_WIDTH,
+  columnX,
   GROUP_HEADER_HEIGHT,
   HEADER_HEIGHT,
-  LANE_PADDING,
 } from './layout'
 
 type LabelRun = {
@@ -67,9 +67,9 @@ export function LaneHeaders({ regions, widths, groupLabels, showGroupRow }: Prop
               {mergeLabelRuns(groupLabels[i]).map((run) => (
                 <div
                   key={run.startColumn}
-                  className="absolute top-0 truncate text-center text-[10px] leading-5 text-muted"
+                  className="absolute top-0 truncate text-center text-[11px] leading-5 text-muted"
                   style={{
-                    left: LANE_PADDING + run.startColumn * (COLUMN_WIDTH + COLUMN_GAP),
+                    left: columnX(0, run.startColumn),
                     width: run.span * COLUMN_WIDTH + (run.span - 1) * COLUMN_GAP,
                   }}
                 >
