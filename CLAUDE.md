@@ -27,6 +27,7 @@ Vite + React + TypeScript の静的 SPA で、Cloudflare Workers の静的アセ
 
 ## 規約
 
+- UI・ビジュアルの変更は DESIGN.md（デザイントークン・タイポグラフィ・Do/Don't）に従う
 - 年は整数のみ。紀元前は負数（前300年 → `-300`）。表示変換は
   `src/domain/format.ts` に集約する
 - エントリ: `ruler` / `person` は `end` 必須。`event` のみ省略可（点イベント）。
