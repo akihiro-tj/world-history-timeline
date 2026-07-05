@@ -22,6 +22,7 @@ export function EventMarker({ entry, laneX, column, scale, selected, onSelect, s
   const y = scale.yearToY(entry.start)
   const x = columnX(laneX, column)
   const labelMaxWidth = svgWidth - (x + LABEL_OFFSET_X) - LABEL_MARGIN_RIGHT
+  const diamondPath = `M ${x + 6} ${y - 6} L ${x + 12} ${y} L ${x + 6} ${y + 6} L ${x} ${y} Z`
   return (
     <g
       role="button"
@@ -38,12 +39,13 @@ export function EventMarker({ entry, laneX, column, scale, selected, onSelect, s
       }}
     >
       <title>{entry.title}</title>
-      <path
-        d={`M ${x + 6} ${y - 6} L ${x + 12} ${y} L ${x + 6} ${y + 6} L ${x} ${y} Z`}
-        fill="var(--color-event)"
-        stroke={selected ? 'var(--color-ink)' : 'none'}
-        strokeWidth={selected ? 2 : 0}
-      />
+      <path d={diamondPath} fill="var(--color-event)" />
+      {selected && (
+        <>
+          <path d={diamondPath} fill="none" stroke="var(--color-panel)" strokeWidth={6} />
+          <path d={diamondPath} fill="none" stroke="var(--color-accent)" strokeWidth={2.5} />
+        </>
+      )}
       <text x={x + LABEL_OFFSET_X} y={y + 4} className="fill-ink text-[11px]">
         {truncateLabel(entry.title, labelMaxWidth, LABEL_FONT_SIZE_PX)}
       </text>

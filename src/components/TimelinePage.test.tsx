@@ -213,3 +213,10 @@ test('ズーム操作後はリサイズしても倍率を再導出しない', as
   fireEvent(window, new Event('resize'))
   expect(barHeight(/エドワード1世/)).toBeCloseTo(zoomed)
 })
+
+test('選択中エントリにアクセント色のリングが付く', async () => {
+  const { container } = render(<TimelinePage dataset={testDataset} />)
+  expect(container.querySelector('[stroke="var(--color-accent)"]')).not.toBeInTheDocument()
+  await userEvent.click(screen.getByRole('button', { name: /エドワード1世/ }))
+  expect(container.querySelector('rect[stroke="var(--color-accent)"]')).toBeInTheDocument()
+})

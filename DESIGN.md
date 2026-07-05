@@ -46,6 +46,7 @@ shapes:
 - {colors.ruler} / {colors.person} / {colors.event}: エントリ種別の色。
   統治者は青系、人物は紫系、事件は橙系で、色覚多様性に配慮して明度差もつける
 - 地域色はデータ（regions.json）が持ち、レーン背景の淡色（不透明度 6%）にのみ使う
+- {colors.accent}: 選択中エントリの枠色。白のハローを外側に重ね、どのバー色の上でも視認できるようにする
 
 ## Do's and Don'ts
 
