@@ -101,7 +101,7 @@ test('ホイールズームのアンカーはヘッダー高さを補正する',
   const scroll = screen.getByTestId('timeline-scroll')
   fireEvent.scroll(scroll, { target: { scrollTop: 1000 } })
   fireEvent.wheel(scroll, { deltaY: -100, ctrlKey: true, clientY: 400 })
-  expect(scroll.scrollTop).toBeCloseTo(1360 * 1.2 - 360)
+  expect(scroll.scrollTop).toBeCloseTo(1360 * 1.25 - 360)
 })
 
 test('バーをクリックすると詳細パネルが開き、閉じるで消える', async () => {
@@ -212,4 +212,44 @@ test('ズーム操作後はリサイズしても倍率を再導出しない', as
   Object.defineProperty(scroll, 'clientHeight', { value: 400, configurable: true })
   fireEvent(window, new Event('resize'))
   expect(barHeight(/エドワード1世/)).toBeCloseTo(zoomed)
+})
+
+test('選択中エントリにアクセント色のリングが付く', async () => {
+  const { container } = render(<TimelinePage dataset={testDataset} />)
+  expect(container.querySelector('[stroke="var(--color-accent)"]')).not.toBeInTheDocument()
+  await userEvent.click(screen.getByRole('button', { name: /エドワード1世/ }))
+  expect(container.querySelector('rect[stroke="var(--color-accent)"]')).toBeInTheDocument()
+})
+
+test('マウスドラッグでスクロールする', () => {
+  render(<TimelinePage dataset={testDataset} />)
+  const scroll = screen.getByTestId('timeline-scroll')
+  fireEvent.pointerDown(scroll, {
+    pointerId: 1,
+    pointerType: 'mouse',
+    button: 0,
+    clientX: 200,
+    clientY: 300,
+  })
+  fireEvent.pointerMove(scroll, { pointerId: 1, pointerType: 'mouse', clientX: 200, clientY: 250 })
+  expect(scroll.scrollTop).toBe(50)
+})
+
+test('ドラッグ直後のクリックはエントリ選択にならない', async () => {
+  render(<TimelinePage dataset={testDataset} />)
+  const scroll = screen.getByTestId('timeline-scroll')
+  const bar = screen.getByRole('button', { name: /エドワード1世/ })
+  fireEvent.pointerDown(scroll, {
+    pointerId: 1,
+    pointerType: 'mouse',
+    button: 0,
+    clientX: 200,
+    clientY: 300,
+  })
+  fireEvent.pointerMove(scroll, { pointerId: 1, pointerType: 'mouse', clientX: 200, clientY: 250 })
+  fireEvent.pointerUp(window, { pointerId: 1 })
+  fireEvent.click(bar)
+  expect(screen.queryByRole('complementary', { name: '詳細' })).not.toBeInTheDocument()
+  await userEvent.click(bar)
+  expect(screen.getByRole('complementary', { name: '詳細' })).toBeInTheDocument()
 })

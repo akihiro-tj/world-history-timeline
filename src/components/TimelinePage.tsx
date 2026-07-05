@@ -11,7 +11,7 @@ import { packLane } from '../domain/packing'
 import { createScale } from '../domain/scale'
 import { maxVisibleImportance, visibleEntries } from '../domain/visibility'
 import { dataYearRange, padYearRange } from '../domain/yearRange'
-import { minPxPerYear, type ZoomState, zoomAt } from '../domain/zoom'
+import { minPxPerYear, wheelZoomFactor, type ZoomState, zoomAt } from '../domain/zoom'
 import { DetailPanel } from './DetailPanel'
 import {
   AXIS_WIDTH,
@@ -31,8 +31,8 @@ import { ZoomControls } from './ZoomControls'
 
 const FALLBACK_VIEWPORT_HEIGHT = 800
 const BUTTON_ZOOM_FACTOR = 1.4
-const WHEEL_ZOOM_FACTOR = 1.2
 const REVEAL_MARGIN_PX = 16
+const DRAG_THRESHOLD_PX = 5
 
 export function TimelinePage({ dataset }: { dataset: Dataset }) {
   const { regions, entries } = dataset
@@ -48,6 +48,20 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const pointers = useRef(new Map<number, { x: number; y: number }>())
   const hasUserZoomedRef = useRef(false)
+  const dragOrigin = useRef<{
+    pointerId: number
+    clientX: number
+    clientY: number
+    scrollLeft: number
+    scrollTop: number
+  } | null>(null)
+  const suppressClickRef = useRef(false)
+  const isDraggingRef = useRef(false)
+  const [isDragging, setIsDragging] = useState(false)
+
+  useEffect(() => {
+    isDraggingRef.current = isDragging
+  }, [isDragging])
 
   useEffect(() => {
     const measure = () =>
@@ -255,8 +269,35 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
 
   const handlePointerDown = (e: ReactPointerEvent) => {
     pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
+    if (pointers.current.size >= 2) {
+      dragOrigin.current = null
+      setIsDragging(false)
+      return
+    }
+    const container = containerRef.current
+    if (e.pointerType !== 'mouse' || e.button !== 0 || !container) return
+    dragOrigin.current = {
+      pointerId: e.pointerId,
+      clientX: e.clientX,
+      clientY: e.clientY,
+      scrollLeft: container.scrollLeft,
+      scrollTop: container.scrollTop,
+    }
   }
   const handlePointerMove = (e: ReactPointerEvent) => {
+    const drag = dragOrigin.current
+    if (drag && drag.pointerId === e.pointerId && pointers.current.size < 2) {
+      const dx = e.clientX - drag.clientX
+      const dy = e.clientY - drag.clientY
+      if (!isDragging && Math.hypot(dx, dy) > DRAG_THRESHOLD_PX) setIsDragging(true)
+      if (isDragging || Math.hypot(dx, dy) > DRAG_THRESHOLD_PX) {
+        const container = containerRef.current
+        if (container) {
+          container.scrollLeft = drag.scrollLeft - dx
+          container.scrollTop = drag.scrollTop - dy
+        }
+      }
+    }
     const prev = pointers.current.get(e.pointerId)
     if (!prev || pointers.current.size !== 2) {
       if (prev) pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
@@ -277,6 +318,11 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
   useEffect(() => {
     const removePointer = (e: PointerEvent) => {
       pointers.current.delete(e.pointerId)
+      if (dragOrigin.current?.pointerId === e.pointerId) {
+        dragOrigin.current = null
+        setIsDragging(false)
+        if (isDraggingRef.current) suppressClickRef.current = true
+      }
     }
     window.addEventListener('pointerup', removePointer)
     window.addEventListener('pointercancel', removePointer)
@@ -293,17 +339,24 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
       if (!e.ctrlKey && !e.metaKey) return
       e.preventDefault()
       const rect = container.getBoundingClientRect()
-      applyZoomAtContainerOffset(
-        e.deltaY < 0 ? WHEEL_ZOOM_FACTOR : 1 / WHEEL_ZOOM_FACTOR,
-        e.clientY - rect.top,
-      )
+      applyZoomAtContainerOffset(wheelZoomFactor(e.deltaY), e.clientY - rect.top)
     }
     container.addEventListener('wheel', handleWheel, { passive: false })
     return () => container.removeEventListener('wheel', handleWheel)
   }, [applyZoomAtContainerOffset])
 
   return (
-    <div onPointerDown={handlePointerDown} onPointerMove={handlePointerMove}>
+    <div
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onClickCapture={(e) => {
+        if (suppressClickRef.current) {
+          suppressClickRef.current = false
+          e.preventDefault()
+          e.stopPropagation()
+        }
+      }}
+    >
       <TopBar entries={entries} onJumpToYear={jumpToYear} onSelectEntry={jumpToEntry} />
       <TimelineView
         containerRef={containerRef}
@@ -314,6 +367,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
         laneWidths={laneWidths}
         laneOffsets={laneOffsets}
         panelOpen={panelOpen}
+        dragging={isDragging}
         inView={inView}
         selectedId={selectedId}
         onSelect={selectEntry}

@@ -17,6 +17,7 @@ type Props = {
   laneWidths: number[]
   laneOffsets: number[]
   panelOpen: boolean
+  dragging: boolean
   inView: Set<string>
   selectedId: string | null
   onSelect: (id: string) => void
@@ -34,6 +35,7 @@ export function TimelineView({
   laneWidths,
   laneOffsets,
   panelOpen,
+  dragging,
   inView,
   selectedId,
   onSelect,
@@ -48,7 +50,9 @@ export function TimelineView({
     <div
       ref={containerRef}
       data-testid="timeline-scroll"
-      className={`mt-12 h-[calc(100dvh-3rem)] overflow-auto ${panelOpen ? 'pb-[50dvh] md:pr-80 md:pb-0' : ''}`}
+      className={`mt-12 h-[calc(100dvh-3rem)] overflow-auto ${
+        dragging ? 'cursor-grabbing select-none' : 'cursor-grab'
+      } ${panelOpen ? 'pb-[50dvh] md:pr-80 md:pb-0' : ''}`}
       style={{ touchAction: 'pan-x pan-y' }}
       onScroll={onScroll}
     >

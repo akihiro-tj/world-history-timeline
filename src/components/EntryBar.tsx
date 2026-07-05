@@ -44,8 +44,6 @@ export function EntryBar({ entry, laneX, column, scale, selected, onSelect, view
         rx={4}
         fill={TYPE_FILL[entry.type]}
         opacity={selected ? 1 : 0.85}
-        stroke={selected ? 'var(--color-ink)' : 'none'}
-        strokeWidth={selected ? 2 : 0}
         className="cursor-pointer"
         onClick={() => onSelect(entry.id)}
         onKeyDown={(e) => {
@@ -57,6 +55,32 @@ export function EntryBar({ entry, laneX, column, scale, selected, onSelect, view
       >
         <title>{entry.title}</title>
       </rect>
+      {selected && (
+        <>
+          <rect
+            x={x}
+            y={top}
+            width={COLUMN_WIDTH}
+            height={height}
+            rx={4}
+            fill="none"
+            stroke="var(--color-panel)"
+            strokeWidth={6}
+            className="pointer-events-none"
+          />
+          <rect
+            x={x}
+            y={top}
+            width={COLUMN_WIDTH}
+            height={height}
+            rx={4}
+            fill="none"
+            stroke="var(--color-accent)"
+            strokeWidth={2.5}
+            className="pointer-events-none"
+          />
+        </>
+      )}
       {showLabel && (
         <text
           x={x + LABEL_PADDING_X}
