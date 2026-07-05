@@ -13,6 +13,7 @@ import { maxVisibleImportance, visibleEntries } from '../domain/visibility'
 import { dataYearRange, padYearRange } from '../domain/yearRange'
 import { minPxPerYear, wheelZoomFactor, type ZoomState, zoomAt } from '../domain/zoom'
 import { DetailPanel } from './DetailPanel'
+import { computeEdgeFades, type EdgeFades } from './edgeFades'
 import {
   AXIS_WIDTH,
   COLUMN_GAP,
@@ -48,6 +49,12 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     pxPerYear: minPxPerYear(totalYears, FALLBACK_VIEWPORT_HEIGHT),
     scrollTop: 0,
   })
+  const [edgeFades, setEdgeFades] = useState<EdgeFades>({
+    top: false,
+    bottom: false,
+    left: false,
+    right: false,
+  })
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const pointers = useRef(new Map<number, { x: number; y: number }>())
   const hasUserZoomedRef = useRef(false)
@@ -72,8 +79,11 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
   }, [isDragging])
 
   useEffect(() => {
-    const measure = () =>
-      setViewportHeight(containerRef.current?.clientHeight || FALLBACK_VIEWPORT_HEIGHT)
+    const measure = () => {
+      const container = containerRef.current
+      setViewportHeight(container?.clientHeight || FALLBACK_VIEWPORT_HEIGHT)
+      if (container) setEdgeFades(computeEdgeFades(container))
+    }
     measure()
     window.addEventListener('resize', measure)
     return () => window.removeEventListener('resize', measure)
@@ -396,11 +406,40 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
         selectedId={selectedId}
         onSelect={selectEntry}
         onScroll={(e) => {
-          const scrollTop = e.currentTarget.scrollTop
-          setZoom((prev) => (prev.scrollTop === scrollTop ? prev : { ...prev, scrollTop }))
+          const el = e.currentTarget
+          setZoom((prev) =>
+            prev.scrollTop === el.scrollTop ? prev : { ...prev, scrollTop: el.scrollTop },
+          )
+          setEdgeFades(computeEdgeFades(el))
         }}
         viewportTopY={zoom.scrollTop}
       />
+      <div aria-hidden="true" className="pointer-events-none fixed inset-x-0 top-12 bottom-0 z-20">
+        {edgeFades.top && (
+          <div
+            data-testid="fade-top"
+            className="absolute inset-x-0 top-0 h-6 bg-gradient-to-b from-surface to-transparent"
+          />
+        )}
+        {edgeFades.bottom && (
+          <div
+            data-testid="fade-bottom"
+            className="absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-surface to-transparent"
+          />
+        )}
+        {edgeFades.left && (
+          <div
+            data-testid="fade-left"
+            className="absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-surface to-transparent"
+          />
+        )}
+        {edgeFades.right && (
+          <div
+            data-testid="fade-right"
+            className="absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-surface to-transparent"
+          />
+        )}
+      </div>
       <ZoomControls
         onZoomIn={() => applyZoomAtContainerOffset(BUTTON_ZOOM_FACTOR, viewportHeight / 2)}
         onZoomOut={() => applyZoomAtContainerOffset(1 / BUTTON_ZOOM_FACTOR, viewportHeight / 2)}
