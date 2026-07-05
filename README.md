@@ -3,6 +3,10 @@
 世界史の「誰が・いつ・どこで」を一目で掴むための年表アプリ。
 地域ごとのレーンが1本の縦時間軸を共有し、統治者・人物・事件の同時代性を横に見比べられる。
 
+https://world-history-timeline.akihiro-tj.workers.dev
+
+![サービス画面](docs/screenshot.png)
+
 ## 開発
 
 ```bash
