@@ -65,6 +65,25 @@ export const testDataset: Dataset = {
       end: 1284,
       importance: 2,
     }),
+    // 軸範囲はデータから導出されるため、既存テストの座標前提 (-700〜2100) を固定する番兵
+    makeEntry({
+      id: 'era-start-marker',
+      title: '年表始端',
+      region: 'japan',
+      type: 'event',
+      start: -700,
+      end: undefined,
+      importance: 1,
+    }),
+    makeEntry({
+      id: 'era-end-marker',
+      title: '年表終端',
+      region: 'japan',
+      type: 'event',
+      start: 2100,
+      end: undefined,
+      importance: 1,
+    }),
   ],
 }
 

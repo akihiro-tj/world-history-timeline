@@ -10,6 +10,7 @@ import type { Dataset } from '../data/schema'
 import { packLane } from '../domain/packing'
 import { createScale } from '../domain/scale'
 import { maxVisibleImportance, visibleEntries } from '../domain/visibility'
+import { dataYearRange } from '../domain/yearRange'
 import { minPxPerYear, type ZoomState, zoomAt } from '../domain/zoom'
 import { DetailPanel } from './DetailPanel'
 import { SearchBar } from './SearchBar'
@@ -21,8 +22,9 @@ const BUTTON_ZOOM_FACTOR = 1.4
 const WHEEL_ZOOM_FACTOR = 1.2
 
 export function TimelinePage({ dataset }: { dataset: Dataset }) {
-  const { config, regions, entries } = dataset
-  const totalYears = config.maxYear - config.minYear
+  const { regions, entries } = dataset
+  const yearRange = useMemo(() => dataYearRange(entries), [entries])
+  const totalYears = yearRange.maxYear - yearRange.minYear
   const containerRef = useRef<HTMLDivElement>(null)
   const [viewportHeight, setViewportHeight] = useState(FALLBACK_VIEWPORT_HEIGHT)
   const [zoom, setZoom] = useState<ZoomState>({
@@ -68,26 +70,26 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
         ...prev,
         scrollTop: Math.max(
           0,
-          (entry.start - config.minYear) * prev.pxPerYear - viewportHeight / 2,
+          (entry.start - yearRange.minYear) * prev.pxPerYear - viewportHeight / 2,
         ),
       }))
     },
-    [entries, config.minYear, viewportHeight],
+    [entries, yearRange.minYear, viewportHeight],
   )
 
   const jumpToYear = useCallback(
     (year: number) => {
       setZoom((prev) => ({
         ...prev,
-        scrollTop: Math.max(0, (year - config.minYear) * prev.pxPerYear - viewportHeight / 2),
+        scrollTop: Math.max(0, (year - yearRange.minYear) * prev.pxPerYear - viewportHeight / 2),
       }))
     },
-    [config.minYear, viewportHeight],
+    [yearRange.minYear, viewportHeight],
   )
 
   const scale = useMemo(
-    () => createScale(config.minYear, config.maxYear, zoom.pxPerYear),
-    [config, zoom.pxPerYear],
+    () => createScale(yearRange.minYear, yearRange.maxYear, zoom.pxPerYear),
+    [yearRange, zoom.pxPerYear],
   )
   const maxImportance = maxVisibleImportance(zoom.pxPerYear)
   const tierEntries = useMemo(() => {
@@ -166,6 +168,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
         containerRef={containerRef}
         dataset={dataset}
         scale={scale}
+        yearRange={yearRange}
         laneLayouts={laneLayouts}
         inView={inView}
         selectedId={selectedId}

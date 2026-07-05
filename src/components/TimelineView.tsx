@@ -2,6 +2,7 @@ import type { ReactNode, RefObject, UIEvent } from 'react'
 import type { Dataset } from '../data/schema'
 import type { LaneLayout } from '../domain/packing'
 import type { Scale } from '../domain/scale'
+import type { YearRange } from '../domain/yearRange'
 import { EntryBar } from './EntryBar'
 import { EventMarker } from './EventMarker'
 import { LaneHeaders } from './LaneHeaders'
@@ -12,6 +13,7 @@ type Props = {
   containerRef: RefObject<HTMLDivElement | null>
   dataset: Dataset
   scale: Scale
+  yearRange: YearRange
   laneLayouts: Map<string, LaneLayout>
   inView: Set<string>
   selectedId: string | null
@@ -25,6 +27,7 @@ export function TimelineView({
   containerRef,
   dataset,
   scale,
+  yearRange,
   laneLayouts,
   inView,
   selectedId,
@@ -33,7 +36,7 @@ export function TimelineView({
   viewportTopY,
   children,
 }: Props) {
-  const { config, regions } = dataset
+  const { regions } = dataset
   const widths = regions.map((r) => laneWidth(laneLayouts.get(r.id)))
   const offsets: number[] = []
   let acc = 0
@@ -52,7 +55,7 @@ export function TimelineView({
     >
       <LaneHeaders regions={regions} widths={widths} />
       <div className="flex w-max">
-        <TimeAxis scale={scale} minYear={config.minYear} maxYear={config.maxYear} />
+        <TimeAxis scale={scale} minYear={yearRange.minYear} maxYear={yearRange.maxYear} />
         <svg width={acc} height={scale.totalHeight} aria-label="年表">
           {regions.map((region, i) => {
             const layout = laneLayouts.get(region.id)
