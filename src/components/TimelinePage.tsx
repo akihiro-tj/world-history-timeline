@@ -11,7 +11,15 @@ import { columnGroupNames, packLane } from '../domain/packing'
 import { createScale } from '../domain/scale'
 import { maxVisibleImportance, visibleEntries } from '../domain/visibility'
 import { dataYearRange, padYearRange } from '../domain/yearRange'
-import { minPxPerYear, wheelZoomFactor, type ZoomState, zoomAt } from '../domain/zoom'
+import {
+  clampPxPerYear,
+  INITIAL_FOCUS_YEAR,
+  initialPxPerYear,
+  minPxPerYear,
+  wheelZoomFactor,
+  type ZoomState,
+  zoomAt,
+} from '../domain/zoom'
 import { DetailPanel } from './DetailPanel'
 import { computeEdgeFades, type EdgeFades } from './edgeFades'
 import {
@@ -46,9 +54,19 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
   const totalYears = scaleRange.maxYear - scaleRange.minYear
   const containerRef = useRef<HTMLDivElement>(null)
   const [viewportHeight, setViewportHeight] = useState(FALLBACK_VIEWPORT_HEIGHT)
-  const [zoom, setZoom] = useState<ZoomState>({
-    pxPerYear: minPxPerYear(totalYears, FALLBACK_VIEWPORT_HEIGHT),
-    scrollTop: 0,
+  const [zoom, setZoom] = useState<ZoomState>(() => {
+    const pxPerYear = clampPxPerYear(
+      initialPxPerYear(FALLBACK_VIEWPORT_HEIGHT),
+      totalYears,
+      FALLBACK_VIEWPORT_HEIGHT,
+    )
+    return {
+      pxPerYear,
+      scrollTop: Math.max(
+        0,
+        (INITIAL_FOCUS_YEAR - scaleRange.minYear) * pxPerYear - FALLBACK_VIEWPORT_HEIGHT / 2,
+      ),
+    }
   })
   const [edgeFades, setEdgeFades] = useState<EdgeFades>({
     top: false,
@@ -111,7 +129,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
   useEffect(() => {
     if (hasUserZoomedRef.current) return
     setZoom((prev) => {
-      const pxPerYear = minPxPerYear(totalYears, viewportHeight)
+      const pxPerYear = clampPxPerYear(initialPxPerYear(viewportHeight), totalYears, viewportHeight)
       if (pxPerYear === prev.pxPerYear) return prev
       return { pxPerYear, scrollTop: (prev.scrollTop / prev.pxPerYear) * pxPerYear }
     })
@@ -135,6 +153,9 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     if (panelOpen) return
     const container = containerRef.current
     if (!container) return
+    // Why: レイアウト未計測（scrollHeight/clientHeight とも 0）の間は
+    // コンテンツ範囲が不明なので、クランプで初期スクロール位置を潰さない
+    if (container.scrollHeight === 0 && container.clientHeight === 0) return
     const maxScrollLeft = Math.max(0, container.scrollWidth - container.clientWidth)
     const maxScrollTop = Math.max(0, container.scrollHeight - container.clientHeight)
     if (container.scrollLeft > maxScrollLeft) container.scrollLeft = maxScrollLeft
