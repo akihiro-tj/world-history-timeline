@@ -276,3 +276,13 @@ test('ヘルプボタンでオーバーレイを再表示できる', async () =>
   await userEvent.click(screen.getByRole('button', { name: 'つかいかた' }))
   expect(screen.getByRole('dialog', { name: 'つかいかた' })).toBeInTheDocument()
 })
+
+test('ズームすると国名の2段目ヘッダーが表示される', async () => {
+  render(<TimelinePage dataset={testDataset} />)
+  expect(screen.queryByText('イングランド')).not.toBeInTheDocument()
+  const zoomIn = screen.getByRole('button', { name: '拡大' })
+  await userEvent.click(zoomIn)
+  await userEvent.click(zoomIn)
+  expect(screen.getByText('イングランド')).toBeInTheDocument()
+  expect(screen.getByText('フランス')).toBeInTheDocument()
+})

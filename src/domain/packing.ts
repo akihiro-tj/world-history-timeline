@@ -78,3 +78,13 @@ export function packLane(entries: Entry[]): LaneLayout {
   }
   return { columnCount: Math.max(columnEnds.length, 1), positioned }
 }
+
+export function columnGroupNames(layout: LaneLayout): (string | null)[] {
+  const names: (string | null)[] = new Array(layout.columnCount).fill(null)
+  for (const { entry, column } of layout.positioned) {
+    if (entry.groupName !== undefined && names[column] === null) {
+      names[column] = entry.groupName
+    }
+  }
+  return names
+}

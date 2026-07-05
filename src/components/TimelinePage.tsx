@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react'
 import type { Dataset } from '../data/schema'
-import { packLane } from '../domain/packing'
+import { columnGroupNames, packLane } from '../domain/packing'
 import { createScale } from '../domain/scale'
 import { maxVisibleImportance, visibleEntries } from '../domain/visibility'
 import { dataYearRange, padYearRange } from '../domain/yearRange'
@@ -19,6 +19,7 @@ import {
   COLUMN_WIDTH,
   DESKTOP_MEDIA_QUERY,
   FALLBACK_VIEWPORT_WIDTH,
+  GROUP_HEADER_HEIGHT,
   HEADER_HEIGHT,
   LANE_PADDING,
   laneWidth,
@@ -102,13 +103,6 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     [totalYears, viewportHeight],
   )
 
-  const applyZoomAtContainerOffset = useCallback(
-    (factor: number, containerOffset: number) => {
-      applyZoom(factor, containerOffset - HEADER_HEIGHT)
-    },
-    [applyZoom],
-  )
-
   const selectedEntry = useMemo(
     () => entries.find((e) => e.id === selectedId) ?? null,
     [entries, selectedId],
@@ -159,6 +153,22 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     }
     return offsets
   }, [laneWidths])
+  const groupLabels = useMemo(
+    () =>
+      regions.map((r) =>
+        columnGroupNames(laneLayouts.get(r.id) ?? { columnCount: 1, positioned: [] }),
+      ),
+    [regions, laneLayouts],
+  )
+  const showGroupRow = maxImportance >= 2 && groupLabels.some((lane) => lane.some(Boolean))
+  const headerHeightPx = HEADER_HEIGHT + (showGroupRow ? GROUP_HEADER_HEIGHT : 0)
+
+  const applyZoomAtContainerOffset = useCallback(
+    (factor: number, containerOffset: number) => {
+      applyZoom(factor, containerOffset - headerHeightPx)
+    },
+    [applyZoom, headerHeightPx],
+  )
 
   const [pendingJump, setPendingJump] = useState<{ id: string; mode: 'center' | 'reveal' } | null>(
     null,
@@ -378,6 +388,8 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
         laneLayouts={laneLayouts}
         laneWidths={laneWidths}
         laneOffsets={laneOffsets}
+        groupLabels={groupLabels}
+        showGroupRow={showGroupRow}
         panelOpen={panelOpen}
         dragging={isDragging}
         inView={inView}

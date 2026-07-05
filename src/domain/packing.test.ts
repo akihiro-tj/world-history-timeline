@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 import { makeEntry } from '../test/factory'
-import { packLane } from './packing'
+import { columnGroupNames, packLane } from './packing'
 
 function columnOf(layout: ReturnType<typeof packLane>, id: string): number {
   const found = layout.positioned.find((p) => p.entry.id === id)
@@ -76,5 +76,20 @@ describe('packLane', () => {
     for (const p of forward.positioned) {
       expect(columnOf(reversed, p.entry.id)).toBe(p.column)
     }
+  })
+})
+
+describe('columnGroupNames', () => {
+  test('カラムごとに groupName を返し、group の無いカラムは null', () => {
+    const layout = packLane([
+      makeEntry({ id: 'e1', group: 'england', groupName: 'イングランド', start: 1200, end: 1300 }),
+      makeEntry({ id: 'f1', group: 'france', groupName: 'フランス', start: 1250, end: 1350 }),
+      makeEntry({ id: 'solo', type: 'event', start: 1250, end: undefined }),
+    ])
+    const names = columnGroupNames(layout)
+    expect(names).toHaveLength(layout.columnCount)
+    expect(names).toContain('イングランド')
+    expect(names).toContain('フランス')
+    expect(names).toContain(null)
   })
 })
