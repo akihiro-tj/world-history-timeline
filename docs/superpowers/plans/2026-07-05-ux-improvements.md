@@ -36,46 +36,13 @@
 
 ブランチ作成: `git checkout main && git pull && git checkout -b ci/pr-preview-and-config`
 
-### Task 1: biome 設定修正
+### Task 1: biome 設定の検証（変更不要と確定）
 
-**Files:**
-- Modify: `biome.json:16-21`
+**Files:** なし（変更しない）
 
-**Interfaces:**
-- Consumes: なし
-- Produces: なし（lint 挙動の修正のみ）
+`biome.json` の `linter.rules.preset: "recommended"` は Biome 2.5.x の現行キーであり、そのまま維持する。`linter.rules.recommended: true` へ置き換えると lint が DEPRECATED 警告（recommended は非推奨、preset を使え）を出すことを実機で確認済み。公式設定リファレンスも preset を現行キーとしている。
 
-- [ ] **Step 1: 無効キー preset を recommended に修正**
-
-`biome.json` の linter 節を以下に変更する（`"preset": "recommended"` は Biome 2.x に存在しない無効キーで、現状 recommended ルールが有効化されていない）:
-
-```json
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "recommended": true
-    }
-  },
-```
-
-- [ ] **Step 2: lint を実行して差分を確認**
-
-Run: `pnpm lint`
-Expected: PASS。新たな指摘が出た場合は次の方針で対処する: 機械的に直せるもの（未使用 import 等）は修正する。既存の意図的なパターン（SVG の `role="button"` 等）と衝突するルールは、既存 overrides と同じ形式で **最小スコープ**の override を追加し、PR 本文に理由を書く。
-
-- [ ] **Step 3: テスト一式で回帰がないことを確認**
-
-Run: `pnpm test && pnpm typecheck`
-Expected: 91 tests PASS / typecheck PASS
-
-- [ ] **Step 4: Commit**
-
-```bash
-git add biome.json
-git commit -m "fix(config): enable biome recommended rules with correct key"
-```
-
-（Step 2 でコード修正が発生した場合は同一コミットに含める）
+- [x] **検証済み: 変更なしで `pnpm lint` が警告なしで PASS すること**
 
 ### Task 2: engines 追加と @types/node の整合
 
