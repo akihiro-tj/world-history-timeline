@@ -46,7 +46,7 @@ export function WelcomeOverlay({ onClose }: Props) {
         </ul>
         <button
           type="button"
-          className="mt-5 w-full rounded-md bg-accent py-2 text-sm font-medium text-white"
+          className="mt-5 w-full rounded-md border border-line bg-panel py-2 text-sm font-medium"
           onClick={onClose}
         >
           はじめる
