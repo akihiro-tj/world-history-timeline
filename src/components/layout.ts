@@ -4,6 +4,7 @@ export const COLUMN_WIDTH = 88
 export const COLUMN_GAP = 8
 export const LANE_PADDING = 12
 export const AXIS_WIDTH = 64
+export const TOP_BAR_HEIGHT = 48
 export const HEADER_HEIGHT = 40
 export const GROUP_HEADER_HEIGHT = 20
 export const LABEL_MIN_HEIGHT = 16

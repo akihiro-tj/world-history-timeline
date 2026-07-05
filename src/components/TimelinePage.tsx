@@ -26,6 +26,7 @@ import {
   laneWidth,
   PANEL_HEIGHT_RATIO,
   PANEL_WIDTH_PX,
+  TOP_BAR_HEIGHT,
 } from './layout'
 import { hasSeenOnboarding, markOnboardingSeen } from './onboardingStorage'
 import { TimelineView } from './TimelineView'
@@ -435,7 +436,11 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
         }}
         viewportTopY={zoom.scrollTop}
       />
-      <div aria-hidden="true" className="pointer-events-none fixed inset-x-0 top-12 bottom-0 z-20">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-x-0 bottom-0 z-20"
+        style={{ top: TOP_BAR_HEIGHT + headerHeightPx }}
+      >
         {edgeFades.top && (
           <div
             data-testid="fade-top"
@@ -451,7 +456,8 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
         {edgeFades.left && (
           <div
             data-testid="fade-left"
-            className="absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-surface to-transparent"
+            className="absolute inset-y-0 w-6 bg-gradient-to-r from-surface to-transparent"
+            style={{ left: AXIS_WIDTH }}
           />
         )}
         {edgeFades.right && (
