@@ -5,7 +5,6 @@ export const COLUMN_GAP = 8
 export const LANE_PADDING = 12
 export const AXIS_WIDTH = 64
 export const HEADER_HEIGHT = 40
-export const CANVAS_PADDING_Y = 8
 export const LABEL_MIN_HEIGHT = 16
 // DetailPanel の md:w-80 / max-h-[50dvh] と連動。変えるときは両方変える
 export const PANEL_WIDTH_PX = 320

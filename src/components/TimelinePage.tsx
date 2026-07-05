@@ -10,12 +10,11 @@ import type { Dataset } from '../data/schema'
 import { packLane } from '../domain/packing'
 import { createScale } from '../domain/scale'
 import { maxVisibleImportance, visibleEntries } from '../domain/visibility'
-import { dataYearRange } from '../domain/yearRange'
+import { dataYearRange, padYearRange } from '../domain/yearRange'
 import { minPxPerYear, type ZoomState, zoomAt } from '../domain/zoom'
 import { DetailPanel } from './DetailPanel'
 import {
   AXIS_WIDTH,
-  CANVAS_PADDING_Y,
   COLUMN_GAP,
   COLUMN_WIDTH,
   DESKTOP_MEDIA_QUERY,
@@ -37,8 +36,9 @@ const REVEAL_MARGIN_PX = 16
 
 export function TimelinePage({ dataset }: { dataset: Dataset }) {
   const { regions, entries } = dataset
-  const yearRange = useMemo(() => dataYearRange(entries), [entries])
-  const totalYears = yearRange.maxYear - yearRange.minYear
+  const tickRange = useMemo(() => dataYearRange(entries), [entries])
+  const scaleRange = useMemo(() => padYearRange(tickRange), [tickRange])
+  const totalYears = scaleRange.maxYear - scaleRange.minYear
   const containerRef = useRef<HTMLDivElement>(null)
   const [viewportHeight, setViewportHeight] = useState(FALLBACK_VIEWPORT_HEIGHT)
   const [zoom, setZoom] = useState<ZoomState>({
@@ -83,7 +83,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
 
   const applyZoomAtContainerOffset = useCallback(
     (factor: number, containerOffset: number) => {
-      applyZoom(factor, containerOffset - HEADER_HEIGHT - CANVAS_PADDING_Y)
+      applyZoom(factor, containerOffset - HEADER_HEIGHT)
     },
     [applyZoom],
   )
@@ -108,8 +108,8 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
   }, [panelOpen])
 
   const scale = useMemo(
-    () => createScale(yearRange.minYear, yearRange.maxYear, zoom.pxPerYear),
-    [yearRange, zoom.pxPerYear],
+    () => createScale(scaleRange.minYear, scaleRange.maxYear, zoom.pxPerYear),
+    [scaleRange, zoom.pxPerYear],
   )
   const maxImportance = maxVisibleImportance(zoom.pxPerYear)
   const tierEntries = useMemo(() => {
@@ -194,7 +194,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
         ...prev,
         scrollTop: Math.max(
           0,
-          (entry.start - yearRange.minYear) * prev.pxPerYear - viewport.height / 2,
+          (entry.start - scaleRange.minYear) * prev.pxPerYear - viewport.height / 2,
         ),
       }))
       return
@@ -219,7 +219,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
       }
     }
     setZoom((prev) => {
-      const entryTopY = (entry.start - yearRange.minYear) * prev.pxPerYear
+      const entryTopY = (entry.start - scaleRange.minYear) * prev.pxPerYear
       const visibleTop = prev.scrollTop + REVEAL_MARGIN_PX
       const visibleBottom = prev.scrollTop + viewport.height - REVEAL_MARGIN_PX
       if (entryTopY < visibleTop) {
@@ -230,17 +230,17 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
       }
       return prev
     })
-  }, [pendingJump, entries, regions, laneLayouts, laneOffsets, yearRange, visibleViewport])
+  }, [pendingJump, entries, regions, laneLayouts, laneOffsets, scaleRange, visibleViewport])
 
   const jumpToYear = useCallback(
     (year: number) => {
       const viewport = visibleViewport(selectedId !== null)
       setZoom((prev) => ({
         ...prev,
-        scrollTop: Math.max(0, (year - yearRange.minYear) * prev.pxPerYear - viewport.height / 2),
+        scrollTop: Math.max(0, (year - scaleRange.minYear) * prev.pxPerYear - viewport.height / 2),
       }))
     },
-    [yearRange.minYear, selectedId, visibleViewport],
+    [scaleRange.minYear, selectedId, visibleViewport],
   )
 
   const inView = useMemo(() => {
@@ -309,7 +309,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
         containerRef={containerRef}
         dataset={dataset}
         scale={scale}
-        yearRange={yearRange}
+        yearRange={tickRange}
         laneLayouts={laneLayouts}
         laneWidths={laneWidths}
         laneOffsets={laneOffsets}

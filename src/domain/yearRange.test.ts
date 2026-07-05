@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 import { makeEntry } from '../test/factory'
-import { dataYearRange } from './yearRange'
+import { dataYearRange, padYearRange } from './yearRange'
 
 describe('dataYearRange', () => {
   test('データ範囲を100年単位で外側に丸める', () => {
@@ -33,5 +33,14 @@ describe('dataYearRange', () => {
   test('空配列でも幅が正の範囲を返す', () => {
     const range = dataYearRange([])
     expect(range.maxYear).toBeGreaterThan(range.minYear)
+  })
+})
+
+describe('padYearRange', () => {
+  test('範囲の外側に上下100年のマージンを付ける', () => {
+    expect(padYearRange({ minYear: -3000, maxYear: 2000 })).toEqual({
+      minYear: -3100,
+      maxYear: 2100,
+    })
   })
 })

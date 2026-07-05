@@ -1,6 +1,7 @@
 import type { Entry } from '../data/schema'
 
 const ROUNDING_YEARS = 100
+const AXIS_MARGIN_YEARS = 100
 
 export type YearRange = {
   minYear: number
@@ -18,4 +19,11 @@ export function dataYearRange(entries: Entry[]): YearRange {
   const minYear = Math.floor(earliest / ROUNDING_YEARS) * ROUNDING_YEARS
   const maxYear = Math.ceil(latest / ROUNDING_YEARS) * ROUNDING_YEARS
   return { minYear, maxYear: maxYear > minYear ? maxYear : minYear + ROUNDING_YEARS }
+}
+
+export function padYearRange(range: YearRange): YearRange {
+  return {
+    minYear: range.minYear - AXIS_MARGIN_YEARS,
+    maxYear: range.maxYear + AXIS_MARGIN_YEARS,
+  }
 }
