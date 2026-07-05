@@ -54,3 +54,40 @@ test('候補選択後は入力と候補がクリアされる', async () => {
   expect(input).toHaveValue('')
   expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
 })
+
+test('プレースホルダーに名前と年の例を示す', () => {
+  render(
+    <SearchBar entries={testDataset.entries} onJumpToYear={() => {}} onSelectEntry={() => {}} />,
+  )
+  expect(screen.getByPlaceholderText('名前または年（例: 信長 / 1600）')).toBeInTheDocument()
+})
+
+test('↑↓とEnterで候補を選択できる', async () => {
+  const onSelectEntry = vi.fn()
+  render(
+    <SearchBar
+      entries={testDataset.entries}
+      onJumpToYear={() => {}}
+      onSelectEntry={onSelectEntry}
+    />,
+  )
+  const input = screen.getByRole('searchbox', { name: '検索' })
+  await userEvent.type(input, 'まるこ')
+  await userEvent.keyboard('{ArrowDown}')
+  expect(screen.getByRole('option', { name: /マルコ・ポーロ/ })).toHaveAttribute(
+    'aria-selected',
+    'true',
+  )
+  await userEvent.keyboard('{Enter}')
+  expect(onSelectEntry).toHaveBeenCalledWith('marco-polo')
+})
+
+test('Escapeで候補リストを閉じる', async () => {
+  render(
+    <SearchBar entries={testDataset.entries} onJumpToYear={() => {}} onSelectEntry={() => {}} />,
+  )
+  await userEvent.type(screen.getByRole('searchbox', { name: '検索' }), 'まるこ')
+  expect(screen.getByRole('listbox')).toBeInTheDocument()
+  await userEvent.keyboard('{Escape}')
+  expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
+})

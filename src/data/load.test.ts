@@ -12,6 +12,7 @@ const entries = [
     type: 'ruler',
     region: 'west-europe',
     title: 'エドワード1世',
+    reading: 'えどわーどいっせい',
     start: 1272,
     end: 1307,
     importance: 2,

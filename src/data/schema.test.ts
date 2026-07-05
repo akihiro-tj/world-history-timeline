@@ -8,6 +8,7 @@ const validEntry = {
   group: 'england',
   groupName: 'イングランド',
   title: 'エドワード1世',
+  reading: 'えどわーどいっせい',
   start: 1272,
   end: 1307,
   importance: 2,
@@ -42,6 +43,34 @@ describe('entrySchema', () => {
 
   test('小数の年を拒否する', () => {
     expect(() => entrySchema.parse({ ...validEntry, start: 1272.5 })).toThrow()
+  })
+
+  test('reading が無いエントリは拒否する', () => {
+    const entry = {
+      id: 'test',
+      type: 'event',
+      region: 'west-europe',
+      title: 'テスト',
+      start: 1000,
+      importance: 1,
+      description: 'テスト。',
+    }
+    expect(entrySchema.safeParse(entry).success).toBe(false)
+  })
+
+  test('reading にカタカナ・漢字・英数字は使えない', () => {
+    const base = {
+      id: 'test',
+      type: 'event',
+      region: 'west-europe',
+      title: 'テスト',
+      start: 1000,
+      importance: 1,
+      description: 'テスト。',
+    }
+    expect(entrySchema.safeParse({ ...base, reading: 'テスト' }).success).toBe(false)
+    expect(entrySchema.safeParse({ ...base, reading: 'test' }).success).toBe(false)
+    expect(entrySchema.safeParse({ ...base, reading: 'まるこ・ぽーろ' }).success).toBe(true)
   })
 })
 
