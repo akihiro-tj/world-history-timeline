@@ -1,3 +1,5 @@
+import { AXIS_WIDTH } from './layout'
+
 type Props = {
   onZoomIn: () => void
   onZoomOut: () => void
@@ -9,7 +11,7 @@ const buttonClass =
 
 export function ZoomControls({ onZoomIn, onZoomOut, onFitAll }: Props) {
   return (
-    <div className="fixed left-4 bottom-4 z-30 flex flex-col gap-2">
+    <div className="fixed bottom-4 z-30 flex flex-col gap-2" style={{ left: AXIS_WIDTH + 8 }}>
       <button type="button" aria-label="拡大" className={buttonClass} onClick={onZoomIn}>
         ＋
       </button>
