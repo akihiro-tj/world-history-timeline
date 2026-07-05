@@ -31,29 +31,25 @@ shapes:
   barCornerRadius: 4px
 ---
 
-# World History Timeline Design
+# 世界史タイムライン デザイン
 
 ## Overview
 
-As a learning tool, this design puts "quiet and readable" above everything
-else. The screen is meant to be studied for long stretches, so a
-low-saturation, paper-like background ({colors.surface}) carries the page and
-only the entry bars — the information itself — get color. No decoration is
-added.
+学習ツールとして「静かで読みやすい」ことを最優先する。長時間眺める画面なので、
+彩度の低い紙のような背景（{colors.surface}）に、情報の主役であるエントリの
+バーだけが色を持つ。装飾は加えない。
 
 ## Colors
 
-- {colors.ink}: body text and headings. Near-black ink.
-- {colors.muted}: supporting text (year labels, descriptions).
-- {colors.ruler} / {colors.person} / {colors.event}: entry-type colors.
-  Rulers are blue, persons purple, and events orange, with lightness
-  differences layered on top of hue for color-vision accessibility.
-- Region colors belong to the data (regions.json) and are used only as pale
-  lane backgrounds (6% opacity).
+- {colors.ink}: 本文・見出し。ほぼ黒のインク色
+- {colors.muted}: 補助テキスト（年ラベル・説明）
+- {colors.ruler} / {colors.person} / {colors.event}: エントリ種別の色。
+  統治者は青系、人物は紫系、事件は橙系で、色覚多様性に配慮して明度差もつける
+- 地域色はデータ（regions.json）が持ち、レーン背景の淡色（不透明度 6%）にのみ使う
 
 ## Do's and Don'ts
 
-- Do: use only {colors.ink} or {colors.muted} for text. Keep AA contrast.
-- Do: double-encode entry types with hue plus shape (bar / diamond).
-- Don't: use region colors for text.
-- Don't: add gradients, shadows, or animation as decoration.
+- Do: テキストは {colors.ink} または {colors.muted} のみ。コントラスト比 AA を守る
+- Do: 種別の描き分けは色相＋形状（バー / ◆）の二重符号化にする
+- Don't: 地域色を文字色に使わない
+- Don't: グラデーション・影・アニメーションを装飾目的で足さない
