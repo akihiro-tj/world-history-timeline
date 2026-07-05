@@ -45,6 +45,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
   })
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const pointers = useRef(new Map<number, { x: number; y: number }>())
+  const hasUserZoomedRef = useRef(false)
 
   useEffect(() => {
     const measure = () =>
@@ -61,8 +62,18 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     }
   }, [zoom])
 
+  useEffect(() => {
+    if (hasUserZoomedRef.current) return
+    setZoom((prev) => {
+      const pxPerYear = minPxPerYear(totalYears, viewportHeight)
+      if (pxPerYear === prev.pxPerYear) return prev
+      return { pxPerYear, scrollTop: (prev.scrollTop / prev.pxPerYear) * pxPerYear }
+    })
+  }, [viewportHeight, totalYears])
+
   const applyZoom = useCallback(
     (factor: number, anchorOffset: number) => {
+      hasUserZoomedRef.current = true
       setZoom((prev) => zoomAt(prev, factor, anchorOffset, totalYears, viewportHeight))
     },
     [totalYears, viewportHeight],
@@ -256,9 +267,10 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
       <ZoomControls
         onZoomIn={() => applyZoomAtContainerOffset(BUTTON_ZOOM_FACTOR, viewportHeight / 2)}
         onZoomOut={() => applyZoomAtContainerOffset(1 / BUTTON_ZOOM_FACTOR, viewportHeight / 2)}
-        onFitAll={() =>
+        onFitAll={() => {
+          hasUserZoomedRef.current = true
           setZoom({ pxPerYear: minPxPerYear(totalYears, viewportHeight), scrollTop: 0 })
-        }
+        }}
       />
       {selectedEntry && (
         <DetailPanel
