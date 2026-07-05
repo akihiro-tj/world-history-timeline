@@ -25,7 +25,7 @@ export function DetailPanel({ entry, dataset, onSelect, onClose }: Props) {
   return (
     <aside
       aria-label="詳細"
-      className="fixed inset-x-0 bottom-0 z-40 max-h-[50dvh] overflow-y-auto rounded-t-xl border border-line bg-panel p-4 shadow-lg md:inset-x-auto md:top-0 md:right-0 md:h-dvh md:max-h-none md:w-80 md:rounded-none"
+      className="fixed inset-x-0 bottom-0 z-40 max-h-[50dvh] overflow-y-auto rounded-t-xl border border-line bg-panel p-4 shadow-lg md:inset-x-auto md:top-12 md:right-0 md:h-[calc(100dvh-3rem)] md:max-h-none md:w-80 md:rounded-none"
     >
       <div className="flex items-start justify-between gap-2">
         <h2 className="text-base font-semibold">{entry.title}</h2>

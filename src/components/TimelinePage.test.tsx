@@ -112,8 +112,18 @@ test('同時代リンクで選択が移動する', async () => {
   await userEvent.click(within(list).getByRole('button', { name: /フビライ・ハン/ }))
   expect(screen.getByRole('heading', { name: 'フビライ・ハン' })).toBeInTheDocument()
   expect(screen.getByTestId('timeline-scroll').scrollTop).toBeCloseTo(
-    (1260 - -700) * (2000 / 2800) - 400,
+    (1260 - -700) * (2000 / 2800) - 200,
   )
+})
+
+test('ジャンプはパネルを除いた可視領域の中心に縦横合わせる', async () => {
+  render(<TimelinePage dataset={testDataset} />)
+  const scroll = screen.getByTestId('timeline-scroll')
+  Object.defineProperty(scroll, 'clientWidth', { value: 600, configurable: true })
+  await userEvent.type(screen.getByRole('searchbox', { name: '検索' }), '終端')
+  await userEvent.click(screen.getByRole('option', { name: /年表終端/ }))
+  expect(scroll.scrollTop).toBeCloseTo((2100 - -700) * (2000 / 2800) - 200)
+  expect(scroll.scrollLeft).toBeCloseTo(632 - 64 - (600 - 64) / 2)
 })
 
 test('検索候補の選択で詳細パネルが開く', async () => {

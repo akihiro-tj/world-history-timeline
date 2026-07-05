@@ -6,6 +6,11 @@ export const LANE_PADDING = 12
 export const AXIS_WIDTH = 64
 export const HEADER_HEIGHT = 40
 export const LABEL_MIN_HEIGHT = 16
+// DetailPanel の md:w-80 / max-h-[50dvh] と連動。変えるときは両方変える
+export const PANEL_WIDTH_PX = 320
+export const PANEL_HEIGHT_RATIO = 0.5
+export const DESKTOP_MEDIA_QUERY = '(min-width: 768px)'
+export const FALLBACK_VIEWPORT_WIDTH = 1200
 
 export function laneWidth(layout: LaneLayout | undefined): number {
   const columns = Math.max(layout?.columnCount ?? 1, 1)
