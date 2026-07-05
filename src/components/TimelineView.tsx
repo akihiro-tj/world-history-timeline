@@ -82,6 +82,7 @@ export function TimelineView({
                         scale={scale}
                         selected={p.entry.id === selectedId}
                         onSelect={onSelect}
+                        svgWidth={acc}
                       />
                     ) : (
                       <EntryBar
