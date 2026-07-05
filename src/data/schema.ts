@@ -22,6 +22,7 @@ export const entrySchema = z
     group: z.string().min(1).optional(),
     groupName: z.string().min(1).optional(),
     title: z.string().min(1),
+    reading: z.string().regex(/^[ぁ-ゖー・\s]+$/),
     start: z.number().int(),
     end: z.number().int().optional(),
     importance: z.number().int().min(1).max(3),

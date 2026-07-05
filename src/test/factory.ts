@@ -5,6 +5,7 @@ export function makeEntry(over: Partial<Entry> & { id: string }): Entry {
     type: 'ruler',
     region: 'west-europe',
     title: over.id,
+    reading: 'てすとよみ',
     start: 1000,
     end: 1050,
     importance: 1,

@@ -13,6 +13,7 @@ export const testDataset: Dataset = {
     makeEntry({
       id: 'edward-1',
       title: 'エドワード1世',
+      reading: 'えどわーどいっせい',
       group: 'england',
       groupName: 'イングランド',
       start: 1272,
@@ -22,6 +23,7 @@ export const testDataset: Dataset = {
     makeEntry({
       id: 'philippe-4',
       title: 'フィリップ4世',
+      reading: 'ふぃりっぷよんせい',
       group: 'france',
       groupName: 'フランス',
       start: 1285,
@@ -31,6 +33,7 @@ export const testDataset: Dataset = {
     makeEntry({
       id: 'kublai-khan',
       title: 'フビライ・ハン',
+      reading: 'ふびらい・はん',
       region: 'east-asia',
       group: 'yuan',
       groupName: '元',
@@ -41,6 +44,7 @@ export const testDataset: Dataset = {
     makeEntry({
       id: 'marco-polo',
       title: 'マルコ・ポーロ',
+      reading: 'まるこ・ぽーろ',
       region: 'east-asia',
       type: 'person',
       start: 1271,
@@ -50,6 +54,7 @@ export const testDataset: Dataset = {
     makeEntry({
       id: 'anagni',
       title: 'アナーニ事件',
+      reading: 'あなーにじけん',
       type: 'event',
       start: 1303,
       end: undefined,
@@ -58,6 +63,7 @@ export const testDataset: Dataset = {
     makeEntry({
       id: 'tokimune',
       title: '北条時宗',
+      reading: 'ほうじょうときむね',
       region: 'japan',
       group: 'kamakura',
       groupName: '鎌倉幕府',
@@ -69,6 +75,7 @@ export const testDataset: Dataset = {
     makeEntry({
       id: 'era-start-marker',
       title: '年表始端',
+      reading: 'ねんぴょうしたん',
       region: 'japan',
       type: 'event',
       start: -700,
@@ -78,6 +85,7 @@ export const testDataset: Dataset = {
     makeEntry({
       id: 'era-end-marker',
       title: '年表終端',
+      reading: 'ねんぴょうしゅうたん',
       region: 'japan',
       type: 'event',
       start: 2100,
