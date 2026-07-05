@@ -1,5 +1,6 @@
 import type { Entry } from '../data/schema'
 import { formatSpan } from '../domain/format'
+import { truncateLabel } from '../domain/label'
 import type { Scale } from '../domain/scale'
 import { COLUMN_WIDTH, columnX, LABEL_MIN_HEIGHT } from './layout'
 
@@ -8,6 +9,9 @@ const TYPE_FILL: Record<Entry['type'], string> = {
   person: 'var(--color-person)',
   event: 'var(--color-event)',
 }
+
+const LABEL_FONT_SIZE_PX = 11
+const LABEL_PADDING_X = 6
 
 type Props = {
   entry: Entry
@@ -50,14 +54,16 @@ export function EntryBar({ entry, laneX, column, scale, selected, onSelect, view
             onSelect(entry.id)
           }
         }}
-      />
+      >
+        <title>{entry.title}</title>
+      </rect>
       {showLabel && (
         <text
-          x={x + 6}
+          x={x + LABEL_PADDING_X}
           y={labelY + 11}
           className="pointer-events-none fill-white text-[11px] font-medium"
         >
-          {entry.title}
+          {truncateLabel(entry.title, COLUMN_WIDTH - LABEL_PADDING_X * 2, LABEL_FONT_SIZE_PX)}
         </text>
       )}
     </g>
