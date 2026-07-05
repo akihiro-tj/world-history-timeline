@@ -310,6 +310,9 @@ test('ズームすると国名の2段目ヘッダーが表示される', async (
   const zoomIn = screen.getByRole('button', { name: '拡大' })
   await userEvent.click(zoomIn)
   await userEvent.click(zoomIn)
+  fireEvent.scroll(screen.getByTestId('timeline-scroll'), {
+    target: { scrollTop: (1272 - -800) * ((800 * 2.5) / 3000) * 1.4 * 1.4 },
+  })
   expect(screen.getByText('イングランド')).toBeInTheDocument()
   expect(screen.getByText('フランス')).toBeInTheDocument()
 })

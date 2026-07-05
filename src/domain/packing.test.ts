@@ -86,10 +86,27 @@ describe('columnGroupNames', () => {
       makeEntry({ id: 'f1', group: 'france', groupName: 'フランス', start: 1250, end: 1350 }),
       makeEntry({ id: 'solo', type: 'event', start: 1250, end: undefined }),
     ])
-    const names = columnGroupNames(layout)
+    const names = columnGroupNames(layout, -10000, 10000)
     expect(names).toHaveLength(layout.columnCount)
     expect(names).toContain('イングランド')
     expect(names).toContain('フランス')
     expect(names).toContain(null)
+  })
+
+  test('同一カラムを再利用する複数 group は可視年範囲の group 名を返す', () => {
+    const layout = packLane([
+      makeEntry({
+        id: 'kamakura-1',
+        group: 'kamakura',
+        groupName: '鎌倉幕府',
+        start: 1192,
+        end: 1333,
+      }),
+      makeEntry({ id: 'edo-1', group: 'edo', groupName: '江戸幕府', start: 1603, end: 1867 }),
+    ])
+    expect(layout.columnCount).toBe(1)
+    expect(columnGroupNames(layout, 1200, 1300)).toEqual(['鎌倉幕府'])
+    expect(columnGroupNames(layout, 1700, 1800)).toEqual(['江戸幕府'])
+    expect(columnGroupNames(layout, 1400, 1500)).toEqual([null])
   })
 })

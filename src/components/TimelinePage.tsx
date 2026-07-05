@@ -174,13 +174,17 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     }
     return offsets
   }, [laneWidths])
-  const groupLabels = useMemo(
-    () =>
-      regions.map((r) =>
-        columnGroupNames(laneLayouts.get(r.id) ?? { columnCount: 1, positioned: [] }),
+  const groupLabels = useMemo(() => {
+    const topYear = scale.yToYear(zoom.scrollTop)
+    const bottomYear = scale.yToYear(zoom.scrollTop + viewportHeight)
+    return regions.map((r) =>
+      columnGroupNames(
+        laneLayouts.get(r.id) ?? { columnCount: 1, positioned: [] },
+        topYear,
+        bottomYear,
       ),
-    [regions, laneLayouts],
-  )
+    )
+  }, [regions, laneLayouts, scale, zoom.scrollTop, viewportHeight])
   const showGroupRow = maxImportance >= 2 && groupLabels.some((lane) => lane.some(Boolean))
   const headerHeightPx = HEADER_HEIGHT + (showGroupRow ? GROUP_HEADER_HEIGHT : 0)
 
