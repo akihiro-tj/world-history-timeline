@@ -33,6 +33,7 @@ import { ZoomControls } from './ZoomControls'
 const FALLBACK_VIEWPORT_HEIGHT = 800
 const BUTTON_ZOOM_FACTOR = 1.4
 const WHEEL_ZOOM_FACTOR = 1.2
+const REVEAL_MARGIN_PX = 16
 
 export function TimelinePage({ dataset }: { dataset: Dataset }) {
   const { regions, entries } = dataset
@@ -138,11 +139,18 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     return offsets
   }, [laneWidths])
 
-  const [pendingJump, setPendingJump] = useState<{ id: string } | null>(null)
+  const [pendingJump, setPendingJump] = useState<{ id: string; mode: 'center' | 'reveal' } | null>(
+    null,
+  )
 
   const jumpToEntry = useCallback((id: string) => {
     setSelectedId(id)
-    setPendingJump({ id })
+    setPendingJump({ id, mode: 'center' })
+  }, [])
+
+  const selectEntry = useCallback((id: string) => {
+    setSelectedId(id)
+    setPendingJump({ id, mode: 'reveal' })
   }, [])
 
   const visibleViewport = useCallback(
@@ -163,6 +171,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     if (!pendingJump) return
     const entry = entries.find((e) => e.id === pendingJump.id)
     const container = containerRef.current
+    const { mode } = pendingJump
     setPendingJump(null)
     if (!entry || !container) return
     const viewport = visibleViewport(true)
@@ -170,22 +179,57 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     const positioned = laneLayouts
       .get(entry.region)
       ?.positioned.find((p) => p.entry.id === entry.id)
+
+    if (mode === 'center') {
+      if (laneIndex >= 0 && positioned) {
+        const entryCenterX =
+          AXIS_WIDTH +
+          laneOffsets[laneIndex] +
+          LANE_PADDING +
+          positioned.column * (COLUMN_WIDTH + COLUMN_GAP) +
+          COLUMN_WIDTH / 2
+        container.scrollLeft = Math.max(0, entryCenterX - AXIS_WIDTH - viewport.width / 2)
+      }
+      setZoom((prev) => ({
+        ...prev,
+        scrollTop: Math.max(
+          0,
+          (entry.start - yearRange.minYear) * prev.pxPerYear - viewport.height / 2,
+        ),
+      }))
+      return
+    }
+
     if (laneIndex >= 0 && positioned) {
-      const entryCenterX =
+      const columnLeftX =
         AXIS_WIDTH +
         laneOffsets[laneIndex] +
         LANE_PADDING +
-        positioned.column * (COLUMN_WIDTH + COLUMN_GAP) +
-        COLUMN_WIDTH / 2
-      container.scrollLeft = Math.max(0, entryCenterX - AXIS_WIDTH - viewport.width / 2)
+        positioned.column * (COLUMN_WIDTH + COLUMN_GAP)
+      const columnRightX = columnLeftX + COLUMN_WIDTH
+      const visibleLeft = container.scrollLeft + AXIS_WIDTH
+      const visibleRight = container.scrollLeft + AXIS_WIDTH + viewport.width
+      if (columnLeftX < visibleLeft + REVEAL_MARGIN_PX) {
+        container.scrollLeft = Math.max(0, columnLeftX - AXIS_WIDTH - REVEAL_MARGIN_PX)
+      } else if (columnRightX > visibleRight - REVEAL_MARGIN_PX) {
+        container.scrollLeft = Math.max(
+          0,
+          columnRightX - AXIS_WIDTH - viewport.width + REVEAL_MARGIN_PX,
+        )
+      }
     }
-    setZoom((prev) => ({
-      ...prev,
-      scrollTop: Math.max(
-        0,
-        (entry.start - yearRange.minYear) * prev.pxPerYear - viewport.height / 2,
-      ),
-    }))
+    setZoom((prev) => {
+      const entryTopY = (entry.start - yearRange.minYear) * prev.pxPerYear
+      const visibleTop = prev.scrollTop + REVEAL_MARGIN_PX
+      const visibleBottom = prev.scrollTop + viewport.height - REVEAL_MARGIN_PX
+      if (entryTopY < visibleTop) {
+        return { ...prev, scrollTop: Math.max(0, entryTopY - REVEAL_MARGIN_PX) }
+      }
+      if (entryTopY > visibleBottom) {
+        return { ...prev, scrollTop: Math.max(0, entryTopY - viewport.height + REVEAL_MARGIN_PX) }
+      }
+      return prev
+    })
   }, [pendingJump, entries, regions, laneLayouts, laneOffsets, yearRange, visibleViewport])
 
   const jumpToYear = useCallback(
@@ -272,7 +316,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
         panelOpen={panelOpen}
         inView={inView}
         selectedId={selectedId}
-        onSelect={setSelectedId}
+        onSelect={selectEntry}
         onScroll={(e) => {
           const scrollTop = e.currentTarget.scrollTop
           setZoom((prev) => (prev.scrollTop === scrollTop ? prev : { ...prev, scrollTop }))
