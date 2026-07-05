@@ -91,6 +91,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     () => entries.find((e) => e.id === selectedId) ?? null,
     [entries, selectedId],
   )
+  const panelOpen = selectedEntry !== null
 
   const scale = useMemo(
     () => createScale(yearRange.minYear, yearRange.maxYear, zoom.pxPerYear),
@@ -255,7 +256,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
         laneLayouts={laneLayouts}
         laneWidths={laneWidths}
         laneOffsets={laneOffsets}
-        panelOpen={selectedEntry !== null}
+        panelOpen={panelOpen}
         inView={inView}
         selectedId={selectedId}
         onSelect={setSelectedId}
@@ -272,6 +273,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
           hasUserZoomedRef.current = true
           setZoom({ pxPerYear: minPxPerYear(totalYears, viewportHeight), scrollTop: 0 })
         }}
+        panelOpen={panelOpen}
       />
       {selectedEntry && (
         <DetailPanel

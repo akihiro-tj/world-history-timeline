@@ -54,7 +54,7 @@ export function TimelineView({
       onScroll={onScroll}
     >
       <LaneHeaders regions={regions} widths={laneWidths} />
-      <div className="flex w-max" style={{ paddingBlock: CANVAS_PADDING_Y }}>
+      <div className="flex w-max" style={{ paddingBlock: CANVAS_PADDING_Y, paddingRight: 64 }}>
         <TimeAxis scale={scale} minYear={yearRange.minYear} maxYear={yearRange.maxYear} />
         <svg width={svgWidth} height={scale.totalHeight} aria-label="年表">
           {regions.map((region, i) => {
