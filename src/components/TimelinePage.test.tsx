@@ -291,6 +291,19 @@ test('スクロール残量のある方向に端フェードを表示する', ()
   expect(screen.queryByTestId('fade-left')).not.toBeInTheDocument()
 })
 
+test('スクロールせずにズームしても端フェードが更新される', async () => {
+  render(<TimelinePage dataset={testDataset} />)
+  const scroll = screen.getByTestId('timeline-scroll')
+  Object.defineProperty(scroll, 'scrollHeight', { value: 3000, configurable: true })
+  Object.defineProperty(scroll, 'clientHeight', { value: 800, configurable: true })
+  Object.defineProperty(scroll, 'scrollWidth', { value: 2000, configurable: true })
+  Object.defineProperty(scroll, 'clientWidth', { value: 600, configurable: true })
+  expect(screen.queryByTestId('fade-bottom')).not.toBeInTheDocument()
+  await userEvent.click(screen.getByRole('button', { name: '拡大' }))
+  expect(screen.getByTestId('fade-bottom')).toBeInTheDocument()
+  expect(screen.getByTestId('fade-right')).toBeInTheDocument()
+})
+
 test('ズームすると国名の2段目ヘッダーが表示される', async () => {
   render(<TimelinePage dataset={testDataset} />)
   expect(screen.queryByText('イングランド')).not.toBeInTheDocument()

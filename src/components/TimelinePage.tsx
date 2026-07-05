@@ -55,6 +55,17 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     left: false,
     right: false,
   })
+  const updateEdgeFades = useCallback((container: HTMLDivElement) => {
+    setEdgeFades((prev) => {
+      const next = computeEdgeFades(container)
+      return prev.top === next.top &&
+        prev.bottom === next.bottom &&
+        prev.left === next.left &&
+        prev.right === next.right
+        ? prev
+        : next
+    })
+  }, [])
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const pointers = useRef(new Map<number, { x: number; y: number }>())
   const hasUserZoomedRef = useRef(false)
@@ -82,12 +93,12 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     const measure = () => {
       const container = containerRef.current
       setViewportHeight(container?.clientHeight || FALLBACK_VIEWPORT_HEIGHT)
-      if (container) setEdgeFades(computeEdgeFades(container))
+      if (container) updateEdgeFades(container)
     }
     measure()
     window.addEventListener('resize', measure)
     return () => window.removeEventListener('resize', measure)
-  }, [])
+  }, [updateEdgeFades])
 
   useEffect(() => {
     const container = containerRef.current
@@ -172,6 +183,12 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
   )
   const showGroupRow = maxImportance >= 2 && groupLabels.some((lane) => lane.some(Boolean))
   const headerHeightPx = HEADER_HEIGHT + (showGroupRow ? GROUP_HEADER_HEIGHT : 0)
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: zoom / laneWidths / viewportHeight は DOM のスクロール寸法が変わった後に再計測するためのトリガー
+  useEffect(() => {
+    const container = containerRef.current
+    if (container) updateEdgeFades(container)
+  }, [zoom, laneWidths, viewportHeight, updateEdgeFades])
 
   const applyZoomAtContainerOffset = useCallback(
     (factor: number, containerOffset: number) => {
@@ -410,7 +427,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
           setZoom((prev) =>
             prev.scrollTop === el.scrollTop ? prev : { ...prev, scrollTop: el.scrollTop },
           )
-          setEdgeFades(computeEdgeFades(el))
+          updateEdgeFades(el)
         }}
         viewportTopY={zoom.scrollTop}
       />
