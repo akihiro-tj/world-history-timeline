@@ -93,6 +93,19 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
   )
   const panelOpen = selectedEntry !== null
 
+  useEffect(() => {
+    if (panelOpen) return
+    const container = containerRef.current
+    if (!container) return
+    const maxScrollLeft = Math.max(0, container.scrollWidth - container.clientWidth)
+    const maxScrollTop = Math.max(0, container.scrollHeight - container.clientHeight)
+    if (container.scrollLeft > maxScrollLeft) container.scrollLeft = maxScrollLeft
+    if (container.scrollTop > maxScrollTop) {
+      container.scrollTop = maxScrollTop
+      setZoom((prev) => ({ ...prev, scrollTop: maxScrollTop }))
+    }
+  }, [panelOpen])
+
   const scale = useMemo(
     () => createScale(yearRange.minYear, yearRange.maxYear, zoom.pxPerYear),
     [yearRange, zoom.pxPerYear],
