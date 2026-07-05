@@ -1,0 +1,30 @@
+<!-- @dsCard group="Foundations" -->
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<style>
+  :root {
+    --surface: #fafaf9; --panel: #ffffff; --ink: #1a1c1e; --muted: #6b7280;
+    --line: #e5e4e0; --accent: #4a90d9; --ruler: #3b6fb0; --person: #7a5cb8; --event: #c2571f;
+  }
+  body { font-family: system-ui, "Hiragino Sans", "Noto Sans JP", sans-serif; background: var(--surface); color: var(--ink); padding: 24px; }
+  .swatch { display: inline-block; width: 120px; margin: 4px; padding: 8px; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; font-size: 12px; }
+  .chip { height: 40px; border-radius: 4px; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+  <h1 style="font-size:20px;font-weight:700">カラートークン</h1>
+  <div class="swatch"><div class="chip" style="background:var(--ink)"></div>ink</div>
+  <div class="swatch"><div class="chip" style="background:var(--muted)"></div>muted</div>
+  <div class="swatch"><div class="chip" style="background:var(--accent)"></div>accent</div>
+  <div class="swatch"><div class="chip" style="background:var(--ruler)"></div>ruler 統治者</div>
+  <div class="swatch"><div class="chip" style="background:var(--person)"></div>person 人物</div>
+  <div class="swatch"><div class="chip" style="background:var(--event)"></div>event 事件</div>
+  <h1 style="font-size:20px;font-weight:700;margin-top:24px">タイポグラフィ</h1>
+  <p style="font-size:20px;font-weight:700">display 20px — 世界史タイムライン</p>
+  <p style="font-size:16px;font-weight:600">heading 16px — エドワード1世</p>
+  <p style="font-size:14px">base 14px — ウェールズを征服し、模範議会を招集。</p>
+  <p style="font-size:12px;font-weight:500;color:var(--muted)">label 12px — 1272年〜1307年</p>
+</body>
+</html>

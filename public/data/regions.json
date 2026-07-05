@@ -1,0 +1,10 @@
+[
+  { "id": "west-europe", "name": "西欧", "order": 1, "color": "#4a90d9" },
+  { "id": "east-europe", "name": "東欧・ロシア", "order": 2, "color": "#7b6bd9" },
+  { "id": "middle-east", "name": "中東・北アフリカ", "order": 3, "color": "#d98f4a" },
+  { "id": "central-eurasia", "name": "中央ユーラシア", "order": 4, "color": "#b0813f" },
+  { "id": "south-asia", "name": "南アジア", "order": 5, "color": "#d94a6b" },
+  { "id": "east-asia", "name": "東アジア", "order": 6, "color": "#3fa06b" },
+  { "id": "japan", "name": "日本", "order": 7, "color": "#d94a4a" },
+  { "id": "americas", "name": "アメリカ大陸", "order": 8, "color": "#8a8f4a" }
+]

@@ -2600,6 +2600,7 @@ const barHeight = (name: RegExp) =>
 
 test('拡大ボタンでバーが高くなる', async () => {
   render(<TimelinePage dataset={testDataset} />)
+  fireEvent.scroll(screen.getByTestId('timeline-scroll'), { target: { scrollTop: 1000 } })
   const before = barHeight(/エドワード1世/)
   await userEvent.click(screen.getByRole('button', { name: '拡大' }))
   expect(barHeight(/エドワード1世/)).toBeGreaterThan(before)
@@ -2628,6 +2629,7 @@ test('全体表示ボタンで初期スケールに戻る', async () => {
 
 test('Ctrl+ホイールでズームする', () => {
   render(<TimelinePage dataset={testDataset} />)
+  fireEvent.scroll(screen.getByTestId('timeline-scroll'), { target: { scrollTop: 1000 } })
   const before = barHeight(/エドワード1世/)
   fireEvent.wheel(screen.getByTestId('timeline-scroll'), {
     deltaY: -100,
@@ -2659,7 +2661,7 @@ const buttonClass =
 
 export function ZoomControls({ onZoomIn, onZoomOut, onFitAll }: Props) {
   return (
-    <div className="fixed right-4 bottom-4 z-30 flex flex-col gap-2">
+    <div className="fixed left-4 bottom-4 z-30 flex flex-col gap-2">
       <button type="button" aria-label="拡大" className={buttonClass} onClick={onZoomIn}>
         ＋
       </button>
@@ -2731,6 +2733,18 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     }
   }, [zoom])
 
+  useEffect(() => {
+    const removePointer = (e: PointerEvent) => {
+      pointers.current.delete(e.pointerId)
+    }
+    window.addEventListener('pointerup', removePointer)
+    window.addEventListener('pointercancel', removePointer)
+    return () => {
+      window.removeEventListener('pointerup', removePointer)
+      window.removeEventListener('pointercancel', removePointer)
+    }
+  }, [])
+
   const applyZoom = useCallback(
     (factor: number, anchorOffset: number) => {
       setZoom(prev => zoomAt(prev, factor, anchorOffset, totalYears, viewportHeight))
@@ -2779,17 +2793,8 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
       applyZoom(distanceAfter / distanceBefore, anchorOffset)
     }
   }
-  const handlePointerEnd = (e: ReactPointerEvent) => {
-    pointers.current.delete(e.pointerId)
-  }
-
   return (
-    <div
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerEnd}
-      onPointerCancel={handlePointerEnd}
-    >
+    <div onPointerDown={handlePointerDown} onPointerMove={handlePointerMove}>
       <TimelineView
         containerRef={containerRef}
         dataset={dataset}
@@ -3004,6 +3009,9 @@ test('同時代リンクで選択が移動する', async () => {
   const list = screen.getByRole('list', { name: '同時代' })
   await userEvent.click(within(list).getByRole('button', { name: /フビライ・ハン/ }))
   expect(screen.getByRole('heading', { name: 'フビライ・ハン' })).toBeInTheDocument()
+  expect(screen.getByTestId('timeline-scroll').scrollTop).toBeCloseTo(
+    (1260 - -700) * (2000 / 2800) - 400,
+  )
 })
 ```
 
@@ -3348,7 +3356,7 @@ Run: `pnpm dev`
 
 **Interfaces:**
 - Consumes: `pnpm validate-data` / `pnpm typecheck` / `pnpm lint` / `pnpm test` / `pnpm build`（Task 1・3）
-- Produces: PR ごとの CI、main マージでの Cloudflare Workers 自動デプロイ、`pnpm deploy`（ローカルからの手動デプロイ）
+- Produces: PR ごとの CI、main マージでの Cloudflare Workers 自動デプロイ、`pnpm deploy:cf`（ローカルからの手動デプロイ。`deploy` という script 名は pnpm 組み込みコマンドに握られるため使わない）
 
 ホスティングは Cloudflare Workers の静的アセット配信（Worker スクリプトを持たないアセットのみの Worker）。デプロイ設定は `wrangler.jsonc` に集約し、Cloudflare 側に置くのは認証情報のみとする。
 
@@ -3377,7 +3385,7 @@ pnpm add -D wrangler
 ```json
 {
   "scripts": {
-    "deploy": "pnpm build && wrangler deploy"
+    "deploy:cf": "pnpm build && wrangler deploy"
   }
 }
 ```
@@ -3505,7 +3513,7 @@ pnpm dev
 | `pnpm test` | Run tests |
 | `pnpm validate-data` | Validate timeline data |
 | `pnpm build` | Validate data, type-check, and build |
-| `pnpm deploy` | Build and deploy to Cloudflare Workers |
+| `pnpm deploy:cf` | Build and deploy to Cloudflare Workers |
 
 ## Adding data
 
@@ -3544,7 +3552,7 @@ served from Cloudflare Workers static assets.
 | `pnpm typecheck` / `pnpm lint` / `pnpm format` | tsc / Biome check / Biome format |
 | `pnpm validate-data` | Validate timeline data against schemas |
 | `pnpm build` | validate-data + typecheck + vite build |
-| `pnpm deploy` | Build and deploy to Cloudflare Workers |
+| `pnpm deploy:cf` | Build and deploy to Cloudflare Workers |
 
 ## Architecture
 
