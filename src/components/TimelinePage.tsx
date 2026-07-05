@@ -15,6 +15,7 @@ import { minPxPerYear, type ZoomState, zoomAt } from '../domain/zoom'
 import { DetailPanel } from './DetailPanel'
 import {
   AXIS_WIDTH,
+  CANVAS_PADDING_Y,
   COLUMN_GAP,
   COLUMN_WIDTH,
   DESKTOP_MEDIA_QUERY,
@@ -81,7 +82,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
 
   const applyZoomAtContainerOffset = useCallback(
     (factor: number, containerOffset: number) => {
-      applyZoom(factor, containerOffset - HEADER_HEIGHT)
+      applyZoom(factor, containerOffset - HEADER_HEIGHT - CANVAS_PADDING_Y)
     },
     [applyZoom],
   )

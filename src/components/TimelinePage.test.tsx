@@ -96,12 +96,12 @@ test('Ctrl+ホイールでズームする', () => {
   expect(barHeight(/エドワード1世/)).toBeGreaterThan(before)
 })
 
-test('ホイールズームのアンカーはヘッダー高さを補正する', () => {
+test('ホイールズームのアンカーはヘッダーと余白の高さを補正する', () => {
   render(<TimelinePage dataset={testDataset} />)
   const scroll = screen.getByTestId('timeline-scroll')
   fireEvent.scroll(scroll, { target: { scrollTop: 1000 } })
   fireEvent.wheel(scroll, { deltaY: -100, ctrlKey: true, clientY: 400 })
-  expect(scroll.scrollTop).toBeCloseTo(1272)
+  expect(scroll.scrollTop).toBeCloseTo(1352 * 1.2 - 352)
 })
 
 test('バーをクリックすると詳細パネルが開き、閉じるで消える', async () => {

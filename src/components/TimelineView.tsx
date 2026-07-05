@@ -6,6 +6,7 @@ import type { YearRange } from '../domain/yearRange'
 import { EntryBar } from './EntryBar'
 import { EventMarker } from './EventMarker'
 import { LaneHeaders } from './LaneHeaders'
+import { CANVAS_PADDING_Y } from './layout'
 import { TimeAxis } from './TimeAxis'
 
 type Props = {
@@ -53,7 +54,7 @@ export function TimelineView({
       onScroll={onScroll}
     >
       <LaneHeaders regions={regions} widths={laneWidths} />
-      <div className="flex w-max">
+      <div className="flex w-max" style={{ paddingBlock: CANVAS_PADDING_Y }}>
         <TimeAxis scale={scale} minYear={yearRange.minYear} maxYear={yearRange.maxYear} />
         <svg width={svgWidth} height={scale.totalHeight} aria-label="年表">
           {regions.map((region, i) => {
