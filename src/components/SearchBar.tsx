@@ -19,6 +19,7 @@ export function SearchBar({ entries, onJumpToYear, onSelectEntry }: Props) {
     [entries, query],
   )
   const isListOpen = candidates.length > 0 && !isListDismissed
+  const activeCandidate = activeIndex >= 0 ? candidates[activeIndex] : undefined
 
   const selectCandidate = (id: string) => {
     onSelectEntry(id)
@@ -33,7 +34,7 @@ export function SearchBar({ entries, onJumpToYear, onSelectEntry }: Props) {
         aria-label="検索"
         placeholder="名前または年（例: 信長 / 1600）"
         aria-activedescendant={
-          isListOpen && activeIndex >= 0 ? `search-option-${candidates[activeIndex].id}` : undefined
+          isListOpen && activeCandidate ? `search-option-${activeCandidate.id}` : undefined
         }
         className="w-full rounded-md border border-line bg-panel px-3 py-2 text-sm shadow-sm"
         value={input}
@@ -59,8 +60,8 @@ export function SearchBar({ entries, onJumpToYear, onSelectEntry }: Props) {
             setActiveIndex((index) => Math.max(index - 1, -1))
             return
           }
-          if (e.key === 'Enter' && activeIndex >= 0) {
-            selectCandidate(candidates[activeIndex].id)
+          if (e.key === 'Enter' && activeCandidate) {
+            selectCandidate(activeCandidate.id)
             return
           }
           if (e.key === 'Escape') {

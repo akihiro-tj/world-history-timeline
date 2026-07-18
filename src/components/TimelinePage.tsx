@@ -260,15 +260,18 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     if (!entry || !container) return
     const viewport = visibleViewport(true)
     const laneIndex = regions.findIndex((r) => r.id === entry.region)
+    // Why: laneOffsets は regions と同じ順序・同じ長さで構築されるため、
+    // laneIndex が見つかった時点で必ず対応する要素が存在する
+    const laneOffset = laneIndex >= 0 ? laneOffsets[laneIndex] : undefined
     const positioned = laneLayouts
       .get(entry.region)
       ?.positioned.find((p) => p.entry.id === entry.id)
 
     if (mode === 'center') {
-      if (laneIndex >= 0 && positioned) {
+      if (laneOffset !== undefined && positioned) {
         const entryCenterX =
           AXIS_WIDTH +
-          laneOffsets[laneIndex] +
+          laneOffset +
           LANE_PADDING +
           positioned.column * (COLUMN_WIDTH + COLUMN_GAP) +
           COLUMN_WIDTH / 2
@@ -284,12 +287,9 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
       return
     }
 
-    if (laneIndex >= 0 && positioned) {
+    if (laneOffset !== undefined && positioned) {
       const columnLeftX =
-        AXIS_WIDTH +
-        laneOffsets[laneIndex] +
-        LANE_PADDING +
-        positioned.column * (COLUMN_WIDTH + COLUMN_GAP)
+        AXIS_WIDTH + laneOffset + LANE_PADDING + positioned.column * (COLUMN_WIDTH + COLUMN_GAP)
       const columnRightX = columnLeftX + COLUMN_WIDTH
       const visibleLeft = container.scrollLeft + AXIS_WIDTH
       const visibleRight = container.scrollLeft + AXIS_WIDTH + viewport.width
@@ -375,10 +375,15 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
       if (prev) pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
       return
     }
+    // Why: 直前の size === 2 チェックにより values() は必ず2要素を返す
     const [a, b] = [...pointers.current.values()]
+    if (!a || !b) return
     const distanceBefore = Math.hypot(a.x - b.x, a.y - b.y)
+    // Why: set の対象キーは既存のポインタ（prev で存在確認済み）なので
+    // サイズは変わらず、values() は引き続き必ず2要素を返す
     pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
     const [a2, b2] = [...pointers.current.values()]
+    if (!a2 || !b2) return
     const distanceAfter = Math.hypot(a2.x - b2.x, a2.y - b2.y)
     if (distanceBefore > 0) {
       const rect = containerRef.current?.getBoundingClientRect()

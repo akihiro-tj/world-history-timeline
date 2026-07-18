@@ -73,7 +73,11 @@ export function packLane(entries: Entry[]): LaneLayout {
       columnEnds[base + i] = Math.max(columnEnds[base + i] ?? Number.NEGATIVE_INFINITY, group.end)
     }
     group.members.forEach((entry, i) => {
-      positioned.push({ entry, column: base + group.innerColumns[i] })
+      // Why: innerColumns は members と同じ sorted 配列から1:1で作られるため、
+      // 同じ添字に対応する要素が必ず存在する
+      const innerColumn = group.innerColumns[i]
+      if (innerColumn === undefined) return
+      positioned.push({ entry, column: base + innerColumn })
     })
   }
   return { columnCount: Math.max(columnEnds.length, 1), positioned }

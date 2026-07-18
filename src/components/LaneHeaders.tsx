@@ -58,26 +58,32 @@ export function LaneHeaders({ regions, widths, groupLabels, showGroupRow }: Prop
       {showGroupRow && (
         <div className="flex" role="row">
           <div className="sticky left-0 z-10 shrink-0 bg-panel" style={{ width: AXIS_WIDTH }} />
-          {regions.map((region, i) => (
-            <div
-              key={region.id}
-              className="relative"
-              style={{ width: widths[i], height: GROUP_HEADER_HEIGHT }}
-            >
-              {mergeLabelRuns(groupLabels[i]).map((run) => (
-                <div
-                  key={run.startColumn}
-                  className="absolute top-0 truncate text-center text-[11px] leading-5 text-muted"
-                  style={{
-                    left: columnX(0, run.startColumn),
-                    width: run.span * COLUMN_WIDTH + (run.span - 1) * COLUMN_GAP,
-                  }}
-                >
-                  {run.label}
-                </div>
-              ))}
-            </div>
-          ))}
+          {regions.map((region, i) => {
+            // Why: groupLabels は regions と同じ順序・同じ長さで構築されるため、
+            // region がある時点で対応する要素が必ず存在する
+            const labels = groupLabels[i]
+            if (!labels) return null
+            return (
+              <div
+                key={region.id}
+                className="relative"
+                style={{ width: widths[i], height: GROUP_HEADER_HEIGHT }}
+              >
+                {mergeLabelRuns(labels).map((run) => (
+                  <div
+                    key={run.startColumn}
+                    className="absolute top-0 truncate text-center text-[11px] leading-5 text-muted"
+                    style={{
+                      left: columnX(0, run.startColumn),
+                      width: run.span * COLUMN_WIDTH + (run.span - 1) * COLUMN_GAP,
+                    }}
+                  >
+                    {run.label}
+                  </div>
+                ))}
+              </div>
+            )
+          })}
         </div>
       )}
     </div>
