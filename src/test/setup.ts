@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/vitest'
 import { cleanup } from '@testing-library/react'
 import { afterEach } from 'vitest'
 
-// jsdom は window.matchMedia を実装しないため、テスト全体でスタブする
+// jsdom doesn't implement window.matchMedia, so stub it for all tests
 window.matchMedia ??= (query: string) =>
   ({
     matches: false,

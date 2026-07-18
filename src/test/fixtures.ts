@@ -71,7 +71,7 @@ export const testDataset: Dataset = {
       end: 1284,
       importance: 2,
     }),
-    // 軸範囲はデータから導出されるため、既存テストの座標前提 (-700〜2100) を固定する番兵
+    // The axis range is derived from data, so this sentinel pins the coordinate assumption (-700 to 2100) that existing tests rely on
     makeEntry({
       id: 'era-start-marker',
       title: '年表始端',
