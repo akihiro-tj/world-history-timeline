@@ -73,8 +73,8 @@ export function packLane(entries: Entry[]): LaneLayout {
       columnEnds[base + i] = Math.max(columnEnds[base + i] ?? Number.NEGATIVE_INFINITY, group.end)
     }
     group.members.forEach((entry, i) => {
-      // Why: innerColumns は members と同じ sorted 配列から1:1で作られるため、
-      // 同じ添字に対応する要素が必ず存在する
+      // Why: innerColumns is built 1:1 from the same sorted array as members,
+      // so the element at the same index always exists
       const innerColumn = group.innerColumns[i]
       if (innerColumn === undefined) return
       positioned.push({ entry, column: base + innerColumn })

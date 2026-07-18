@@ -71,8 +71,8 @@ export function TimelineView({
         <svg width={svgWidth} height={scale.totalHeight} aria-label="年表">
           {regions.map((region, i) => {
             const layout = laneLayouts.get(region.id)
-            // Why: laneOffsets/laneWidths は regions と同じ順序・同じ長さで
-            // 構築されるため、region がある時点で対応する要素が必ず存在する
+            // Why: laneOffsets/laneWidths are built with the same order and length
+            // as regions, so a corresponding element always exists for each region
             const laneOffset = laneOffsets[i]
             const laneWidthPx = laneWidths[i]
             if (!layout || laneOffset === undefined || laneWidthPx === undefined) return null

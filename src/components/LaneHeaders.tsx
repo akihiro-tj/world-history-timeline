@@ -59,8 +59,8 @@ export function LaneHeaders({ regions, widths, groupLabels, showGroupRow }: Prop
         <div className="flex" role="row">
           <div className="sticky left-0 z-10 shrink-0 bg-panel" style={{ width: AXIS_WIDTH }} />
           {regions.map((region, i) => {
-            // Why: groupLabels は regions と同じ順序・同じ長さで構築されるため、
-            // region がある時点で対応する要素が必ず存在する
+            // Why: groupLabels is built with the same order and length as regions,
+            // so a corresponding element always exists for each region
             const labels = groupLabels[i]
             if (!labels) return null
             return (

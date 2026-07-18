@@ -260,8 +260,8 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     if (!entry || !container) return
     const viewport = visibleViewport(true)
     const laneIndex = regions.findIndex((r) => r.id === entry.region)
-    // Why: laneOffsets は regions と同じ順序・同じ長さで構築されるため、
-    // laneIndex が見つかった時点で必ず対応する要素が存在する
+    // Why: laneOffsets is built with the same order and length as regions,
+    // so once laneIndex is found, the corresponding element always exists
     const laneOffset = laneIndex >= 0 ? laneOffsets[laneIndex] : undefined
     const positioned = laneLayouts
       .get(entry.region)
@@ -375,12 +375,12 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
       if (prev) pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
       return
     }
-    // Why: 直前の size === 2 チェックにより values() は必ず2要素を返す
+    // Why: the size === 2 check above guarantees values() always returns two elements
     const [a, b] = [...pointers.current.values()]
     if (!a || !b) return
     const distanceBefore = Math.hypot(a.x - b.x, a.y - b.y)
-    // Why: set の対象キーは既存のポインタ（prev で存在確認済み）なので
-    // サイズは変わらず、values() は引き続き必ず2要素を返す
+    // Why: the key being set is an existing pointer (confirmed present via prev),
+    // so the size doesn't change and values() still always returns two elements
     pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
     const [a2, b2] = [...pointers.current.values()]
     if (!a2 || !b2) return
