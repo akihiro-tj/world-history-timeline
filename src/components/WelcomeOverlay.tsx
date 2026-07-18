@@ -21,13 +21,13 @@ export function WelcomeOverlay({ onClose }: Props) {
   }, [onClose])
 
   return (
-    // biome-ignore lint/a11y/noStaticElementInteractions: Escape キーで同等の操作を提供している
+    // biome-ignore lint/a11y/noStaticElementInteractions: Escape key provides an equivalent operation
     <div
       className="fixed inset-0 z-50 grid place-items-center bg-ink/50 p-4"
       role="presentation"
       onClick={onClose}
     >
-      {/* biome-ignore lint/a11y/useKeyWithClickEvents: Escape キーで同等の操作を提供している */}
+      {/* biome-ignore lint/a11y/useKeyWithClickEvents: Escape key provides an equivalent operation */}
       <section
         role="dialog"
         aria-modal="true"

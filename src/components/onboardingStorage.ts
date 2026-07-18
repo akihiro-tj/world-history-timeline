@@ -13,6 +13,6 @@ export function markOnboardingSeen(): void {
   try {
     localStorage.setItem(STORAGE_KEY, SEEN_VALUE)
   } catch {
-    // ストレージ不可の環境では毎回表示を避けるため何もしない
+    // Do nothing here — avoids showing this every time in environments where storage is unavailable
   }
 }

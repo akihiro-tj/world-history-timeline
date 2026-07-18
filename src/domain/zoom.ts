@@ -28,7 +28,7 @@ export function initialPxPerYear(viewportHeight: number): number {
 }
 
 export function maxPxPerYear(viewportHeight: number): number {
-  // 5 = visibility.ts の TIER3_MIN_PX_PER_YEAR(4) を確実に超える下限
+  // 5 = lower bound that reliably exceeds TIER3_MIN_PX_PER_YEAR(4) in visibility.ts
   return Math.max(viewportHeight / CENTURY_YEARS, TIER3_GUARANTEE_PX_PER_YEAR)
 }
 

@@ -153,8 +153,8 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
     if (panelOpen) return
     const container = containerRef.current
     if (!container) return
-    // Why: レイアウト未計測（scrollHeight/clientHeight とも 0）の間は
-    // コンテンツ範囲が不明なので、クランプで初期スクロール位置を潰さない
+    // Why: While layout hasn't been measured yet (scrollHeight/clientHeight both 0),
+    // the content range is unknown, so don't let clamping wipe out the initial scroll position
     if (container.scrollHeight === 0 && container.clientHeight === 0) return
     const maxScrollLeft = Math.max(0, container.scrollWidth - container.clientWidth)
     const maxScrollTop = Math.max(0, container.scrollHeight - container.clientHeight)
@@ -210,7 +210,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
   const showGroupRow = maxImportance >= 2 && groupLabels.some((lane) => lane.some(Boolean))
   const headerHeightPx = HEADER_HEIGHT + (showGroupRow ? GROUP_HEADER_HEIGHT : 0)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: zoom / laneWidths / viewportHeight は DOM のスクロール寸法が変わった後に再計測するためのトリガー
+  // biome-ignore lint/correctness/useExhaustiveDependencies: zoom / laneWidths / viewportHeight are triggers to re-measure after the DOM's scroll dimensions change
   useEffect(() => {
     const container = containerRef.current
     if (container) updateEdgeFades(container)
