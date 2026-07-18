@@ -71,13 +71,17 @@ export function TimelineView({
         <svg width={svgWidth} height={scale.totalHeight} aria-label="年表">
           {regions.map((region, i) => {
             const layout = laneLayouts.get(region.id)
-            if (!layout) return null
+            // Why: laneOffsets/laneWidths are built with the same order and length
+            // as regions, so a corresponding element always exists for each region
+            const laneOffset = laneOffsets[i]
+            const laneWidthPx = laneWidths[i]
+            if (!layout || laneOffset === undefined || laneWidthPx === undefined) return null
             return (
               <g key={region.id}>
                 <rect
-                  x={laneOffsets[i]}
+                  x={laneOffset}
                   y={0}
-                  width={laneWidths[i]}
+                  width={laneWidthPx}
                   height={scale.totalHeight}
                   fill={region.color}
                   opacity={0.06}
@@ -89,7 +93,7 @@ export function TimelineView({
                       <EventMarker
                         key={p.entry.id}
                         entry={p.entry}
-                        laneX={laneOffsets[i]}
+                        laneX={laneOffset}
                         column={p.column}
                         scale={scale}
                         selected={p.entry.id === selectedId}
@@ -100,7 +104,7 @@ export function TimelineView({
                       <EntryBar
                         key={p.entry.id}
                         entry={p.entry}
-                        laneX={laneOffsets[i]}
+                        laneX={laneOffset}
                         column={p.column}
                         scale={scale}
                         selected={p.entry.id === selectedId}
