@@ -35,6 +35,7 @@ Vite + React + TypeScript の静的 SPA で、Cloudflare Workers の静的アセ
 - 色の責務: 地域色はデータ（`public/data/regions.json`）、UI の色はデザイン
   トークン（`DESIGN.md` → `src/index.css` の `@theme`）。この境界を崩さない
 - UI 文言は日本語、コミットメッセージは英語（conventional commits）
+- コード内コメントは英語で書く（UI 文言・ドキュメントは日本語、コード内コメントは英語）
 - ドメイン層は必ず単体テスト。UI は主要動線を RTL でカバーする
 
 ## データ作成（public/data/entries.json）
