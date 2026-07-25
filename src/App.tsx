@@ -14,7 +14,7 @@ function TimelineRoot() {
           <p className="mb-4">データの読み込みに失敗しました</p>
           <button
             type="button"
-            className="rounded-md bg-accent px-4 py-2 text-white"
+            className="rounded-md bg-action px-4 py-2 text-white"
             onClick={reload}
           >
             再試行

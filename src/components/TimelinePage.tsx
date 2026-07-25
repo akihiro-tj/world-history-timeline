@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { Dataset } from '../data/schema'
 import { dataYearRange, padYearRange } from '../domain/yearRange'
+import { useColorTheme } from '../hooks/useColorTheme'
 import { useEdgeFades } from '../hooks/useEdgeFades'
 import { useEntryJump } from '../hooks/useEntryJump'
 import { useOnboarding } from '../hooks/useOnboarding'
@@ -31,6 +32,7 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
   const panelOpen = selectedEntry !== null
 
   const onboarding = useOnboarding()
+  const { theme, toggleTheme } = useColorTheme()
   const { edgeFades, updateEdgeFades } = useEdgeFades()
   const { viewportHeight, zoom, applyZoom, fitAll, updateScrollTop } = useTimelineZoom({
     containerRef,
@@ -107,6 +109,8 @@ export function TimelinePage({ dataset }: { dataset: Dataset }) {
         onJumpToYear={jumpToYear}
         onSelectEntry={jumpToEntry}
         onOpenHelp={onboarding.openHelp}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
       <TimelineView
         containerRef={containerRef}

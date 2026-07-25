@@ -4,6 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>世界史タイムライン</title>
+    <script>
+      // Warning: 'whtl:color-theme:v1' is duplicated in src/hooks/useColorTheme.ts.
+      // This script runs synchronously before React mounts so data-color-theme is
+      // set before first paint, avoiding a flash of the wrong theme. Keep both in
+      // sync if this key ever changes.
+      ;(() => {
+        var stored
+        try {
+          stored = localStorage.getItem('whtl:color-theme:v1')
+        } catch {
+          stored = null
+        }
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        document.documentElement.dataset.colorTheme =
+          stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light'
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>
