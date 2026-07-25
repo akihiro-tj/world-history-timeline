@@ -24,3 +24,15 @@ test('fetch 失敗でエラーと再試行ボタンを表示し、再試行で�
   await userEvent.click(retry)
   expect(await screen.findByRole('columnheader', { name: '西欧' })).toBeInTheDocument()
 })
+
+test('fetch が reject してもエラーと再試行ボタンを表示し、再試行で回復する', async () => {
+  const rejecting = vi.fn(async () => {
+    throw new Error('network down')
+  })
+  vi.stubGlobal('fetch', rejecting)
+  render(<App />)
+  const retry = await screen.findByRole('button', { name: '再試行' })
+  stubFetch(testDataset)
+  await userEvent.click(retry)
+  expect(await screen.findByRole('columnheader', { name: '西欧' })).toBeInTheDocument()
+})
