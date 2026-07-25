@@ -14,24 +14,39 @@ export const regionSchema = z.object({
   color: z.string().regex(/^#[0-9a-f]{6}$/i),
 })
 
+const baseEntryFields = {
+  id: z.string().regex(/^[a-z0-9-]+$/),
+  region: z.string().min(1),
+  group: z.string().min(1).optional(),
+  groupName: z.string().min(1).optional(),
+  title: z.string().min(1),
+  reading: z.string().regex(/^[ぁ-ゖー・\s]+$/),
+  start: z.number().int(),
+  importance: z.number().int().min(1).max(3),
+  description: z.string().min(1),
+}
+
+const rulerEntrySchema = z.object({
+  ...baseEntryFields,
+  type: z.literal('ruler'),
+  end: z.number().int(),
+})
+
+const personEntrySchema = z.object({
+  ...baseEntryFields,
+  type: z.literal('person'),
+  end: z.number().int(),
+})
+
+const eventEntrySchema = z.object({
+  ...baseEntryFields,
+  type: z.literal('event'),
+  end: z.number().int().optional(),
+})
+
 export const entrySchema = z
-  .object({
-    id: z.string().regex(/^[a-z0-9-]+$/),
-    type: z.enum(['ruler', 'person', 'event']),
-    region: z.string().min(1),
-    group: z.string().min(1).optional(),
-    groupName: z.string().min(1).optional(),
-    title: z.string().min(1),
-    reading: z.string().regex(/^[ぁ-ゖー・\s]+$/),
-    start: z.number().int(),
-    end: z.number().int().optional(),
-    importance: z.number().int().min(1).max(3),
-    description: z.string().min(1),
-  })
+  .discriminatedUnion('type', [rulerEntrySchema, personEntrySchema, eventEntrySchema])
   .superRefine((e, ctx) => {
-    if (e.type !== 'event' && e.end === undefined) {
-      ctx.addIssue({ code: 'custom', message: `${e.id}: ruler/person requires end` })
-    }
     if (e.end !== undefined && e.end < e.start) {
       ctx.addIssue({ code: 'custom', message: `${e.id}: end must be >= start` })
     }
