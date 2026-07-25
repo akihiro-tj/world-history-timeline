@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { type KeyboardEvent, useMemo, useState } from 'react'
 import type { Entry } from '../data/schema'
 import { formatSpan } from '../domain/format'
 import { parseQuery, searchEntries } from '../domain/query'
@@ -27,6 +27,48 @@ export function SearchBar({ entries, onJumpToYear, onSelectEntry }: Props) {
     setActiveIndex(-1)
   }
 
+  const jumpToYearIfRequested = (e: KeyboardEvent<HTMLInputElement>): boolean => {
+    if (e.key !== 'Enter' || query.kind !== 'year') return false
+    onJumpToYear(query.year)
+    setInput('')
+    return true
+  }
+
+  const navigateListIfRequested = (e: KeyboardEvent<HTMLInputElement>): boolean => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      setActiveIndex((index) => Math.min(index + 1, candidates.length - 1))
+      return true
+    }
+    if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      setActiveIndex((index) => Math.max(index - 1, -1))
+      return true
+    }
+    return false
+  }
+
+  const selectActiveCandidateIfRequested = (e: KeyboardEvent<HTMLInputElement>): boolean => {
+    if (e.key !== 'Enter' || !activeCandidate) return false
+    selectCandidate(activeCandidate.id)
+    return true
+  }
+
+  const dismissListIfRequested = (e: KeyboardEvent<HTMLInputElement>): boolean => {
+    if (e.key !== 'Escape') return false
+    setIsListDismissed(true)
+    setActiveIndex(-1)
+    return true
+  }
+
+  const handleInputKeyDown = (e: KeyboardEvent<HTMLInputElement>): void => {
+    if (jumpToYearIfRequested(e)) return
+    if (!isListOpen) return
+    if (navigateListIfRequested(e)) return
+    if (selectActiveCandidateIfRequested(e)) return
+    dismissListIfRequested(e)
+  }
+
   return (
     <div className="relative w-full">
       <input
@@ -43,32 +85,7 @@ export function SearchBar({ entries, onJumpToYear, onSelectEntry }: Props) {
           setActiveIndex(-1)
           setIsListDismissed(false)
         }}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' && query.kind === 'year') {
-            onJumpToYear(query.year)
-            setInput('')
-            return
-          }
-          if (!isListOpen) return
-          if (e.key === 'ArrowDown') {
-            e.preventDefault()
-            setActiveIndex((index) => Math.min(index + 1, candidates.length - 1))
-            return
-          }
-          if (e.key === 'ArrowUp') {
-            e.preventDefault()
-            setActiveIndex((index) => Math.max(index - 1, -1))
-            return
-          }
-          if (e.key === 'Enter' && activeCandidate) {
-            selectCandidate(activeCandidate.id)
-            return
-          }
-          if (e.key === 'Escape') {
-            setIsListDismissed(true)
-            setActiveIndex(-1)
-          }
-        }}
+        onKeyDown={handleInputKeyDown}
       />
       {isListOpen && (
         <div
