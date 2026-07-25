@@ -14,6 +14,13 @@
   --color-action: #2f6fb5;
 }
 
+:root {
+  /* Why: not a color token, so it's a plain custom property rather than an
+     @theme entry — Tailwind v4 drops @theme properties outside its known
+     namespaces (verified against the built CSS) instead of emitting them. */
+  --lane-bg-opacity: 0.06;
+}
+
 :root[data-color-theme="dark"] {
   --color-surface: #16181c;
   --color-panel: #1e2126;
@@ -25,6 +32,7 @@
   --color-person: #a889d9;
   --color-event: #e08a4a;
   --color-on-bar: #16181c;
+  --lane-bg-opacity: 0.12;
 }
 
 body {
