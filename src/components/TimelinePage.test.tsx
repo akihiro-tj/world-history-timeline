@@ -2,10 +2,12 @@ import { fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 import { testDataset } from '../test/fixtures'
+import { setPrefersDark } from '../test/setup'
 import { TimelinePage } from './TimelinePage'
 
 beforeEach(() => {
   localStorage.setItem('whtl:onboarding:v1', 'done')
+  localStorage.removeItem('whtl:color-theme:v1')
 })
 
 afterEach(() => {
@@ -323,4 +325,28 @@ test('初期表示では国名の2段目ヘッダーが見え、全体表示で�
   expect(screen.getByText('イングランド')).toBeInTheDocument()
   await clickFitAll()
   expect(screen.queryByText('イングランド')).not.toBeInTheDocument()
+})
+
+test('未保存時は OS のダーク設定に従って初期表示される', () => {
+  setPrefersDark(true)
+  render(<TimelinePage dataset={testDataset} />)
+  expect(document.documentElement.dataset.colorTheme).toBe('dark')
+  expect(screen.getByRole('button', { name: 'ライトモードに切り替え' })).toBeInTheDocument()
+})
+
+test('テーマ切り替えボタンで data-color-theme が切り替わり、localStorage に保存される', async () => {
+  render(<TimelinePage dataset={testDataset} />)
+  expect(document.documentElement.dataset.colorTheme).toBe('light')
+  await userEvent.click(screen.getByRole('button', { name: 'ダークモードに切り替え' }))
+  expect(document.documentElement.dataset.colorTheme).toBe('dark')
+  expect(localStorage.getItem('whtl:color-theme:v1')).toBe('dark')
+})
+
+test('テーマ切り替え後に再マウントすると保存したテーマが復元される', async () => {
+  const { unmount } = render(<TimelinePage dataset={testDataset} />)
+  await userEvent.click(screen.getByRole('button', { name: 'ダークモードに切り替え' }))
+  unmount()
+  render(<TimelinePage dataset={testDataset} />)
+  expect(document.documentElement.dataset.colorTheme).toBe('dark')
+  expect(screen.getByRole('button', { name: 'ライトモードに切り替え' })).toBeInTheDocument()
 })

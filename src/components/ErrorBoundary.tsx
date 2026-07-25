@@ -18,7 +18,7 @@ export class ErrorBoundary extends Component<Props, State> {
             <p className="mb-4">問題が発生しました</p>
             <button
               type="button"
-              className="rounded-md bg-accent px-4 py-2 text-white"
+              className="rounded-md bg-action px-4 py-2 text-white"
               onClick={() => window.location.reload()}
             >
               再読み込み

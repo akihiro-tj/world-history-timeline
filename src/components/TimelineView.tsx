@@ -84,7 +84,7 @@ export function TimelineView({
                   width={laneWidthPx}
                   height={scale.totalHeight}
                   fill={region.color}
-                  opacity={0.06}
+                  style={{ opacity: 'var(--lane-bg-opacity)' }}
                 />
                 {layout.positioned
                   .filter((p) => inView.has(p.entry.id))

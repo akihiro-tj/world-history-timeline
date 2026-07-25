@@ -82,7 +82,7 @@ export function EntryBar({ entry, laneX, column, scale, selected, onSelect, view
         <text
           x={x + LABEL_PADDING_X}
           y={labelY + 11}
-          className="pointer-events-none fill-white text-[11px] font-medium"
+          className="pointer-events-none fill-on-bar text-[11px] font-medium"
         >
           {truncateLabel(entry.title, COLUMN_WIDTH - LABEL_PADDING_X * 2, LABEL_FONT_SIZE_PX)}
         </text>

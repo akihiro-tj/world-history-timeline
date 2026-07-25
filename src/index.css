@@ -9,7 +9,30 @@
   --color-accent: #4a90d9;
   --color-ruler: #3b6fb0;
   --color-person: #7a5cb8;
-  --color-event: #c2571f;
+  --color-event: #bd541d;
+  --color-on-bar: #ffffff;
+  --color-action: #2f6fb5;
+}
+
+:root {
+  /* Why: not a color token, so it's a plain custom property rather than an
+     @theme entry — Tailwind v4 drops @theme properties outside its known
+     namespaces (verified against the built CSS) instead of emitting them. */
+  --lane-bg-opacity: 0.06;
+}
+
+:root[data-color-theme="dark"] {
+  --color-surface: #16181c;
+  --color-panel: #1e2126;
+  --color-ink: #e8e6e1;
+  --color-muted: #9aa0aa;
+  --color-line: #33373e;
+  --color-accent: #5b9fe3;
+  --color-ruler: #6fa3d9;
+  --color-person: #a889d9;
+  --color-event: #e08a4a;
+  --color-on-bar: #16181c;
+  --lane-bg-opacity: 0.12;
 }
 
 body {
