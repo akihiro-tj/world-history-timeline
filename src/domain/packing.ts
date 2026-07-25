@@ -1,4 +1,5 @@
 import type { Entry } from '../data/schema'
+import { endYear } from './entry'
 
 export type PositionedEntry = {
   entry: Entry
@@ -9,8 +10,6 @@ export type LaneLayout = {
   columnCount: number
   positioned: PositionedEntry[]
 }
-
-const endOf = (e: Entry) => e.end ?? e.start
 
 function packIntervals(intervals: { start: number; end: number }[]): {
   columnCount: number
@@ -53,11 +52,11 @@ export function packLane(entries: Entry[]): LaneLayout {
   const groups = [...byGroup.entries()]
     .map(([key, members]) => {
       const sorted = [...members].sort((a, b) => a.start - b.start || a.id.localeCompare(b.id))
-      const inner = packIntervals(sorted.map((e) => ({ start: e.start, end: endOf(e) })))
+      const inner = packIntervals(sorted.map((e) => ({ start: e.start, end: endYear(e) })))
       return {
         key,
         start: Math.min(...sorted.map((e) => e.start)),
-        end: Math.max(...sorted.map(endOf)),
+        end: Math.max(...sorted.map(endYear)),
         width: inner.columnCount,
         innerColumns: inner.columns,
         members: sorted,
@@ -91,7 +90,7 @@ export function columnGroupNames(
   const names: (string | null)[] = new Array(layout.columnCount).fill(null)
   for (const { entry, column } of layout.positioned) {
     if (entry.groupName === undefined || names[column] !== null) continue
-    if (entry.start <= bottomYear && (entry.end ?? entry.start) >= topYear) {
+    if (entry.start <= bottomYear && endYear(entry) >= topYear) {
       names[column] = entry.groupName
     }
   }

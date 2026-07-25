@@ -1,4 +1,5 @@
 import type { Entry } from '../data/schema'
+import { endYear } from './entry'
 
 const ROUNDING_YEARS = 100
 const AXIS_MARGIN_YEARS = 100
@@ -14,7 +15,7 @@ export function dataYearRange(entries: Entry[]): YearRange {
   let latest = Number.NEGATIVE_INFINITY
   for (const entry of entries) {
     earliest = Math.min(earliest, entry.start)
-    latest = Math.max(latest, entry.end ?? entry.start)
+    latest = Math.max(latest, endYear(entry))
   }
   const minYear = Math.floor(earliest / ROUNDING_YEARS) * ROUNDING_YEARS
   const maxYear = Math.ceil(latest / ROUNDING_YEARS) * ROUNDING_YEARS

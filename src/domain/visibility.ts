@@ -1,4 +1,5 @@
 import type { Entry } from '../data/schema'
+import { endYear } from './entry'
 
 export const TIER2_MIN_PX_PER_YEAR = 1
 export const TIER3_MIN_PX_PER_YEAR = 4
@@ -16,6 +17,6 @@ export function visibleEntries(
   maxImportance: number,
 ): Entry[] {
   return entries.filter(
-    (e) => e.importance <= maxImportance && e.start <= bottomYear && (e.end ?? e.start) >= topYear,
+    (e) => e.importance <= maxImportance && e.start <= bottomYear && endYear(e) >= topYear,
   )
 }

@@ -1,4 +1,5 @@
 import type { Entry } from '../data/schema'
+import { endYear } from '../domain/entry'
 import { formatSpan } from '../domain/format'
 import { truncateLabel } from '../domain/label'
 import type { Scale } from '../domain/scale'
@@ -25,7 +26,7 @@ type Props = {
 
 export function EntryBar({ entry, laneX, column, scale, selected, onSelect, viewportTopY }: Props) {
   const top = scale.yearToY(entry.start)
-  const bottom = scale.yearToY(entry.end ?? entry.start)
+  const bottom = scale.yearToY(endYear(entry))
   const height = Math.max(bottom - top, 2)
   const x = columnX(laneX, column)
   const showLabel = height >= LABEL_MIN_HEIGHT

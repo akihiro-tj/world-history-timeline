@@ -1,3 +1,4 @@
+import { endYear } from '../domain/entry'
 import type { Dataset } from './schema'
 
 export function validateDataset({ config, regions, entries }: Dataset): string[] {
@@ -8,7 +9,7 @@ export function validateDataset({ config, regions, entries }: Dataset): string[]
     if (seen.has(e.id)) errors.push(`duplicate id: ${e.id}`)
     seen.add(e.id)
     if (!regionIds.has(e.region)) errors.push(`${e.id}: unknown region ${e.region}`)
-    if (e.start < config.minYear || (e.end ?? e.start) > config.maxYear) {
+    if (e.start < config.minYear || endYear(e) > config.maxYear) {
       errors.push(`${e.id}: out of range`)
     }
   }
