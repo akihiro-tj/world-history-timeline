@@ -39,10 +39,11 @@ afterEach(() => {
 describe('fetchDataset', () => {
   test('3ファイルを取得し、地域を order 順に返す', async () => {
     stubFetchWith({ 'config.json': config, 'regions.json': regions, 'entries.json': entries })
-    const dataset = await fetchDataset('/base/')
-    expect(dataset.config).toEqual(config)
-    expect(dataset.regions.map((r) => r.id)).toEqual(['west-europe', 'east-asia'])
-    expect(dataset.entries).toHaveLength(1)
+    const result = await fetchDataset('/base/')
+    if (!result.ok) throw new Error('expected ok result')
+    expect(result.value.config).toEqual(config)
+    expect(result.value.regions.map((r) => r.id)).toEqual(['west-europe', 'east-asia'])
+    expect(result.value.entries).toHaveLength(1)
   })
 
   test('baseUrl からのパスで取得する', async () => {
@@ -51,17 +52,28 @@ describe('fetchDataset', () => {
     expect(vi.mocked(fetch)).toHaveBeenCalledWith('/base/data/config.json')
   })
 
-  test('HTTP エラーで reject する', async () => {
+  test('HTTP エラーで network 種別の失敗を返す', async () => {
     stubFetchWith({ 'config.json': config, 'regions.json': regions })
-    await expect(fetchDataset('/base/')).rejects.toThrow('404')
+    const result = await fetchDataset('/base/')
+    if (result.ok) throw new Error('expected error result')
+    expect(result.error).toEqual({
+      type: 'network',
+      file: 'entries',
+      url: '/base/data/entries.json',
+      status: 404,
+    })
   })
 
-  test('スキーマ違反で reject する', async () => {
+  test('スキーマ違反で validation 種別の失敗を返す', async () => {
     stubFetchWith({
       'config.json': config,
       'regions.json': regions,
       'entries.json': [{ id: 'broken' }],
     })
-    await expect(fetchDataset('/base/')).rejects.toThrow()
+    const result = await fetchDataset('/base/')
+    if (result.ok) throw new Error('expected error result')
+    if (result.error.type !== 'validation') throw new Error('expected validation error')
+    expect(result.error.file).toBe('entries')
+    expect(result.error.issues.length).toBeGreaterThan(0)
   })
 })
