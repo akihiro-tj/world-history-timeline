@@ -3,3 +3,6 @@ dist
 .superpowers/
 .pnpm-store
 .playwright-cli/
+.features-gen/
+test-results/
+playwright-report/
