@@ -1,4 +1,5 @@
 import type { Entry, Region } from '../data/schema'
+import { endYear } from './entry'
 
 export function findContemporaries(
   selected: Entry,
@@ -8,7 +9,7 @@ export function findContemporaries(
 ): Entry[] {
   const regionOrder = new Map(regions.map((r) => [r.id, r.order]))
   const start = selected.start
-  const end = selected.end ?? selected.start
+  const end = endYear(selected)
   return entries
     .filter(
       (e) =>
@@ -16,7 +17,7 @@ export function findContemporaries(
         e.region !== selected.region &&
         e.importance <= 2 &&
         e.start <= end &&
-        (e.end ?? e.start) >= start,
+        endYear(e) >= start,
     )
     .sort(
       (a, b) =>
