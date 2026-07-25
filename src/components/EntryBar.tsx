@@ -3,6 +3,7 @@ import { endYear } from '../domain/entry'
 import { formatSpan } from '../domain/format'
 import { truncateLabel } from '../domain/label'
 import type { Scale } from '../domain/scale'
+import { handleActivationKeyDown } from './keyboardActivation'
 import { COLUMN_WIDTH, columnX, LABEL_MIN_HEIGHT } from './layout'
 
 const TYPE_FILL: Record<Entry['type'], string> = {
@@ -47,12 +48,7 @@ export function EntryBar({ entry, laneX, column, scale, selected, onSelect, view
         opacity={selected ? 1 : 0.85}
         className="cursor-pointer"
         onClick={() => onSelect(entry.id)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault()
-            onSelect(entry.id)
-          }
-        }}
+        onKeyDown={(e) => handleActivationKeyDown(e, () => onSelect(entry.id))}
       >
         <title>{entry.title}</title>
       </rect>
