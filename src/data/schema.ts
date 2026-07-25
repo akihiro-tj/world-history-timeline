@@ -1,5 +1,9 @@
 import { z } from 'zod'
 
+// Why: 1 = skeletal (era-defining), 2 = major (rulers/popes/wars/treaties), 3 = detail (deep zoom only)
+const MIN_IMPORTANCE = 1
+const MAX_IMPORTANCE = 3
+
 export const configSchema = z
   .object({
     minYear: z.number().int(),
@@ -22,7 +26,7 @@ const baseEntryFields = {
   title: z.string().min(1),
   reading: z.string().regex(/^[ぁ-ゖー・\s]+$/),
   start: z.number().int(),
-  importance: z.number().int().min(1).max(3),
+  importance: z.number().int().min(MIN_IMPORTANCE).max(MAX_IMPORTANCE),
   description: z.string().min(1),
 }
 

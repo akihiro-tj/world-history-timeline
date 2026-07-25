@@ -11,6 +11,15 @@ export type LaneLayout = {
   positioned: PositionedEntry[]
 }
 
+type GroupLayout = {
+  key: string
+  start: number
+  end: number
+  width: number
+  innerColumns: number[]
+  members: Entry[]
+}
+
 function packIntervals(intervals: { start: number; end: number }[]): {
   columnCount: number
   columns: number[]
@@ -25,22 +34,22 @@ function packIntervals(intervals: { start: number; end: number }[]): {
   return { columnCount: Math.max(ends.length, 1), columns }
 }
 
+function isRangeFree(columnEnds: number[], base: number, width: number, start: number): boolean {
+  for (let i = 0; i < width; i++) {
+    const end = columnEnds[base + i]
+    if (end !== undefined && end > start) return false
+  }
+  return true
+}
+
 function findSlot(columnEnds: number[], start: number, width: number): number {
   for (let base = 0; base <= columnEnds.length; base++) {
-    let free = true
-    for (let i = 0; i < width; i++) {
-      const end = columnEnds[base + i]
-      if (end !== undefined && end > start) {
-        free = false
-        break
-      }
-    }
-    if (free) return base
+    if (isRangeFree(columnEnds, base, width, start)) return base
   }
   return columnEnds.length
 }
 
-export function packLane(entries: Entry[]): LaneLayout {
+function groupByGroupKey(entries: Entry[]): Map<string, Entry[]> {
   const byGroup = new Map<string, Entry[]>()
   for (const e of entries) {
     const key = e.group ?? `solo:${e.id}`
@@ -48,8 +57,11 @@ export function packLane(entries: Entry[]): LaneLayout {
     if (members) members.push(e)
     else byGroup.set(key, [e])
   }
+  return byGroup
+}
 
-  const groups = [...byGroup.entries()]
+function computeGroupLayouts(byGroup: Map<string, Entry[]>): GroupLayout[] {
+  return [...byGroup.entries()]
     .map(([key, members]) => {
       const sorted = [...members].sort((a, b) => a.start - b.start || a.id.localeCompare(b.id))
       const inner = packIntervals(sorted.map((e) => ({ start: e.start, end: endYear(e) })))
@@ -63,7 +75,9 @@ export function packLane(entries: Entry[]): LaneLayout {
       }
     })
     .sort((a, b) => a.start - b.start || a.key.localeCompare(b.key))
+}
 
+function placeGroupsInLane(groups: GroupLayout[]): LaneLayout {
   const columnEnds: number[] = []
   const positioned: PositionedEntry[] = []
   for (const group of groups) {
@@ -82,6 +96,24 @@ export function packLane(entries: Entry[]): LaneLayout {
   return { columnCount: Math.max(columnEnds.length, 1), positioned }
 }
 
+export function packLane(entries: Entry[]): LaneLayout {
+  const byGroup = groupByGroupKey(entries)
+  const groups = computeGroupLayouts(byGroup)
+  return placeGroupsInLane(groups)
+}
+
+function isColumnAvailableForGroupName(
+  entry: Entry,
+  names: (string | null)[],
+  column: number,
+): boolean {
+  return entry.groupName !== undefined && names[column] === null
+}
+
+function isVisibleInYearRange(entry: Entry, topYear: number, bottomYear: number): boolean {
+  return entry.start <= bottomYear && endYear(entry) >= topYear
+}
+
 export function columnGroupNames(
   layout: LaneLayout,
   topYear: number,
@@ -89,9 +121,9 @@ export function columnGroupNames(
 ): (string | null)[] {
   const names: (string | null)[] = new Array(layout.columnCount).fill(null)
   for (const { entry, column } of layout.positioned) {
-    if (entry.groupName === undefined || names[column] !== null) continue
-    if (entry.start <= bottomYear && endYear(entry) >= topYear) {
-      names[column] = entry.groupName
+    if (!isColumnAvailableForGroupName(entry, names, column)) continue
+    if (isVisibleInYearRange(entry, topYear, bottomYear)) {
+      names[column] = entry.groupName ?? null
     }
   }
   return names

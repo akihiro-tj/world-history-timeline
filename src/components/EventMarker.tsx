@@ -2,11 +2,13 @@ import type { Entry } from '../data/schema'
 import { formatYear } from '../domain/format'
 import { truncateLabel } from '../domain/label'
 import type { Scale } from '../domain/scale'
+import { handleActivationKeyDown } from './keyboardActivation'
 import { columnX } from './layout'
 
 const LABEL_FONT_SIZE_PX = 11
 const LABEL_OFFSET_X = 16
 const LABEL_MARGIN_RIGHT = 4
+const MARKER_RADIUS_PX = 6
 
 type Props = {
   entry: Entry
@@ -22,7 +24,7 @@ export function EventMarker({ entry, laneX, column, scale, selected, onSelect, s
   const y = scale.yearToY(entry.start)
   const x = columnX(laneX, column)
   const labelMaxWidth = svgWidth - (x + LABEL_OFFSET_X) - LABEL_MARGIN_RIGHT
-  const diamondPath = `M ${x + 6} ${y - 6} L ${x + 12} ${y} L ${x + 6} ${y + 6} L ${x} ${y} Z`
+  const diamondPath = `M ${x + MARKER_RADIUS_PX} ${y - MARKER_RADIUS_PX} L ${x + MARKER_RADIUS_PX * 2} ${y} L ${x + MARKER_RADIUS_PX} ${y + MARKER_RADIUS_PX} L ${x} ${y} Z`
   return (
     <g
       role="button"
@@ -31,12 +33,7 @@ export function EventMarker({ entry, laneX, column, scale, selected, onSelect, s
       aria-pressed={selected}
       className="cursor-pointer"
       onClick={() => onSelect(entry.id)}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault()
-          onSelect(entry.id)
-        }
-      }}
+      onKeyDown={(e) => handleActivationKeyDown(e, () => onSelect(entry.id))}
     >
       <title>{entry.title}</title>
       <path d={diamondPath} fill="var(--color-event)" />

@@ -1,6 +1,9 @@
 import type { Entry, Region } from '../data/schema'
 import { endYear } from './entry'
 
+// Why: detail-level entries (importance 3) are excluded from the "contemporaries" view
+const MAX_CONTEMPORARY_IMPORTANCE = 2
+
 export function findContemporaries(
   selected: Entry,
   entries: Entry[],
@@ -10,15 +13,16 @@ export function findContemporaries(
   const regionOrder = new Map(regions.map((r) => [r.id, r.order]))
   const start = selected.start
   const end = endYear(selected)
+
+  const isEligibleContemporary = (e: Entry): boolean =>
+    e.id !== selected.id &&
+    e.region !== selected.region &&
+    e.importance <= MAX_CONTEMPORARY_IMPORTANCE &&
+    e.start <= end &&
+    endYear(e) >= start
+
   return entries
-    .filter(
-      (e) =>
-        e.id !== selected.id &&
-        e.region !== selected.region &&
-        e.importance <= 2 &&
-        e.start <= end &&
-        endYear(e) >= start,
-    )
+    .filter(isEligibleContemporary)
     .sort(
       (a, b) =>
         (regionOrder.get(a.region) ?? 0) - (regionOrder.get(b.region) ?? 0) || a.start - b.start,
