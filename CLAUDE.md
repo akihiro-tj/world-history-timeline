@@ -10,6 +10,7 @@ Vite + React + TypeScript の静的 SPA で、Cloudflare Workers の静的アセ
 | `pnpm dev` | 開発サーバー |
 | `pnpm test` | 全テスト実行（Vitest） |
 | `pnpm vitest run <path>` | 単一テストファイルの実行 |
+| `pnpm test:e2e` | E2E テスト実行（playwright-bdd、`tests/e2e/`） |
 | `pnpm typecheck` / `pnpm lint` / `pnpm format` | tsc / Biome check / Biome format |
 | `pnpm validate-data` | 年表データのスキーマ検証 |
 | `pnpm build` | validate-data + typecheck + vite build |
@@ -24,6 +25,9 @@ Vite + React + TypeScript の静的 SPA で、Cloudflare Workers の静的アセ
 - `src/data/` — zod スキーマ（`schema.ts` が型の一次情報）、横断検証、fetch
 - `public/data/*.json` — 年表データの正。`scripts/validate-data.ts` が CI と
   ビルド前に検証する
+- `tests/e2e/` — Gherkin（`features/`）+ playwright-bdd（`steps/`）による E2E。
+  実ブラウザでのリロード・カラースキーム・レイアウト崩れなど jsdom で
+  再現できない領域と、主要な操作の流れを検証する
 
 ## 規約
 
@@ -37,7 +41,9 @@ Vite + React + TypeScript の静的 SPA で、Cloudflare Workers の静的アセ
 - UI 文言は日本語、コミットメッセージは英語（conventional commits）
 - コード内コメントは英語で書く（UI 文言・ドキュメントは日本語、コード内コメントは英語）
 - main への直接コミット・push は避け、PR 経由で変更する（CI green を必須とする）
-- ドメイン層は必ず単体テスト。UI は主要動線を RTL でカバーする
+- ドメイン層は必ず単体テスト。UI は主要動線を RTL でカバーする。実ブラウザ
+  でしか確認できない挙動（リロード・カラースキーム・レスポンシブ配置）は
+  `tests/e2e/` の E2E でカバーする
 
 ## データ作成（public/data/entries.json）
 
