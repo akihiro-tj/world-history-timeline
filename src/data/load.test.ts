@@ -32,6 +32,32 @@ function stubFetchWith(bodies: Record<string, unknown>) {
   )
 }
 
+function stubFetchRejectingFor(file: string, bodies: Record<string, unknown>) {
+  vi.stubGlobal(
+    'fetch',
+    vi.fn(async (url: string) => {
+      const name = String(url).split('/').pop() ?? ''
+      if (name === file) throw new Error('network down')
+      const body = bodies[name]
+      if (body === undefined) return new Response('not found', { status: 404 })
+      return new Response(JSON.stringify(body))
+    }),
+  )
+}
+
+function stubFetchWithInvalidJsonFor(file: string, bodies: Record<string, unknown>) {
+  vi.stubGlobal(
+    'fetch',
+    vi.fn(async (url: string) => {
+      const name = String(url).split('/').pop() ?? ''
+      if (name === file) return new Response('not valid json')
+      const body = bodies[name]
+      if (body === undefined) return new Response('not found', { status: 404 })
+      return new Response(JSON.stringify(body))
+    }),
+  )
+}
+
 afterEach(() => {
   vi.unstubAllGlobals()
 })
@@ -52,16 +78,36 @@ describe('fetchDataset', () => {
     expect(vi.mocked(fetch)).toHaveBeenCalledWith('/base/data/config.json')
   })
 
-  test('HTTP エラーで network 種別の失敗を返す', async () => {
+  test('HTTP エラーで http 種別の失敗を返す', async () => {
     stubFetchWith({ 'config.json': config, 'regions.json': regions })
     const result = await fetchDataset('/base/')
     if (result.ok) throw new Error('expected error result')
     expect(result.error).toEqual({
-      type: 'network',
+      type: 'http',
       file: 'entries',
       url: '/base/data/entries.json',
       status: 404,
     })
+  })
+
+  test('fetch が reject しても network 種別の失敗を返す（reject しない）', async () => {
+    stubFetchRejectingFor('entries.json', { 'config.json': config, 'regions.json': regions })
+    const result = await fetchDataset('/base/')
+    if (result.ok) throw new Error('expected error result')
+    if (result.error.type !== 'network') throw new Error('expected network error')
+    expect(result.error.file).toBe('entries')
+    expect(result.error.url).toBe('/base/data/entries.json')
+    expect(result.error.cause).toBeInstanceOf(Error)
+  })
+
+  test('レスポンスが JSON として読めなくても invalid-json 種別の失敗を返す', async () => {
+    stubFetchWithInvalidJsonFor('entries.json', { 'config.json': config, 'regions.json': regions })
+    const result = await fetchDataset('/base/')
+    if (result.ok) throw new Error('expected error result')
+    if (result.error.type !== 'invalid-json') throw new Error('expected invalid-json error')
+    expect(result.error.file).toBe('entries')
+    expect(result.error.url).toBe('/base/data/entries.json')
+    expect(result.error.cause).toBeDefined()
   })
 
   test('スキーマ違反で validation 種別の失敗を返す', async () => {

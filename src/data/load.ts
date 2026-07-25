@@ -5,18 +5,33 @@ import { configSchema, type Dataset, entriesSchema, regionsSchema } from './sche
 export type DatasetFile = 'config' | 'regions' | 'entries'
 
 export type DatasetError =
-  | { type: 'network'; file: DatasetFile; url: string; status: number }
+  | { type: 'network'; file: DatasetFile; url: string; cause: unknown }
+  | { type: 'http'; file: DatasetFile; url: string; status: number }
+  | { type: 'invalid-json'; file: DatasetFile; url: string; cause: unknown }
   | { type: 'validation'; file: DatasetFile; issues: z.core.$ZodIssue[] }
 
+// Every await here is wrapped so this never rejects: callers rely on
+// fetchDataset always resolving to a Result, never throwing.
 async function fetchDatasetFile<T>(
   file: DatasetFile,
   url: string,
   schema: z.ZodType<T>,
 ): Promise<Result<T, DatasetError>> {
-  const res = await fetch(url)
-  if (!res.ok) return err({ type: 'network', file, url, status: res.status })
+  let res: Response
+  try {
+    res = await fetch(url)
+  } catch (cause) {
+    return err({ type: 'network', file, url, cause })
+  }
+  if (!res.ok) return err({ type: 'http', file, url, status: res.status })
 
-  const json = await res.json()
+  let json: unknown
+  try {
+    json = await res.json()
+  } catch (cause) {
+    return err({ type: 'invalid-json', file, url, cause })
+  }
+
   const parsed = schema.safeParse(json)
   return parsed.success
     ? ok(parsed.data)
