@@ -6,6 +6,11 @@ updates:
       interval: weekly
     cooldown:
       default-days: 7
+    ignore:
+      # @types/node major versions track Node.js runtime majors; the CI/engines
+      # major is pinned, so major bumps here would desync types from the runtime.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: github-actions
     directory: /
     schedule:
