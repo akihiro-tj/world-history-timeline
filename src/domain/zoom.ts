@@ -1,3 +1,5 @@
+import { TIER3_MIN_PX_PER_YEAR } from './visibility'
+
 export type ZoomState = {
   pxPerYear: number
   scrollTop: number
@@ -9,7 +11,7 @@ const WHEEL_FACTOR_MAX = 1.25
 
 const FIT_ALL_SCREENS = 2.5
 const CENTURY_YEARS = 100
-const TIER3_GUARANTEE_PX_PER_YEAR = 5
+const TIER3_GUARANTEE_PX_PER_YEAR = TIER3_MIN_PX_PER_YEAR + 1
 
 export const INITIAL_FOCUS_YEAR = 1500
 const INITIAL_VIEW_YEARS = 500
@@ -28,7 +30,6 @@ export function initialPxPerYear(viewportHeight: number): number {
 }
 
 export function maxPxPerYear(viewportHeight: number): number {
-  // 5 = lower bound that reliably exceeds TIER3_MIN_PX_PER_YEAR(4) in visibility.ts
   return Math.max(viewportHeight / CENTURY_YEARS, TIER3_GUARANTEE_PX_PER_YEAR)
 }
 
