@@ -1,6 +1,6 @@
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vitest/config'
+import { configDefaults, defineConfig } from 'vitest/config'
 
 // Why: Node 25+ は Web Storage API がデフォルト有効になり、vitest の jsdom 環境が
 // window.localStorage を注入する仕組みと衝突して localStorage が undefined になる。
@@ -13,5 +13,9 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: './src/test/setup.ts',
     execArgv: nodeMajorVersion >= 25 ? ['--no-experimental-webstorage'] : [],
+    // Why: playwright-bdd generates *.feature.spec.js files that use the
+    // Playwright test runner's own test.describe, which vitest's default
+    // include glob would otherwise pick up and fail to run.
+    exclude: [...configDefaults.exclude, '.features-gen/**', 'tests/e2e/**'],
   },
 })

@@ -49,6 +49,16 @@
           }
         }
       }
+    },
+    {
+      "includes": ["tests/e2e/steps/**/*.ts"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noEmptyPattern": "off"
+          }
+        }
+      }
     }
   ]
 }
