@@ -21,7 +21,9 @@ Vite + React + TypeScript の静的 SPA で、Cloudflare Workers の静的アセ
 - `src/domain/` — React 非依存の純粋関数（スケール、group パッキング、目盛、
   importance フィルタ、検索解釈、同時代抽出、ズーム計算、年表示整形）。
   ロジック変更はまずここのテストから始める
-- `src/components/` — SVG 描画と UI。状態は `TimelinePage` に集約されている
+- `src/components/` — SVG 描画と UI。`TimelinePage` は各フックを組み合わせる薄い層
+- `src/hooks/` — 状態と副作用（データ取得、ズーム、レーンレイアウト、ジャンプ、
+  ポインタ操作、端フェード、オンボーディング、カラーテーマ）
 - `src/data/` — zod スキーマ（`schema.ts` が型の一次情報）、横断検証、fetch
 - `public/data/*.json` — 年表データの正。`scripts/validate-data.ts` が CI と
   ビルド前に検証する
