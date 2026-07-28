@@ -29,10 +29,3 @@ Then('{string}の高さが記録した高さより高い', async ({ page, ctx },
   const height = await page.getByRole('button', { name }).getAttribute('height')
   expect(Number(height)).toBeGreaterThan(recorded)
 })
-
-Then('{string}の高さが記録した高さより低い', async ({ page, ctx }, name: string) => {
-  const recorded = ctx.heights[name]
-  if (recorded === undefined) throw new Error(`no recorded height for "${name}"`)
-  const height = await page.getByRole('button', { name }).getAttribute('height')
-  expect(Number(height)).toBeLessThan(recorded)
-})
