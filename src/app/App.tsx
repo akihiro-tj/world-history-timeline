@@ -7,6 +7,8 @@ import { initialOrientation } from "../timeline/scroll";
 import type { Subject } from "../timeline/spans";
 import { Timeline } from "../timeline/Timeline";
 import { COPY } from "./copy";
+import { HorizontalIcon, VerticalIcon } from "./icons";
+import { SubjectSelect } from "./SubjectSelect";
 import { ToggleGroup } from "./ToggleGroup";
 
 type State = { status: "loading" } | { status: "error" } | { status: "ready"; data: TimelineData };
@@ -17,8 +19,8 @@ const SUBJECTS = [
 ] as const;
 
 const ORIENTATIONS = [
-  { value: "vertical", label: COPY.orientationVertical },
-  { value: "horizontal", label: COPY.orientationHorizontal },
+  { value: "vertical", label: COPY.orientationVertical, icon: <VerticalIcon /> },
+  { value: "horizontal", label: COPY.orientationHorizontal, icon: <HorizontalIcon /> },
 ] as const;
 
 export function App() {
@@ -47,7 +49,7 @@ export function App() {
   return (
     <div className="flex h-dvh flex-col bg-surface font-body text-body text-on-surface">
       <header className="flex items-center justify-between gap-sm border-b border-border p-sm">
-        <ToggleGroup
+        <SubjectSelect
           label={COPY.subjectLabel}
           options={SUBJECTS}
           value={subject}

@@ -1,5 +1,8 @@
-// aria-pressed のトグルボタンを並べた切り替え
-type Option<T extends string> = { value: T; label: string };
+// 表示の設定（向き）を選ぶ、アイコンのトグルボタンの並び。選んだ側に下線と薄い地を付ける。
+// アイコンだけを出すので、名前は読み上げ（aria-label）とツールチップ（title）で示す
+import type { ReactNode } from "react";
+
+type Option<T extends string> = { value: T; label: string; icon: ReactNode };
 
 type Props<T extends string> = {
   label: string;
@@ -12,17 +15,19 @@ export function ToggleGroup<T extends string>({ label, options, value, onChange 
   return (
     <fieldset
       aria-label={label}
-      className="inline-flex overflow-hidden rounded-md border border-border font-label text-label"
+      className="inline-flex overflow-hidden rounded-md border border-border"
     >
-      {options.map((option) => (
+      {options.map((option, index) => (
         <button
           key={option.value}
           type="button"
           aria-pressed={option.value === value}
+          aria-label={option.label}
+          title={option.label}
           onClick={() => onChange(option.value)}
-          className="px-md py-xs aria-pressed:bg-primary aria-pressed:text-on-primary focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary"
+          className={`inline-flex min-h-(--spacing-tap) min-w-(--spacing-tap) items-center justify-center px-sm text-muted ${index > 0 ? "border-l border-border" : ""} aria-pressed:bg-surface-subtle aria-pressed:text-primary aria-pressed:shadow-[inset_0_-2px_0_var(--color-primary)] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary`}
         >
-          {option.label}
+          {option.icon}
         </button>
       ))}
     </fieldset>
