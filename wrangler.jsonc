@@ -7,5 +7,8 @@
   "preview_urls": true,
   // Worker スクリプトは置かず、静的アセットだけで配信する（spec §5.3）
   "assets": { "directory": "./dist" },
+  // Worker Previews（wrangler preview）はこのブロックが無いと作成できない。
+  // 本番と違う設定が要らないので空にしておく
+  "previews": {},
   "observability": { "enabled": true }
 }
