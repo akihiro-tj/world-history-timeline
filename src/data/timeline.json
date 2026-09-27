@@ -1,1 +1,479 @@
-{ "lanes": [], "dynasties": [], "people": [], "reigns": [] }
+{
+  "lanes": [
+    {
+      "id": "france",
+      "name": "フランク王国・フランス",
+      "dynasties": [
+        "merovingian",
+        "carolingian",
+        "capetian",
+        "valois"
+      ],
+      "reigns": [
+        "clovis",
+        "pippin",
+        "charlemagne",
+        "louis-i",
+        "hugues-capet",
+        "philippe-ii",
+        "louis-ix",
+        "philippe-iv",
+        "charles-vii"
+      ]
+    },
+    {
+      "id": "england",
+      "name": "イングランド",
+      "dynasties": [
+        "danish",
+        "norman",
+        "plantagenet",
+        "lancaster",
+        "york",
+        "tudor"
+      ],
+      "reigns": [
+        "egbert",
+        "alfred",
+        "cnut",
+        "william-i",
+        "henry-ii",
+        "john",
+        "henry-iii",
+        "edward-i",
+        "edward-iii",
+        "henry-vii"
+      ]
+    }
+  ],
+  "dynasties": [
+    {
+      "id": "merovingian",
+      "name": "メロヴィング朝",
+      "start": {
+        "year": 481,
+        "circa": false
+      },
+      "end": {
+        "year": 751,
+        "circa": false
+      }
+    },
+    {
+      "id": "carolingian",
+      "name": "カロリング朝",
+      "start": {
+        "year": 751,
+        "circa": false
+      },
+      "end": {
+        "year": 987,
+        "circa": false
+      }
+    },
+    {
+      "id": "capetian",
+      "name": "カペー朝",
+      "start": {
+        "year": 987,
+        "circa": false
+      },
+      "end": {
+        "year": 1328,
+        "circa": false
+      }
+    },
+    {
+      "id": "valois",
+      "name": "ヴァロワ朝",
+      "start": {
+        "year": 1328,
+        "circa": false
+      },
+      "end": {
+        "year": 1589,
+        "circa": false
+      }
+    },
+    {
+      "id": "danish",
+      "name": "デーン朝",
+      "start": {
+        "year": 1016,
+        "circa": false
+      },
+      "end": {
+        "year": 1042,
+        "circa": false
+      }
+    },
+    {
+      "id": "norman",
+      "name": "ノルマン朝",
+      "start": {
+        "year": 1066,
+        "circa": false
+      },
+      "end": {
+        "year": 1154,
+        "circa": false
+      }
+    },
+    {
+      "id": "plantagenet",
+      "name": "プランタジネット朝",
+      "start": {
+        "year": 1154,
+        "circa": false
+      },
+      "end": {
+        "year": 1399,
+        "circa": false
+      }
+    },
+    {
+      "id": "lancaster",
+      "name": "ランカスター家",
+      "start": {
+        "year": 1399,
+        "circa": false
+      },
+      "end": {
+        "year": 1461,
+        "circa": false
+      }
+    },
+    {
+      "id": "york",
+      "name": "ヨーク家",
+      "start": {
+        "year": 1461,
+        "circa": false
+      },
+      "end": {
+        "year": 1485,
+        "circa": false
+      }
+    },
+    {
+      "id": "tudor",
+      "name": "テューダー朝",
+      "start": {
+        "year": 1485,
+        "circa": false
+      },
+      "end": {
+        "year": 1603,
+        "circa": false
+      }
+    }
+  ],
+  "people": [
+    {
+      "id": "clovis",
+      "name": "クローヴィス"
+    },
+    {
+      "id": "pippin",
+      "name": "ピピン"
+    },
+    {
+      "id": "charlemagne",
+      "name": "カール大帝"
+    },
+    {
+      "id": "louis-i",
+      "name": "ルートヴィヒ1世"
+    },
+    {
+      "id": "hugues-capet",
+      "name": "ユーグ=カペー"
+    },
+    {
+      "id": "philippe-ii",
+      "name": "フィリップ2世"
+    },
+    {
+      "id": "louis-ix",
+      "name": "ルイ9世"
+    },
+    {
+      "id": "philippe-iv",
+      "name": "フィリップ4世"
+    },
+    {
+      "id": "charles-vii",
+      "name": "シャルル7世"
+    },
+    {
+      "id": "egbert",
+      "name": "エグバート"
+    },
+    {
+      "id": "alfred",
+      "name": "アルフレッド大王"
+    },
+    {
+      "id": "cnut",
+      "name": "クヌート"
+    },
+    {
+      "id": "william-i",
+      "name": "ウィリアム1世"
+    },
+    {
+      "id": "henry-ii",
+      "name": "ヘンリ2世"
+    },
+    {
+      "id": "john",
+      "name": "ジョン王"
+    },
+    {
+      "id": "henry-iii",
+      "name": "ヘンリ3世"
+    },
+    {
+      "id": "edward-i",
+      "name": "エドワード1世"
+    },
+    {
+      "id": "edward-iii",
+      "name": "エドワード3世"
+    },
+    {
+      "id": "henry-vii",
+      "name": "ヘンリ7世"
+    }
+  ],
+  "reigns": [
+    {
+      "id": "clovis",
+      "personId": "clovis",
+      "start": {
+        "year": 481,
+        "circa": false
+      },
+      "end": {
+        "year": 511,
+        "circa": false
+      }
+    },
+    {
+      "id": "pippin",
+      "personId": "pippin",
+      "start": {
+        "year": 751,
+        "circa": false
+      },
+      "end": {
+        "year": 768,
+        "circa": false
+      }
+    },
+    {
+      "id": "charlemagne",
+      "personId": "charlemagne",
+      "start": {
+        "year": 768,
+        "circa": false
+      },
+      "end": {
+        "year": 814,
+        "circa": false
+      }
+    },
+    {
+      "id": "louis-i",
+      "personId": "louis-i",
+      "start": {
+        "year": 814,
+        "circa": false
+      },
+      "end": {
+        "year": 840,
+        "circa": false
+      }
+    },
+    {
+      "id": "hugues-capet",
+      "personId": "hugues-capet",
+      "start": {
+        "year": 987,
+        "circa": false
+      },
+      "end": {
+        "year": 996,
+        "circa": false
+      }
+    },
+    {
+      "id": "philippe-ii",
+      "personId": "philippe-ii",
+      "start": {
+        "year": 1180,
+        "circa": false
+      },
+      "end": {
+        "year": 1223,
+        "circa": false
+      }
+    },
+    {
+      "id": "louis-ix",
+      "personId": "louis-ix",
+      "start": {
+        "year": 1226,
+        "circa": false
+      },
+      "end": {
+        "year": 1270,
+        "circa": false
+      }
+    },
+    {
+      "id": "philippe-iv",
+      "personId": "philippe-iv",
+      "start": {
+        "year": 1285,
+        "circa": false
+      },
+      "end": {
+        "year": 1314,
+        "circa": false
+      }
+    },
+    {
+      "id": "charles-vii",
+      "personId": "charles-vii",
+      "start": {
+        "year": 1422,
+        "circa": false
+      },
+      "end": {
+        "year": 1461,
+        "circa": false
+      }
+    },
+    {
+      "id": "egbert",
+      "personId": "egbert",
+      "start": {
+        "year": 802,
+        "circa": false
+      },
+      "end": {
+        "year": 839,
+        "circa": false
+      }
+    },
+    {
+      "id": "alfred",
+      "personId": "alfred",
+      "start": {
+        "year": 871,
+        "circa": false
+      },
+      "end": {
+        "year": 899,
+        "circa": false
+      }
+    },
+    {
+      "id": "cnut",
+      "personId": "cnut",
+      "start": {
+        "year": 1016,
+        "circa": false
+      },
+      "end": {
+        "year": 1035,
+        "circa": false
+      }
+    },
+    {
+      "id": "william-i",
+      "personId": "william-i",
+      "start": {
+        "year": 1066,
+        "circa": false
+      },
+      "end": {
+        "year": 1087,
+        "circa": false
+      }
+    },
+    {
+      "id": "henry-ii",
+      "personId": "henry-ii",
+      "start": {
+        "year": 1154,
+        "circa": false
+      },
+      "end": {
+        "year": 1189,
+        "circa": false
+      }
+    },
+    {
+      "id": "john",
+      "personId": "john",
+      "start": {
+        "year": 1199,
+        "circa": false
+      },
+      "end": {
+        "year": 1216,
+        "circa": false
+      }
+    },
+    {
+      "id": "henry-iii",
+      "personId": "henry-iii",
+      "start": {
+        "year": 1216,
+        "circa": false
+      },
+      "end": {
+        "year": 1272,
+        "circa": false
+      }
+    },
+    {
+      "id": "edward-i",
+      "personId": "edward-i",
+      "start": {
+        "year": 1272,
+        "circa": false
+      },
+      "end": {
+        "year": 1307,
+        "circa": false
+      }
+    },
+    {
+      "id": "edward-iii",
+      "personId": "edward-iii",
+      "start": {
+        "year": 1327,
+        "circa": false
+      },
+      "end": {
+        "year": 1377,
+        "circa": false
+      }
+    },
+    {
+      "id": "henry-vii",
+      "personId": "henry-vii",
+      "start": {
+        "year": 1485,
+        "circa": false
+      },
+      "end": {
+        "year": 1509,
+        "circa": false
+      }
+    }
+  ]
+}
