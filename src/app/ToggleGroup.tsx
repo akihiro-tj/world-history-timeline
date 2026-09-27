@@ -25,7 +25,7 @@ export function ToggleGroup<T extends string>({ label, options, value, onChange 
           aria-label={option.label}
           title={option.label}
           onClick={() => onChange(option.value)}
-          className={`inline-flex min-h-(--spacing-tap) min-w-(--spacing-tap) items-center justify-center px-sm text-muted ${index > 0 ? "border-l border-border" : ""} aria-pressed:bg-surface-subtle aria-pressed:text-primary aria-pressed:shadow-[inset_0_-2px_0_var(--color-primary)] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary`}
+          className={`inline-flex min-h-tap min-w-tap items-center justify-center px-sm text-muted ${index > 0 ? "border-l border-border" : ""} aria-pressed:bg-surface-subtle aria-pressed:text-primary aria-pressed:shadow-[inset_0_-2px_0_var(--color-primary)] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary`}
         >
           {option.icon}
         </button>

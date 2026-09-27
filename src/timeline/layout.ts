@@ -15,7 +15,7 @@ export const LINE_HEIGHT = 16;
 export const BAR_THICKNESS = 36;
 export const TRACK_GAP = 4;
 export const LABEL_GAP = 6;
-// 棒の中に文字を入れるときの余白の合計（両端の 1px の隙間と左右 5px ずつ）
+// 棒の中に文字を入れるときの余白の合計（両端の 1px の隙間と左右 4px ずつに、少し余裕を足す）
 const INSIDE_PADDING = 12;
 
 export type TimeRange = { from: number; to: number };

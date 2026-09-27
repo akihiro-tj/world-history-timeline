@@ -76,6 +76,18 @@ describe("parseTimeline", () => {
     expect(() => parseTimeline(data)).toThrow("存在しない id を参照しています: stuart");
   });
 
+  it("行が同じ王朝を 2 回参照していれば例外にする", () => {
+    const data = valid();
+    (data.lanes[0] as { dynasties: string[] }).dynasties = ["tudor", "tudor"];
+    expect(() => parseTimeline(data)).toThrow("同じ id を 2 回参照しています: tudor");
+  });
+
+  it("id の形式が不正なら例外にする", () => {
+    const data = valid();
+    (data.people[0] as { id: string }).id = "Henry VII";
+    expect(() => parseTimeline(data)).toThrow("id が不正です");
+  });
+
   it("id が重複していれば例外にする", () => {
     const data = valid();
     data.people.push({ id: "henry-vii", name: "ヘンリ7世" });

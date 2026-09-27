@@ -1,6 +1,6 @@
 // design.md export --format css-tailwind の出力を Tailwind v4 でそのまま使える形に直す
 // - フォントの並び全体が 1 つの名前として引用符で囲まれるので、名前ごとに囲み直す
-// - @theme のままだと未使用の変数が出力されず、地図の色を CSS 変数から読めないので static にする
+// - @theme のままだと未使用の変数が出力されないので、すべてのトークンを CSS 変数として残すために static にする
 
 const GENERIC_FAMILIES = new Set([
   "serif",

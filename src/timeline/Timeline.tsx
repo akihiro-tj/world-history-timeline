@@ -2,6 +2,7 @@
 import { type CSSProperties, useLayoutEffect, useMemo, useRef } from "react";
 import { COPY } from "../app/copy";
 import type { TimelineData } from "../data/timeline";
+import { formatYear } from "./format";
 import {
   BAR_THICKNESS,
   type BarLayout,
@@ -51,8 +52,13 @@ export function Timeline({ data, subject, orientation }: Props) {
   // 切り替えの前に中央にあった年を、切り替えの後も中央に置く
   useLayoutEffect(() => {
     const scroller = scrollerRef.current;
+    if (!scroller || !range || !lanes) return;
     const year = centerRef.current;
-    if (!scroller || !range || !lanes || year === null) return;
+    // まだスクロールしていなければ、いまの中央の年を覚えておく
+    if (year === null) {
+      centerRef.current = currentCenter(scroller, orientation, axisOffset, range);
+      return;
+    }
     if (orientation === "vertical") {
       scroller.scrollTop = scrollStartFor(
         year,
@@ -75,10 +81,7 @@ export function Timeline({ data, subject, orientation }: Props) {
   function handleScroll() {
     const scroller = scrollerRef.current;
     if (!scroller || !range) return;
-    centerRef.current =
-      orientation === "vertical"
-        ? centerYear(scroller.scrollTop, scroller.clientHeight, axisOffset, range)
-        : centerYear(scroller.scrollLeft, scroller.clientWidth, axisOffset, range);
+    centerRef.current = currentCenter(scroller, orientation, axisOffset, range);
   }
 
   return (
@@ -106,6 +109,17 @@ export function Timeline({ data, subject, orientation }: Props) {
         ))}
     </section>
   );
+}
+
+function currentCenter(
+  scroller: HTMLElement,
+  orientation: Orientation,
+  axisOffset: number,
+  range: TimeRange,
+): number {
+  return orientation === "vertical"
+    ? centerYear(scroller.scrollTop, scroller.clientHeight, axisOffset, range)
+    : centerYear(scroller.scrollLeft, scroller.clientWidth, axisOffset, range);
 }
 
 type LaneEntry = { lane: TimelineData["lanes"][number]; layout: LaneLayout };
@@ -153,10 +167,10 @@ function Horizontal({ range, lanes }: { range: TimeRange; lanes: LaneEntry[] }) 
         {years.map((year) => (
           <span
             key={year}
-            className="absolute top-1 pl-1 font-caption text-caption text-muted"
+            className="absolute top-xs pl-xs font-caption text-caption text-muted"
             style={{ left: yearToOffset(year, range) }}
           >
-            {year}
+            {formatYear({ year, circa: false })}
           </span>
         ))}
       </div>
@@ -172,13 +186,13 @@ function Horizontal({ range, lanes }: { range: TimeRange; lanes: LaneEntry[] }) 
                 style={{ left: yearToOffset(year, range) }}
               />
             ))}
-            <h2 className="sticky left-0 z-10 inline-block border-r border-b border-border bg-surface px-2 font-heading text-heading">
+            <h2 className="sticky left-0 z-10 inline-block border-r border-b border-border bg-surface px-sm font-heading text-heading">
               {lane.name}
             </h2>
             {layout.bars.map((bar, i) => (
               <div
                 key={bar.span.id}
-                className={`${barClass(i)} px-1 font-caption text-caption`}
+                className={`${barClass(i)} px-xs font-caption text-caption`}
                 style={{
                   ...textStyle,
                   left: bar.offset + 1,
@@ -235,7 +249,7 @@ function Vertical({ range, lanes }: { range: TimeRange; lanes: LaneEntry[] }) {
       {lanes.map(({ lane }) => (
         <h2
           key={lane.id}
-          className="sticky top-0 z-20 flex items-center border-b border-l border-border bg-surface px-2 font-heading text-heading"
+          className="sticky top-0 z-20 flex items-center border-b border-l border-border bg-surface px-sm font-heading text-heading"
           style={{ height: HEADER_HEIGHT }}
         >
           <span className="truncate">{lane.name}</span>
@@ -245,10 +259,10 @@ function Vertical({ range, lanes }: { range: TimeRange; lanes: LaneEntry[] }) {
         {years.map((year) => (
           <span
             key={year}
-            className="absolute left-1 font-caption text-caption text-muted"
+            className="absolute left-xs font-caption text-caption text-muted"
             style={{ top: yearToOffset(year, range) }}
           >
-            {year}
+            {formatYear({ year, circa: false })}
           </span>
         ))}
       </div>
@@ -272,7 +286,7 @@ function Vertical({ range, lanes }: { range: TimeRange; lanes: LaneEntry[] }) {
             {layout.bars.map((bar, i) => (
               <div
                 key={bar.span.id}
-                className={`${barClass(i)} truncate px-1 font-caption text-caption`}
+                className={`${barClass(i)} truncate px-xs font-caption text-caption`}
                 style={{
                   ...textStyle,
                   top: bar.offset + 1,
@@ -285,7 +299,7 @@ function Vertical({ range, lanes }: { range: TimeRange; lanes: LaneEntry[] }) {
                 {bar.labelRow === null && (
                   <>
                     {bar.span.name}
-                    <span className="ml-1 text-muted">{bar.period}</span>
+                    <span className="ml-xs text-muted">{bar.period}</span>
                   </>
                 )}
               </div>

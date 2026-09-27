@@ -73,9 +73,12 @@ function unique<T extends { id: string }>(items: T[], where: string): Map<string
 }
 
 function references(value: unknown, known: Map<string, unknown>, where: string): string[] {
+  const seen = new Set<string>();
   return array(value, where).map((item, i) => {
     const ref = id(item, `${where}[${i}]`);
     if (!known.has(ref)) fail(`${where}[${i}]`, `存在しない id を参照しています: ${ref}`);
+    if (seen.has(ref)) fail(`${where}[${i}]`, `同じ id を 2 回参照しています: ${ref}`);
+    seen.add(ref);
     return ref;
   });
 }
