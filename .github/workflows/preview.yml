@@ -1,0 +1,47 @@
+name: Preview
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+permissions:
+  contents: read
+  pull-requests: write
+concurrency:
+  group: preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+env:
+  PREVIEW_NAME: pr-${{ github.event.pull_request.number }}
+jobs:
+  deploy:
+    name: Deploy preview
+    if: >-
+      github.event.action != 'closed' &&
+      github.actor != 'dependabot[bot]' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: akihiro-tj/house-rules/.github/actions/setup-node-pnpm@main
+      - run: pnpm build
+      - id: preview
+        uses: akihiro-tj/house-rules/.github/actions/wrangler-preview@main
+        with:
+          name: ${{ env.PREVIEW_NAME }}
+      - name: Smoke test
+        run: bash scripts/smoke.sh "${{ steps.preview.outputs.url }}"
+  cleanup:
+    name: Delete preview
+    if: >-
+      github.event.action == 'closed' &&
+      github.actor != 'dependabot[bot]' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: akihiro-tj/house-rules/.github/actions/setup-node-pnpm@main
+      - uses: akihiro-tj/house-rules/.github/actions/wrangler-preview-delete@main
+        with:
+          name: ${{ env.PREVIEW_NAME }}

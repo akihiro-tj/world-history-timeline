@@ -1,0 +1,24 @@
+name: Deploy
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: production
+  cancel-in-progress: false
+env:
+  PRODUCTION_URL: https://world-history-timeline.akihiro-tj.workers.dev
+jobs:
+  deploy:
+    name: Deploy to production
+    runs-on: ubuntu-24.04
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: akihiro-tj/house-rules/.github/actions/setup-node-pnpm@main
+      - run: pnpm build
+      - run: pnpm exec wrangler deploy
+      - name: Smoke test
+        run: bash scripts/smoke.sh "$PRODUCTION_URL"
