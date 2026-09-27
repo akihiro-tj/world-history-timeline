@@ -21,7 +21,7 @@ export function SubjectSelect<T extends string>({ label, options, value, onChang
           const next = options.find((option) => option.value === event.target.value);
           if (next) onChange(next.value);
         }}
-        className="min-h-(--spacing-tap) min-w-32 cursor-pointer appearance-none rounded-md border border-border bg-surface pr-10 pl-md font-label text-label text-on-surface focus-visible:outline-2 focus-visible:outline-primary"
+        className="min-h-(--spacing-tap) cursor-pointer appearance-none rounded-md border border-border bg-surface pr-(--spacing-tap) pl-md font-label text-label text-on-surface focus-visible:outline-2 focus-visible:outline-primary"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
