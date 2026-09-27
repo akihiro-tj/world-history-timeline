@@ -14,6 +14,11 @@ jobs:
       - run: pnpm exec biome ci .
       - run: pnpm typecheck
       - run: pnpm test
+      - run: pnpm exec design.md lint DESIGN.md
+      - name: Verify generated tokens match DESIGN.md
+        run: |
+          pnpm tokens
+          git diff --exit-code src/app/theme.css
       - run: pnpm build
       - name: Report initial JS size
         run: |
