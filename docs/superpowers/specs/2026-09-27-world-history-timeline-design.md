@@ -148,6 +148,16 @@ type TimelineData = {
   2. `_headers` が本番とプレビューの両方で効く
 - **フォールバック**: どちらかがだめなら、`env.ASSETS.fetch` に渡すだけの最小の Worker（`src/worker/`）を置き、キャッシュのヘッダーはその Worker で付ける
 
+#### スパイクの結果（2026-09-27、PR #1）
+
+| 確認したこと | 結果 | 対応 |
+|---|---|---|
+| Worker スクリプトのない構成での `wrangler preview` | 最初は「Your Wrangler configuration is missing a previews block」で失敗した。`wrangler.jsonc` に空の `previews` ブロックを足すと、プレビューを作成でき、URL の PR コメントも付いた | `previews: {}` を足した。フォールバックの Worker は不要 |
+| `_headers` がプレビューで効くか | スモークテストが成功した（JS と年表データに `immutable` が付く） | 変更なし |
+| プレビュー URL の形式 | `https://pr-<番号>-world-history-timeline.akihiro-tj.workers.dev` | なし |
+| 失敗時のログ | house-rules の `wrangler-preview` は、失敗すると wrangler の出力を表示しない | `preview.yml` に失敗時だけ `preview.log` を表示するステップを足した |
+| 本番で `_headers` が効くか | 未確認（main にマージした後の `Deploy` のスモークテストで確かめる） | なし |
+
 ### 5.4 非機能要件
 
 - 初期 JS は gzip 後 100KB 以下を目標にする。CI でサイズを出力するが、失敗にはしない。年表やチャートのライブラリは入れない
