@@ -28,6 +28,10 @@ jobs:
         uses: akihiro-tj/house-rules/.github/actions/wrangler-preview@main
         with:
           name: ${{ env.PREVIEW_NAME }}
+      - name: Show wrangler preview output
+        # house-rules の action は失敗すると wrangler の出力を表示しないので、ここで出す
+        if: failure()
+        run: cat preview.log || true
       - name: Smoke test
         run: bash scripts/smoke.sh "${{ steps.preview.outputs.url }}"
   cleanup:
