@@ -1,0 +1,30 @@
+// 向きの初期値と、切り替えの前後で画面中央の年を保つための計算
+import { type Orientation, PX_PER_YEAR, type TimeRange } from "./layout";
+
+// 開いたときの画面が横長なら横、そうでなければ縦（spec §3.2）
+export function initialOrientation(width: number, height: number): Orientation {
+  return width > height ? "horizontal" : "vertical";
+}
+
+// scrollStart: 時間軸方向のスクロール量。viewport: 時間軸方向の表示領域の長さ。
+// axisOffset: 時間軸方向の先頭に貼り付いている見出しの長さ（縦向きの行の見出し）
+export function centerYear(
+  scrollStart: number,
+  viewport: number,
+  axisOffset: number,
+  range: TimeRange,
+): number {
+  return range.from + (scrollStart + (viewport - axisOffset) / 2) / PX_PER_YEAR;
+}
+
+// year が画面中央に来るスクロール量。スクロールできる範囲 [0, maxScroll] に収める
+export function scrollStartFor(
+  year: number,
+  viewport: number,
+  axisOffset: number,
+  range: TimeRange,
+  maxScroll: number,
+): number {
+  const start = (year - range.from) * PX_PER_YEAR - (viewport - axisOffset) / 2;
+  return Math.min(Math.max(start, 0), Math.max(maxScroll, 0));
+}

@@ -1,0 +1,17 @@
+name: world-history-timeline
+version: 1.0.0
+targets:
+  - claude
+dependencies:
+  apm:
+    - akihiro-tj/house-rules/packages/core#main
+    - akihiro-tj/house-rules/packages/web-react#main
+    - akihiro-tj/house-rules/packages/cloudflare-workers#main
+    - akihiro-tj/house-rules/packages/github-actions#main
+executables:
+  allow:
+    github.com/akihiro-tj/house-rules/packages/core:
+      hooks: true
+  deny:
+    obra/superpowers:
+      hooks: true

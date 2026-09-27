@@ -141,3 +141,18 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# APM dependencies
+apm_modules/
+
+# superpowers の作業ディレクトリ
+.superpowers/
+
+
+# Claude Code の個人用メモ
+CLAUDE.local.md
+
+# 世界史年表
+.wrangler/
+.dev.vars
+CLAUDE.local.md

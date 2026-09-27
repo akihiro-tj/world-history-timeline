@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "world-history-timeline",
+  "compatibility_date": "2026-09-27",
+  // workers.dev の本番 URL とプレビュー URL をどちらも明示的に有効にする
+  "workers_dev": true,
+  "preview_urls": true,
+  // Worker スクリプトは置かず、静的アセットだけで配信する（spec §5.3）
+  "assets": { "directory": "./dist" },
+  // Worker Previews（wrangler preview）はこのブロックが無いと作成できない。
+  // 本番と違う設定が要らないので空にしておく
+  "previews": {},
+  "observability": { "enabled": true }
+}

@@ -1,0 +1,29 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  check:
+    name: Check and build
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: akihiro-tj/house-rules/.github/actions/setup-node-pnpm@main
+      - run: pnpm exec biome ci .
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm exec design.md lint DESIGN.md
+      - name: Verify generated tokens match DESIGN.md
+        run: |
+          pnpm tokens
+          git diff --exit-code src/app/theme.css
+      - run: pnpm build
+      - name: Report initial JS size
+        run: |
+          # 目標は gzip 後 100KB 以下（spec §5.4）。失敗にはせず、サイズを出すだけ
+          for f in dist/assets/index-*.js; do
+            echo "$f: $(gzip -c "$f" | wc -c) bytes (gzip)" | tee -a "$GITHUB_STEP_SUMMARY"
+          done
+      - run: pnpm exec wrangler deploy --dry-run --outdir .wrangler/dry-run
