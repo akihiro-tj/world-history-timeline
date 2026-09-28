@@ -1,7 +1,6 @@
 // 年表の描画。layout.ts の結果（along / cross）を縦か横に当てはめる
 import { type CSSProperties, useLayoutEffect, useMemo, useRef } from "react";
 import { COPY } from "../app/copy";
-import type { TimelineData } from "../data/timeline";
 import { formatYear } from "./format";
 import {
   BAR_THICKNESS,
@@ -17,11 +16,10 @@ import {
   type TimeRange,
   TRACK_GAP,
   ticks,
-  timeRange,
   yearToOffset,
 } from "./layout";
 import { centerYear, scrollStartFor } from "./scroll";
-import { type Subject, spansForLane } from "./spans";
+import type { Row } from "./spans";
 import { useTextMeasure } from "./useTextMeasure";
 
 // 見出しの寸法（位置の計算に使う）
@@ -31,23 +29,22 @@ const HEADER_HEIGHT = 32; // 縦向きの行の見出し
 const AXIS_WIDTH = 48; // 縦向きの年の目盛り
 const MIN_COLUMN_WIDTH = 120; // 縦向きの 1 行（列）の最小幅
 
-type Props = { data: TimelineData; subject: Subject; orientation: Orientation };
+type Props = { rows: Row[]; range: TimeRange | null; orientation: Orientation };
 
-export function Timeline({ data, subject, orientation }: Props) {
+export function Timeline({ rows, range, orientation }: Props) {
   const scrollerRef = useRef<HTMLElement>(null);
   const probeRef = useRef<HTMLSpanElement>(null);
   const centerRef = useRef<number | null>(null);
   const measure = useTextMeasure(probeRef);
-  const range = useMemo(() => timeRange(data), [data]);
   const axisOffset = orientation === "vertical" ? HEADER_HEIGHT : 0;
 
   const lanes = useMemo(() => {
     if (!range || !measure) return null;
-    return data.lanes.map((lane) => ({
-      lane,
-      layout: layoutLane(spansForLane(data, lane, subject), range, orientation, measure),
+    return rows.map((row) => ({
+      lane: row,
+      layout: layoutLane(row.spans, range, orientation, measure),
     }));
-  }, [data, subject, orientation, range, measure]);
+  }, [rows, orientation, range, measure]);
 
   // 切り替えの前に中央にあった年を、切り替えの後も中央に置く
   useLayoutEffect(() => {
@@ -122,7 +119,7 @@ function currentCenter(
     : centerYear(scroller.scrollLeft, scroller.clientWidth, axisOffset, range);
 }
 
-type LaneEntry = { lane: TimelineData["lanes"][number]; layout: LaneLayout };
+type LaneEntry = { lane: Row; layout: LaneLayout };
 
 function contentLength(range: TimeRange, lanes: LaneEntry[]): number {
   return Math.max(rangeLength(range), ...lanes.map(({ layout }) => layout.extent));

@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { loadTimeline } from "../data/loadTimeline";
 import type { TimelineData } from "../data/timeline";
 import timelineUrl from "../data/timeline.json?url";
-import type { Orientation } from "../timeline/layout";
+import { type Orientation, timeRange } from "../timeline/layout";
 import { initialOrientation } from "../timeline/scroll";
-import type { Subject } from "../timeline/spans";
+import { rowsForView, type Subject } from "../timeline/spans";
 import { Timeline } from "../timeline/Timeline";
 import { COPY } from "./copy";
 import { HorizontalIcon, VerticalIcon } from "./icons";
@@ -17,6 +17,9 @@ const SUBJECTS = [
   { value: "dynasty", label: COPY.subjectDynasty },
   { value: "reign", label: COPY.subjectReign },
 ] as const;
+
+// 国・地域の表示の行の名前は、主題の選択肢と同じ文言にする（spec §5）
+const ROW_NAMES = { dynasty: COPY.subjectDynasty, reign: COPY.subjectReign } as const;
 
 const ORIENTATIONS = [
   { value: "vertical", label: COPY.orientationVertical, icon: <VerticalIcon /> },
@@ -46,6 +49,14 @@ export function App() {
     };
   }, []);
 
+  const data = state.status === "ready" ? state.data : null;
+  const range = useMemo(() => (data ? timeRange(data) : null), [data]);
+  // 行を作り直すと Timeline が中央の年に合わせ直すので、表示が変わったときだけ作る
+  const rows = useMemo(
+    () => (data ? rowsForView(data, { kind: "subject", subject }, ROW_NAMES) : null),
+    [data, subject],
+  );
+
   return (
     <div className="flex h-dvh flex-col bg-surface font-body text-body text-on-surface">
       <header className="flex items-center justify-between gap-sm border-b border-border p-sm">
@@ -69,9 +80,7 @@ export function App() {
             {COPY.loadError}
           </p>
         )}
-        {state.status === "ready" && (
-          <Timeline data={state.data} subject={subject} orientation={orientation} />
-        )}
+        {rows && <Timeline rows={rows} range={range} orientation={orientation} />}
       </main>
     </div>
   );
