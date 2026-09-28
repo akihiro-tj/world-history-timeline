@@ -1,7 +1,7 @@
 # 国・地域で見る表示 設計書
 
 - 作成日: 2026-09-28
-- 状態: 承認待ち
+- 状態: 承認済み
 - 前提: [2026-09-27-world-history-timeline-design.md](./2026-09-27-world-history-timeline-design.md)（以下「MVP の spec」）
 
 ## 1. 目的
