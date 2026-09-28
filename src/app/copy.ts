@@ -1,6 +1,8 @@
 // UI 文言（spec §6）。ここと index.html の <title> 以外に文言を書かない
 export const COPY = {
-  subjectLabel: "主題",
+  viewLabel: "表示",
+  groupSubject: "主題",
+  groupLane: "国・地域",
   subjectDynasty: "王朝",
   subjectReign: "王",
   orientationLabel: "向き",
