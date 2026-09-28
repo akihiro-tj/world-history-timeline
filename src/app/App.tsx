@@ -4,19 +4,22 @@ import type { TimelineData } from "../data/timeline";
 import timelineUrl from "../data/timeline.json?url";
 import { type Orientation, timeRange } from "../timeline/layout";
 import { initialOrientation } from "../timeline/scroll";
-import { rowsForView, type Subject } from "../timeline/spans";
+import { rowsForView, type View, valueToView, viewToValue } from "../timeline/spans";
 import { Timeline } from "../timeline/Timeline";
 import { COPY } from "./copy";
 import { HorizontalIcon, VerticalIcon } from "./icons";
-import { SubjectSelect } from "./SubjectSelect";
 import { ToggleGroup } from "./ToggleGroup";
+import { type ViewGroup, ViewSelect } from "./ViewSelect";
 
 type State = { status: "loading" } | { status: "error" } | { status: "ready"; data: TimelineData };
 
-const SUBJECTS = [
-  { value: "dynasty", label: COPY.subjectDynasty },
-  { value: "reign", label: COPY.subjectReign },
-] as const;
+const SUBJECT_GROUP: ViewGroup = {
+  label: COPY.groupSubject,
+  options: [
+    { value: viewToValue({ kind: "subject", subject: "dynasty" }), label: COPY.subjectDynasty },
+    { value: viewToValue({ kind: "subject", subject: "reign" }), label: COPY.subjectReign },
+  ],
+};
 
 // 国・地域の表示の行の名前は、主題の選択肢と同じ文言にする（spec §5）
 const ROW_NAMES = { dynasty: COPY.subjectDynasty, reign: COPY.subjectReign } as const;
@@ -28,7 +31,7 @@ const ORIENTATIONS = [
 
 export function App() {
   const [state, setState] = useState<State>({ status: "loading" });
-  const [subject, setSubject] = useState<Subject>("dynasty");
+  const [view, setView] = useState<View>({ kind: "subject", subject: "dynasty" });
   const [orientation, setOrientation] = useState<Orientation>(() =>
     initialOrientation(window.innerWidth, window.innerHeight),
   );
@@ -52,19 +55,38 @@ export function App() {
   const data = state.status === "ready" ? state.data : null;
   const range = useMemo(() => (data ? timeRange(data) : null), [data]);
   // 行を作り直すと Timeline が中央の年に合わせ直すので、表示が変わったときだけ作る
-  const rows = useMemo(
-    () => (data ? rowsForView(data, { kind: "subject", subject }, ROW_NAMES) : null),
-    [data, subject],
+  const rows = useMemo(() => (data ? rowsForView(data, view, ROW_NAMES) : null), [data, view]);
+  // 読み込むまでは国・地域がわからないので、主題の群だけを出す
+  const groups = useMemo<ViewGroup[]>(
+    () =>
+      data
+        ? [
+            SUBJECT_GROUP,
+            {
+              label: COPY.groupLane,
+              options: data.lanes.map((lane) => ({
+                value: viewToValue({ kind: "lane", laneId: lane.id }),
+                label: lane.name,
+              })),
+            },
+          ]
+        : [SUBJECT_GROUP],
+    [data],
   );
+
+  function handleViewChange(value: string) {
+    const next = valueToView(value, data ? data.lanes.map((lane) => lane.id) : []);
+    if (next) setView(next);
+  }
 
   return (
     <div className="flex h-dvh flex-col bg-surface font-body text-body text-on-surface">
       <header className="flex items-center justify-between gap-sm border-b border-border p-sm">
-        <SubjectSelect
-          label={COPY.subjectLabel}
-          options={SUBJECTS}
-          value={subject}
-          onChange={setSubject}
+        <ViewSelect
+          label={COPY.viewLabel}
+          groups={groups}
+          value={viewToValue(view)}
+          onChange={handleViewChange}
         />
         <ToggleGroup
           label={COPY.orientationLabel}
