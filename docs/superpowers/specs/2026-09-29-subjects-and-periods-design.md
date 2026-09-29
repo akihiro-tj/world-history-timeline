@@ -1,7 +1,7 @@
 # 主題の 3 分割と期間の表し方 設計書
 
 - 作成日: 2026-09-29
-- 状態: レビュー待ち
+- 状態: 承認済み
 - 前提: [2026-09-27-world-history-timeline-design.md](./2026-09-27-world-history-timeline-design.md)（以下「MVP の spec」）、[2026-09-28-lane-view-design.md](./2026-09-28-lane-view-design.md)（以下「国・地域の spec」）
 
 ## 1. 目的

@@ -29,6 +29,7 @@
         "poincare-cabinet",
         "cartel-des-gauches",
         "vichy",
+        "free-france",
         "fifth-republic"
       ],
       "reigns": [
@@ -539,6 +540,18 @@
     {
       "id": "vichy",
       "name": "ヴィシー政府",
+      "start": {
+        "year": 1940,
+        "circa": false
+      },
+      "end": {
+        "year": 1944,
+        "circa": false
+      }
+    },
+    {
+      "id": "free-france",
+      "name": "自由フランス政府",
       "start": {
         "year": 1940,
         "circa": false
