@@ -7,7 +7,29 @@
         "merovingian",
         "carolingian",
         "capetian",
-        "valois"
+        "valois",
+        "bourbon-1589",
+        "national-assembly",
+        "legislative-assembly",
+        "national-convention",
+        "first-republic",
+        "directory",
+        "consulate",
+        "first-empire",
+        "bourbon-1814",
+        "restoration",
+        "july-monarchy",
+        "provisional-government-1848",
+        "second-republic",
+        "second-empire",
+        "national-defense",
+        "provisional-government-1871",
+        "paris-commune",
+        "third-republic",
+        "poincare-cabinet",
+        "cartel-des-gauches",
+        "vichy",
+        "fifth-republic"
       ],
       "reigns": [
         "clovis",
@@ -18,19 +40,48 @@
         "philippe-ii",
         "louis-ix",
         "philippe-iv",
-        "charles-vii"
+        "charles-vii",
+        "francois-i",
+        "henri-iv",
+        "louis-xiii",
+        "louis-xiv",
+        "louis-xvi",
+        "napoleon-i-1804",
+        "napoleon-i-1815",
+        "louis-xviii",
+        "charles-x",
+        "louis-philippe",
+        "napoleon-iii",
+        "clemenceau-1906",
+        "clemenceau-1917",
+        "briand-1909",
+        "briand-1913",
+        "briand-1915",
+        "briand-1921",
+        "briand-1925",
+        "briand-1929",
+        "daladier-1933",
+        "daladier-1934",
+        "daladier-1938",
+        "schuman",
+        "de-gaulle",
+        "mitterrand"
       ]
     },
     {
       "id": "england",
-      "name": "イングランド",
+      "name": "イングランド・イギリス",
       "dynasties": [
         "danish",
         "norman",
         "plantagenet",
         "lancaster",
         "york",
-        "tudor"
+        "tudor",
+        "stuart-1603",
+        "commonwealth",
+        "stuart-1660",
+        "hanover"
       ],
       "reigns": [
         "egbert",
@@ -42,7 +93,37 @@
         "henry-iii",
         "edward-i",
         "edward-iii",
-        "henry-vii"
+        "henry-vii",
+        "henry-viii",
+        "mary-i",
+        "elizabeth-i",
+        "james-i",
+        "charles-i",
+        "cromwell",
+        "charles-ii",
+        "james-ii",
+        "william-iii",
+        "mary-ii",
+        "anne",
+        "george-i",
+        "walpole",
+        "pitt-1783",
+        "pitt-1804",
+        "victoria",
+        "disraeli-1868",
+        "disraeli-1874",
+        "gladstone-1868",
+        "gladstone-1880",
+        "gladstone-1886",
+        "gladstone-1892",
+        "lloyd-george",
+        "macdonald-1924",
+        "macdonald-1929",
+        "neville-chamberlain",
+        "churchill-1940",
+        "churchill-1951",
+        "attlee",
+        "thatcher"
       ]
     }
   ],
@@ -166,6 +247,315 @@
         "year": 1603,
         "circa": false
       }
+    },
+    {
+      "id": "stuart-1603",
+      "name": "ステュアート朝",
+      "start": {
+        "year": 1603,
+        "circa": false
+      },
+      "end": {
+        "year": 1649,
+        "circa": false
+      }
+    },
+    {
+      "id": "commonwealth",
+      "name": "共和政",
+      "start": {
+        "year": 1649,
+        "circa": false
+      },
+      "end": {
+        "year": 1660,
+        "circa": false
+      }
+    },
+    {
+      "id": "stuart-1660",
+      "name": "ステュアート朝",
+      "start": {
+        "year": 1660,
+        "circa": false
+      },
+      "end": {
+        "year": 1714,
+        "circa": false
+      }
+    },
+    {
+      "id": "hanover",
+      "name": "ハノーヴァー朝",
+      "start": {
+        "year": 1714,
+        "circa": false
+      },
+      "end": {
+        "year": 1901,
+        "circa": false
+      }
+    },
+    {
+      "id": "bourbon-1589",
+      "name": "ブルボン朝",
+      "start": {
+        "year": 1589,
+        "circa": false
+      },
+      "end": {
+        "year": 1792,
+        "circa": false
+      }
+    },
+    {
+      "id": "national-assembly",
+      "name": "国民議会",
+      "start": {
+        "year": 1789,
+        "circa": false
+      },
+      "end": {
+        "year": 1791,
+        "circa": false
+      }
+    },
+    {
+      "id": "legislative-assembly",
+      "name": "立法議会",
+      "start": {
+        "year": 1791,
+        "circa": false
+      },
+      "end": {
+        "year": 1792,
+        "circa": false
+      }
+    },
+    {
+      "id": "national-convention",
+      "name": "国民公会",
+      "start": {
+        "year": 1792,
+        "circa": false
+      },
+      "end": {
+        "year": 1795,
+        "circa": false
+      }
+    },
+    {
+      "id": "first-republic",
+      "name": "第一共和政",
+      "start": {
+        "year": 1792,
+        "circa": false
+      },
+      "end": {
+        "year": 1804,
+        "circa": false
+      }
+    },
+    {
+      "id": "directory",
+      "name": "総裁政府",
+      "start": {
+        "year": 1795,
+        "circa": false
+      },
+      "end": {
+        "year": 1799,
+        "circa": false
+      }
+    },
+    {
+      "id": "consulate",
+      "name": "統領政府",
+      "start": {
+        "year": 1799,
+        "circa": false
+      },
+      "end": {
+        "year": 1804,
+        "circa": false
+      }
+    },
+    {
+      "id": "first-empire",
+      "name": "第一帝政",
+      "start": {
+        "year": 1804,
+        "circa": false
+      },
+      "end": {
+        "year": 1814,
+        "circa": false
+      }
+    },
+    {
+      "id": "bourbon-1814",
+      "name": "ブルボン朝",
+      "start": {
+        "year": 1814,
+        "circa": false
+      },
+      "end": {
+        "year": 1830,
+        "circa": false
+      }
+    },
+    {
+      "id": "restoration",
+      "name": "復古王政",
+      "start": {
+        "year": 1814,
+        "circa": false
+      },
+      "end": {
+        "year": 1830,
+        "circa": false
+      }
+    },
+    {
+      "id": "july-monarchy",
+      "name": "七月王政",
+      "start": {
+        "year": 1830,
+        "circa": false
+      },
+      "end": {
+        "year": 1848,
+        "circa": false
+      }
+    },
+    {
+      "id": "provisional-government-1848",
+      "name": "臨時政府",
+      "start": {
+        "year": 1848,
+        "circa": false
+      },
+      "end": {
+        "year": 1848,
+        "circa": false
+      }
+    },
+    {
+      "id": "second-republic",
+      "name": "第二共和政",
+      "start": {
+        "year": 1848,
+        "circa": false
+      },
+      "end": {
+        "year": 1852,
+        "circa": false
+      }
+    },
+    {
+      "id": "second-empire",
+      "name": "第二帝政",
+      "start": {
+        "year": 1852,
+        "circa": false
+      },
+      "end": {
+        "year": 1870,
+        "circa": false
+      }
+    },
+    {
+      "id": "national-defense",
+      "name": "臨時国防政府",
+      "start": {
+        "year": 1870,
+        "circa": false
+      },
+      "end": {
+        "year": 1871,
+        "circa": false
+      }
+    },
+    {
+      "id": "provisional-government-1871",
+      "name": "臨時政府",
+      "start": {
+        "year": 1871,
+        "circa": false
+      },
+      "end": {
+        "year": 1871,
+        "circa": false
+      }
+    },
+    {
+      "id": "paris-commune",
+      "name": "パリ=コミューン",
+      "start": {
+        "year": 1871,
+        "circa": false
+      },
+      "end": {
+        "year": 1871,
+        "circa": false
+      }
+    },
+    {
+      "id": "third-republic",
+      "name": "第三共和政",
+      "start": {
+        "year": 1871,
+        "circa": false
+      },
+      "end": {
+        "year": 1940,
+        "circa": false
+      }
+    },
+    {
+      "id": "poincare-cabinet",
+      "name": "ポワンカレ右派内閣",
+      "start": {
+        "year": 1922,
+        "circa": false
+      },
+      "end": {
+        "year": 1924,
+        "circa": false
+      }
+    },
+    {
+      "id": "cartel-des-gauches",
+      "name": "左派連合政権",
+      "start": {
+        "year": 1924,
+        "circa": false
+      },
+      "end": {
+        "year": 1926,
+        "circa": false
+      }
+    },
+    {
+      "id": "vichy",
+      "name": "ヴィシー政府",
+      "start": {
+        "year": 1940,
+        "circa": false
+      },
+      "end": {
+        "year": 1944,
+        "circa": false
+      }
+    },
+    {
+      "id": "fifth-republic",
+      "name": "第五共和政",
+      "start": {
+        "year": 1958,
+        "circa": false
+      },
+      "end": null
     }
   ],
   "people": [
@@ -244,12 +634,169 @@
     {
       "id": "henry-vii",
       "name": "ヘンリ7世"
+    },
+    {
+      "id": "henry-viii",
+      "name": "ヘンリ8世"
+    },
+    {
+      "id": "mary-i",
+      "name": "メアリ1世"
+    },
+    {
+      "id": "elizabeth-i",
+      "name": "エリザベス1世"
+    },
+    {
+      "id": "james-i",
+      "name": "ジェームズ1世"
+    },
+    {
+      "id": "charles-i",
+      "name": "チャールズ1世"
+    },
+    {
+      "id": "cromwell",
+      "name": "クロムウェル"
+    },
+    {
+      "id": "charles-ii",
+      "name": "チャールズ2世"
+    },
+    {
+      "id": "james-ii",
+      "name": "ジェームズ2世"
+    },
+    {
+      "id": "william-iii",
+      "name": "ウィリアム3世"
+    },
+    {
+      "id": "mary-ii",
+      "name": "メアリ2世"
+    },
+    {
+      "id": "anne",
+      "name": "アン女王"
+    },
+    {
+      "id": "george-i",
+      "name": "ジョージ1世"
+    },
+    {
+      "id": "walpole",
+      "name": "ウォルポール"
+    },
+    {
+      "id": "pitt",
+      "name": "ピット"
+    },
+    {
+      "id": "victoria",
+      "name": "ヴィクトリア女王"
+    },
+    {
+      "id": "disraeli",
+      "name": "ディズレーリ"
+    },
+    {
+      "id": "gladstone",
+      "name": "グラッドストン"
+    },
+    {
+      "id": "lloyd-george",
+      "name": "ロイド=ジョージ"
+    },
+    {
+      "id": "macdonald",
+      "name": "マクドナルド"
+    },
+    {
+      "id": "neville-chamberlain",
+      "name": "ネヴィル=チェンバレン"
+    },
+    {
+      "id": "churchill",
+      "name": "チャーチル"
+    },
+    {
+      "id": "attlee",
+      "name": "アトリー"
+    },
+    {
+      "id": "thatcher",
+      "name": "サッチャー"
+    },
+    {
+      "id": "francois-i",
+      "name": "フランソワ1世"
+    },
+    {
+      "id": "henri-iv",
+      "name": "アンリ4世"
+    },
+    {
+      "id": "louis-xiii",
+      "name": "ルイ13世"
+    },
+    {
+      "id": "louis-xiv",
+      "name": "ルイ14世"
+    },
+    {
+      "id": "louis-xvi",
+      "name": "ルイ16世"
+    },
+    {
+      "id": "napoleon-i",
+      "name": "ナポレオン1世"
+    },
+    {
+      "id": "louis-xviii",
+      "name": "ルイ18世"
+    },
+    {
+      "id": "charles-x",
+      "name": "シャルル10世"
+    },
+    {
+      "id": "louis-philippe",
+      "name": "ルイ=フィリップ"
+    },
+    {
+      "id": "napoleon-iii",
+      "name": "ナポレオン3世"
+    },
+    {
+      "id": "clemenceau",
+      "name": "クレマンソー"
+    },
+    {
+      "id": "briand",
+      "name": "ブリアン"
+    },
+    {
+      "id": "daladier",
+      "name": "ダラディエ"
+    },
+    {
+      "id": "schuman",
+      "name": "シューマン"
+    },
+    {
+      "id": "de-gaulle",
+      "name": "ド=ゴール"
+    },
+    {
+      "id": "mitterrand",
+      "name": "ミッテラン"
     }
   ],
   "reigns": [
     {
       "id": "clovis",
       "personId": "clovis",
+      "role": "monarch",
       "start": {
         "year": 481,
         "circa": false
@@ -262,6 +809,7 @@
     {
       "id": "pippin",
       "personId": "pippin",
+      "role": "monarch",
       "start": {
         "year": 751,
         "circa": false
@@ -274,6 +822,7 @@
     {
       "id": "charlemagne",
       "personId": "charlemagne",
+      "role": "monarch",
       "start": {
         "year": 768,
         "circa": false
@@ -286,6 +835,7 @@
     {
       "id": "louis-i",
       "personId": "louis-i",
+      "role": "monarch",
       "start": {
         "year": 814,
         "circa": false
@@ -298,6 +848,7 @@
     {
       "id": "hugues-capet",
       "personId": "hugues-capet",
+      "role": "monarch",
       "start": {
         "year": 987,
         "circa": false
@@ -310,6 +861,7 @@
     {
       "id": "philippe-ii",
       "personId": "philippe-ii",
+      "role": "monarch",
       "start": {
         "year": 1180,
         "circa": false
@@ -322,6 +874,7 @@
     {
       "id": "louis-ix",
       "personId": "louis-ix",
+      "role": "monarch",
       "start": {
         "year": 1226,
         "circa": false
@@ -334,6 +887,7 @@
     {
       "id": "philippe-iv",
       "personId": "philippe-iv",
+      "role": "monarch",
       "start": {
         "year": 1285,
         "circa": false
@@ -346,6 +900,7 @@
     {
       "id": "charles-vii",
       "personId": "charles-vii",
+      "role": "monarch",
       "start": {
         "year": 1422,
         "circa": false
@@ -358,6 +913,7 @@
     {
       "id": "egbert",
       "personId": "egbert",
+      "role": "monarch",
       "start": {
         "year": 802,
         "circa": false
@@ -370,6 +926,7 @@
     {
       "id": "alfred",
       "personId": "alfred",
+      "role": "monarch",
       "start": {
         "year": 871,
         "circa": false
@@ -382,6 +939,7 @@
     {
       "id": "cnut",
       "personId": "cnut",
+      "role": "monarch",
       "start": {
         "year": 1016,
         "circa": false
@@ -394,6 +952,7 @@
     {
       "id": "william-i",
       "personId": "william-i",
+      "role": "monarch",
       "start": {
         "year": 1066,
         "circa": false
@@ -406,6 +965,7 @@
     {
       "id": "henry-ii",
       "personId": "henry-ii",
+      "role": "monarch",
       "start": {
         "year": 1154,
         "circa": false
@@ -418,6 +978,7 @@
     {
       "id": "john",
       "personId": "john",
+      "role": "monarch",
       "start": {
         "year": 1199,
         "circa": false
@@ -430,6 +991,7 @@
     {
       "id": "henry-iii",
       "personId": "henry-iii",
+      "role": "monarch",
       "start": {
         "year": 1216,
         "circa": false
@@ -442,6 +1004,7 @@
     {
       "id": "edward-i",
       "personId": "edward-i",
+      "role": "monarch",
       "start": {
         "year": 1272,
         "circa": false
@@ -454,6 +1017,7 @@
     {
       "id": "edward-iii",
       "personId": "edward-iii",
+      "role": "monarch",
       "start": {
         "year": 1327,
         "circa": false
@@ -466,12 +1030,728 @@
     {
       "id": "henry-vii",
       "personId": "henry-vii",
+      "role": "monarch",
       "start": {
         "year": 1485,
         "circa": false
       },
       "end": {
         "year": 1509,
+        "circa": false
+      }
+    },
+    {
+      "id": "henry-viii",
+      "personId": "henry-viii",
+      "role": "monarch",
+      "start": {
+        "year": 1509,
+        "circa": false
+      },
+      "end": {
+        "year": 1547,
+        "circa": false
+      }
+    },
+    {
+      "id": "mary-i",
+      "personId": "mary-i",
+      "role": "monarch",
+      "start": {
+        "year": 1553,
+        "circa": false
+      },
+      "end": {
+        "year": 1558,
+        "circa": false
+      }
+    },
+    {
+      "id": "elizabeth-i",
+      "personId": "elizabeth-i",
+      "role": "monarch",
+      "start": {
+        "year": 1558,
+        "circa": false
+      },
+      "end": {
+        "year": 1603,
+        "circa": false
+      }
+    },
+    {
+      "id": "james-i",
+      "personId": "james-i",
+      "role": "monarch",
+      "start": {
+        "year": 1603,
+        "circa": false
+      },
+      "end": {
+        "year": 1625,
+        "circa": false
+      }
+    },
+    {
+      "id": "charles-i",
+      "personId": "charles-i",
+      "role": "monarch",
+      "start": {
+        "year": 1625,
+        "circa": false
+      },
+      "end": {
+        "year": 1649,
+        "circa": false
+      }
+    },
+    {
+      "id": "cromwell",
+      "personId": "cromwell",
+      "role": "leader",
+      "start": {
+        "year": 1653,
+        "circa": false
+      },
+      "end": {
+        "year": 1658,
+        "circa": false
+      }
+    },
+    {
+      "id": "charles-ii",
+      "personId": "charles-ii",
+      "role": "monarch",
+      "start": {
+        "year": 1660,
+        "circa": false
+      },
+      "end": {
+        "year": 1685,
+        "circa": false
+      }
+    },
+    {
+      "id": "james-ii",
+      "personId": "james-ii",
+      "role": "monarch",
+      "start": {
+        "year": 1685,
+        "circa": false
+      },
+      "end": {
+        "year": 1688,
+        "circa": false
+      }
+    },
+    {
+      "id": "william-iii",
+      "personId": "william-iii",
+      "role": "monarch",
+      "start": {
+        "year": 1689,
+        "circa": false
+      },
+      "end": {
+        "year": 1702,
+        "circa": false
+      }
+    },
+    {
+      "id": "mary-ii",
+      "personId": "mary-ii",
+      "role": "monarch",
+      "start": {
+        "year": 1689,
+        "circa": false
+      },
+      "end": {
+        "year": 1694,
+        "circa": false
+      }
+    },
+    {
+      "id": "anne",
+      "personId": "anne",
+      "role": "monarch",
+      "start": {
+        "year": 1702,
+        "circa": false
+      },
+      "end": {
+        "year": 1714,
+        "circa": false
+      }
+    },
+    {
+      "id": "george-i",
+      "personId": "george-i",
+      "role": "monarch",
+      "start": {
+        "year": 1714,
+        "circa": false
+      },
+      "end": {
+        "year": 1727,
+        "circa": false
+      }
+    },
+    {
+      "id": "walpole",
+      "personId": "walpole",
+      "role": "leader",
+      "start": {
+        "year": 1721,
+        "circa": false
+      },
+      "end": {
+        "year": 1742,
+        "circa": false
+      }
+    },
+    {
+      "id": "pitt-1783",
+      "personId": "pitt",
+      "role": "leader",
+      "start": {
+        "year": 1783,
+        "circa": false
+      },
+      "end": {
+        "year": 1801,
+        "circa": false
+      }
+    },
+    {
+      "id": "pitt-1804",
+      "personId": "pitt",
+      "role": "leader",
+      "start": {
+        "year": 1804,
+        "circa": false
+      },
+      "end": {
+        "year": 1806,
+        "circa": false
+      }
+    },
+    {
+      "id": "victoria",
+      "personId": "victoria",
+      "role": "monarch",
+      "start": {
+        "year": 1837,
+        "circa": false
+      },
+      "end": {
+        "year": 1901,
+        "circa": false
+      }
+    },
+    {
+      "id": "disraeli-1868",
+      "personId": "disraeli",
+      "role": "leader",
+      "start": {
+        "year": 1868,
+        "circa": false
+      },
+      "end": {
+        "year": 1868,
+        "circa": false
+      }
+    },
+    {
+      "id": "disraeli-1874",
+      "personId": "disraeli",
+      "role": "leader",
+      "start": {
+        "year": 1874,
+        "circa": false
+      },
+      "end": {
+        "year": 1880,
+        "circa": false
+      }
+    },
+    {
+      "id": "gladstone-1868",
+      "personId": "gladstone",
+      "role": "leader",
+      "start": {
+        "year": 1868,
+        "circa": false
+      },
+      "end": {
+        "year": 1874,
+        "circa": false
+      }
+    },
+    {
+      "id": "gladstone-1880",
+      "personId": "gladstone",
+      "role": "leader",
+      "start": {
+        "year": 1880,
+        "circa": false
+      },
+      "end": {
+        "year": 1885,
+        "circa": false
+      }
+    },
+    {
+      "id": "gladstone-1886",
+      "personId": "gladstone",
+      "role": "leader",
+      "start": {
+        "year": 1886,
+        "circa": false
+      },
+      "end": {
+        "year": 1886,
+        "circa": false
+      }
+    },
+    {
+      "id": "gladstone-1892",
+      "personId": "gladstone",
+      "role": "leader",
+      "start": {
+        "year": 1892,
+        "circa": false
+      },
+      "end": {
+        "year": 1894,
+        "circa": false
+      }
+    },
+    {
+      "id": "lloyd-george",
+      "personId": "lloyd-george",
+      "role": "leader",
+      "start": {
+        "year": 1916,
+        "circa": false
+      },
+      "end": {
+        "year": 1922,
+        "circa": false
+      }
+    },
+    {
+      "id": "macdonald-1924",
+      "personId": "macdonald",
+      "role": "leader",
+      "start": {
+        "year": 1924,
+        "circa": false
+      },
+      "end": {
+        "year": 1924,
+        "circa": false
+      }
+    },
+    {
+      "id": "macdonald-1929",
+      "personId": "macdonald",
+      "role": "leader",
+      "start": {
+        "year": 1929,
+        "circa": false
+      },
+      "end": {
+        "year": 1935,
+        "circa": false
+      }
+    },
+    {
+      "id": "neville-chamberlain",
+      "personId": "neville-chamberlain",
+      "role": "leader",
+      "start": {
+        "year": 1937,
+        "circa": false
+      },
+      "end": {
+        "year": 1940,
+        "circa": false
+      }
+    },
+    {
+      "id": "churchill-1940",
+      "personId": "churchill",
+      "role": "leader",
+      "start": {
+        "year": 1940,
+        "circa": false
+      },
+      "end": {
+        "year": 1945,
+        "circa": false
+      }
+    },
+    {
+      "id": "churchill-1951",
+      "personId": "churchill",
+      "role": "leader",
+      "start": {
+        "year": 1951,
+        "circa": false
+      },
+      "end": {
+        "year": 1955,
+        "circa": false
+      }
+    },
+    {
+      "id": "attlee",
+      "personId": "attlee",
+      "role": "leader",
+      "start": {
+        "year": 1945,
+        "circa": false
+      },
+      "end": {
+        "year": 1951,
+        "circa": false
+      }
+    },
+    {
+      "id": "thatcher",
+      "personId": "thatcher",
+      "role": "leader",
+      "start": {
+        "year": 1979,
+        "circa": false
+      },
+      "end": {
+        "year": 1990,
+        "circa": false
+      }
+    },
+    {
+      "id": "francois-i",
+      "personId": "francois-i",
+      "role": "monarch",
+      "start": {
+        "year": 1515,
+        "circa": false
+      },
+      "end": {
+        "year": 1547,
+        "circa": false
+      }
+    },
+    {
+      "id": "henri-iv",
+      "personId": "henri-iv",
+      "role": "monarch",
+      "start": {
+        "year": 1589,
+        "circa": false
+      },
+      "end": {
+        "year": 1610,
+        "circa": false
+      }
+    },
+    {
+      "id": "louis-xiii",
+      "personId": "louis-xiii",
+      "role": "monarch",
+      "start": {
+        "year": 1610,
+        "circa": false
+      },
+      "end": {
+        "year": 1643,
+        "circa": false
+      }
+    },
+    {
+      "id": "louis-xiv",
+      "personId": "louis-xiv",
+      "role": "monarch",
+      "start": {
+        "year": 1643,
+        "circa": false
+      },
+      "end": {
+        "year": 1715,
+        "circa": false
+      }
+    },
+    {
+      "id": "louis-xvi",
+      "personId": "louis-xvi",
+      "role": "monarch",
+      "start": {
+        "year": 1774,
+        "circa": false
+      },
+      "end": {
+        "year": 1792,
+        "circa": false
+      }
+    },
+    {
+      "id": "napoleon-i-1804",
+      "personId": "napoleon-i",
+      "role": "monarch",
+      "start": {
+        "year": 1804,
+        "circa": false
+      },
+      "end": {
+        "year": 1814,
+        "circa": false
+      }
+    },
+    {
+      "id": "napoleon-i-1815",
+      "personId": "napoleon-i",
+      "role": "monarch",
+      "start": {
+        "year": 1815,
+        "circa": false
+      },
+      "end": {
+        "year": 1815,
+        "circa": false
+      }
+    },
+    {
+      "id": "louis-xviii",
+      "personId": "louis-xviii",
+      "role": "monarch",
+      "start": {
+        "year": 1814,
+        "circa": false
+      },
+      "end": {
+        "year": 1824,
+        "circa": false
+      }
+    },
+    {
+      "id": "charles-x",
+      "personId": "charles-x",
+      "role": "monarch",
+      "start": {
+        "year": 1824,
+        "circa": false
+      },
+      "end": {
+        "year": 1830,
+        "circa": false
+      }
+    },
+    {
+      "id": "louis-philippe",
+      "personId": "louis-philippe",
+      "role": "monarch",
+      "start": {
+        "year": 1830,
+        "circa": false
+      },
+      "end": {
+        "year": 1848,
+        "circa": false
+      }
+    },
+    {
+      "id": "napoleon-iii",
+      "personId": "napoleon-iii",
+      "role": "monarch",
+      "start": {
+        "year": 1852,
+        "circa": false
+      },
+      "end": {
+        "year": 1870,
+        "circa": false
+      }
+    },
+    {
+      "id": "clemenceau-1906",
+      "personId": "clemenceau",
+      "role": "leader",
+      "start": {
+        "year": 1906,
+        "circa": false
+      },
+      "end": {
+        "year": 1909,
+        "circa": false
+      }
+    },
+    {
+      "id": "clemenceau-1917",
+      "personId": "clemenceau",
+      "role": "leader",
+      "start": {
+        "year": 1917,
+        "circa": false
+      },
+      "end": {
+        "year": 1920,
+        "circa": false
+      }
+    },
+    {
+      "id": "briand-1909",
+      "personId": "briand",
+      "role": "leader",
+      "start": {
+        "year": 1909,
+        "circa": false
+      },
+      "end": {
+        "year": 1911,
+        "circa": false
+      }
+    },
+    {
+      "id": "briand-1913",
+      "personId": "briand",
+      "role": "leader",
+      "start": {
+        "year": 1913,
+        "circa": false
+      },
+      "end": {
+        "year": 1913,
+        "circa": false
+      }
+    },
+    {
+      "id": "briand-1915",
+      "personId": "briand",
+      "role": "leader",
+      "start": {
+        "year": 1915,
+        "circa": false
+      },
+      "end": {
+        "year": 1917,
+        "circa": false
+      }
+    },
+    {
+      "id": "briand-1921",
+      "personId": "briand",
+      "role": "leader",
+      "start": {
+        "year": 1921,
+        "circa": false
+      },
+      "end": {
+        "year": 1922,
+        "circa": false
+      }
+    },
+    {
+      "id": "briand-1925",
+      "personId": "briand",
+      "role": "leader",
+      "start": {
+        "year": 1925,
+        "circa": false
+      },
+      "end": {
+        "year": 1926,
+        "circa": false
+      }
+    },
+    {
+      "id": "briand-1929",
+      "personId": "briand",
+      "role": "leader",
+      "start": {
+        "year": 1929,
+        "circa": false
+      },
+      "end": {
+        "year": 1929,
+        "circa": false
+      }
+    },
+    {
+      "id": "daladier-1933",
+      "personId": "daladier",
+      "role": "leader",
+      "start": {
+        "year": 1933,
+        "circa": false
+      },
+      "end": {
+        "year": 1933,
+        "circa": false
+      }
+    },
+    {
+      "id": "daladier-1934",
+      "personId": "daladier",
+      "role": "leader",
+      "start": {
+        "year": 1934,
+        "circa": false
+      },
+      "end": {
+        "year": 1934,
+        "circa": false
+      }
+    },
+    {
+      "id": "daladier-1938",
+      "personId": "daladier",
+      "role": "leader",
+      "start": {
+        "year": 1938,
+        "circa": false
+      },
+      "end": {
+        "year": 1940,
+        "circa": false
+      }
+    },
+    {
+      "id": "schuman",
+      "personId": "schuman",
+      "role": "leader",
+      "start": {
+        "year": 1947,
+        "circa": false
+      },
+      "end": {
+        "year": 1948,
+        "circa": false
+      }
+    },
+    {
+      "id": "de-gaulle",
+      "personId": "de-gaulle",
+      "role": "leader",
+      "start": {
+        "year": 1959,
+        "circa": false
+      },
+      "end": {
+        "year": 1969,
+        "circa": false
+      }
+    },
+    {
+      "id": "mitterrand",
+      "personId": "mitterrand",
+      "role": "leader",
+      "start": {
+        "year": 1981,
+        "circa": false
+      },
+      "end": {
+        "year": 1995,
         "circa": false
       }
     }

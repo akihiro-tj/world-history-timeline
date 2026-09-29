@@ -1,12 +1,14 @@
 // 表示（主題／国・地域）に応じて、年表に並べる行と棒の元データを取り出す
-import type { Lane, TimelineData, Year } from "../data/timeline";
+import type { Lane, Role, TimelineData, Year } from "../data/timeline";
 
-export type Subject = "dynasty" | "reign";
-export type Span = { id: string; name: string; start: Year; end: Year };
+// 在位は役割（君主／首脳）ごとに別の主題にする
+export type Subject = "dynasty" | Role;
+// 終わりが null なら現在まで続いている
+export type Span = { id: string; name: string; start: Year; end: Year | null };
 export type View = { kind: "subject"; subject: Subject } | { kind: "lane"; laneId: string };
 export type Row = { id: string; name: string; spans: Span[] };
 
-const SUBJECTS: readonly Subject[] = ["dynasty", "reign"];
+const SUBJECTS: readonly Subject[] = ["dynasty", "monarch", "leader"];
 
 function lookup<T extends { id: string }>(items: T[], id: string): T {
   const item = items.find((candidate) => candidate.id === id);
@@ -21,15 +23,15 @@ export function spansForLane(data: TimelineData, lane: Lane, subject: Subject): 
       return { id, name, start, end };
     });
   }
-  return lane.reigns.map((id) => {
-    const reign = lookup(data.reigns, id);
-    return {
-      id,
+  return lane.reigns
+    .map((id) => lookup(data.reigns, id))
+    .filter((reign) => reign.role === subject)
+    .map((reign) => ({
+      id: reign.id,
       name: lookup(data.people, reign.personId).name,
       start: reign.start,
       end: reign.end,
-    };
-  });
+    }));
 }
 
 // 表示のセレクトの値（"subject:dynasty"・"lane:england" など）と表示の状態の相互変換。
@@ -49,7 +51,7 @@ export function valueToView(value: string, laneIds: readonly string[]): View | n
   return null;
 }
 
-// 主題の表示では行＝国・地域、国・地域の表示では行＝主題（王朝・王）。
+// 主題の表示では行＝国・地域、国・地域の表示では行＝主題（王朝・政体、君主、首相・大統領）。
 // 主題の行の名前は UI 文言なので、呼び出し側から受け取る
 export function rowsForView(data: TimelineData, view: View, names: Record<Subject, string>): Row[] {
   if (view.kind === "subject") {

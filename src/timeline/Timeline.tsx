@@ -28,10 +28,17 @@ const AXIS_HEIGHT = 24; // 横向きの年の目盛り
 const HEADER_HEIGHT = 32; // 縦向きの行の見出し
 const AXIS_WIDTH = 48; // 縦向きの年の目盛り
 const MIN_COLUMN_WIDTH = 120; // 縦向きの 1 行（列）の最小幅
+const MIN_BARS_WIDTH = 48; // 縦向きで、棒の外のラベルを除いて棒に残す最小幅
 
-type Props = { rows: Row[]; range: TimeRange | null; orientation: Orientation };
+type Props = {
+  rows: Row[];
+  range: TimeRange | null;
+  orientation: Orientation;
+  // 現在まで続く棒の終わりの年
+  currentYear: number;
+};
 
-export function Timeline({ rows, range, orientation }: Props) {
+export function Timeline({ rows, range, orientation, currentYear }: Props) {
   const scrollerRef = useRef<HTMLElement>(null);
   const probeRef = useRef<HTMLSpanElement>(null);
   const centerRef = useRef<number | null>(null);
@@ -42,9 +49,9 @@ export function Timeline({ rows, range, orientation }: Props) {
     if (!range || !measure) return null;
     return rows.map((row) => ({
       lane: row,
-      layout: layoutLane(row.spans, range, orientation, measure),
+      layout: layoutLane(row.spans, range, orientation, measure, currentYear),
     }));
-  }, [rows, orientation, range, measure]);
+  }, [rows, orientation, range, measure, currentYear]);
 
   // 切り替えの前に中央にあった年を、切り替えの後も中央に置く
   useLayoutEffect(() => {
@@ -236,7 +243,17 @@ function Vertical({ range, lanes }: { range: TimeRange; lanes: LaneEntry[] }) {
     <div
       className="grid"
       style={{
-        gridTemplateColumns: `${AXIS_WIDTH}px repeat(${lanes.length}, minmax(${MIN_COLUMN_WIDTH}px, 1fr))`,
+        // 棒の外のラベルが隣の列にはみ出さないよう、ラベルの段の分だけ列の最小幅を広げる
+        gridTemplateColumns: [
+          `${AXIS_WIDTH}px`,
+          ...lanes.map(({ layout }) => {
+            const min = Math.max(
+              MIN_COLUMN_WIDTH,
+              labelRowsTotal(layout.labelRowSizes) + MIN_BARS_WIDTH,
+            );
+            return `minmax(${min}px, 1fr)`;
+          }),
+        ].join(" "),
       }}
     >
       <div

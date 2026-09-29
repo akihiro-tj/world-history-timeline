@@ -27,9 +27,9 @@ describe("timeRange", () => {
       lanes: [],
       dynasties: [{ id: "a", name: "A", start: y(481), end: y(751) }],
       people: [{ id: "p", name: "P" }],
-      reigns: [{ id: "r", personId: "p", start: y(1485), end: y(1603) }],
+      reigns: [{ id: "r", personId: "p", role: "monarch", start: y(1485), end: y(1603) }],
     };
-    expect(timeRange(data)).toEqual({ from: 400, to: 1700 });
+    expect(timeRange(data, 2026)).toEqual({ from: 400, to: 1700 });
   });
 
   it("紀元前も区切りにそろえる", () => {
@@ -39,7 +39,7 @@ describe("timeRange", () => {
       people: [],
       reigns: [],
     };
-    expect(timeRange(data)).toEqual({ from: -300, to: -200 });
+    expect(timeRange(data, 2026)).toEqual({ from: -300, to: -200 });
   });
 
   it("区切りちょうどの 1 点だけでも幅を持たせる", () => {
@@ -49,11 +49,21 @@ describe("timeRange", () => {
       people: [],
       reigns: [],
     };
-    expect(timeRange(data)).toEqual({ from: 1500, to: 1600 });
+    expect(timeRange(data, 2026)).toEqual({ from: 1500, to: 1600 });
+  });
+
+  it("現在まで続く期間は現在の年までを含める", () => {
+    const data: TimelineData = {
+      lanes: [],
+      dynasties: [{ id: "a", name: "A", start: y(1958), end: null }],
+      people: [],
+      reigns: [],
+    };
+    expect(timeRange(data, 2026)).toEqual({ from: 1900, to: 2100 });
   });
 
   it("データが無ければ null", () => {
-    expect(timeRange({ lanes: [], dynasties: [], people: [], reigns: [] })).toBeNull();
+    expect(timeRange({ lanes: [], dynasties: [], people: [], reigns: [] }, 2026)).toBeNull();
   });
 });
 
@@ -103,6 +113,7 @@ describe("layoutLane", () => {
       range,
       "horizontal",
       measure,
+      2026,
     );
     expect(lane.bars[0]).toMatchObject({ offset: 174, length: 18, track: 0, labelRow: 0 });
     // 名前と期間を 2 行に積んだ太さ
@@ -110,7 +121,13 @@ describe("layoutLane", () => {
   });
 
   it("横向きで幅が足りれば棒の中に入れる", () => {
-    const lane = layoutLane([span("capet", "カペー朝", 987, 1100)], range, "horizontal", measure);
+    const lane = layoutLane(
+      [span("capet", "カペー朝", 987, 1100)],
+      range,
+      "horizontal",
+      measure,
+      2026,
+    );
     expect(lane.bars[0]?.labelRow).toBeNull();
     expect(lane.labelRowSizes).toEqual([]);
   });
@@ -121,6 +138,7 @@ describe("layoutLane", () => {
       range,
       "horizontal",
       measure,
+      2026,
     );
     // a のラベルは 200px から 96px（期間 9 文字の 90px と間隔 6px）。b は 220px から始まるので重なる
     expect(lane.bars.map((bar) => bar.labelRow)).toEqual([0, 1]);
@@ -132,6 +150,7 @@ describe("layoutLane", () => {
       range,
       "horizontal",
       measure,
+      2026,
     );
     expect(lane.bars.map((bar) => bar.labelRow)).toEqual([0, 0]);
   });
@@ -143,6 +162,7 @@ describe("layoutLane", () => {
       range,
       "vertical",
       measure,
+      2026,
     );
     expect(lane.bars.map((bar) => bar.labelRow)).toEqual([null, 0]);
     // 縦向きのラベルの太さは名前か期間の長いほうの幅
@@ -150,12 +170,49 @@ describe("layoutLane", () => {
   });
 
   it("ラベルが範囲の末端を越えるなら extent を伸ばす", () => {
-    const lane = layoutLane([span("a", "アアアアア", 1095, 1100)], range, "horizontal", measure);
+    const lane = layoutLane(
+      [span("a", "アアアアア", 1095, 1100)],
+      range,
+      "horizontal",
+      measure,
+      2026,
+    );
     expect(lane.extent).toBe(390 + 96);
   });
 
+  it("開始と終了が同じ年の棒は 1 年分の長さを持ち、次の年に始まる棒と同じ段に並ぶ", () => {
+    const lane = layoutLane(
+      [span("a", "ア", 1000, 1000), span("b", "イ", 1001, 1010)],
+      range,
+      "horizontal",
+      measure,
+      2026,
+    );
+    expect(lane.bars.map((bar) => [bar.length, bar.track, bar.period])).toEqual([
+      [2, 0, "1000"],
+      [18, 0, "1001–1010"],
+    ]);
+  });
+
+  it("同じ年の棒どうしは重なるものとして段を分ける", () => {
+    const lane = layoutLane(
+      [span("a", "ア", 1000, 1000), span("b", "イ", 1000, 1000)],
+      range,
+      "horizontal",
+      measure,
+      2026,
+    );
+    expect(lane.bars.map((bar) => bar.track)).toEqual([0, 1]);
+  });
+
+  it("現在まで続く棒は現在の年で終わる", () => {
+    const bar = { id: "a", name: "ア", start: y(1000), end: null };
+    const lane = layoutLane([bar], range, "horizontal", measure, 1050);
+    expect(lane.bars[0]).toMatchObject({ offset: 200, length: 100, period: "1000–現在" });
+  });
+
   it("棒が無い行は段も 0", () => {
-    expect(layoutLane([], range, "horizontal", measure)).toEqual({
+    expect(layoutLane([], range, "horizontal", measure, 2026)).toEqual({
       bars: [],
       trackCount: 0,
       labelRowSizes: [],

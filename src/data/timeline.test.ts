@@ -17,6 +17,7 @@ function valid() {
       {
         id: "henry-vii",
         personId: "henry-vii",
+        role: "monarch",
         start: { year: 1485, circa: false },
         end: { year: 1509, circa: false },
       },
@@ -62,6 +63,18 @@ describe("parseTimeline", () => {
     const data = valid();
     (data.reigns[0] as { end: unknown }).end = { year: 1484, circa: false };
     expect(() => parseTimeline(data)).toThrow("開始が終了より後です");
+  });
+
+  it("終わりが null の期間（現在まで）を読める", () => {
+    const data = valid();
+    (data.dynasties[0] as { end: unknown }).end = null;
+    expect(parseTimeline(data).dynasties[0]?.end).toBeNull();
+  });
+
+  it("知らない役割なら例外にする", () => {
+    const data = valid();
+    (data.reigns[0] as { role: string }).role = "king";
+    expect(() => parseTimeline(data)).toThrow("role は monarch か leader です");
   });
 
   it("存在しない人物を参照していれば例外にする", () => {

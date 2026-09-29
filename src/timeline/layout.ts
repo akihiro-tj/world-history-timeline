@@ -1,6 +1,6 @@
 // 年表の位置の計算。向き（縦／横）に依存しない形で、時間軸方向（along）と
 // それに直交する方向（cross）の値を返す。描画側がこれを縦か横に当てはめる
-import type { TimelineData } from "../data/timeline";
+import type { TimelineData, Year } from "../data/timeline";
 import { formatPeriod } from "./format";
 import type { Span } from "./spans";
 
@@ -20,11 +20,16 @@ const INSIDE_PADDING = 12;
 
 export type TimeRange = { from: number; to: number };
 
+// 終わりの年。現在まで続く期間（end が null）は currentYear で終わる
+export function endYear(item: { end: Year | null }, currentYear: number): number {
+  return item.end?.year ?? currentYear;
+}
+
 // 王朝と在位のすべての年を含み、目盛りの区切りにそろえた範囲。データが無ければ null
-export function timeRange(data: TimelineData): TimeRange | null {
+export function timeRange(data: TimelineData, currentYear: number): TimeRange | null {
   const years = [...data.dynasties, ...data.reigns].flatMap((item) => [
     item.start.year,
-    item.end.year,
+    endYear(item, currentYear),
   ]);
   if (years.length === 0) return null;
   const from = Math.floor(Math.min(...years) / TICK_STEP) * TICK_STEP;
@@ -110,11 +115,14 @@ export function layoutLane(
   range: TimeRange,
   orientation: Orientation,
   measure: (text: string) => number,
+  currentYear: number,
 ): LaneLayout {
-  const periods = spans.map((span) => ({
-    start: yearToOffset(span.start.year, range),
-    end: yearToOffset(span.end.year, range),
-  }));
+  // 開始と終了が同じ年の棒は、長さが 0 にならないよう、その 1 年分の長さを持たせる
+  const periods = spans.map((span) => {
+    const start = span.start.year;
+    const end = Math.max(endYear(span, currentYear), start + 1);
+    return { start: yearToOffset(start, range), end: yearToOffset(end, range) };
+  });
   const tracks = assignTracks(periods);
 
   const bars: BarLayout[] = spans.map((span, i) => {

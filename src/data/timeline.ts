@@ -2,9 +2,13 @@
 
 export type Year = { year: number; circa: boolean };
 export type Lane = { id: string; name: string; dynasties: string[]; reigns: string[] };
-export type Dynasty = { id: string; name: string; start: Year; end: Year };
+// 終わりが null なら現在まで続いている
+export type Dynasty = { id: string; name: string; start: Year; end: Year | null };
 export type Person = { id: string; name: string };
-export type Reign = { id: string; personId: string; start: Year; end: Year };
+// 役割: 君主（王・女王・皇帝）か、首脳（首相・大統領など）か
+export const ROLES = ["monarch", "leader"] as const;
+export type Role = (typeof ROLES)[number];
+export type Reign = { id: string; personId: string; role: Role; start: Year; end: Year | null };
 export type TimelineData = {
   lanes: Lane[];
   dynasties: Dynasty[];
@@ -56,11 +60,17 @@ function year(value: unknown, where: string): Year {
   return { year: r.year, circa: r.circa };
 }
 
-function period(r: Record<string, unknown>, where: string): { start: Year; end: Year } {
+// 終わりが null の期間は現在まで続いている
+function period(r: Record<string, unknown>, where: string): { start: Year; end: Year | null } {
   const start = year(r.start, `${where}.start`);
-  const end = year(r.end, `${where}.end`);
-  if (start.year > end.year) fail(where, "開始が終了より後です");
+  const end = r.end === null ? null : year(r.end, `${where}.end`);
+  if (end && start.year > end.year) fail(where, "開始が終了より後です");
   return { start, end };
+}
+
+function role(value: unknown, where: string): Role {
+  const found = ROLES.find((candidate) => candidate === value);
+  return found ?? fail(where, `role は ${ROLES.join(" か ")} です`);
 }
 
 function unique<T extends { id: string }>(items: T[], where: string): Map<string, T> {
@@ -102,10 +112,10 @@ export function parseTimeline(value: unknown): TimelineData {
 
   const reigns = array(root.reigns, "reigns").map((item, i) => {
     const where = `reigns[${i}]`;
-    const r = record(item, ["id", "personId", "start", "end"], where);
+    const r = record(item, ["id", "personId", "role", "start", "end"], where);
     const personId = id(r.personId, where);
     if (!personMap.has(personId)) fail(where, `存在しない人物を参照しています: ${personId}`);
-    return { id: id(r.id, where), personId, ...period(r, where) };
+    return { id: id(r.id, where), personId, role: role(r.role, where), ...period(r, where) };
   });
   const reignMap = unique(reigns, "reigns");
 
