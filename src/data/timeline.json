@@ -25,10 +25,9 @@
         "provisional-government-1871",
         "paris-commune",
         "third-republic",
-        "poincare-cabinet",
-        "cartel-des-gauches",
         "vichy",
         "free-france",
+        "fourth-republic",
         "fifth-republic"
       ],
       "reigns": [
@@ -62,6 +61,10 @@
         "briand-1921",
         "briand-1925",
         "briand-1929",
+        "poincare-1912",
+        "poincare-1913",
+        "poincare-1922",
+        "poincare-1926",
         "daladier-1933",
         "daladier-1934",
         "daladier-1938",
@@ -534,32 +537,6 @@
       }
     },
     {
-      "id": "poincare-cabinet",
-      "name": "ポワンカレ右派内閣",
-      "kind": "government",
-      "start": {
-        "year": 1922,
-        "circa": false
-      },
-      "end": {
-        "year": 1924,
-        "circa": false
-      }
-    },
-    {
-      "id": "cartel-des-gauches",
-      "name": "左派連合政権",
-      "kind": "government",
-      "start": {
-        "year": 1924,
-        "circa": false
-      },
-      "end": {
-        "year": 1926,
-        "circa": false
-      }
-    },
-    {
       "id": "vichy",
       "name": "ヴィシー政府",
       "kind": "regime",
@@ -582,6 +559,19 @@
       },
       "end": {
         "year": 1944,
+        "circa": false
+      }
+    },
+    {
+      "id": "fourth-republic",
+      "name": "第四共和政",
+      "kind": "regime",
+      "start": {
+        "year": 1946,
+        "circa": false
+      },
+      "end": {
+        "year": 1958,
         "circa": false
       }
     },
@@ -816,6 +806,10 @@
     {
       "id": "briand",
       "name": "ブリアン"
+    },
+    {
+      "id": "poincare",
+      "name": "ポワンカレ"
     },
     {
       "id": "daladier",
@@ -1738,6 +1732,58 @@
       "role": "leader",
       "start": {
         "year": 1929,
+        "circa": false
+      },
+      "end": {
+        "year": 1929,
+        "circa": false
+      }
+    },
+    {
+      "id": "poincare-1912",
+      "personId": "poincare",
+      "role": "leader",
+      "start": {
+        "year": 1912,
+        "circa": false
+      },
+      "end": {
+        "year": 1913,
+        "circa": false
+      }
+    },
+    {
+      "id": "poincare-1913",
+      "personId": "poincare",
+      "role": "leader",
+      "start": {
+        "year": 1913,
+        "circa": false
+      },
+      "end": {
+        "year": 1920,
+        "circa": false
+      }
+    },
+    {
+      "id": "poincare-1922",
+      "personId": "poincare",
+      "role": "leader",
+      "start": {
+        "year": 1922,
+        "circa": false
+      },
+      "end": {
+        "year": 1924,
+        "circa": false
+      }
+    },
+    {
+      "id": "poincare-1926",
+      "personId": "poincare",
+      "role": "leader",
+      "start": {
+        "year": 1926,
         "circa": false
       },
       "end": {
