@@ -203,7 +203,7 @@ function Horizontal({ range, lanes }: { range: TimeRange; lanes: LaneEntry[] }) 
                   paddingTop: (BAR_THICKNESS - LINE_HEIGHT * 2) / 2,
                 }}
               >
-                {bar.labelCross === null && (
+                {bar.inside && (
                   <>
                     <div className="truncate">{bar.span.name}</div>
                     <div className="truncate">{bar.period}</div>
@@ -240,14 +240,9 @@ function Vertical({ range, lanes }: { range: TimeRange; lanes: LaneEntry[] }) {
     <div
       className="grid"
       style={{
-        // 棒と棒の外のラベルが隣の列にはみ出さないよう、その分だけ列の最小幅を広げる
-        gridTemplateColumns: [
-          `${AXIS_WIDTH}px`,
-          ...lanes.map(({ layout }) => {
-            const min = Math.max(MIN_COLUMN_WIDTH, layout.crossExtent + TRACK_GAP * 2);
-            return `minmax(${min}px, 1fr)`;
-          }),
-        ].join(" "),
+        // 列の最小幅は、見出しの幅と、各列の section の min-width（棒とラベルを並べた幅）の大きいほう。
+        // 見出しを切らず、棒とラベルが隣の列にはみ出さない
+        gridTemplateColumns: `${AXIS_WIDTH}px repeat(${lanes.length}, minmax(max-content, 1fr))`,
       }}
     >
       <div
@@ -260,7 +255,7 @@ function Vertical({ range, lanes }: { range: TimeRange; lanes: LaneEntry[] }) {
           className="sticky top-0 z-20 flex items-center border-b border-l border-border bg-surface px-sm font-heading text-heading"
           style={{ height: HEADER_HEIGHT }}
         >
-          <span className="truncate">{lane.name}</span>
+          <span className="whitespace-nowrap">{lane.name}</span>
         </h2>
       ))}
       <div className="sticky left-0 z-10 bg-surface" style={{ height: length }}>
@@ -280,7 +275,10 @@ function Vertical({ range, lanes }: { range: TimeRange; lanes: LaneEntry[] }) {
             key={lane.id}
             aria-label={lane.name}
             className="relative border-l border-border"
-            style={{ height: length }}
+            style={{
+              height: length,
+              minWidth: Math.max(MIN_COLUMN_WIDTH, layout.crossExtent + TRACK_GAP * 2),
+            }}
           >
             {years.map((year) => (
               <div
@@ -302,10 +300,16 @@ function Vertical({ range, lanes }: { range: TimeRange; lanes: LaneEntry[] }) {
                   paddingTop: 1,
                 }}
               >
-                {bar.labelCross === null && (
+                {bar.inside === "row" && (
                   <>
                     {bar.span.name}
                     <span className="ml-xs text-muted">{bar.period}</span>
+                  </>
+                )}
+                {bar.inside === "stack" && (
+                  <>
+                    <div>{bar.span.name}</div>
+                    <div className="text-muted">{bar.period}</div>
                   </>
                 )}
               </div>

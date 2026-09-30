@@ -179,19 +179,43 @@ describe("layoutLane", () => {
     ]);
   });
 
-  it("縦向きは 1 行分の長さがあれば棒の中に入れる", () => {
-    // 1 行に 18px（16px と両端の隙間 2px）が要る。9 年（18px）なら中、8 年（16px）なら外
+  it("縦向きは 1 行に収まれば、名前と期間を 1 行で棒の中に入れる", () => {
+    // 名前 20px + 間隔 4px + 期間 70px + 余白 12px = 106px が棒の幅 112px に収まり、長さ 18px で 1 行分ある
+    const lane = layoutLane([span("a", "アア", 987, 996)], range, "vertical", measure, 2026);
+    expect(lane.bars[0]).toMatchObject({ inside: "row", labelCross: null });
+  });
+
+  it("縦向きで 1 行に収まらなくても、2 行分の長さがあれば積んで棒の中に入れる", () => {
+    // 1 行なら 176px で入らない。長いほうの期間 90px + 余白 12px は入り、長さ 60px は 2 行分（34px）ある
     const lane = layoutLane(
-      [span("a", "ユーグ=カペー", 987, 996), span("b", "短い", 1000, 1008)],
+      [span("a", "アアアアアアア", 1000, 1030)],
       range,
       "vertical",
       measure,
       2026,
     );
-    // ラベルは棒（幅 104px）のすぐ右（間隔 4px）に置く
-    expect(lane.bars.map((bar) => bar.labelCross)).toEqual([null, 108]);
+    expect(lane.bars[0]).toMatchObject({ inside: "stack", labelCross: null });
+  });
+
+  it("縦向きで名前が棒の幅に収まらなければ、長い棒でも外に出す", () => {
+    // 名前 110px + 余白 12px は 112px を超える
+    const lane = layoutLane(
+      [span("a", "アアアアアアアアアアア", 1000, 1090)],
+      range,
+      "vertical",
+      measure,
+      2026,
+    );
+    expect(lane.bars[0]).toMatchObject({ inside: null, labelCross: 116 });
+  });
+
+  it("縦向きで 1 行分の長さがなければ外に出し、棒のすぐ右に置く", () => {
+    // 8 年（16px）は 1 行分（18px）に足りない
+    const lane = layoutLane([span("b", "短い", 1000, 1008)], range, "vertical", measure, 2026);
+    // ラベルは棒（幅 112px）のすぐ右（間隔 4px）に置く
+    expect(lane.bars[0]).toMatchObject({ inside: null, labelCross: 116 });
     // 縦向きのラベルの太さは名前か期間の長いほうの幅と間隔
-    expect(lane.crossExtent).toBe(108 + 96);
+    expect(lane.crossExtent).toBe(116 + 96);
   });
 
   it("ラベルが範囲の末端を越えるなら extent を伸ばす", () => {

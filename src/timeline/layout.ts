@@ -80,6 +80,8 @@ export type BarLayout = {
   length: number; // 時間軸方向の長さ（px）
   track: number;
   cross: number; // 段の開始位置（cross 方向の px）
+  // 棒の中の文字の並べ方。棒の外に出すなら null
+  inside: "row" | "stack" | null;
   // 棒の外に出すラベルの cross 方向の開始位置（px）。棒の中に収まるなら null
   labelCross: number | null;
 };
@@ -93,7 +95,7 @@ export type LaneLayout = {
 };
 
 // 縦向きの 1 段（棒 1 本）の幅。棒の中の「名前 期間」が読める幅にする
-export const VERTICAL_TRACK_WIDTH = 104;
+export const VERTICAL_TRACK_WIDTH = 112;
 
 export function trackSize(orientation: Orientation): number {
   return orientation === "horizontal" ? BAR_THICKNESS : VERTICAL_TRACK_WIDTH;
@@ -125,13 +127,23 @@ function placeLabel(
   return candidates[candidates.length - 1] ?? from;
 }
 
-function fitsInside(orientation: Orientation, length: number, size: LabelSize): boolean {
-  if (orientation === "horizontal") {
-    return length >= Math.max(size.nameWidth, size.periodWidth) + INSIDE_PADDING;
-  }
-  // 縦向きは「名前 期間」を 1 行で入れる（両端の 1px の隙間を除いて 1 行の高さが要る）。
-  // 幅が足りない分は省略記号で切る
-  return length >= LINE_HEIGHT + 2;
+// 縦向きで 1 行に並べる名前と期間の間隔（DESIGN.md の spacing xs）
+const INLINE_GAP = 4;
+
+// 棒の中の文字の並べ方。名前と期間を 1 行に並べる（row）か 2 行に積む（stack）。
+// 名前と期間のどちらかが切れるなら入れない（null）
+function insideText(
+  orientation: Orientation,
+  length: number,
+  size: LabelSize,
+): "row" | "stack" | null {
+  const widest = Math.max(size.nameWidth, size.periodWidth) + INSIDE_PADDING;
+  if (orientation === "horizontal") return length >= widest ? "stack" : null;
+  // 縦向きは棒の幅に収まれば入れる。高さは 1 行なら 1 行分、2 行なら 2 行分（両端の 1px の隙間を足す）が要る
+  const inline = size.nameWidth + INLINE_GAP + size.periodWidth + INSIDE_PADDING;
+  if (length >= LINE_HEIGHT + 2 && inline <= VERTICAL_TRACK_WIDTH) return "row";
+  if (length >= LINE_HEIGHT * 2 + 2 && widest <= VERTICAL_TRACK_WIDTH) return "stack";
+  return null;
 }
 
 // 棒の外に出すラベルの大きさ。横向きは名前と期間を 2 行に積み、棒の下に置く。縦向きは棒の右に置く
@@ -169,6 +181,7 @@ export function layoutLane(
       length: end - start,
       track,
       cross: track * (size + TRACK_GAP),
+      inside: null,
       labelCross: null,
     };
   });
@@ -184,7 +197,8 @@ export function layoutLane(
   const byOffset = [...bars].sort((a, b) => a.offset - b.offset || a.track - b.track);
   for (const bar of byOffset) {
     const text = { nameWidth: measure(bar.span.name), periodWidth: measure(bar.period) };
-    if (fitsInside(orientation, bar.length, text)) continue;
+    bar.inside = insideText(orientation, bar.length, text);
+    if (bar.inside) continue;
     const label = outsideLabelSize(orientation, text);
     const alongRange = { start: bar.offset, end: bar.offset + label.along };
     const cross = placeLabel(bar.cross + size + TRACK_GAP, alongRange, label.cross, obstacles);
