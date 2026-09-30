@@ -79,18 +79,51 @@ export type BarLayout = {
   offset: number; // 時間軸方向の開始位置（px）
   length: number; // 時間軸方向の長さ（px）
   track: number;
-  // 棒の外に出すラベルの段。棒の中に収まるなら null
-  labelRow: number | null;
+  cross: number; // 段の開始位置（cross 方向の px）
+  // 棒の外に出すラベルの cross 方向の開始位置（px）。棒の中に収まるなら null
+  labelCross: number | null;
 };
 
 export type LaneLayout = {
   bars: BarLayout[];
-  trackCount: number;
-  // 棒の外に出すラベルの段ごとの太さ（cross 方向の px）
-  labelRowSizes: number[];
+  // 棒とラベルを含めた cross 方向の太さ（px）
+  crossExtent: number;
   // ラベルを含めた時間軸方向の末端（px）
   extent: number;
 };
+
+// 縦向きの 1 段（棒 1 本）の幅。棒の中の「名前 期間」が読める幅にする
+export const VERTICAL_TRACK_WIDTH = 104;
+
+export function trackSize(orientation: Orientation): number {
+  return orientation === "horizontal" ? BAR_THICKNESS : VERTICAL_TRACK_WIDTH;
+}
+
+type Rect = { along: number; alongEnd: number; cross: number; crossEnd: number };
+
+function overlaps(a: Rect, b: Rect): boolean {
+  return (
+    a.along < b.alongEnd && b.along < a.alongEnd && a.cross < b.crossEnd && b.cross < a.crossEnd
+  );
+}
+
+// 棒の外のラベルを、自分の棒のすぐ外側から、ほかの棒やラベルに重ならない最初の位置に置く
+function placeLabel(
+  from: number,
+  along: { start: number; end: number },
+  size: number,
+  obstacles: Rect[],
+): number {
+  const candidates = [from, ...obstacles.map((rect) => rect.crossEnd + TRACK_GAP)]
+    .filter((cross) => cross >= from)
+    .sort((a, b) => a - b);
+  for (const cross of candidates) {
+    const rect = { along: along.start, alongEnd: along.end, cross, crossEnd: cross + size };
+    if (!obstacles.some((obstacle) => overlaps(rect, obstacle))) return cross;
+  }
+  // 候補の最後（すべての障害物の外側）はかならず空いている
+  return candidates[candidates.length - 1] ?? from;
+}
 
 function fitsInside(orientation: Orientation, length: number, size: LabelSize): boolean {
   if (orientation === "horizontal") {
@@ -125,52 +158,46 @@ export function layoutLane(
   });
   const tracks = assignTracks(periods);
 
+  const size = trackSize(orientation);
   const bars: BarLayout[] = spans.map((span, i) => {
     const { start, end } = periods[i] ?? { start: 0, end: 0 };
+    const track = tracks[i] ?? 0;
     return {
       span,
       period: formatPeriod(span.start, span.end),
       offset: start,
       length: end - start,
-      track: tracks[i] ?? 0,
-      labelRow: null,
+      track,
+      cross: track * (size + TRACK_GAP),
+      labelCross: null,
     };
   });
 
-  const rowEnds: number[] = [];
-  const labelRowSizes: number[] = [];
+  const obstacles: Rect[] = bars.map((bar) => ({
+    along: bar.offset,
+    alongEnd: bar.offset + bar.length,
+    cross: bar.cross,
+    crossEnd: bar.cross + size,
+  }));
   let extent = rangeLength(range);
-  const byOffset = [...bars].sort((a, b) => a.offset - b.offset);
+  let crossExtent = obstacles.reduce((max, rect) => Math.max(max, rect.crossEnd), 0);
+  const byOffset = [...bars].sort((a, b) => a.offset - b.offset || a.track - b.track);
   for (const bar of byOffset) {
-    const size = { nameWidth: measure(bar.span.name), periodWidth: measure(bar.period) };
-    if (fitsInside(orientation, bar.length, size)) continue;
-    const { along, cross } = outsideLabelSize(orientation, size);
-    let row = rowEnds.findIndex((rowEnd) => rowEnd <= bar.offset);
-    if (row === -1) {
-      row = rowEnds.length;
-      rowEnds.push(0);
-      labelRowSizes.push(0);
-    }
-    rowEnds[row] = bar.offset + along;
-    labelRowSizes[row] = Math.max(labelRowSizes[row] ?? 0, cross);
-    bar.labelRow = row;
-    extent = Math.max(extent, bar.offset + along);
+    const text = { nameWidth: measure(bar.span.name), periodWidth: measure(bar.period) };
+    if (fitsInside(orientation, bar.length, text)) continue;
+    const label = outsideLabelSize(orientation, text);
+    const alongRange = { start: bar.offset, end: bar.offset + label.along };
+    const cross = placeLabel(bar.cross + size + TRACK_GAP, alongRange, label.cross, obstacles);
+    obstacles.push({
+      along: alongRange.start,
+      alongEnd: alongRange.end,
+      cross,
+      crossEnd: cross + label.cross,
+    });
+    bar.labelCross = cross;
+    extent = Math.max(extent, alongRange.end);
+    crossExtent = Math.max(crossExtent, cross + label.cross);
   }
 
-  return {
-    bars,
-    trackCount: bars.length === 0 ? 0 : Math.max(...tracks) + 1,
-    labelRowSizes,
-    extent,
-  };
-}
-
-// ラベルの段 row が始まる位置（棒の段の後ろからの cross 方向の px）
-export function labelRowStart(labelRowSizes: number[], row: number): number {
-  return labelRowSizes.slice(0, row).reduce((sum, size) => sum + size + TRACK_GAP, 0);
-}
-
-// ラベルの段すべてを合わせた太さ
-export function labelRowsTotal(labelRowSizes: number[]): number {
-  return labelRowStart(labelRowSizes, labelRowSizes.length);
+  return { bars, crossExtent, extent };
 }

@@ -1,14 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { TimelineData } from "../data/timeline";
-import {
-  assignTracks,
-  labelRowStart,
-  labelRowsTotal,
-  layoutLane,
-  ticks,
-  timeRange,
-  yearToOffset,
-} from "./layout";
+import { assignTracks, layoutLane, ticks, timeRange, yearToOffset } from "./layout";
 import type { Span } from "./spans";
 
 const y = (year: number) => ({ year, circa: false });
@@ -115,9 +107,10 @@ describe("layoutLane", () => {
       measure,
       2026,
     );
-    expect(lane.bars[0]).toMatchObject({ offset: 174, length: 18, track: 0, labelRow: 0 });
-    // 名前と期間を 2 行に積んだ太さ
-    expect(lane.labelRowSizes).toEqual([38]);
+    // ラベルは棒（太さ 36px）のすぐ下（間隔 4px）に置く
+    expect(lane.bars[0]).toMatchObject({ offset: 174, length: 18, track: 0, labelCross: 40 });
+    // 名前と期間を 2 行に積んだ太さ 38px の分だけ行が太くなる
+    expect(lane.crossExtent).toBe(78);
   });
 
   it("横向きで幅が足りれば棒の中に入れる", () => {
@@ -128,8 +121,8 @@ describe("layoutLane", () => {
       measure,
       2026,
     );
-    expect(lane.bars[0]?.labelRow).toBeNull();
-    expect(lane.labelRowSizes).toEqual([]);
+    expect(lane.bars[0]?.labelCross).toBeNull();
+    expect(lane.crossExtent).toBe(36);
   });
 
   it("外に出したラベルが重なるなら次の段にずらす", () => {
@@ -141,7 +134,7 @@ describe("layoutLane", () => {
       2026,
     );
     // a のラベルは 200px から 96px（期間 9 文字の 90px と間隔 6px）。b は 220px から始まるので重なる
-    expect(lane.bars.map((bar) => bar.labelRow)).toEqual([0, 1]);
+    expect(lane.bars.map((bar) => bar.labelCross)).toEqual([40, 82]);
   });
 
   it("外に出したラベルが重ならなければ同じ段に置く", () => {
@@ -152,7 +145,38 @@ describe("layoutLane", () => {
       measure,
       2026,
     );
-    expect(lane.bars.map((bar) => bar.labelRow)).toEqual([0, 0]);
+    expect(lane.bars.map((bar) => bar.labelCross)).toEqual([40, 40]);
+  });
+
+  it("ラベルが 2 段目の棒と重なるなら、その棒の外側に置く", () => {
+    // b は a と期間が重なるので 2 段目（cross 40px）。a のラベル（200〜296px）は b（206〜400px）と重なる
+    const lane = layoutLane(
+      [span("a", "アア", 1000, 1005), span("b", "イイ", 1003, 1100)],
+      range,
+      "horizontal",
+      measure,
+      2026,
+    );
+    expect(lane.bars.map((bar) => [bar.track, bar.labelCross])).toEqual([
+      [0, 80],
+      [1, null],
+    ]);
+  });
+
+  it("2 段目の棒がラベルと重ならなければ、ラベルを自分の棒のすぐ外側に置く", () => {
+    // d は 2 段目だが 320px から始まり、a のラベル（200〜296px）とは重ならない
+    const lane = layoutLane(
+      [span("a", "アア", 1000, 1005), span("c", "ウウ", 1050, 1200), span("d", "エエ", 1060, 1150)],
+      { from: 900, to: 1300 },
+      "horizontal",
+      measure,
+      2026,
+    );
+    expect(lane.bars.map((bar) => [bar.track, bar.labelCross])).toEqual([
+      [0, 40],
+      [0, null],
+      [1, null],
+    ]);
   });
 
   it("縦向きは 1 行分の長さがあれば棒の中に入れる", () => {
@@ -164,9 +188,10 @@ describe("layoutLane", () => {
       measure,
       2026,
     );
-    expect(lane.bars.map((bar) => bar.labelRow)).toEqual([null, 0]);
-    // 縦向きのラベルの太さは名前か期間の長いほうの幅
-    expect(lane.labelRowSizes).toEqual([96]);
+    // ラベルは棒（幅 104px）のすぐ右（間隔 4px）に置く
+    expect(lane.bars.map((bar) => bar.labelCross)).toEqual([null, 108]);
+    // 縦向きのラベルの太さは名前か期間の長いほうの幅と間隔
+    expect(lane.crossExtent).toBe(108 + 96);
   });
 
   it("ラベルが範囲の末端を越えるなら extent を伸ばす", () => {
@@ -214,18 +239,8 @@ describe("layoutLane", () => {
   it("棒が無い行は段も 0", () => {
     expect(layoutLane([], range, "horizontal", measure, 2026)).toEqual({
       bars: [],
-      trackCount: 0,
-      labelRowSizes: [],
+      crossExtent: 0,
       extent: 400,
     });
-  });
-});
-
-describe("labelRowStart", () => {
-  it("前の段の太さと間隔を足す", () => {
-    expect(labelRowStart([38, 20], 0)).toBe(0);
-    expect(labelRowStart([38, 20], 1)).toBe(42);
-    expect(labelRowsTotal([38, 20])).toBe(66);
-    expect(labelRowsTotal([])).toBe(0);
   });
 });
