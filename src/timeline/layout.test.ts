@@ -19,7 +19,9 @@ describe("timeRange", () => {
       lanes: [],
       dynasties: [{ id: "a", name: "A", kind: "regime", start: y(481), end: y(751) }],
       people: [{ id: "p", name: "P" }],
-      reigns: [{ id: "r", personId: "p", role: "monarch", start: y(1485), end: y(1603) }],
+      reigns: [
+        { id: "r", personId: "p", name: null, role: "monarch", start: y(1485), end: y(1603) },
+      ],
     };
     expect(timeRange(data, 2026)).toEqual({ from: 400, to: 1700 });
   });

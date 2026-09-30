@@ -17,7 +17,15 @@ export type Person = { id: string; name: string };
 // 役割: 君主（王・女王・皇帝）か、首脳（首相・大統領など）か
 export const ROLES = ["monarch", "leader"] as const;
 export type Role = (typeof ROLES)[number];
-export type Reign = { id: string; personId: string; role: Role; start: Year; end: Year | null };
+// name はその在位のあいだの表示名。null なら人物の名前を出す（即位で名前が変わる人のため）
+export type Reign = {
+  id: string;
+  personId: string;
+  name: string | null;
+  role: Role;
+  start: Year;
+  end: Year | null;
+};
 export type TimelineData = {
   lanes: Lane[];
   dynasties: Dynasty[];
@@ -131,10 +139,16 @@ export function parseTimeline(value: unknown): TimelineData {
 
   const reigns = array(root.reigns, "reigns").map((item, i) => {
     const where = `reigns[${i}]`;
-    const r = record(item, ["id", "personId", "role", "start", "end"], where);
+    const r = record(item, ["id", "personId", "name", "role", "start", "end"], where);
     const personId = id(r.personId, where);
     if (!personMap.has(personId)) fail(where, `存在しない人物を参照しています: ${personId}`);
-    return { id: id(r.id, where), personId, role: role(r.role, where), ...period(r, where) };
+    return {
+      id: id(r.id, where),
+      personId,
+      name: r.name === null ? null : name(r.name, where),
+      role: role(r.role, where),
+      ...period(r, where),
+    };
   });
   const reignMap = unique(reigns, "reigns");
 

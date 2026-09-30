@@ -30,7 +30,7 @@ export function spansForLane(data: TimelineData, lane: Lane, subject: Subject): 
     .filter((reign) => reign.role === subject)
     .map((reign) => ({
       id: reign.id,
-      name: lookup(data.people, reign.personId).name,
+      name: reign.name ?? lookup(data.people, reign.personId).name,
       start: reign.start,
       end: reign.end,
     }));

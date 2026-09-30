@@ -47,12 +47,14 @@
         "louis-xiii",
         "louis-xiv",
         "louis-xvi",
+        "napoleon-i-1799",
         "napoleon-i-1804",
         "napoleon-i-1815",
         "louis-xviii",
         "charles-x",
         "louis-philippe",
-        "napoleon-iii",
+        "napoleon-iii-1848",
+        "napoleon-iii-1852",
         "thiers",
         "clemenceau-1906",
         "clemenceau-1917",
@@ -859,6 +861,7 @@
     {
       "id": "clovis",
       "personId": "clovis",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 481,
@@ -872,6 +875,7 @@
     {
       "id": "charles-martel",
       "personId": "charles-martel",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 715,
@@ -885,6 +889,7 @@
     {
       "id": "pippin-741",
       "personId": "pippin",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 741,
@@ -898,6 +903,7 @@
     {
       "id": "pippin-751",
       "personId": "pippin",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 751,
@@ -911,6 +917,7 @@
     {
       "id": "charlemagne",
       "personId": "charlemagne",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 768,
@@ -924,6 +931,7 @@
     {
       "id": "louis-i",
       "personId": "louis-i",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 814,
@@ -937,6 +945,7 @@
     {
       "id": "hugues-capet",
       "personId": "hugues-capet",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 987,
@@ -950,6 +959,7 @@
     {
       "id": "philippe-ii",
       "personId": "philippe-ii",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1180,
@@ -963,6 +973,7 @@
     {
       "id": "louis-ix",
       "personId": "louis-ix",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1226,
@@ -976,6 +987,7 @@
     {
       "id": "philippe-iv",
       "personId": "philippe-iv",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1285,
@@ -989,6 +1001,7 @@
     {
       "id": "charles-vii",
       "personId": "charles-vii",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1422,
@@ -1002,6 +1015,7 @@
     {
       "id": "egbert",
       "personId": "egbert",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 802,
@@ -1015,6 +1029,7 @@
     {
       "id": "alfred",
       "personId": "alfred",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 871,
@@ -1028,6 +1043,7 @@
     {
       "id": "cnut",
       "personId": "cnut",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1016,
@@ -1041,6 +1057,7 @@
     {
       "id": "william-i",
       "personId": "william-i",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1066,
@@ -1054,6 +1071,7 @@
     {
       "id": "henry-ii",
       "personId": "henry-ii",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1154,
@@ -1067,6 +1085,7 @@
     {
       "id": "richard-i",
       "personId": "richard-i",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1189,
@@ -1080,6 +1099,7 @@
     {
       "id": "john",
       "personId": "john",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1199,
@@ -1093,6 +1113,7 @@
     {
       "id": "henry-iii",
       "personId": "henry-iii",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1216,
@@ -1106,6 +1127,7 @@
     {
       "id": "edward-i",
       "personId": "edward-i",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1272,
@@ -1119,6 +1141,7 @@
     {
       "id": "edward-iii",
       "personId": "edward-iii",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1327,
@@ -1132,6 +1155,7 @@
     {
       "id": "henry-vii",
       "personId": "henry-vii",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1485,
@@ -1145,6 +1169,7 @@
     {
       "id": "henry-viii",
       "personId": "henry-viii",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1509,
@@ -1158,6 +1183,7 @@
     {
       "id": "mary-i",
       "personId": "mary-i",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1553,
@@ -1171,6 +1197,7 @@
     {
       "id": "elizabeth-i",
       "personId": "elizabeth-i",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1558,
@@ -1184,6 +1211,7 @@
     {
       "id": "james-i",
       "personId": "james-i",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1603,
@@ -1197,6 +1225,7 @@
     {
       "id": "charles-i",
       "personId": "charles-i",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1625,
@@ -1210,6 +1239,7 @@
     {
       "id": "cromwell",
       "personId": "cromwell",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1653,
@@ -1223,6 +1253,7 @@
     {
       "id": "charles-ii",
       "personId": "charles-ii",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1660,
@@ -1236,6 +1267,7 @@
     {
       "id": "james-ii",
       "personId": "james-ii",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1685,
@@ -1249,6 +1281,7 @@
     {
       "id": "william-iii",
       "personId": "william-iii",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1689,
@@ -1262,6 +1295,7 @@
     {
       "id": "mary-ii",
       "personId": "mary-ii",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1689,
@@ -1275,6 +1309,7 @@
     {
       "id": "anne",
       "personId": "anne",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1702,
@@ -1288,6 +1323,7 @@
     {
       "id": "george-i",
       "personId": "george-i",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1714,
@@ -1301,6 +1337,7 @@
     {
       "id": "walpole",
       "personId": "walpole",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1721,
@@ -1314,6 +1351,7 @@
     {
       "id": "pitt-1783",
       "personId": "pitt",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1783,
@@ -1327,6 +1365,7 @@
     {
       "id": "pitt-1804",
       "personId": "pitt",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1804,
@@ -1340,6 +1379,7 @@
     {
       "id": "victoria",
       "personId": "victoria",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1837,
@@ -1353,6 +1393,7 @@
     {
       "id": "disraeli-1868",
       "personId": "disraeli",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1868,
@@ -1366,6 +1407,7 @@
     {
       "id": "disraeli-1874",
       "personId": "disraeli",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1874,
@@ -1379,6 +1421,7 @@
     {
       "id": "gladstone-1868",
       "personId": "gladstone",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1868,
@@ -1392,6 +1435,7 @@
     {
       "id": "gladstone-1880",
       "personId": "gladstone",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1880,
@@ -1405,6 +1449,7 @@
     {
       "id": "gladstone-1886",
       "personId": "gladstone",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1886,
@@ -1418,6 +1463,7 @@
     {
       "id": "gladstone-1892",
       "personId": "gladstone",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1892,
@@ -1431,6 +1477,7 @@
     {
       "id": "lloyd-george",
       "personId": "lloyd-george",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1916,
@@ -1444,6 +1491,7 @@
     {
       "id": "macdonald-1924",
       "personId": "macdonald",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1924,
@@ -1457,6 +1505,7 @@
     {
       "id": "macdonald-1929",
       "personId": "macdonald",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1929,
@@ -1470,6 +1519,7 @@
     {
       "id": "neville-chamberlain",
       "personId": "neville-chamberlain",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1937,
@@ -1483,6 +1533,7 @@
     {
       "id": "churchill-1940",
       "personId": "churchill",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1940,
@@ -1496,6 +1547,7 @@
     {
       "id": "churchill-1951",
       "personId": "churchill",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1951,
@@ -1509,6 +1561,7 @@
     {
       "id": "attlee",
       "personId": "attlee",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1945,
@@ -1522,6 +1575,7 @@
     {
       "id": "thatcher",
       "personId": "thatcher",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1979,
@@ -1535,6 +1589,7 @@
     {
       "id": "francois-i",
       "personId": "francois-i",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1515,
@@ -1548,6 +1603,7 @@
     {
       "id": "henri-iv",
       "personId": "henri-iv",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1589,
@@ -1561,6 +1617,7 @@
     {
       "id": "louis-xiii",
       "personId": "louis-xiii",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1610,
@@ -1574,6 +1631,7 @@
     {
       "id": "louis-xiv",
       "personId": "louis-xiv",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1643,
@@ -1587,6 +1645,7 @@
     {
       "id": "louis-xvi",
       "personId": "louis-xvi",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1774,
@@ -1598,8 +1657,23 @@
       }
     },
     {
+      "id": "napoleon-i-1799",
+      "personId": "napoleon-i",
+      "name": "ナポレオン=ボナパルト",
+      "role": "leader",
+      "start": {
+        "year": 1799,
+        "circa": false
+      },
+      "end": {
+        "year": 1804,
+        "circa": false
+      }
+    },
+    {
       "id": "napoleon-i-1804",
       "personId": "napoleon-i",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1804,
@@ -1613,6 +1687,7 @@
     {
       "id": "napoleon-i-1815",
       "personId": "napoleon-i",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1815,
@@ -1626,6 +1701,7 @@
     {
       "id": "louis-xviii",
       "personId": "louis-xviii",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1814,
@@ -1639,6 +1715,7 @@
     {
       "id": "charles-x",
       "personId": "charles-x",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1824,
@@ -1652,6 +1729,7 @@
     {
       "id": "louis-philippe",
       "personId": "louis-philippe",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1830,
@@ -1663,8 +1741,23 @@
       }
     },
     {
-      "id": "napoleon-iii",
+      "id": "napoleon-iii-1848",
       "personId": "napoleon-iii",
+      "name": "ルイ=ナポレオン",
+      "role": "leader",
+      "start": {
+        "year": 1848,
+        "circa": false
+      },
+      "end": {
+        "year": 1852,
+        "circa": false
+      }
+    },
+    {
+      "id": "napoleon-iii-1852",
+      "personId": "napoleon-iii",
+      "name": null,
       "role": "monarch",
       "start": {
         "year": 1852,
@@ -1678,6 +1771,7 @@
     {
       "id": "thiers",
       "personId": "thiers",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1871,
@@ -1691,6 +1785,7 @@
     {
       "id": "clemenceau-1906",
       "personId": "clemenceau",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1906,
@@ -1704,6 +1799,7 @@
     {
       "id": "clemenceau-1917",
       "personId": "clemenceau",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1917,
@@ -1717,6 +1813,7 @@
     {
       "id": "briand-1909",
       "personId": "briand",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1909,
@@ -1730,6 +1827,7 @@
     {
       "id": "briand-1913",
       "personId": "briand",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1913,
@@ -1743,6 +1841,7 @@
     {
       "id": "briand-1915",
       "personId": "briand",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1915,
@@ -1756,6 +1855,7 @@
     {
       "id": "briand-1921",
       "personId": "briand",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1921,
@@ -1769,6 +1869,7 @@
     {
       "id": "briand-1925",
       "personId": "briand",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1925,
@@ -1782,6 +1883,7 @@
     {
       "id": "briand-1929",
       "personId": "briand",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1929,
@@ -1795,6 +1897,7 @@
     {
       "id": "poincare-1912",
       "personId": "poincare",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1912,
@@ -1808,6 +1911,7 @@
     {
       "id": "poincare-1913",
       "personId": "poincare",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1913,
@@ -1821,6 +1925,7 @@
     {
       "id": "poincare-1922",
       "personId": "poincare",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1922,
@@ -1834,6 +1939,7 @@
     {
       "id": "poincare-1926",
       "personId": "poincare",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1926,
@@ -1847,6 +1953,7 @@
     {
       "id": "daladier-1933",
       "personId": "daladier",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1933,
@@ -1860,6 +1967,7 @@
     {
       "id": "daladier-1934",
       "personId": "daladier",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1934,
@@ -1873,6 +1981,7 @@
     {
       "id": "daladier-1938",
       "personId": "daladier",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1938,
@@ -1886,6 +1995,7 @@
     {
       "id": "petain",
       "personId": "petain",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1940,
@@ -1899,6 +2009,7 @@
     {
       "id": "de-gaulle-1944",
       "personId": "de-gaulle",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1944,
@@ -1912,6 +2023,7 @@
     {
       "id": "schuman",
       "personId": "schuman",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1947,
@@ -1925,6 +2037,7 @@
     {
       "id": "de-gaulle-1959",
       "personId": "de-gaulle",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1959,
@@ -1938,6 +2051,7 @@
     {
       "id": "mitterrand",
       "personId": "mitterrand",
+      "name": null,
       "role": "leader",
       "start": {
         "year": 1981,

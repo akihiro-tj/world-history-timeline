@@ -50,11 +50,12 @@ type TimelineData = {
   lanes: { id: string; name: string; dynasties: string[]; reigns: string[] }[];
   dynasties: { id: string; name: string; kind: DynastyKind; start: Year; end: Year | null }[]; // null は現在まで
   people: { id: string; name: string }[];
-  reigns: { id: string; personId: string; role: Role; start: Year; end: Year | null }[];
+  reigns: { id: string; personId: string; name: string | null; role: Role; start: Year; end: Year | null }[]; // name はその在位のあいだの表示名
 };
 ```
 
 - 行の `dynasties` は種類を問わず、`reigns` は役割を問わず並べる。主題「国家・体制」「政権」は `kind` で、「君主」「首相・大統領など」は `role` で、その行の項目を絞り込んで出す
+- 在位の棒には、`name` があればそれを、`null` なら人物の名前を出す。即位で名前が変わる人（第一統領期の「ナポレオン=ボナパルト」と皇帝期の「ナポレオン1世」など）を、その時期の名前で出すため
 - 知らない `kind`・`role` は、ほかの検証の失敗と同じく読み込まずにエラーにする
 
 ## 4. 表示
@@ -82,5 +83,5 @@ MVP の spec §6・国・地域の spec §5 から変える・足すものだけ
 
 ## 6. 検証
 
-- Vitest: 成果物の検証（`kind`、`role`、終わりの `null`）、年の形式（1 年だけ、現在まで）、`timeRange`（現在まで）、`layoutLane`（1 年だけの棒の長さと段、現在まで続く棒、棒の外のラベルの位置）、`rowsForView`（主題 4 つ、国・地域の 4 行）、セレクトの値の相互変換
+- Vitest: 成果物の検証（`kind`、`role`、在位の `name`、終わりの `null`）、年の形式（1 年だけ、現在まで）、`timeRange`（現在まで）、`layoutLane`（1 年だけの棒の長さと段、現在まで続く棒、棒の外のラベルの位置）、`rowsForView`（主題 4 つ、国・地域の 4 行）、セレクトの値の相互変換
 - 実ブラウザ（headless Chromium）: PC 幅と 375px 幅のそれぞれで、表示 6 通り × 向き 2 通りを確かめ、棒の外のラベルどうしが重ならないことを確かめる

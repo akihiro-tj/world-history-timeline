@@ -10,7 +10,7 @@ const data: TimelineData = {
       id: "england",
       name: "イングランド",
       dynasties: ["york", "tudor", "cabinet"],
-      reigns: ["henry-vii", "walpole"],
+      reigns: ["henry-vii", "walpole", "walpole-alias"],
     },
     { id: "empty", name: "空の行", dynasties: [], reigns: [] },
   ],
@@ -24,8 +24,30 @@ const data: TimelineData = {
     { id: "walpole", name: "ウォルポール" },
   ],
   reigns: [
-    { id: "henry-vii", personId: "henry", role: "monarch", start: y(1485), end: y(1509) },
-    { id: "walpole", personId: "walpole", role: "leader", start: y(1721), end: y(1742) },
+    {
+      id: "henry-vii",
+      personId: "henry",
+      name: null,
+      role: "monarch",
+      start: y(1485),
+      end: y(1509),
+    },
+    {
+      id: "walpole",
+      personId: "walpole",
+      name: null,
+      role: "leader",
+      start: y(1721),
+      end: y(1742),
+    },
+    {
+      id: "walpole-alias",
+      personId: "walpole",
+      name: "ロバート=ウォルポール",
+      role: "leader",
+      start: y(1743),
+      end: y(1744),
+    },
   ],
 };
 
@@ -40,7 +62,7 @@ describe("spansForLane", () => {
     expect(spansForLane(data, lane, "government").map((span) => span.name)).toEqual(["内閣"]);
   });
 
-  it("在位は役割ごとに、人物の名前と在位の期間を返す", () => {
+  it("在位は役割ごとに、名前（在位の表示名があればそれ、なければ人物の名前）と在位の期間を返す", () => {
     const lane = data.lanes[0];
     if (!lane) throw new Error("テストデータがありません");
     expect(spansForLane(data, lane, "monarch")).toEqual([
@@ -48,6 +70,7 @@ describe("spansForLane", () => {
     ]);
     expect(spansForLane(data, lane, "leader")).toEqual([
       { id: "walpole", name: "ウォルポール", start: y(1721), end: y(1742) },
+      { id: "walpole-alias", name: "ロバート=ウォルポール", start: y(1743), end: y(1744) },
     ]);
   });
 
@@ -81,7 +104,10 @@ describe("rowsForView", () => {
 
   it("主題が首相・大統領などなら、行ごとに首脳の在任を並べる", () => {
     const rows = rowsForView(data, { kind: "subject", subject: "leader" }, names);
-    expect(rows.map((row) => row.spans.map((span) => span.name))).toEqual([["ウォルポール"], []]);
+    expect(rows.map((row) => row.spans.map((span) => span.name))).toEqual([
+      ["ウォルポール", "ロバート=ウォルポール"],
+      [],
+    ]);
   });
 
   it("国・地域の表示では、その行の国家・体制、君主、首相・大統領など、政権を 4 行で並べる", () => {
@@ -89,7 +115,7 @@ describe("rowsForView", () => {
     expect(rows.map((row) => [row.id, row.name, row.spans.map((span) => span.name)])).toEqual([
       ["regime", "国家・体制", ["ヨーク家", "テューダー朝"]],
       ["monarch", "君主", ["ヘンリ7世"]],
-      ["leader", "首相・大統領など", ["ウォルポール"]],
+      ["leader", "首相・大統領など", ["ウォルポール", "ロバート=ウォルポール"]],
       ["government", "政権", ["内閣"]],
     ]);
   });
