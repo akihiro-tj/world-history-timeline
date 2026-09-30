@@ -17,12 +17,12 @@ const SUBJECT_GROUP: ViewGroup = {
   label: COPY.groupSubject,
   options: [
     { value: viewToValue({ kind: "subject", subject: "regime" }), label: COPY.subjectRegime },
+    { value: viewToValue({ kind: "subject", subject: "monarch" }), label: COPY.subjectMonarch },
+    { value: viewToValue({ kind: "subject", subject: "leader" }), label: COPY.subjectLeader },
     {
       value: viewToValue({ kind: "subject", subject: "government" }),
       label: COPY.subjectGovernment,
     },
-    { value: viewToValue({ kind: "subject", subject: "monarch" }), label: COPY.subjectMonarch },
-    { value: viewToValue({ kind: "subject", subject: "leader" }), label: COPY.subjectLeader },
   ],
 };
 

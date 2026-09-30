@@ -84,13 +84,13 @@ describe("rowsForView", () => {
     expect(rows.map((row) => row.spans.map((span) => span.name))).toEqual([["ウォルポール"], []]);
   });
 
-  it("国・地域の表示では、その行の国家・体制、政権、君主、首相・大統領などを 4 行で並べる", () => {
+  it("国・地域の表示では、その行の国家・体制、君主、首相・大統領など、政権を 4 行で並べる", () => {
     const rows = rowsForView(data, { kind: "lane", laneId: "england" }, names);
     expect(rows.map((row) => [row.id, row.name, row.spans.map((span) => span.name)])).toEqual([
       ["regime", "国家・体制", ["ヨーク家", "テューダー朝"]],
-      ["government", "政権", ["内閣"]],
       ["monarch", "君主", ["ヘンリ7世"]],
       ["leader", "首相・大統領など", ["ウォルポール"]],
+      ["government", "政権", ["内閣"]],
     ]);
   });
 
@@ -98,9 +98,9 @@ describe("rowsForView", () => {
     const rows = rowsForView(data, { kind: "lane", laneId: "empty" }, names);
     expect(rows).toEqual([
       { id: "regime", name: "国家・体制", spans: [] },
-      { id: "government", name: "政権", spans: [] },
       { id: "monarch", name: "君主", spans: [] },
       { id: "leader", name: "首相・大統領など", spans: [] },
+      { id: "government", name: "政権", spans: [] },
     ]);
   });
 
