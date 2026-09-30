@@ -9,14 +9,15 @@ const data: TimelineData = {
     {
       id: "england",
       name: "イングランド",
-      dynasties: ["york", "tudor"],
+      dynasties: ["york", "tudor", "cabinet"],
       reigns: ["henry-vii", "walpole"],
     },
     { id: "empty", name: "空の行", dynasties: [], reigns: [] },
   ],
   dynasties: [
-    { id: "tudor", name: "テューダー朝", start: y(1485), end: y(1603) },
-    { id: "york", name: "ヨーク家", start: y(1461), end: y(1485) },
+    { id: "tudor", name: "テューダー朝", kind: "regime", start: y(1485), end: y(1603) },
+    { id: "york", name: "ヨーク家", kind: "regime", start: y(1461), end: y(1485) },
+    { id: "cabinet", name: "内閣", kind: "government", start: y(1500), end: y(1510) },
   ],
   people: [
     { id: "henry", name: "ヘンリ7世" },
@@ -29,13 +30,14 @@ const data: TimelineData = {
 };
 
 describe("spansForLane", () => {
-  it("王朝は行に並べた順で返す", () => {
+  it("王朝は種類ごとに、行に並べた順で返す", () => {
     const lane = data.lanes[0];
     if (!lane) throw new Error("テストデータがありません");
-    expect(spansForLane(data, lane, "dynasty").map((span) => span.name)).toEqual([
+    expect(spansForLane(data, lane, "regime").map((span) => span.name)).toEqual([
       "ヨーク家",
       "テューダー朝",
     ]);
+    expect(spansForLane(data, lane, "government").map((span) => span.name)).toEqual(["内閣"]);
   });
 
   it("在位は役割ごとに、人物の名前と在位の期間を返す", () => {
@@ -56,11 +58,16 @@ describe("spansForLane", () => {
   });
 });
 
-const names = { dynasty: "王朝・政体", monarch: "君主", leader: "首相・大統領" };
+const names = {
+  regime: "国家・体制",
+  government: "政権",
+  monarch: "君主",
+  leader: "首相・大統領",
+};
 
 describe("rowsForView", () => {
   it("主題の表示では、行（国・地域）ごとにその主題の棒を並べる", () => {
-    const rows = rowsForView(data, { kind: "subject", subject: "dynasty" }, names);
+    const rows = rowsForView(data, { kind: "subject", subject: "regime" }, names);
     expect(rows.map((row) => [row.id, row.name, row.spans.map((span) => span.name)])).toEqual([
       ["england", "イングランド", ["ヨーク家", "テューダー朝"]],
       ["empty", "空の行", []],
@@ -77,19 +84,21 @@ describe("rowsForView", () => {
     expect(rows.map((row) => row.spans.map((span) => span.name))).toEqual([["ウォルポール"], []]);
   });
 
-  it("国・地域の表示では、その行の王朝・政体、君主、首相・大統領を 3 行で並べる", () => {
+  it("国・地域の表示では、その行の国家・体制、政権、君主、首相・大統領を 4 行で並べる", () => {
     const rows = rowsForView(data, { kind: "lane", laneId: "england" }, names);
     expect(rows.map((row) => [row.id, row.name, row.spans.map((span) => span.name)])).toEqual([
-      ["dynasty", "王朝・政体", ["ヨーク家", "テューダー朝"]],
+      ["regime", "国家・体制", ["ヨーク家", "テューダー朝"]],
+      ["government", "政権", ["内閣"]],
       ["monarch", "君主", ["ヘンリ7世"]],
       ["leader", "首相・大統領", ["ウォルポール"]],
     ]);
   });
 
-  it("王朝も在位もない行を選んでも、空の 3 行を返す", () => {
+  it("王朝も在位もない行を選んでも、空の 4 行を返す", () => {
     const rows = rowsForView(data, { kind: "lane", laneId: "empty" }, names);
     expect(rows).toEqual([
-      { id: "dynasty", name: "王朝・政体", spans: [] },
+      { id: "regime", name: "国家・体制", spans: [] },
+      { id: "government", name: "政権", spans: [] },
       { id: "monarch", name: "君主", spans: [] },
       { id: "leader", name: "首相・大統領", spans: [] },
     ]);
@@ -105,13 +114,15 @@ describe("viewToValue と valueToView", () => {
 
   it("表示の状態とセレクトの値を相互に変換する", () => {
     const views = [
-      { kind: "subject", subject: "dynasty" },
+      { kind: "subject", subject: "regime" },
+      { kind: "subject", subject: "government" },
       { kind: "subject", subject: "monarch" },
       { kind: "subject", subject: "leader" },
       { kind: "lane", laneId: "england" },
     ] as const;
     expect(views.map(viewToValue)).toEqual([
-      "subject:dynasty",
+      "subject:regime",
+      "subject:government",
       "subject:monarch",
       "subject:leader",
       "lane:england",
@@ -128,6 +139,7 @@ describe("viewToValue と valueToView", () => {
       "subject:",
       "subject:war",
       "subject:reign",
+      "subject:dynasty",
       "lane:nowhere",
       "lane:england:extra",
       "country:england",

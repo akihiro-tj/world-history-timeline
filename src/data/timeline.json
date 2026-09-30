@@ -16,7 +16,6 @@
         "directory",
         "consulate",
         "first-empire",
-        "bourbon-1814",
         "restoration",
         "july-monarchy",
         "provisional-government-1848",
@@ -132,6 +131,7 @@
     {
       "id": "merovingian",
       "name": "メロヴィング朝",
+      "kind": "regime",
       "start": {
         "year": 481,
         "circa": false
@@ -144,6 +144,7 @@
     {
       "id": "carolingian",
       "name": "カロリング朝",
+      "kind": "regime",
       "start": {
         "year": 751,
         "circa": false
@@ -156,6 +157,7 @@
     {
       "id": "capetian",
       "name": "カペー朝",
+      "kind": "regime",
       "start": {
         "year": 987,
         "circa": false
@@ -168,6 +170,7 @@
     {
       "id": "valois",
       "name": "ヴァロワ朝",
+      "kind": "regime",
       "start": {
         "year": 1328,
         "circa": false
@@ -180,6 +183,7 @@
     {
       "id": "danish",
       "name": "デーン朝",
+      "kind": "regime",
       "start": {
         "year": 1016,
         "circa": false
@@ -192,6 +196,7 @@
     {
       "id": "norman",
       "name": "ノルマン朝",
+      "kind": "regime",
       "start": {
         "year": 1066,
         "circa": false
@@ -204,6 +209,7 @@
     {
       "id": "plantagenet",
       "name": "プランタジネット朝",
+      "kind": "regime",
       "start": {
         "year": 1154,
         "circa": false
@@ -216,6 +222,7 @@
     {
       "id": "lancaster",
       "name": "ランカスター家",
+      "kind": "regime",
       "start": {
         "year": 1399,
         "circa": false
@@ -228,6 +235,7 @@
     {
       "id": "york",
       "name": "ヨーク家",
+      "kind": "regime",
       "start": {
         "year": 1461,
         "circa": false
@@ -240,6 +248,7 @@
     {
       "id": "tudor",
       "name": "テューダー朝",
+      "kind": "regime",
       "start": {
         "year": 1485,
         "circa": false
@@ -252,6 +261,7 @@
     {
       "id": "stuart-1603",
       "name": "ステュアート朝",
+      "kind": "regime",
       "start": {
         "year": 1603,
         "circa": false
@@ -264,6 +274,7 @@
     {
       "id": "commonwealth",
       "name": "共和政",
+      "kind": "regime",
       "start": {
         "year": 1649,
         "circa": false
@@ -276,6 +287,7 @@
     {
       "id": "stuart-1660",
       "name": "ステュアート朝",
+      "kind": "regime",
       "start": {
         "year": 1660,
         "circa": false
@@ -288,6 +300,7 @@
     {
       "id": "hanover",
       "name": "ハノーヴァー朝",
+      "kind": "regime",
       "start": {
         "year": 1714,
         "circa": false
@@ -300,6 +313,7 @@
     {
       "id": "bourbon-1589",
       "name": "ブルボン朝",
+      "kind": "regime",
       "start": {
         "year": 1589,
         "circa": false
@@ -312,6 +326,7 @@
     {
       "id": "national-assembly",
       "name": "国民議会",
+      "kind": "government",
       "start": {
         "year": 1789,
         "circa": false
@@ -324,6 +339,7 @@
     {
       "id": "legislative-assembly",
       "name": "立法議会",
+      "kind": "government",
       "start": {
         "year": 1791,
         "circa": false
@@ -336,6 +352,7 @@
     {
       "id": "national-convention",
       "name": "国民公会",
+      "kind": "government",
       "start": {
         "year": 1792,
         "circa": false
@@ -348,6 +365,7 @@
     {
       "id": "first-republic",
       "name": "第一共和政",
+      "kind": "regime",
       "start": {
         "year": 1792,
         "circa": false
@@ -360,6 +378,7 @@
     {
       "id": "directory",
       "name": "総裁政府",
+      "kind": "government",
       "start": {
         "year": 1795,
         "circa": false
@@ -372,6 +391,7 @@
     {
       "id": "consulate",
       "name": "統領政府",
+      "kind": "government",
       "start": {
         "year": 1799,
         "circa": false
@@ -384,6 +404,7 @@
     {
       "id": "first-empire",
       "name": "第一帝政",
+      "kind": "regime",
       "start": {
         "year": 1804,
         "circa": false
@@ -394,20 +415,9 @@
       }
     },
     {
-      "id": "bourbon-1814",
-      "name": "ブルボン朝",
-      "start": {
-        "year": 1814,
-        "circa": false
-      },
-      "end": {
-        "year": 1830,
-        "circa": false
-      }
-    },
-    {
       "id": "restoration",
       "name": "復古王政",
+      "kind": "regime",
       "start": {
         "year": 1814,
         "circa": false
@@ -420,6 +430,7 @@
     {
       "id": "july-monarchy",
       "name": "七月王政",
+      "kind": "regime",
       "start": {
         "year": 1830,
         "circa": false
@@ -432,6 +443,7 @@
     {
       "id": "provisional-government-1848",
       "name": "臨時政府",
+      "kind": "government",
       "start": {
         "year": 1848,
         "circa": false
@@ -444,6 +456,7 @@
     {
       "id": "second-republic",
       "name": "第二共和政",
+      "kind": "regime",
       "start": {
         "year": 1848,
         "circa": false
@@ -456,6 +469,7 @@
     {
       "id": "second-empire",
       "name": "第二帝政",
+      "kind": "regime",
       "start": {
         "year": 1852,
         "circa": false
@@ -468,6 +482,7 @@
     {
       "id": "national-defense",
       "name": "臨時国防政府",
+      "kind": "government",
       "start": {
         "year": 1870,
         "circa": false
@@ -480,6 +495,7 @@
     {
       "id": "provisional-government-1871",
       "name": "臨時政府",
+      "kind": "government",
       "start": {
         "year": 1871,
         "circa": false
@@ -492,6 +508,7 @@
     {
       "id": "paris-commune",
       "name": "パリ=コミューン",
+      "kind": "government",
       "start": {
         "year": 1871,
         "circa": false
@@ -504,6 +521,7 @@
     {
       "id": "third-republic",
       "name": "第三共和政",
+      "kind": "regime",
       "start": {
         "year": 1871,
         "circa": false
@@ -516,6 +534,7 @@
     {
       "id": "poincare-cabinet",
       "name": "ポワンカレ右派内閣",
+      "kind": "government",
       "start": {
         "year": 1922,
         "circa": false
@@ -528,6 +547,7 @@
     {
       "id": "cartel-des-gauches",
       "name": "左派連合政権",
+      "kind": "government",
       "start": {
         "year": 1924,
         "circa": false
@@ -540,6 +560,7 @@
     {
       "id": "vichy",
       "name": "ヴィシー政府",
+      "kind": "regime",
       "start": {
         "year": 1940,
         "circa": false
@@ -552,6 +573,7 @@
     {
       "id": "free-france",
       "name": "自由フランス政府",
+      "kind": "government",
       "start": {
         "year": 1940,
         "circa": false
@@ -564,6 +586,7 @@
     {
       "id": "fifth-republic",
       "name": "第五共和政",
+      "kind": "regime",
       "start": {
         "year": 1958,
         "circa": false

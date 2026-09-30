@@ -1,14 +1,14 @@
 // 表示（主題／国・地域）に応じて、年表に並べる行と棒の元データを取り出す
-import type { Lane, Role, TimelineData, Year } from "../data/timeline";
+import type { DynastyKind, Lane, Role, TimelineData, Year } from "../data/timeline";
 
-// 在位は役割（君主／首脳）ごとに別の主題にする
-export type Subject = "dynasty" | Role;
+// 王朝は種類（国家・体制／政権）ごとに、在位は役割（君主／首脳）ごとに別の主題にする
+export type Subject = DynastyKind | Role;
 // 終わりが null なら現在まで続いている
 export type Span = { id: string; name: string; start: Year; end: Year | null };
 export type View = { kind: "subject"; subject: Subject } | { kind: "lane"; laneId: string };
 export type Row = { id: string; name: string; spans: Span[] };
 
-const SUBJECTS: readonly Subject[] = ["dynasty", "monarch", "leader"];
+const SUBJECTS: readonly Subject[] = ["regime", "government", "monarch", "leader"];
 
 function lookup<T extends { id: string }>(items: T[], id: string): T {
   const item = items.find((candidate) => candidate.id === id);
@@ -17,11 +17,11 @@ function lookup<T extends { id: string }>(items: T[], id: string): T {
 }
 
 export function spansForLane(data: TimelineData, lane: Lane, subject: Subject): Span[] {
-  if (subject === "dynasty") {
-    return lane.dynasties.map((id) => {
-      const { name, start, end } = lookup(data.dynasties, id);
-      return { id, name, start, end };
-    });
+  if (subject === "regime" || subject === "government") {
+    return lane.dynasties
+      .map((id) => lookup(data.dynasties, id))
+      .filter((dynasty) => dynasty.kind === subject)
+      .map(({ id, name, start, end }) => ({ id, name, start, end }));
   }
   return lane.reigns
     .map((id) => lookup(data.reigns, id))
@@ -34,7 +34,7 @@ export function spansForLane(data: TimelineData, lane: Lane, subject: Subject): 
     }));
 }
 
-// 表示のセレクトの値（"subject:dynasty"・"lane:england" など）と表示の状態の相互変換。
+// 表示のセレクトの値（"subject:regime"・"lane:england" など）と表示の状態の相互変換。
 // id に ":" は使えない（src/data/timeline.ts の ID_PATTERN）ので、区切りに使える
 export function viewToValue(view: View): string {
   return view.kind === "subject" ? `subject:${view.subject}` : `lane:${view.laneId}`;
@@ -51,7 +51,7 @@ export function valueToView(value: string, laneIds: readonly string[]): View | n
   return null;
 }
 
-// 主題の表示では行＝国・地域、国・地域の表示では行＝主題（王朝・政体、君主、首相・大統領）。
+// 主題の表示では行＝国・地域、国・地域の表示では行＝主題（国家・体制、政権、君主、首相・大統領）。
 // 主題の行の名前は UI 文言なので、呼び出し側から受け取る
 export function rowsForView(data: TimelineData, view: View, names: Record<Subject, string>): Row[] {
   if (view.kind === "subject") {

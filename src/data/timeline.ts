@@ -2,8 +2,17 @@
 
 export type Year = { year: number; circa: boolean };
 export type Lane = { id: string; name: string; dynasties: string[]; reigns: string[] };
+// 種類: 国家・体制（王朝・共和政・帝政など）か、政権（体制の中の特定の政府・統治機関・内閣）か
+export const DYNASTY_KINDS = ["regime", "government"] as const;
+export type DynastyKind = (typeof DYNASTY_KINDS)[number];
 // 終わりが null なら現在まで続いている
-export type Dynasty = { id: string; name: string; start: Year; end: Year | null };
+export type Dynasty = {
+  id: string;
+  name: string;
+  kind: DynastyKind;
+  start: Year;
+  end: Year | null;
+};
 export type Person = { id: string; name: string };
 // 役割: 君主（王・女王・皇帝）か、首脳（首相・大統領など）か
 export const ROLES = ["monarch", "leader"] as const;
@@ -68,6 +77,11 @@ function period(r: Record<string, unknown>, where: string): { start: Year; end: 
   return { start, end };
 }
 
+function dynastyKind(value: unknown, where: string): DynastyKind {
+  const found = DYNASTY_KINDS.find((candidate) => candidate === value);
+  return found ?? fail(where, `kind は ${DYNASTY_KINDS.join(" か ")} です`);
+}
+
 function role(value: unknown, where: string): Role {
   const found = ROLES.find((candidate) => candidate === value);
   return found ?? fail(where, `role は ${ROLES.join(" か ")} です`);
@@ -98,8 +112,13 @@ export function parseTimeline(value: unknown): TimelineData {
 
   const dynasties = array(root.dynasties, "dynasties").map((item, i) => {
     const where = `dynasties[${i}]`;
-    const r = record(item, ["id", "name", "start", "end"], where);
-    return { id: id(r.id, where), name: name(r.name, where), ...period(r, where) };
+    const r = record(item, ["id", "name", "kind", "start", "end"], where);
+    return {
+      id: id(r.id, where),
+      name: name(r.name, where),
+      kind: dynastyKind(r.kind, where),
+      ...period(r, where),
+    };
   });
   const dynastyMap = unique(dynasties, "dynasties");
 

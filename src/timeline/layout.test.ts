@@ -17,7 +17,7 @@ describe("timeRange", () => {
   it("王朝と在位のすべての年を含み、100 年の区切りにそろえる", () => {
     const data: TimelineData = {
       lanes: [],
-      dynasties: [{ id: "a", name: "A", start: y(481), end: y(751) }],
+      dynasties: [{ id: "a", name: "A", kind: "regime", start: y(481), end: y(751) }],
       people: [{ id: "p", name: "P" }],
       reigns: [{ id: "r", personId: "p", role: "monarch", start: y(1485), end: y(1603) }],
     };
@@ -27,7 +27,7 @@ describe("timeRange", () => {
   it("紀元前も区切りにそろえる", () => {
     const data: TimelineData = {
       lanes: [],
-      dynasties: [{ id: "a", name: "A", start: y(-221), end: y(-206) }],
+      dynasties: [{ id: "a", name: "A", kind: "regime", start: y(-221), end: y(-206) }],
       people: [],
       reigns: [],
     };
@@ -37,7 +37,7 @@ describe("timeRange", () => {
   it("区切りちょうどの 1 点だけでも幅を持たせる", () => {
     const data: TimelineData = {
       lanes: [],
-      dynasties: [{ id: "a", name: "A", start: y(1500), end: y(1500) }],
+      dynasties: [{ id: "a", name: "A", kind: "regime", start: y(1500), end: y(1500) }],
       people: [],
       reigns: [],
     };
@@ -47,7 +47,7 @@ describe("timeRange", () => {
   it("現在まで続く期間は現在の年までを含める", () => {
     const data: TimelineData = {
       lanes: [],
-      dynasties: [{ id: "a", name: "A", start: y(1958), end: null }],
+      dynasties: [{ id: "a", name: "A", kind: "regime", start: y(1958), end: null }],
       people: [],
       reigns: [],
     };

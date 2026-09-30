@@ -8,6 +8,7 @@ function valid() {
       {
         id: "tudor",
         name: "テューダー朝",
+        kind: "regime",
         start: { year: 1485, circa: false },
         end: { year: 1603, circa: false },
       },
@@ -69,6 +70,12 @@ describe("parseTimeline", () => {
     const data = valid();
     (data.dynasties[0] as { end: unknown }).end = null;
     expect(parseTimeline(data).dynasties[0]?.end).toBeNull();
+  });
+
+  it("知らない種類の王朝なら例外にする", () => {
+    const data = valid();
+    (data.dynasties[0] as { kind: string }).kind = "dynasty";
+    expect(() => parseTimeline(data)).toThrow("kind は regime か government です");
   });
 
   it("知らない役割なら例外にする", () => {

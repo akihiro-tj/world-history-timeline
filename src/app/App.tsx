@@ -16,7 +16,11 @@ type State = { status: "loading" } | { status: "error" } | { status: "ready"; da
 const SUBJECT_GROUP: ViewGroup = {
   label: COPY.groupSubject,
   options: [
-    { value: viewToValue({ kind: "subject", subject: "dynasty" }), label: COPY.subjectDynasty },
+    { value: viewToValue({ kind: "subject", subject: "regime" }), label: COPY.subjectRegime },
+    {
+      value: viewToValue({ kind: "subject", subject: "government" }),
+      label: COPY.subjectGovernment,
+    },
     { value: viewToValue({ kind: "subject", subject: "monarch" }), label: COPY.subjectMonarch },
     { value: viewToValue({ kind: "subject", subject: "leader" }), label: COPY.subjectLeader },
   ],
@@ -24,7 +28,8 @@ const SUBJECT_GROUP: ViewGroup = {
 
 // 国・地域の表示の行の名前は、主題の選択肢と同じ文言にする（spec §5）
 const ROW_NAMES = {
-  dynasty: COPY.subjectDynasty,
+  regime: COPY.subjectRegime,
+  government: COPY.subjectGovernment,
   monarch: COPY.subjectMonarch,
   leader: COPY.subjectLeader,
 } as const;
@@ -36,7 +41,7 @@ const ORIENTATIONS = [
 
 export function App() {
   const [state, setState] = useState<State>({ status: "loading" });
-  const [view, setView] = useState<View>({ kind: "subject", subject: "dynasty" });
+  const [view, setView] = useState<View>({ kind: "subject", subject: "regime" });
   const [orientation, setOrientation] = useState<Orientation>(() =>
     initialOrientation(window.innerWidth, window.innerHeight),
   );
