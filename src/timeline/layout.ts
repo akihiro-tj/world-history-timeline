@@ -1,7 +1,7 @@
 // 年表の位置の計算。向き（縦／横）に依存しない形で、時間軸方向（along）と
 // それに直交する方向（cross）の値を返す。描画側がこれを縦か横に当てはめる
 import type { TimelineData, Year } from "../data/timeline";
-import { formatPeriod } from "./format";
+import { formatPeriod, formatPeriodLines } from "./format";
 import type { Span } from "./spans";
 
 export type Orientation = "vertical" | "horizontal";
@@ -75,16 +75,41 @@ export type LabelSize = { nameWidth: number; periodWidth: number };
 
 export type BarLayout = {
   span: Span;
-  period: string;
+  // 棒のラベルの期間。再登板をまとめた最初の棒では、すべての期間を 2 つずつ改行して並べる
+  periodLines: string[];
   offset: number; // 時間軸方向の開始位置（px）
   length: number; // 時間軸方向の長さ（px）
   track: number;
   cross: number; // 段の開始位置（cross 方向の px）
   // 棒の中の文字の並べ方。棒の外に出すなら null
   inside: "row" | "stack" | null;
-  // 棒の外に出すラベルの cross 方向の開始位置（px）。棒の中に収まるなら null
+  // 棒の外に出すラベルの cross 方向の開始位置（px）。棒の中に収まるか、ラベルを出さないなら null
   labelCross: number | null;
 };
+
+// 再登板のまとめ方。最初の在位（primary）にすべての期間のラベルを付け、2 回目以降（secondary）は
+// 棒の中に収まるときだけ自分の期間を出し、棒の外にはラベルを出さない
+type LabelRole = "solo" | "primary" | "secondary";
+
+function labelRoles(spans: Span[]): LabelRole[] {
+  const firstOfGroup = new Map<string, number>();
+  const counts = new Map<string, number>();
+  spans.forEach((span, i) => {
+    if (span.group === null) return;
+    counts.set(span.group, (counts.get(span.group) ?? 0) + 1);
+    const first = firstOfGroup.get(span.group);
+    if (
+      first === undefined ||
+      span.start.year < (spans[first]?.start.year ?? Number.POSITIVE_INFINITY)
+    ) {
+      firstOfGroup.set(span.group, i);
+    }
+  });
+  return spans.map((span, i) => {
+    if (span.group === null || (counts.get(span.group) ?? 0) < 2) return "solo";
+    return firstOfGroup.get(span.group) === i ? "primary" : "secondary";
+  });
+}
 
 export type LaneLayout = {
   bars: BarLayout[];
@@ -146,10 +171,10 @@ function insideText(
   return null;
 }
 
-// 棒の外に出すラベルの大きさ。横向きは名前と期間を 2 行に積み、棒の下に置く。縦向きは棒の右に置く
-function outsideLabelSize(orientation: Orientation, size: LabelSize) {
+// 棒の外に出すラベルの大きさ。横向きは名前と期間（1 行以上）を積み、棒の下に置く。縦向きは棒の右に置く
+function outsideLabelSize(orientation: Orientation, size: LabelSize, periodLineCount: number) {
   const width = Math.max(size.nameWidth, size.periodWidth) + LABEL_GAP;
-  const height = LINE_HEIGHT * 2 + LABEL_GAP;
+  const height = LINE_HEIGHT * (1 + periodLineCount) + LABEL_GAP;
   return orientation === "horizontal"
     ? { along: width, cross: height }
     : { along: height, cross: width };
@@ -171,12 +196,17 @@ export function layoutLane(
   const tracks = assignTracks(periods);
 
   const size = trackSize(orientation);
+  const roles = labelRoles(spans);
   const bars: BarLayout[] = spans.map((span, i) => {
     const { start, end } = periods[i] ?? { start: 0, end: 0 };
     const track = tracks[i] ?? 0;
+    const group = spans.filter((other) => other.group !== null && other.group === span.group);
     return {
       span,
-      period: formatPeriod(span.start, span.end),
+      periodLines:
+        roles[i] === "primary"
+          ? formatPeriodLines([...group].sort((a, b) => a.start.year - b.start.year))
+          : [formatPeriod(span.start, span.end)],
       offset: start,
       length: end - start,
       track,
@@ -194,12 +224,18 @@ export function layoutLane(
   }));
   let extent = rangeLength(range);
   let crossExtent = obstacles.reduce((max, rect) => Math.max(max, rect.crossEnd), 0);
-  const byOffset = [...bars].sort((a, b) => a.offset - b.offset || a.track - b.track);
-  for (const bar of byOffset) {
-    const text = { nameWidth: measure(bar.span.name), periodWidth: measure(bar.period) };
-    bar.inside = insideText(orientation, bar.length, text);
-    if (bar.inside) continue;
-    const label = outsideLabelSize(orientation, text);
+  const byOffset = [...bars]
+    .map((bar, i) => ({ bar, role: roles[i] ?? "solo" }))
+    .sort((a, b) => a.bar.offset - b.bar.offset || a.bar.track - b.bar.track);
+  for (const { bar, role } of byOffset) {
+    const text = {
+      nameWidth: measure(bar.span.name),
+      periodWidth: Math.max(...bar.periodLines.map(measure)),
+    };
+    // 期間が 2 行以上のラベルは棒の中に入れない
+    bar.inside = bar.periodLines.length === 1 ? insideText(orientation, bar.length, text) : null;
+    if (bar.inside || role === "secondary") continue;
+    const label = outsideLabelSize(orientation, text, bar.periodLines.length);
     const alongRange = { start: bar.offset, end: bar.offset + label.along };
     const cross = placeLabel(bar.cross + size + TRACK_GAP, alongRange, label.cross, obstacles);
     obstacles.push({

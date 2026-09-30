@@ -12,6 +12,7 @@ export const COPY = {
   orientationHorizontal: "横",
   timelineLabel: "年表",
   present: "現在",
+  periodSeparator: "、",
   loading: "読み込み中…",
   loadError: "年表のデータを読み込めませんでした。ページを再読み込みしてください。",
 } as const;
