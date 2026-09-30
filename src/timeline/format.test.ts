@@ -20,4 +20,16 @@ describe("formatPeriod", () => {
   it("開始と終了を en dash でつなぐ", () => {
     expect(formatPeriod({ year: 481, circa: false }, { year: 751, circa: false })).toBe("481–751");
   });
+
+  it("開始と終了が同じ年なら 1 つだけ出す", () => {
+    expect(formatPeriod({ year: 1871, circa: false }, { year: 1871, circa: false })).toBe("1871");
+  });
+
+  it("同じ年でも circa が違えば両方出す", () => {
+    expect(formatPeriod({ year: 900, circa: true }, { year: 900, circa: false })).toBe("900頃–900");
+  });
+
+  it("終わりが null なら「現在」まで", () => {
+    expect(formatPeriod({ year: 1958, circa: false }, null)).toBe("1958–現在");
+  });
 });

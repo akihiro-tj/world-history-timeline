@@ -16,13 +16,23 @@ type State = { status: "loading" } | { status: "error" } | { status: "ready"; da
 const SUBJECT_GROUP: ViewGroup = {
   label: COPY.groupSubject,
   options: [
-    { value: viewToValue({ kind: "subject", subject: "dynasty" }), label: COPY.subjectDynasty },
-    { value: viewToValue({ kind: "subject", subject: "reign" }), label: COPY.subjectReign },
+    { value: viewToValue({ kind: "subject", subject: "regime" }), label: COPY.subjectRegime },
+    { value: viewToValue({ kind: "subject", subject: "monarch" }), label: COPY.subjectMonarch },
+    { value: viewToValue({ kind: "subject", subject: "leader" }), label: COPY.subjectLeader },
+    {
+      value: viewToValue({ kind: "subject", subject: "government" }),
+      label: COPY.subjectGovernment,
+    },
   ],
 };
 
 // 国・地域の表示の行の名前は、主題の選択肢と同じ文言にする（spec §5）
-const ROW_NAMES = { dynasty: COPY.subjectDynasty, reign: COPY.subjectReign } as const;
+const ROW_NAMES = {
+  regime: COPY.subjectRegime,
+  government: COPY.subjectGovernment,
+  monarch: COPY.subjectMonarch,
+  leader: COPY.subjectLeader,
+} as const;
 
 const ORIENTATIONS = [
   { value: "vertical", label: COPY.orientationVertical, icon: <VerticalIcon /> },
@@ -31,7 +41,7 @@ const ORIENTATIONS = [
 
 export function App() {
   const [state, setState] = useState<State>({ status: "loading" });
-  const [view, setView] = useState<View>({ kind: "subject", subject: "dynasty" });
+  const [view, setView] = useState<View>({ kind: "subject", subject: "regime" });
   const [orientation, setOrientation] = useState<Orientation>(() =>
     initialOrientation(window.innerWidth, window.innerHeight),
   );
@@ -53,7 +63,9 @@ export function App() {
   }, []);
 
   const data = state.status === "ready" ? state.data : null;
-  const range = useMemo(() => (data ? timeRange(data) : null), [data]);
+  // 現在まで続く期間の終わりに使う。開いている間に年が変わっても描き直さない
+  const [currentYear] = useState(() => new Date().getFullYear());
+  const range = useMemo(() => (data ? timeRange(data, currentYear) : null), [data, currentYear]);
   // 行を作り直すと Timeline が中央の年に合わせ直すので、表示が変わったときだけ作る
   const rows = useMemo(() => (data ? rowsForView(data, view, ROW_NAMES) : null), [data, view]);
   // 読み込むまでは国・地域がわからないので、主題の群だけを出す
@@ -102,7 +114,9 @@ export function App() {
             {COPY.loadError}
           </p>
         )}
-        {rows && <Timeline rows={rows} range={range} orientation={orientation} />}
+        {rows && (
+          <Timeline rows={rows} range={range} orientation={orientation} currentYear={currentYear} />
+        )}
       </main>
     </div>
   );

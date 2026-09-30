@@ -2,9 +2,30 @@
 
 export type Year = { year: number; circa: boolean };
 export type Lane = { id: string; name: string; dynasties: string[]; reigns: string[] };
-export type Dynasty = { id: string; name: string; start: Year; end: Year };
+// 種類: 国家・体制（王朝・共和政・帝政など）か、政権（体制の中の特定の政府・統治機関・内閣）か
+export const DYNASTY_KINDS = ["regime", "government"] as const;
+export type DynastyKind = (typeof DYNASTY_KINDS)[number];
+// 終わりが null なら現在まで続いている
+export type Dynasty = {
+  id: string;
+  name: string;
+  kind: DynastyKind;
+  start: Year;
+  end: Year | null;
+};
 export type Person = { id: string; name: string };
-export type Reign = { id: string; personId: string; start: Year; end: Year };
+// 役割: 君主（王・女王・皇帝）か、首脳（首相・大統領など）か
+export const ROLES = ["monarch", "leader"] as const;
+export type Role = (typeof ROLES)[number];
+// name はその在位のあいだの表示名。null なら人物の名前を出す（即位で名前が変わる人のため）
+export type Reign = {
+  id: string;
+  personId: string;
+  name: string | null;
+  role: Role;
+  start: Year;
+  end: Year | null;
+};
 export type TimelineData = {
   lanes: Lane[];
   dynasties: Dynasty[];
@@ -56,11 +77,22 @@ function year(value: unknown, where: string): Year {
   return { year: r.year, circa: r.circa };
 }
 
-function period(r: Record<string, unknown>, where: string): { start: Year; end: Year } {
+// 終わりが null の期間は現在まで続いている
+function period(r: Record<string, unknown>, where: string): { start: Year; end: Year | null } {
   const start = year(r.start, `${where}.start`);
-  const end = year(r.end, `${where}.end`);
-  if (start.year > end.year) fail(where, "開始が終了より後です");
+  const end = r.end === null ? null : year(r.end, `${where}.end`);
+  if (end && start.year > end.year) fail(where, "開始が終了より後です");
   return { start, end };
+}
+
+function dynastyKind(value: unknown, where: string): DynastyKind {
+  const found = DYNASTY_KINDS.find((candidate) => candidate === value);
+  return found ?? fail(where, `kind は ${DYNASTY_KINDS.join(" か ")} です`);
+}
+
+function role(value: unknown, where: string): Role {
+  const found = ROLES.find((candidate) => candidate === value);
+  return found ?? fail(where, `role は ${ROLES.join(" か ")} です`);
 }
 
 function unique<T extends { id: string }>(items: T[], where: string): Map<string, T> {
@@ -88,8 +120,13 @@ export function parseTimeline(value: unknown): TimelineData {
 
   const dynasties = array(root.dynasties, "dynasties").map((item, i) => {
     const where = `dynasties[${i}]`;
-    const r = record(item, ["id", "name", "start", "end"], where);
-    return { id: id(r.id, where), name: name(r.name, where), ...period(r, where) };
+    const r = record(item, ["id", "name", "kind", "start", "end"], where);
+    return {
+      id: id(r.id, where),
+      name: name(r.name, where),
+      kind: dynastyKind(r.kind, where),
+      ...period(r, where),
+    };
   });
   const dynastyMap = unique(dynasties, "dynasties");
 
@@ -102,10 +139,16 @@ export function parseTimeline(value: unknown): TimelineData {
 
   const reigns = array(root.reigns, "reigns").map((item, i) => {
     const where = `reigns[${i}]`;
-    const r = record(item, ["id", "personId", "start", "end"], where);
+    const r = record(item, ["id", "personId", "name", "role", "start", "end"], where);
     const personId = id(r.personId, where);
     if (!personMap.has(personId)) fail(where, `存在しない人物を参照しています: ${personId}`);
-    return { id: id(r.id, where), personId, ...period(r, where) };
+    return {
+      id: id(r.id, where),
+      personId,
+      name: r.name === null ? null : name(r.name, where),
+      role: role(r.role, where),
+      ...period(r, where),
+    };
   });
   const reignMap = unique(reigns, "reigns");
 

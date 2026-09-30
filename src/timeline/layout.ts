@@ -1,6 +1,6 @@
 // 年表の位置の計算。向き（縦／横）に依存しない形で、時間軸方向（along）と
 // それに直交する方向（cross）の値を返す。描画側がこれを縦か横に当てはめる
-import type { TimelineData } from "../data/timeline";
+import type { TimelineData, Year } from "../data/timeline";
 import { formatPeriod } from "./format";
 import type { Span } from "./spans";
 
@@ -20,11 +20,16 @@ const INSIDE_PADDING = 12;
 
 export type TimeRange = { from: number; to: number };
 
+// 終わりの年。現在まで続く期間（end が null）は currentYear で終わる
+export function endYear(item: { end: Year | null }, currentYear: number): number {
+  return item.end?.year ?? currentYear;
+}
+
 // 王朝と在位のすべての年を含み、目盛りの区切りにそろえた範囲。データが無ければ null
-export function timeRange(data: TimelineData): TimeRange | null {
+export function timeRange(data: TimelineData, currentYear: number): TimeRange | null {
   const years = [...data.dynasties, ...data.reigns].flatMap((item) => [
     item.start.year,
-    item.end.year,
+    endYear(item, currentYear),
   ]);
   if (years.length === 0) return null;
   const from = Math.floor(Math.min(...years) / TICK_STEP) * TICK_STEP;
@@ -74,26 +79,71 @@ export type BarLayout = {
   offset: number; // 時間軸方向の開始位置（px）
   length: number; // 時間軸方向の長さ（px）
   track: number;
-  // 棒の外に出すラベルの段。棒の中に収まるなら null
-  labelRow: number | null;
+  cross: number; // 段の開始位置（cross 方向の px）
+  // 棒の中の文字の並べ方。棒の外に出すなら null
+  inside: "row" | "stack" | null;
+  // 棒の外に出すラベルの cross 方向の開始位置（px）。棒の中に収まるなら null
+  labelCross: number | null;
 };
 
 export type LaneLayout = {
   bars: BarLayout[];
-  trackCount: number;
-  // 棒の外に出すラベルの段ごとの太さ（cross 方向の px）
-  labelRowSizes: number[];
+  // 棒とラベルを含めた cross 方向の太さ（px）
+  crossExtent: number;
   // ラベルを含めた時間軸方向の末端（px）
   extent: number;
 };
 
-function fitsInside(orientation: Orientation, length: number, size: LabelSize): boolean {
-  if (orientation === "horizontal") {
-    return length >= Math.max(size.nameWidth, size.periodWidth) + INSIDE_PADDING;
+// 縦向きの 1 段（棒 1 本）の幅。棒の中の「名前 期間」が読める幅にする
+export const VERTICAL_TRACK_WIDTH = 112;
+
+export function trackSize(orientation: Orientation): number {
+  return orientation === "horizontal" ? BAR_THICKNESS : VERTICAL_TRACK_WIDTH;
+}
+
+type Rect = { along: number; alongEnd: number; cross: number; crossEnd: number };
+
+function overlaps(a: Rect, b: Rect): boolean {
+  return (
+    a.along < b.alongEnd && b.along < a.alongEnd && a.cross < b.crossEnd && b.cross < a.crossEnd
+  );
+}
+
+// 棒の外のラベルを、自分の棒のすぐ外側から、ほかの棒やラベルに重ならない最初の位置に置く
+function placeLabel(
+  from: number,
+  along: { start: number; end: number },
+  size: number,
+  obstacles: Rect[],
+): number {
+  const candidates = [from, ...obstacles.map((rect) => rect.crossEnd + TRACK_GAP)]
+    .filter((cross) => cross >= from)
+    .sort((a, b) => a - b);
+  for (const cross of candidates) {
+    const rect = { along: along.start, alongEnd: along.end, cross, crossEnd: cross + size };
+    if (!obstacles.some((obstacle) => overlaps(rect, obstacle))) return cross;
   }
-  // 縦向きは「名前 期間」を 1 行で入れる（両端の 1px の隙間を除いて 1 行の高さが要る）。
-  // 幅が足りない分は省略記号で切る
-  return length >= LINE_HEIGHT + 2;
+  // 候補の最後（すべての障害物の外側）はかならず空いている
+  return candidates[candidates.length - 1] ?? from;
+}
+
+// 縦向きで 1 行に並べる名前と期間の間隔（DESIGN.md の spacing xs）
+const INLINE_GAP = 4;
+
+// 棒の中の文字の並べ方。名前と期間を 1 行に並べる（row）か 2 行に積む（stack）。
+// 名前と期間のどちらかが切れるなら入れない（null）
+function insideText(
+  orientation: Orientation,
+  length: number,
+  size: LabelSize,
+): "row" | "stack" | null {
+  const widest = Math.max(size.nameWidth, size.periodWidth) + INSIDE_PADDING;
+  if (orientation === "horizontal") return length >= widest ? "stack" : null;
+  // 縦向きは棒の幅に収まれば入れる。高さは 1 行なら 1 行分、2 行なら 2 行分（両端の 1px の隙間を足す）が要る
+  const inline = size.nameWidth + INLINE_GAP + size.periodWidth + INSIDE_PADDING;
+  if (length >= LINE_HEIGHT + 2 && inline <= VERTICAL_TRACK_WIDTH) return "row";
+  if (length >= LINE_HEIGHT * 2 + 2 && widest <= VERTICAL_TRACK_WIDTH) return "stack";
+  return null;
 }
 
 // 棒の外に出すラベルの大きさ。横向きは名前と期間を 2 行に積み、棒の下に置く。縦向きは棒の右に置く
@@ -110,59 +160,58 @@ export function layoutLane(
   range: TimeRange,
   orientation: Orientation,
   measure: (text: string) => number,
+  currentYear: number,
 ): LaneLayout {
-  const periods = spans.map((span) => ({
-    start: yearToOffset(span.start.year, range),
-    end: yearToOffset(span.end.year, range),
-  }));
+  // 開始と終了が同じ年の棒は、長さが 0 にならないよう、その 1 年分の長さを持たせる
+  const periods = spans.map((span) => {
+    const start = span.start.year;
+    const end = Math.max(endYear(span, currentYear), start + 1);
+    return { start: yearToOffset(start, range), end: yearToOffset(end, range) };
+  });
   const tracks = assignTracks(periods);
 
+  const size = trackSize(orientation);
   const bars: BarLayout[] = spans.map((span, i) => {
     const { start, end } = periods[i] ?? { start: 0, end: 0 };
+    const track = tracks[i] ?? 0;
     return {
       span,
       period: formatPeriod(span.start, span.end),
       offset: start,
       length: end - start,
-      track: tracks[i] ?? 0,
-      labelRow: null,
+      track,
+      cross: track * (size + TRACK_GAP),
+      inside: null,
+      labelCross: null,
     };
   });
 
-  const rowEnds: number[] = [];
-  const labelRowSizes: number[] = [];
+  const obstacles: Rect[] = bars.map((bar) => ({
+    along: bar.offset,
+    alongEnd: bar.offset + bar.length,
+    cross: bar.cross,
+    crossEnd: bar.cross + size,
+  }));
   let extent = rangeLength(range);
-  const byOffset = [...bars].sort((a, b) => a.offset - b.offset);
+  let crossExtent = obstacles.reduce((max, rect) => Math.max(max, rect.crossEnd), 0);
+  const byOffset = [...bars].sort((a, b) => a.offset - b.offset || a.track - b.track);
   for (const bar of byOffset) {
-    const size = { nameWidth: measure(bar.span.name), periodWidth: measure(bar.period) };
-    if (fitsInside(orientation, bar.length, size)) continue;
-    const { along, cross } = outsideLabelSize(orientation, size);
-    let row = rowEnds.findIndex((rowEnd) => rowEnd <= bar.offset);
-    if (row === -1) {
-      row = rowEnds.length;
-      rowEnds.push(0);
-      labelRowSizes.push(0);
-    }
-    rowEnds[row] = bar.offset + along;
-    labelRowSizes[row] = Math.max(labelRowSizes[row] ?? 0, cross);
-    bar.labelRow = row;
-    extent = Math.max(extent, bar.offset + along);
+    const text = { nameWidth: measure(bar.span.name), periodWidth: measure(bar.period) };
+    bar.inside = insideText(orientation, bar.length, text);
+    if (bar.inside) continue;
+    const label = outsideLabelSize(orientation, text);
+    const alongRange = { start: bar.offset, end: bar.offset + label.along };
+    const cross = placeLabel(bar.cross + size + TRACK_GAP, alongRange, label.cross, obstacles);
+    obstacles.push({
+      along: alongRange.start,
+      alongEnd: alongRange.end,
+      cross,
+      crossEnd: cross + label.cross,
+    });
+    bar.labelCross = cross;
+    extent = Math.max(extent, alongRange.end);
+    crossExtent = Math.max(crossExtent, cross + label.cross);
   }
 
-  return {
-    bars,
-    trackCount: bars.length === 0 ? 0 : Math.max(...tracks) + 1,
-    labelRowSizes,
-    extent,
-  };
-}
-
-// ラベルの段 row が始まる位置（棒の段の後ろからの cross 方向の px）
-export function labelRowStart(labelRowSizes: number[], row: number): number {
-  return labelRowSizes.slice(0, row).reduce((sum, size) => sum + size + TRACK_GAP, 0);
-}
-
-// ラベルの段すべてを合わせた太さ
-export function labelRowsTotal(labelRowSizes: number[]): number {
-  return labelRowStart(labelRowSizes, labelRowSizes.length);
+  return { bars, crossExtent, extent };
 }
