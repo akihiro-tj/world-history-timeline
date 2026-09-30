@@ -233,7 +233,7 @@
     },
     {
       "id": "lancaster",
-      "name": "ランカスター家",
+      "name": "ランカスター朝",
       "kind": "regime",
       "start": {
         "year": 1399,
@@ -246,7 +246,7 @@
     },
     {
       "id": "york",
-      "name": "ヨーク家",
+      "name": "ヨーク朝",
       "kind": "regime",
       "start": {
         "year": 1461,
