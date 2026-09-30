@@ -86,7 +86,8 @@
         "stuart-1603",
         "commonwealth",
         "stuart-1660",
-        "hanover"
+        "hanover",
+        "windsor"
       ],
       "reigns": [
         "egbert",
@@ -314,6 +315,16 @@
         "year": 1901,
         "circa": false
       }
+    },
+    {
+      "id": "windsor",
+      "name": "ウィンザー朝",
+      "kind": "regime",
+      "start": {
+        "year": 1917,
+        "circa": false
+      },
+      "end": null
     },
     {
       "id": "bourbon-1589",
