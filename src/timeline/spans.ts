@@ -51,7 +51,7 @@ export function valueToView(value: string, laneIds: readonly string[]): View | n
   return null;
 }
 
-// 主題の表示では行＝国・地域、国・地域の表示では行＝主題（国家・体制、政権、君主、首相・大統領）。
+// 主題の表示では行＝国・地域、国・地域の表示では行＝主題（国家・体制、政権、君主、首相・大統領など）。
 // 主題の行の名前は UI 文言なので、呼び出し側から受け取る
 export function rowsForView(data: TimelineData, view: View, names: Record<Subject, string>): Row[] {
   if (view.kind === "subject") {

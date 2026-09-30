@@ -6,7 +6,7 @@ export const COPY = {
   subjectRegime: "国家・体制",
   subjectGovernment: "政権",
   subjectMonarch: "君主",
-  subjectLeader: "首相・大統領",
+  subjectLeader: "首相・大統領など",
   orientationLabel: "向き",
   orientationVertical: "縦",
   orientationHorizontal: "横",

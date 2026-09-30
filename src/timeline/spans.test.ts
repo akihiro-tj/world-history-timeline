@@ -62,7 +62,7 @@ const names = {
   regime: "国家・体制",
   government: "政権",
   monarch: "君主",
-  leader: "首相・大統領",
+  leader: "首相・大統領など",
 };
 
 describe("rowsForView", () => {
@@ -79,18 +79,18 @@ describe("rowsForView", () => {
     expect(rows.map((row) => row.spans.map((span) => span.name))).toEqual([["ヘンリ7世"], []]);
   });
 
-  it("主題が首相・大統領なら、行ごとに首脳の在任を並べる", () => {
+  it("主題が首相・大統領などなら、行ごとに首脳の在任を並べる", () => {
     const rows = rowsForView(data, { kind: "subject", subject: "leader" }, names);
     expect(rows.map((row) => row.spans.map((span) => span.name))).toEqual([["ウォルポール"], []]);
   });
 
-  it("国・地域の表示では、その行の国家・体制、政権、君主、首相・大統領を 4 行で並べる", () => {
+  it("国・地域の表示では、その行の国家・体制、政権、君主、首相・大統領などを 4 行で並べる", () => {
     const rows = rowsForView(data, { kind: "lane", laneId: "england" }, names);
     expect(rows.map((row) => [row.id, row.name, row.spans.map((span) => span.name)])).toEqual([
       ["regime", "国家・体制", ["ヨーク家", "テューダー朝"]],
       ["government", "政権", ["内閣"]],
       ["monarch", "君主", ["ヘンリ7世"]],
-      ["leader", "首相・大統領", ["ウォルポール"]],
+      ["leader", "首相・大統領など", ["ウォルポール"]],
     ]);
   });
 
@@ -100,7 +100,7 @@ describe("rowsForView", () => {
       { id: "regime", name: "国家・体制", spans: [] },
       { id: "government", name: "政権", spans: [] },
       { id: "monarch", name: "君主", spans: [] },
-      { id: "leader", name: "首相・大統領", spans: [] },
+      { id: "leader", name: "首相・大統領など", spans: [] },
     ]);
   });
 
