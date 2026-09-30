@@ -53,6 +53,7 @@
         "charles-x",
         "louis-philippe",
         "napoleon-iii",
+        "thiers",
         "clemenceau-1906",
         "clemenceau-1917",
         "briand-1909",
@@ -68,8 +69,10 @@
         "daladier-1933",
         "daladier-1934",
         "daladier-1938",
+        "petain",
+        "de-gaulle-1944",
         "schuman",
-        "de-gaulle",
+        "de-gaulle-1959",
         "mitterrand"
       ]
     },
@@ -95,6 +98,7 @@
         "cnut",
         "william-i",
         "henry-ii",
+        "richard-i",
         "john",
         "henry-iii",
         "edward-i",
@@ -663,6 +667,10 @@
       "name": "ジョン王"
     },
     {
+      "id": "richard-i",
+      "name": "リチャード1世"
+    },
+    {
       "id": "henry-iii",
       "name": "ヘンリ3世"
     },
@@ -811,6 +819,10 @@
       "name": "ナポレオン3世"
     },
     {
+      "id": "thiers",
+      "name": "ティエール"
+    },
+    {
       "id": "clemenceau",
       "name": "クレマンソー"
     },
@@ -821,6 +833,10 @@
     {
       "id": "poincare",
       "name": "ポワンカレ"
+    },
+    {
+      "id": "petain",
+      "name": "ペタン"
     },
     {
       "id": "daladier",
@@ -1045,6 +1061,19 @@
       },
       "end": {
         "year": 1189,
+        "circa": false
+      }
+    },
+    {
+      "id": "richard-i",
+      "personId": "richard-i",
+      "role": "monarch",
+      "start": {
+        "year": 1189,
+        "circa": false
+      },
+      "end": {
+        "year": 1199,
         "circa": false
       }
     },
@@ -1647,6 +1676,19 @@
       }
     },
     {
+      "id": "thiers",
+      "personId": "thiers",
+      "role": "leader",
+      "start": {
+        "year": 1871,
+        "circa": false
+      },
+      "end": {
+        "year": 1873,
+        "circa": false
+      }
+    },
+    {
       "id": "clemenceau-1906",
       "personId": "clemenceau",
       "role": "leader",
@@ -1842,6 +1884,32 @@
       }
     },
     {
+      "id": "petain",
+      "personId": "petain",
+      "role": "leader",
+      "start": {
+        "year": 1940,
+        "circa": false
+      },
+      "end": {
+        "year": 1944,
+        "circa": false
+      }
+    },
+    {
+      "id": "de-gaulle-1944",
+      "personId": "de-gaulle",
+      "role": "leader",
+      "start": {
+        "year": 1944,
+        "circa": false
+      },
+      "end": {
+        "year": 1946,
+        "circa": false
+      }
+    },
+    {
       "id": "schuman",
       "personId": "schuman",
       "role": "leader",
@@ -1855,7 +1923,7 @@
       }
     },
     {
-      "id": "de-gaulle",
+      "id": "de-gaulle-1959",
       "personId": "de-gaulle",
       "role": "leader",
       "start": {
