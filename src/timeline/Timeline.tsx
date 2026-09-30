@@ -152,7 +152,11 @@ function OutsideLabel({
       style={{ ...textStyle, ...style }}
     >
       <div>{bar.span.name}</div>
-      <div className="text-muted">{bar.period}</div>
+      {bar.periodLines.map((line) => (
+        <div key={line} className="text-muted">
+          {line}
+        </div>
+      ))}
     </div>
   );
 }
@@ -206,7 +210,7 @@ function Horizontal({ range, lanes }: { range: TimeRange; lanes: LaneEntry[] }) 
                 {bar.inside && (
                   <>
                     <div className="truncate">{bar.span.name}</div>
-                    <div className="truncate">{bar.period}</div>
+                    <div className="truncate">{bar.periodLines[0]}</div>
                   </>
                 )}
               </div>
@@ -303,13 +307,17 @@ function Vertical({ range, lanes }: { range: TimeRange; lanes: LaneEntry[] }) {
                 {bar.inside === "row" && (
                   <>
                     {bar.span.name}
-                    <span className="ml-xs text-muted">{bar.period}</span>
+                    <span className="ml-xs text-muted">{bar.periodLines[0]}</span>
                   </>
                 )}
                 {bar.inside === "stack" && (
                   <>
                     <div>{bar.span.name}</div>
-                    <div className="text-muted">{bar.period}</div>
+                    {bar.periodLines.map((line) => (
+                      <div key={line} className="text-muted">
+                        {line}
+                      </div>
+                    ))}
                   </>
                 )}
               </div>

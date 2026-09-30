@@ -4,12 +4,13 @@ import { assignTracks, layoutLane, ticks, timeRange, yearToOffset } from "./layo
 import type { Span } from "./spans";
 
 const y = (year: number) => ({ year, circa: false });
-const span = (id: string, name: string, start: number, end: number): Span => ({
-  id,
-  name,
-  start: y(start),
-  end: y(end),
-});
+const span = (
+  id: string,
+  name: string,
+  start: number,
+  end: number,
+  group: string | null = null,
+): Span => ({ id, name, start: y(start), end: y(end), group });
 // 1 文字 10px として幅を測る
 const measure = (text: string) => text.length * 10;
 
@@ -239,9 +240,9 @@ describe("layoutLane", () => {
       measure,
       2026,
     );
-    expect(lane.bars.map((bar) => [bar.length, bar.track, bar.period])).toEqual([
-      [2, 0, "1000"],
-      [18, 0, "1001–1010"],
+    expect(lane.bars.map((bar) => [bar.length, bar.track, bar.periodLines])).toEqual([
+      [2, 0, ["1000"]],
+      [18, 0, ["1001–1010"]],
     ]);
   });
 
@@ -257,9 +258,90 @@ describe("layoutLane", () => {
   });
 
   it("現在まで続く棒は現在の年で終わる", () => {
-    const bar = { id: "a", name: "ア", start: y(1000), end: null };
+    const bar = { id: "a", name: "ア", start: y(1000), end: null, group: null };
     const lane = layoutLane([bar], range, "horizontal", measure, 1050);
-    expect(lane.bars[0]).toMatchObject({ offset: 200, length: 100, period: "1000–現在" });
+    expect(lane.bars[0]).toMatchObject({ offset: 200, length: 100, periodLines: ["1000–現在"] });
+  });
+
+  describe("同じ人の再登板", () => {
+    const wide = { from: 900, to: 1300 };
+
+    it("最初の在位の棒にだけ、すべての期間をまとめたラベルを付ける", () => {
+      // 並びは年の順でなくてもよい。いちばん早い在位の棒にラベルを付ける
+      const lane = layoutLane(
+        [span("b", "アア", 1100, 1105, "p"), span("a", "アア", 1000, 1005, "p")],
+        wide,
+        "horizontal",
+        measure,
+        2026,
+      );
+      expect(lane.bars.map((bar) => [bar.span.id, bar.periodLines, bar.labelCross])).toEqual([
+        ["b", ["1100–1105"], null],
+        ["a", ["1000–1005、1100–1105"], 40],
+      ]);
+    });
+
+    it("期間が 3 つ以上なら 2 つずつ改行し、改行の前にも「、」を付ける", () => {
+      const lane = layoutLane(
+        [
+          span("a", "アア", 1000, 1005, "p"),
+          span("b", "アア", 1100, 1105, "p"),
+          span("c", "アア", 1200, 1205, "p"),
+        ],
+        wide,
+        "horizontal",
+        measure,
+        2026,
+      );
+      expect(lane.bars[0]?.periodLines).toEqual(["1000–1005、1100–1105、", "1200–1205"]);
+      // ラベルは名前と期間 2 行の 3 行分（16px × 3 + 間隔 6px）
+      expect(lane.crossExtent).toBe(40 + 54);
+    });
+
+    it("2 回目以降の棒は、棒の中に収まるときだけ自分の期間を出す", () => {
+      // b は 200px あり、名前と期間が中に収まる
+      const lane = layoutLane(
+        [span("a", "アア", 1000, 1005, "p"), span("b", "アア", 1100, 1200, "p")],
+        wide,
+        "horizontal",
+        measure,
+        2026,
+      );
+      expect(lane.bars[1]).toMatchObject({
+        periodLines: ["1100–1200"],
+        inside: "stack",
+        labelCross: null,
+      });
+    });
+
+    it("まとめた期間が 2 行以上なら、棒が長くても棒の外に出す", () => {
+      const lane = layoutLane(
+        [
+          span("a", "アア", 1000, 1150, "p"),
+          span("b", "アア", 1160, 1165, "p"),
+          span("c", "アア", 1200, 1205, "p"),
+        ],
+        wide,
+        "horizontal",
+        measure,
+        2026,
+      );
+      expect(lane.bars[0]).toMatchObject({ inside: null, labelCross: 40 });
+    });
+
+    it("group が null の棒はまとめない", () => {
+      const lane = layoutLane(
+        [span("a", "臨時政府", 1000, 1005), span("b", "臨時政府", 1100, 1105)],
+        wide,
+        "horizontal",
+        measure,
+        2026,
+      );
+      expect(lane.bars.map((bar) => [bar.periodLines, bar.labelCross])).toEqual([
+        [["1000–1005"], 40],
+        [["1100–1105"], 40],
+      ]);
+    });
   });
 
   it("棒が無い行は段も 0", () => {

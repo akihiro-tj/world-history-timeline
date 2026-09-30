@@ -3,8 +3,14 @@ import type { DynastyKind, Lane, Role, TimelineData, Year } from "../data/timeli
 
 // 王朝は種類（国家・体制／政権）ごとに、在位は役割（君主／首脳）ごとに別の主題にする
 export type Subject = DynastyKind | Role;
-// 終わりが null なら現在まで続いている
-export type Span = { id: string; name: string; start: Year; end: Year | null };
+// 終わりが null なら現在まで続いている。group が同じ棒は同じ人の再登板で、ラベルを 1 つにまとめる
+export type Span = {
+  id: string;
+  name: string;
+  start: Year;
+  end: Year | null;
+  group: string | null;
+};
 export type View = { kind: "subject"; subject: Subject } | { kind: "lane"; laneId: string };
 export type Row = { id: string; name: string; spans: Span[] };
 
@@ -23,17 +29,22 @@ export function spansForLane(data: TimelineData, lane: Lane, subject: Subject): 
     return lane.dynasties
       .map((id) => lookup(data.dynasties, id))
       .filter((dynasty) => dynasty.kind === subject)
-      .map(({ id, name, start, end }) => ({ id, name, start, end }));
+      .map(({ id, name, start, end }) => ({ id, name, start, end, group: null }));
   }
   return lane.reigns
     .map((id) => lookup(data.reigns, id))
     .filter((reign) => reign.role === subject)
-    .map((reign) => ({
-      id: reign.id,
-      name: reign.name ?? lookup(data.people, reign.personId).name,
-      start: reign.start,
-      end: reign.end,
-    }));
+    .map((reign) => {
+      const name = reign.name ?? lookup(data.people, reign.personId).name;
+      // 同じ人でも表示名が違う在位（第一統領期と皇帝期など）はまとめない
+      return {
+        id: reign.id,
+        name,
+        start: reign.start,
+        end: reign.end,
+        group: `${reign.personId}/${name}`,
+      };
+    });
 }
 
 // 表示のセレクトの値（"subject:regime"・"lane:england" など）と表示の状態の相互変換。

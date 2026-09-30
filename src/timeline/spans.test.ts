@@ -60,17 +60,38 @@ describe("spansForLane", () => {
       "テューダー朝",
     ]);
     expect(spansForLane(data, lane, "government").map((span) => span.name)).toEqual(["内閣"]);
+    // 王朝はまとめない（同じ名前の別の政府があるため）
+    expect(spansForLane(data, lane, "regime").map((span) => span.group)).toEqual([null, null]);
   });
 
   it("在位は役割ごとに、名前（在位の表示名があればそれ、なければ人物の名前）と在位の期間を返す", () => {
     const lane = data.lanes[0];
     if (!lane) throw new Error("テストデータがありません");
     expect(spansForLane(data, lane, "monarch")).toEqual([
-      { id: "henry-vii", name: "ヘンリ7世", start: y(1485), end: y(1509) },
+      {
+        id: "henry-vii",
+        name: "ヘンリ7世",
+        start: y(1485),
+        end: y(1509),
+        group: "henry/ヘンリ7世",
+      },
     ]);
     expect(spansForLane(data, lane, "leader")).toEqual([
-      { id: "walpole", name: "ウォルポール", start: y(1721), end: y(1742) },
-      { id: "walpole-alias", name: "ロバート=ウォルポール", start: y(1743), end: y(1744) },
+      // 同じ人の再登板は group でまとめる。表示名が違う在位は別の group にする
+      {
+        id: "walpole",
+        name: "ウォルポール",
+        start: y(1721),
+        end: y(1742),
+        group: "walpole/ウォルポール",
+      },
+      {
+        id: "walpole-alias",
+        name: "ロバート=ウォルポール",
+        start: y(1743),
+        end: y(1744),
+        group: "walpole/ロバート=ウォルポール",
+      },
     ]);
   });
 

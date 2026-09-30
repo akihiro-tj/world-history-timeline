@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatPeriod, formatYear } from "./format";
+import { formatPeriod, formatPeriodLines, formatYear } from "./format";
 
 describe("formatYear", () => {
   it("紀元後の年は数字だけ", () => {
@@ -31,5 +31,33 @@ describe("formatPeriod", () => {
 
   it("終わりが null なら「現在」まで", () => {
     expect(formatPeriod({ year: 1958, circa: false }, null)).toBe("1958–現在");
+  });
+});
+
+describe("formatPeriodLines", () => {
+  const y = (year: number) => ({ year, circa: false });
+
+  it("期間が 1 つなら 1 行", () => {
+    expect(formatPeriodLines([{ start: y(1906), end: y(1909) }])).toEqual(["1906–1909"]);
+  });
+
+  it("2 つまでは「、」でつないで 1 行", () => {
+    expect(
+      formatPeriodLines([
+        { start: y(1906), end: y(1909) },
+        { start: y(1917), end: y(1920) },
+      ]),
+    ).toEqual(["1906–1909、1917–1920"]);
+  });
+
+  it("3 つ以上は 2 つずつ改行し、改行の前にも「、」を付ける", () => {
+    expect(
+      formatPeriodLines([
+        { start: y(1909), end: y(1911) },
+        { start: y(1913), end: y(1913) },
+        { start: y(1915), end: y(1917) },
+        { start: y(1929), end: null },
+      ]),
+    ).toEqual(["1909–1911、1913、", "1915–1917、1929–現在"]);
   });
 });
