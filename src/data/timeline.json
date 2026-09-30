@@ -539,7 +539,7 @@
     {
       "id": "vichy",
       "name": "ヴィシー政府",
-      "kind": "regime",
+      "kind": "government",
       "start": {
         "year": 1940,
         "circa": false
