@@ -15,4 +15,13 @@ export const COPY = {
   periodSeparator: "、",
   loading: "読み込み中…",
   loadError: "年表のデータを読み込めませんでした。ページを再読み込みしてください。",
+  panelLabel: "出典",
+  sectionSources: "出典",
+  sectionPeriod: "期間",
+  sectionMonarch: "在位",
+  sectionLeader: "在任",
+  noteMark: "※",
+  close: "閉じる",
+  newTab: "（新しいタブで開きます）",
+  wikidataLink: (label: string) => `Wikidata「${label}」`,
 } as const;
