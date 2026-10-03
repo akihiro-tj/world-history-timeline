@@ -12,14 +12,17 @@
   --color-on-bar: #1d2533;
   --color-error-surface: #fdecea;
   --color-on-error-surface: #8a1c12;
+  --font-title: system-ui, sans-serif;
   --font-body: system-ui, sans-serif;
   --font-label: system-ui, sans-serif;
   --font-heading: system-ui, sans-serif;
   --font-caption: system-ui, sans-serif;
+  --text-title: 18px;
   --text-body: 16px;
   --text-label: 15px;
   --text-heading: 13px;
   --text-caption: 12px;
+  --font-weight-title: 600;
   --font-weight-body: 400;
   --font-weight-label: 400;
   --font-weight-heading: 600;
