@@ -14,3 +14,16 @@ export function revealDelta(
   }
   return itemEnd - areaEnd + REVEAL_MARGIN;
 }
+
+export type Box = { top: number; bottom: number; left: number; right: number };
+
+// 選んだ棒と棒の外のラベルをまとめた範囲（ラベルまで見えるようにスクロールするため）
+export function unionBox(boxes: Box[]): Box | null {
+  if (boxes.length === 0) return null;
+  return {
+    top: Math.min(...boxes.map((box) => box.top)),
+    bottom: Math.max(...boxes.map((box) => box.bottom)),
+    left: Math.min(...boxes.map((box) => box.left)),
+    right: Math.max(...boxes.map((box) => box.right)),
+  };
+}

@@ -1,7 +1,7 @@
 // 年表の描画。layout.ts の結果（along / cross）を縦か横に当てはめる
 import { type CSSProperties, useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { COPY } from "../app/copy";
-import { revealDelta } from "../panel/reveal";
+import { revealDelta, unionBox } from "../panel/reveal";
 import { formatYear } from "./format";
 import {
   BAR_THICKNESS,
@@ -102,10 +102,14 @@ export function Timeline({
     const scroller = scrollerRef.current;
     // 全画面に広げたパネルの下では年表が見えないので、スクロールしない
     if (!scroller || revealKey === null || visibleRatio <= 0) return;
-    const target = scroller.querySelector<HTMLElement>('[data-selected="true"]');
-    if (!target) return;
+    // 選んだ棒（再登板ならすべて）と棒の外のラベルをまとめた範囲を見せる
+    const item = unionBox(
+      [...scroller.querySelectorAll<HTMLElement>('[data-selected="true"]')].map((element) =>
+        element.getBoundingClientRect(),
+      ),
+    );
+    if (!item) return;
     const area = scroller.getBoundingClientRect();
-    const item = target.getBoundingClientRect();
     // 貼り付けた見出し（縦向きの行の見出し・横向きの年の目盛り）の下から測る
     const top = area.top + (orientation === "vertical" ? HEADER_HEIGHT : AXIS_HEIGHT);
     const bottom = area.top + area.height * visibleRatio;

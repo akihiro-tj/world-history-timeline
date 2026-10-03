@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { revealDelta } from "./reveal";
+import { revealDelta, unionBox } from "./reveal";
 
 describe("revealDelta", () => {
   it("見えていればスクロールしない", () => {
@@ -16,5 +16,17 @@ describe("revealDelta", () => {
 
   it("見える範囲より大きければ始まりにそろえる", () => {
     expect(revealDelta(300, 900, 0, 400)).toBe(300 - 8);
+  });
+});
+
+describe("unionBox", () => {
+  it("選んだ棒とラベルをまとめた範囲を返す", () => {
+    const bar = { top: 100, bottom: 136, left: 900, right: 915 };
+    const label = { top: 140, bottom: 172, left: 901, right: 990 };
+    expect(unionBox([bar, label])).toEqual({ top: 100, bottom: 172, left: 900, right: 990 });
+  });
+
+  it("要素がなければ null", () => {
+    expect(unionBox([])).toBeNull();
   });
 });
