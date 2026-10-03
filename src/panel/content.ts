@@ -1,6 +1,5 @@
 // 出典パネルに出す中身（名前・出典のリンク・期間の行・注記）を作る（spec §5）
-import { COPY } from "../app/copy";
-import type { Note, Person, TimelineData, Year } from "../data/timeline";
+import type { Source, TimelineData, Year } from "../data/timeline";
 import type { Selection } from "./selection";
 
 // 節の見出し: 王朝は「期間」、君主は「在位」、首相・大統領などは「在任」
@@ -20,19 +19,11 @@ export type PanelContent = {
   rows: PanelRow[];
 };
 
-const WIKIDATA_ITEM = "https://www.wikidata.org/wiki/";
-
-// Wikidata のリンクを先に、続けて注記の資料を行の順に集める。同じ URL は 1 つにする
-function links(item: Pick<Person, "wikidata" | "wikidataLabel">, notes: Note[]): PanelLink[] {
+// 出典を並びの順に集め、同じ URL は 1 つにする
+function links(sources: Source[]): PanelLink[] {
   const result: PanelLink[] = [];
-  if (item.wikidata !== null && item.wikidataLabel !== null) {
-    result.push({
-      label: COPY.wikidataLink(item.wikidataLabel),
-      url: WIKIDATA_ITEM + item.wikidata,
-    });
-  }
-  for (const ref of notes.flatMap((note) => note.refs)) {
-    if (!result.some((link) => link.url === ref.url)) result.push(ref);
+  for (const source of sources) {
+    if (!result.some((link) => link.url === source.url)) result.push(source);
   }
   return result;
 }
@@ -50,14 +41,14 @@ export function panelContent(data: TimelineData, selection: Selection): PanelCon
     return {
       name: dynasty.name,
       section: "period",
-      links: links(dynasty, dynasty.notes),
+      links: links(dynasty.sources),
       rows: [
         {
           id: dynasty.id,
           start: dynasty.start,
           end: dynasty.end,
           title: null,
-          notes: dynasty.notes.map((note) => note.reason),
+          notes: dynasty.notes,
         },
       ],
     };
@@ -78,16 +69,13 @@ export function panelContent(data: TimelineData, selection: Selection): PanelCon
   return {
     name: first.name ?? person.name,
     section: first.role,
-    links: links(
-      person,
-      reigns.flatMap((reign) => reign.notes),
-    ),
+    links: links(reigns.flatMap((reign) => reign.sources)),
     rows: reigns.map((reign) => ({
       id: reign.id,
       start: reign.start,
       end: reign.end,
       title: reign.title,
-      notes: reign.notes.map((note) => note.reason),
+      notes: reign.notes,
     })),
   };
 }

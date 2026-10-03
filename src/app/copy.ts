@@ -23,5 +23,4 @@ export const COPY = {
   noteMark: "※",
   close: "閉じる",
   newTab: "（新しいタブで開きます）",
-  wikidataLink: (label: string) => `Wikidata「${label}」`,
 } as const;

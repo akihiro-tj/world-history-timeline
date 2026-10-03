@@ -3,6 +3,7 @@ import type { TimelineData } from "../data/timeline";
 import { rowsForView, spansForLane, valueToView, viewToValue } from "./spans";
 
 const y = (year: number) => ({ year, circa: false });
+const SOURCE = { label: "Wikipedia「x」", url: "https://ja.wikipedia.org/wiki/x" };
 
 const data: TimelineData = {
   lanes: [
@@ -21,8 +22,7 @@ const data: TimelineData = {
       kind: "regime",
       start: y(1485),
       end: y(1603),
-      wikidata: null,
-      wikidataLabel: null,
+      sources: [SOURCE],
       notes: [],
     },
     {
@@ -31,8 +31,7 @@ const data: TimelineData = {
       kind: "regime",
       start: y(1461),
       end: y(1485),
-      wikidata: null,
-      wikidataLabel: null,
+      sources: [SOURCE],
       notes: [],
     },
     {
@@ -41,14 +40,13 @@ const data: TimelineData = {
       kind: "government",
       start: y(1500),
       end: y(1510),
-      wikidata: null,
-      wikidataLabel: null,
+      sources: [SOURCE],
       notes: [],
     },
   ],
   people: [
-    { id: "henry", name: "ヘンリ7世", wikidata: null, wikidataLabel: null },
-    { id: "walpole", name: "ウォルポール", wikidata: null, wikidataLabel: null },
+    { id: "henry", name: "ヘンリ7世" },
+    { id: "walpole", name: "ウォルポール" },
   ],
   reigns: [
     {
@@ -57,6 +55,7 @@ const data: TimelineData = {
       name: null,
       role: "monarch",
       title: "地位",
+      sources: [SOURCE],
       notes: [],
       start: y(1485),
       end: y(1509),
@@ -67,6 +66,7 @@ const data: TimelineData = {
       name: null,
       role: "leader",
       title: "地位",
+      sources: [SOURCE],
       notes: [],
       start: y(1721),
       end: y(1742),
@@ -77,6 +77,7 @@ const data: TimelineData = {
       name: "ロバート=ウォルポール",
       role: "leader",
       title: "地位",
+      sources: [SOURCE],
       notes: [],
       start: y(1743),
       end: y(1744),

@@ -5,27 +5,19 @@ export type Lane = { id: string; name: string; dynasties: string[]; reigns: stri
 // 種類: 国家・体制（王朝・共和政・帝政など）か、政権（体制の中の特定の政府・統治機関・内閣）か
 export const DYNASTY_KINDS = ["regime", "government"] as const;
 export type DynastyKind = (typeof DYNASTY_KINDS)[number];
-// 値に使った資料（Wikipedia の記事など）。label は画面に出す名前
-export type Ref = { label: string; url: string };
-// Wikidata と違う値や Wikidata にない値にした理由。reason は利用者に見える文
-export type Note = { reason: string; refs: Ref[] };
-// 終わりが null なら現在まで続いている。wikidata は Wikidata の項目の ID、wikidataLabel はその日本語のラベル
+// 出典: 値を取った Wikipedia の記事。label は画面に出す名前
+export type Source = { label: string; url: string };
+// 終わりが null なら現在まで続いている。notes は利用者に見える注記の文
 export type Dynasty = {
   id: string;
   name: string;
   kind: DynastyKind;
   start: Year;
   end: Year | null;
-  wikidata: string | null;
-  wikidataLabel: string | null;
-  notes: Note[];
+  sources: Source[];
+  notes: string[];
 };
-export type Person = {
-  id: string;
-  name: string;
-  wikidata: string | null;
-  wikidataLabel: string | null;
-};
+export type Person = { id: string; name: string };
 // 役割: 君主（王・女王・皇帝）か、首脳（首相・大統領など）か
 export const ROLES = ["monarch", "leader"] as const;
 export type Role = (typeof ROLES)[number];
@@ -38,7 +30,8 @@ export type Reign = {
   title: string;
   start: Year;
   end: Year | null;
-  notes: Note[];
+  sources: Source[];
+  notes: string[];
 };
 export type TimelineData = {
   lanes: Lane[];
@@ -48,8 +41,7 @@ export type TimelineData = {
 };
 
 const ID_PATTERN = /^[a-z][a-z0-9-]*$/;
-const QID_PATTERN = /^Q[1-9][0-9]*$/;
-const REF_URL = /^https:\/\/([a-z][a-z-]*\.wikipedia\.org|www\.wikidata\.org)\//;
+const WIKIPEDIA_URL = /^https:\/\/[a-z][a-z-]*\.wikipedia\.org\//;
 
 function fail(where: string, reason: string): never {
   throw new Error(`年表データの ${where}: ${reason}`);
@@ -89,36 +81,22 @@ function text(value: unknown, where: string): string {
   return value;
 }
 
-// Wikidata の項目の ID と日本語のラベル。項目がなければどちらも null
-function wikidataItem(
-  r: Record<string, unknown>,
-  where: string,
-): { wikidata: string | null; wikidataLabel: string | null } {
-  if (r.wikidata === null) {
-    if (r.wikidataLabel !== null) fail(where, "Wikidata の項目がないのに wikidataLabel があります");
-    return { wikidata: null, wikidataLabel: null };
-  }
-  if (typeof r.wikidata !== "string" || !QID_PATTERN.test(r.wikidata)) {
-    return fail(where, "Wikidata の ID が不正です");
-  }
-  return { wikidata: r.wikidata, wikidataLabel: text(r.wikidataLabel, `${where}.wikidataLabel`) };
+// 出典は 1 件以上の Wikipedia の記事
+function sources(value: unknown, where: string): Source[] {
+  const items = array(value, where);
+  if (items.length === 0) fail(where, "出典がありません");
+  return items.map((item, i) => {
+    const w = `${where}[${i}]`;
+    const r = record(item, ["label", "url"], w);
+    if (typeof r.url !== "string" || !WIKIPEDIA_URL.test(r.url)) {
+      return fail(w, "出典の url は Wikipedia のページです");
+    }
+    return { label: text(r.label, `${w}.label`), url: r.url };
+  });
 }
 
-function notes(value: unknown, where: string): Note[] {
-  return array(value, where).map((item, i) => {
-    const w = `${where}[${i}]`;
-    const r = record(item, ["reason", "refs"], w);
-    return {
-      reason: text(r.reason, `${w}.reason`),
-      refs: array(r.refs, `${w}.refs`).map((ref, j) => {
-        const rr = record(ref, ["label", "url"], `${w}.refs[${j}]`);
-        if (typeof rr.url !== "string" || !REF_URL.test(rr.url)) {
-          return fail(`${w}.refs[${j}]`, "url は Wikipedia か Wikidata のページです");
-        }
-        return { label: text(rr.label, `${w}.refs[${j}].label`), url: rr.url };
-      }),
-    };
-  });
+function notes(value: unknown, where: string): string[] {
+  return array(value, where).map((item, i) => text(item, `${where}[${i}]`));
 }
 
 function year(value: unknown, where: string): Year {
@@ -173,17 +151,13 @@ export function parseTimeline(value: unknown): TimelineData {
 
   const dynasties = array(root.dynasties, "dynasties").map((item, i) => {
     const where = `dynasties[${i}]`;
-    const r = record(
-      item,
-      ["id", "name", "kind", "start", "end", "wikidata", "wikidataLabel", "notes"],
-      where,
-    );
+    const r = record(item, ["id", "name", "kind", "start", "end", "sources", "notes"], where);
     return {
       id: id(r.id, where),
       name: name(r.name, where),
       kind: dynastyKind(r.kind, where),
       ...period(r, where),
-      ...wikidataItem(r, where),
+      sources: sources(r.sources, `${where}.sources`),
       notes: notes(r.notes, `${where}.notes`),
     };
   });
@@ -191,8 +165,8 @@ export function parseTimeline(value: unknown): TimelineData {
 
   const people = array(root.people, "people").map((item, i) => {
     const where = `people[${i}]`;
-    const r = record(item, ["id", "name", "wikidata", "wikidataLabel"], where);
-    return { id: id(r.id, where), name: name(r.name, where), ...wikidataItem(r, where) };
+    const r = record(item, ["id", "name"], where);
+    return { id: id(r.id, where), name: name(r.name, where) };
   });
   const personMap = unique(people, "people");
 
@@ -200,7 +174,7 @@ export function parseTimeline(value: unknown): TimelineData {
     const where = `reigns[${i}]`;
     const r = record(
       item,
-      ["id", "personId", "name", "role", "title", "start", "end", "notes"],
+      ["id", "personId", "name", "role", "title", "start", "end", "sources", "notes"],
       where,
     );
     const personId = id(r.personId, where);
@@ -212,6 +186,7 @@ export function parseTimeline(value: unknown): TimelineData {
       role: role(r.role, where),
       title: text(r.title, `${where}.title`),
       ...period(r, where),
+      sources: sources(r.sources, `${where}.sources`),
       notes: notes(r.notes, `${where}.notes`),
     };
   });

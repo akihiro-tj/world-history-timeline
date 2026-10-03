@@ -24,9 +24,8 @@ const data: TimelineData = {
       kind: "regime",
       start: y(1603),
       end: y(1649),
-      wikidata: "Q1",
-      wikidataLabel: "ステュアート家",
-      notes: [{ reason: "期間の理由", refs: [wp("ステュアート朝")] }],
+      sources: [wp("ステュアート朝")],
+      notes: ["期間の理由"],
     },
     {
       id: "commune",
@@ -34,19 +33,13 @@ const data: TimelineData = {
       kind: "government",
       start: y(1871),
       end: y(1871),
-      wikidata: null,
-      wikidataLabel: null,
-      notes: [{ reason: "補った理由", refs: [wp("パリ・コミューン")] }],
+      sources: [wp("パリ・コミューン"), wp("パリ・コミューン"), wp("第三共和政")],
+      notes: [],
     },
   ],
   people: [
-    { id: "poincare", name: "ポワンカレ", wikidata: "Q2", wikidataLabel: "レイモン・ポアンカレ" },
-    {
-      id: "napoleon",
-      name: "ナポレオン1世",
-      wikidata: "Q3",
-      wikidataLabel: "ナポレオン・ボナパルト",
-    },
+    { id: "poincare", name: "ポワンカレ" },
+    { id: "napoleon", name: "ナポレオン1世" },
   ],
   reigns: [
     {
@@ -57,7 +50,8 @@ const data: TimelineData = {
       title: "首相",
       start: y(1926),
       end: y(1929),
-      notes: [{ reason: "B", refs: [wp("ポワンカレ")] }],
+      sources: [wp("レイモン・ポアンカレ"), wp("フランスの首相")],
+      notes: ["B"],
     },
     {
       id: "poincare-1912",
@@ -67,6 +61,7 @@ const data: TimelineData = {
       title: "首相",
       start: y(1912),
       end: y(1913),
+      sources: [wp("レイモン・ポアンカレ")],
       notes: [],
     },
     {
@@ -77,7 +72,8 @@ const data: TimelineData = {
       title: "大統領",
       start: y(1913),
       end: y(1920),
-      notes: [{ reason: "A", refs: [wp("ポワンカレ"), wp("第三共和政")] }],
+      sources: [wp("レイモン・ポアンカレ"), wp("フランスの大統領")],
+      notes: ["A"],
     },
     {
       id: "napoleon-1799",
@@ -87,6 +83,7 @@ const data: TimelineData = {
       title: "第一統領",
       start: y(1799),
       end: y(1804),
+      sources: [wp("ナポレオン・ボナパルト")],
       notes: [],
     },
     {
@@ -97,33 +94,32 @@ const data: TimelineData = {
       title: "フランス皇帝",
       start: y(1804),
       end: y(1814),
+      sources: [wp("ナポレオン・ボナパルト")],
       notes: [],
     },
   ],
 };
 
 describe("panelContent", () => {
-  it("王朝は Wikidata のリンクと注記の資料を出典にし、期間を 1 行にする", () => {
+  it("王朝は出典をリンクにし、期間を 1 行にする", () => {
     expect(panelContent(data, { laneId: "france", key: "dynasty:stuart-like" })).toEqual({
       name: "ステュアート朝",
       section: "period",
-      links: [
-        { label: "Wikidata「ステュアート家」", url: "https://www.wikidata.org/wiki/Q1" },
-        wp("ステュアート朝"),
-      ],
+      links: [wp("ステュアート朝")],
       rows: [
         { id: "stuart-like", start: y(1603), end: y(1649), title: null, notes: ["期間の理由"] },
       ],
     });
   });
 
-  it("Wikidata の項目がない王朝は、注記の資料だけを出典にする", () => {
+  it("同じ URL の出典は 1 つにする", () => {
     expect(panelContent(data, { laneId: "france", key: "dynasty:commune" })?.links).toEqual([
       wp("パリ・コミューン"),
+      wp("第三共和政"),
     ]);
   });
 
-  it("在位のまとまりは年の順に並べ、注記はその在任の行に付け、資料は年の順に重ねずに集める", () => {
+  it("在位のまとまりは年の順に並べ、注記はその在任の行に付け、出典は年の順に重ねずに集める", () => {
     const content = panelContent(data, { laneId: "france", key: "reign:poincare/ポワンカレ" });
     expect(content?.name).toBe("ポワンカレ");
     expect(content?.section).toBe("leader");
@@ -133,9 +129,9 @@ describe("panelContent", () => {
       ["poincare-1926", "首相", ["B"]],
     ]);
     expect(content?.links).toEqual([
-      { label: "Wikidata「レイモン・ポアンカレ」", url: "https://www.wikidata.org/wiki/Q2" },
-      wp("ポワンカレ"),
-      wp("第三共和政"),
+      wp("レイモン・ポアンカレ"),
+      wp("フランスの大統領"),
+      wp("フランスの首相"),
     ]);
   });
 

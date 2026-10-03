@@ -4,6 +4,7 @@ import { assignTracks, layoutLane, ticks, timeRange, yearToOffset } from "./layo
 import type { Span } from "./spans";
 
 const y = (year: number) => ({ year, circa: false });
+const SOURCE = { label: "Wikipedia「x」", url: "https://ja.wikipedia.org/wiki/x" };
 const span = (
   id: string,
   name: string,
@@ -25,12 +26,11 @@ describe("timeRange", () => {
           kind: "regime",
           start: y(481),
           end: y(751),
-          wikidata: null,
-          wikidataLabel: null,
+          sources: [SOURCE],
           notes: [],
         },
       ],
-      people: [{ id: "p", name: "P", wikidata: null, wikidataLabel: null }],
+      people: [{ id: "p", name: "P" }],
       reigns: [
         {
           id: "r",
@@ -38,6 +38,7 @@ describe("timeRange", () => {
           name: null,
           role: "monarch",
           title: "地位",
+          sources: [SOURCE],
           notes: [],
           start: y(1485),
           end: y(1603),
@@ -57,8 +58,7 @@ describe("timeRange", () => {
           kind: "regime",
           start: y(-221),
           end: y(-206),
-          wikidata: null,
-          wikidataLabel: null,
+          sources: [SOURCE],
           notes: [],
         },
       ],
@@ -78,8 +78,7 @@ describe("timeRange", () => {
           kind: "regime",
           start: y(1500),
           end: y(1500),
-          wikidata: null,
-          wikidataLabel: null,
+          sources: [SOURCE],
           notes: [],
         },
       ],
@@ -99,8 +98,7 @@ describe("timeRange", () => {
           kind: "regime",
           start: y(1958),
           end: null,
-          wikidata: null,
-          wikidataLabel: null,
+          sources: [SOURCE],
           notes: [],
         },
       ],
