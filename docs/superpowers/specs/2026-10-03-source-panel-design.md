@@ -6,12 +6,12 @@
 
 ## 1. 目的
 
-年表のデータがどう作られているかを、利用者が年表の中で確かめられるようにする。棒を選ぶとパネルが開き、その値の出典（Wikidata と、値に使った Wikipedia の記事）と、Wikidata と違う値や Wikidata にない値にしたところはその理由が出る。
+年表のデータがどう作られているかを、利用者が年表の中で確かめられるようにする。棒を選ぶとパネルが開き、その値の出典（値を取った Wikipedia の記事）と、説が分かれていて 1 つを選んだところや記事と違う年にしたところはその理由が出る。
 
 成功の基準:
 
 - どの棒を選んでも、その値の出典をパネルからたどれる
-- Wikidata と違う値や Wikidata にない値には、その期間のすぐ下に理由の注記が出る
+- 説が分かれていて 1 つを選んだ値や記事と違う年には、その期間のすぐ下に理由の注記が出る
 - 表示 6 通り × 向き 2 通りのすべてで、PC 幅と 375px 幅のどちらでも、パネルを開いた状態で棒・ラベル・行の見出しの配置が崩れない
 
 ## 2. スコープ
@@ -32,17 +32,16 @@
 再登板の spec の成果物から変えるところだけ。
 
 ```ts
-// 注記: Wikidata と違う値や Wikidata にない値にした理由。reason は利用者に見える文、refs はその値に使った資料
-type Note = { reason: string; refs: { label: string; url: string }[] };
-type Dynasty = { id; name; kind; start; end; wikidata: string | null; wikidataLabel: string | null; notes: Note[] };
-type Person = { id; name; wikidata: string | null; wikidataLabel: string | null };
-type Reign = { id; personId; name; role; title: string; start; end; notes: Note[] };
+// 出典: 値を取った Wikipedia の記事。label は画面に出す名前
+type Source = { label: string; url: string };
+type Dynasty = { id; name; kind; start; end; sources: Source[]; notes: string[] };
+type Reign = { id; personId; name; role; title: string; start; end; sources: Source[]; notes: string[] };
 ```
 
-- `wikidata` は Wikidata の項目の ID（`Q` に続く数字）、`wikidataLabel` はその項目の日本語のラベル。項目がなければどちらも `null`
-- 在位には Wikidata の項目がない（人物の項目の中の記録）ので、在位の出典は人物の `wikidata` を使う
+- `sources` は 1 件以上。`label` は画面に出す名前そのもの（例: `Wikipedia「ステュアート朝」`、日本語版以外は `Wikipedia 英語版「House of Knýtlinga」`）。`url` は Wikipedia の記事
+- `notes` は利用者に見える注記の文。説が分かれていて 1 つを選んだとき、記事と違う年にしたときだけ付く
 - `title` は在位の地位（首相・大統領・イングランド女王など）。パネルの在位・在任の一覧に出す
-- `refs` の `label` は画面に出す名前そのもの（例: `Wikipedia「ステュアート朝」`）。`url` は Wikipedia か Wikidata のページ
+- 人物（`Person`）は変えない
 
 ## 4. 選ぶ
 
@@ -63,16 +62,14 @@ type Reign = { id; personId; name; role; title: string; start; end; notes: Note[
 
 ### 中身
 
-上から次の順に並べる。
+上から次の順に並べる。期間がパネルでいちばん知りたいことで、出典はその拠り所なので、本の脚注と同じく最後に置く。
 
 1. **名前**: 王朝の名前、または在位の表示名
-2. **出典**: 外部のページへのリンクを縦に並べる
-   - 1 つ目は Wikidata の項目（`Wikidata「{wikidataLabel}」`）。王朝はその王朝の項目、在位は人物の項目。項目がなければ出さない
-   - 続けて、注記の `refs` を出す。在位のまとまりでは、すべての在位の注記の `refs` を年の順に集める。同じ URL は 1 つにする
-3. **期間・在位・在任**: 見出しは、王朝なら「期間」、君主なら「在位」、首相・大統領などなら「在任」
+2. **期間・在位・在任**: 見出しは、王朝なら「期間」、君主なら「在位」、首相・大統領などなら「在任」
    - 王朝は期間を 1 行、在位はまとまりの在位を年の順に 1 行ずつ並べ、右に地位（`title`）を出す
    - 期間の書き方は、年表の棒と同じ（「頃」、「現在」）
-   - 注記は、説明している期間の行のすぐ下に、先頭に「※」を付けて出す。2 行目以降は「※」の後ろにそろえる
+   - 注記は、その王朝・在位の期間の行のすぐ下に、先頭に「※」を付けて出す。2 行目以降は「※」の後ろにそろえる
+3. **出典**: `sources` を外部のページへのリンクとして縦に並べる。在位のまとまりでは、すべての在位の `sources` を年の順に集め、同じ URL は 1 つにする
 
 ### 文字
 
@@ -93,13 +90,12 @@ type Reign = { id; personId; name; role; title: string; start; end; notes: Note[
 
 ## 6. UI 文言
 
-`copy.ts` に足すものだけ。注記の文（`reason`）とリンクの名前（`refs` の `label`）はデータの側で持つ。
+`copy.ts` に足すものだけ。注記の文（`notes`）とリンクの名前（`sources` の `label`）はデータの側で持つ。
 
 | 場所 | 文言 |
 |---|---|
 | パネルの領域の名前（読み上げ） | `出典` |
 | 節の見出し | `出典`、`期間`、`在位`、`在任` |
-| Wikidata のリンク | `Wikidata「{wikidataLabel}」` |
 | 注記の印 | `※` |
 | 閉じるボタン（読み上げ） | `閉じる` |
 | 外部リンクの補足（読み上げ） | `（新しいタブで開きます）` |
@@ -109,10 +105,9 @@ type Reign = { id; personId; name; role; title: string; start; end; notes: Note[
 `parseTimeline` に足すもの。今と同じく、1 つでも外れたら全体を読み込まず、読み込めなかったことを出す。
 
 - 知らないキー・足りないキーがあれば弾く（今と同じ）
-- `wikidata` は `Q` に続く数字か `null`。`wikidataLabel` は、`wikidata` が `null` なら `null`、そうでなければ空でない文字列
 - `title` は空でない文字列
-- 注記の `reason` は空でない文字列、`refs` は `label`（空でない文字列）と `url` を持つ
-- `url` は `https://<言語コード>.wikipedia.org/` か `https://www.wikidata.org/` で始まるものだけを通す（言語コードは英小文字とハイフン）
+- `sources` は 1 件以上で、各件は `label`（空でない文字列）と `url` を持つ。`url` は `https://<言語コード>.wikipedia.org/` で始まるものだけを通す（言語コードは英小文字とハイフン）
+- `notes` の各文は空でない文字列
 
 ## 8. DESIGN.md
 
@@ -124,8 +119,8 @@ type Reign = { id; personId; name; role; title: string; start; end; notes: Note[
 ## 9. 検証
 
 - Vitest:
-  - `parseTimeline`: §7 の規則（通る例と弾かれる例。言語コード付きの Wikipedia は通り、ほかのサイトは弾かれる）
-  - パネルの中身を作る関数: 出典の並び（Wikidata が先、`refs` を年の順に集めて同じ URL を 1 つに、項目がなければ Wikidata を出さない）、在位・在任の一覧（年の順、地位、表示名が違えば別のまとまり）、節の見出し（期間・在位・在任）
+  - `parseTimeline`: §7 の規則（通る例と弾かれる例。言語コード付きの Wikipedia は通り、ほかのサイトは弾かれる。`sources` が空なら弾かれる）
+  - パネルの中身を作る関数: 出典の並び（在位のまとまりは `sources` を年の順に集め、同じ URL を 1 つに）、在位・在任の一覧（年の順、地位、注記、表示名が違えば別のまとまり）、節の見出し（期間・在位・在任）
   - 表示を切り替えたあとの選択（新しい表示にあれば残し、なければ閉じる）
 - 実ブラウザ（headless Chromium）: PC 幅と 375px 幅のそれぞれで、表示 6 通り × 向き 2 通りのすべてについて、パネルを開いた状態で次を確かめる
   - 選んだ棒の枠が出て、パネルに隠れずに見えている
