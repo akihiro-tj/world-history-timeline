@@ -158,7 +158,7 @@ describe("parseTimeline", () => {
 
   it("Wikidata の項目がなければ ID もラベルも null", () => {
     const data = valid();
-    Object.assign(data.people[0] ?? {}, { wikidata: "Q130005", wikidataLabel: "ヘンリー7世" });
+    Object.assign(data.people[0] ?? {}, { wikidata: null, wikidataLabel: null });
     expect(parseTimeline(data).people[0]?.wikidata).toBeNull();
   });
 
