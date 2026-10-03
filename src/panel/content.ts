@@ -1,4 +1,4 @@
-// 出典パネルに出す中身（名前・出典のリンク・期間の行・注記）を作る（spec §5）
+// 出典パネルに出す中身（名前・期間の行・注記・出典のリンク）を作る（spec §5）
 import type { Source, TimelineData, Year } from "../data/timeline";
 import type { Selection } from "./selection";
 
@@ -60,7 +60,10 @@ export function panelContent(data: TimelineData, selection: Selection): PanelCon
     .filter((reign) => reign !== undefined)
     .filter((reign) => {
       const person = data.people.find((p) => p.id === reign.personId);
-      return person !== undefined && `${reign.personId}/${reign.name ?? person.name}` === group;
+      return (
+        person !== undefined &&
+        `${reign.role}/${reign.personId}/${reign.name ?? person.name}` === group
+      );
     })
     .sort((a, b) => a.start.year - b.start.year);
   const first = reigns[0];

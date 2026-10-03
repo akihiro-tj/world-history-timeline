@@ -15,7 +15,7 @@ const reign: Span = {
   name: "ピット",
   start: y(1783),
   end: y(1801),
-  group: "pitt/ピット",
+  group: "leader/pitt/ピット",
 };
 const rows: Row[] = [{ id: "england", name: "イングランド", spans: [dynasty, reign] }];
 const subject: View = { kind: "subject", subject: "regime" };
@@ -24,7 +24,7 @@ const lane: View = { kind: "lane", laneId: "england" };
 describe("選択", () => {
   it("棒から選択の key を作る", () => {
     expect(spanKey(dynasty)).toBe("dynasty:tudor");
-    expect(spanKey(reign)).toBe("reign:pitt/ピット");
+    expect(spanKey(reign)).toBe("reign:leader/pitt/ピット");
   });
 
   it("主題の表示では行が国・地域、国・地域の表示では選んだ国・地域", () => {
@@ -33,7 +33,7 @@ describe("選択", () => {
   });
 
   it("同じ行の同じまとまりの棒を選んだものとする", () => {
-    const selection = { laneId: "england", key: "reign:pitt/ピット" };
+    const selection = { laneId: "england", key: "reign:leader/pitt/ピット" };
     expect(isSelected(selection, "england", reign)).toBe(true);
     expect(isSelected(selection, "england", { ...reign, id: "pitt-1804" })).toBe(true);
     expect(isSelected(selection, "france", reign)).toBe(false);

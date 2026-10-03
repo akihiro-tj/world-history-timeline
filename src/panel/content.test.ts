@@ -14,7 +14,15 @@ const data: TimelineData = {
       id: "france",
       name: "フランス",
       dynasties: ["stuart-like", "commune"],
-      reigns: ["poincare-1926", "poincare-1912", "poincare-1913", "napoleon-1799", "napoleon-1804"],
+      reigns: [
+        "poincare-1926",
+        "poincare-1912",
+        "poincare-1913",
+        "napoleon-1799",
+        "napoleon-1804",
+        "pippin-741",
+        "pippin-751",
+      ],
     },
   ],
   dynasties: [
@@ -40,6 +48,7 @@ const data: TimelineData = {
   people: [
     { id: "poincare", name: "ポワンカレ" },
     { id: "napoleon", name: "ナポレオン1世" },
+    { id: "pippin", name: "ピピン" },
   ],
   reigns: [
     {
@@ -97,6 +106,28 @@ const data: TimelineData = {
       sources: [wp("ナポレオン・ボナパルト")],
       notes: [],
     },
+    {
+      id: "pippin-741",
+      personId: "pippin",
+      name: null,
+      role: "leader",
+      title: "宮宰",
+      start: y(741),
+      end: y(751),
+      sources: [wp("ピピン3世")],
+      notes: [],
+    },
+    {
+      id: "pippin-751",
+      personId: "pippin",
+      name: null,
+      role: "monarch",
+      title: "フランク王",
+      start: y(751),
+      end: y(768),
+      sources: [wp("ピピン3世")],
+      notes: [],
+    },
   ],
 };
 
@@ -120,7 +151,10 @@ describe("panelContent", () => {
   });
 
   it("在位のまとまりは年の順に並べ、注記はその在任の行に付け、出典は年の順に重ねずに集める", () => {
-    const content = panelContent(data, { laneId: "france", key: "reign:poincare/ポワンカレ" });
+    const content = panelContent(data, {
+      laneId: "france",
+      key: "reign:leader/poincare/ポワンカレ",
+    });
     expect(content?.name).toBe("ポワンカレ");
     expect(content?.section).toBe("leader");
     expect(content?.rows.map((r) => [r.id, r.title, r.notes])).toEqual([
@@ -138,18 +172,30 @@ describe("panelContent", () => {
   it("表示名が違う在位は別のまとまりにする", () => {
     const consul = panelContent(data, {
       laneId: "france",
-      key: "reign:napoleon/ナポレオン=ボナパルト",
+      key: "reign:leader/napoleon/ナポレオン=ボナパルト",
     });
     expect(consul?.rows.map((r) => r.id)).toEqual(["napoleon-1799"]);
     expect(consul?.section).toBe("leader");
-    const emperor = panelContent(data, { laneId: "france", key: "reign:napoleon/ナポレオン1世" });
+    const emperor = panelContent(data, {
+      laneId: "france",
+      key: "reign:monarch/napoleon/ナポレオン1世",
+    });
     expect(emperor?.rows.map((r) => r.id)).toEqual(["napoleon-1804"]);
     expect(emperor?.section).toBe("monarch");
+  });
+
+  it("同じ人物・同じ表示名でも役割が違う在位は別のまとまりにする", () => {
+    const leader = panelContent(data, { laneId: "france", key: "reign:leader/pippin/ピピン" });
+    expect(leader?.section).toBe("leader");
+    expect(leader?.rows.map((r) => r.id)).toEqual(["pippin-741"]);
+    const monarch = panelContent(data, { laneId: "france", key: "reign:monarch/pippin/ピピン" });
+    expect(monarch?.section).toBe("monarch");
+    expect(monarch?.rows.map((r) => r.id)).toEqual(["pippin-751"]);
   });
 
   it("見つからない項目は null", () => {
     expect(panelContent(data, { laneId: "france", key: "dynasty:none" })).toBeNull();
     expect(panelContent(data, { laneId: "england", key: "dynasty:stuart-like" })).toBeNull();
-    expect(panelContent(data, { laneId: "france", key: "reign:nobody/x" })).toBeNull();
+    expect(panelContent(data, { laneId: "france", key: "reign:leader/nobody/x" })).toBeNull();
   });
 });

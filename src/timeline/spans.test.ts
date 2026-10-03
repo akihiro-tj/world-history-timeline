@@ -107,7 +107,7 @@ describe("spansForLane", () => {
         name: "ヘンリ7世",
         start: y(1485),
         end: y(1509),
-        group: "henry/ヘンリ7世",
+        group: "monarch/henry/ヘンリ7世",
       },
     ]);
     expect(spansForLane(data, lane, "leader")).toEqual([
@@ -117,14 +117,14 @@ describe("spansForLane", () => {
         name: "ウォルポール",
         start: y(1721),
         end: y(1742),
-        group: "walpole/ウォルポール",
+        group: "leader/walpole/ウォルポール",
       },
       {
         id: "walpole-alias",
         name: "ロバート=ウォルポール",
         start: y(1743),
         end: y(1744),
-        group: "walpole/ロバート=ウォルポール",
+        group: "leader/walpole/ロバート=ウォルポール",
       },
     ]);
   });

@@ -46,7 +46,7 @@ type Reign = { id; personId; name; role; title: string; start; end; sources: Sou
 ## 4. 選ぶ
 
 - 棒と、棒の外のラベルを、どちらもボタンにする。クリック・タップのほか、Tab で移って Enter / Space でも選べる。キーボードで移ったときはフォーカスの枠（`primary`）を出す
-- 選ぶ単位は、王朝ならその王朝、在位なら再登板の spec のまとまり（同じ行の、同じ人物・同じ表示名の在位）。在位の棒を選ぶと、まとまりの棒すべてを選んだ状態にする
+- 選ぶ単位は、王朝ならその王朝、在位なら再登板の spec のまとまり（同じ行の、同じ人物・同じ表示名の在位）。国・地域の表示では君主と首相・大統領などが別の行になるので、同じ人物・同じ表示名でも役割が違えば別のまとまりにする。在位の棒を選ぶと、まとまりの棒すべてを選んだ状態にする
 - 選んだ棒には `primary` の 2px の枠を付ける
 - 主題や向きを切り替えても、選んだ項目が新しい表示にあれば選んだままにし、なければパネルを閉じる
 
@@ -97,7 +97,7 @@ type Reign = { id; personId; name; role; title: string; start; end; sources: Sou
 | パネルの領域の名前（読み上げ） | `出典` |
 | 節の見出し | `出典`、`期間`、`在位`、`在任` |
 | 注記の印 | `※` |
-| 閉じるボタン（読み上げ） | `閉じる` |
+| 閉じるボタン | `×`（読み上げは `閉じる`） |
 | 外部リンクの補足（読み上げ） | `（新しいタブで開きます）` |
 
 ## 7. 読み込みの検証
@@ -113,7 +113,7 @@ type Reign = { id; personId; name; role; title: string; start; end; sources: Sou
 
 - `typography` に `title`（18px、太さ 600、行の高さ 1.4）を足し、`pnpm tokens` で `theme.css` を作り直す
 - Typography に `title`（出典パネルの名前）、`label`・`heading`・`body` の用途にパネルの要素を足す
-- Components に出典パネル（`source-panel`）、出典のリンク（`source-link`）、注記（`source-note`）を足す
+- Components に出典パネル（`source-panel`）、パネルの名前（`source-panel-title`）、節の見出し（`source-panel-heading`）、出典のリンク（`source-link`）、注記（`source-note`）、選んだ棒の枠（`selected-bar`）を足す
 - Layout に §5 の出し方を足す
 
 ## 9. 検証

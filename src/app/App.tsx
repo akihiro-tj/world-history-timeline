@@ -85,6 +85,11 @@ export function App() {
     if (rows) setSelection((current) => keepSelection(current, view, rows));
   }, [rows, view]);
 
+  // 閉じたら、次に開くときは元の高さから
+  useEffect(() => {
+    if (selection === null) setExpanded(false);
+  }, [selection]);
+
   const content = useMemo(
     () => (data && selection ? panelContent(data, selection) : null),
     [data, selection],
@@ -100,7 +105,6 @@ export function App() {
 
   const handleClose = useCallback(() => {
     setSelection(null);
-    setExpanded(false);
     if (trigger.current?.isConnected) trigger.current.focus();
   }, []);
 
