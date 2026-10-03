@@ -210,8 +210,9 @@ function barClass(index: number): string {
 const textStyle: CSSProperties = { lineHeight: `${LINE_HEIGHT}px` };
 
 // 選んだ棒の枠とキーボードのフォーカスの枠は primary の 2px（spec §4）
+// 選んだ棒とフォーカスがある棒は、枠が隣の棒に隠れないよう手前に描く（貼り付けた見出しの z-10 より奥）
 const selectableClass =
-  "cursor-pointer text-left data-[selected=true]:outline-2 data-[selected=true]:outline-offset-1 data-[selected=true]:outline-primary focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-primary";
+  "cursor-pointer text-left data-[selected=true]:z-5 focus-visible:z-5 data-[selected=true]:outline-2 data-[selected=true]:outline-offset-1 data-[selected=true]:outline-primary focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-primary";
 
 type SelectProps = {
   isSelected: (row: Row, span: Span) => boolean;
