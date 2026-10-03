@@ -3,8 +3,9 @@ import { loadTimeline } from "../data/loadTimeline";
 import type { TimelineData } from "../data/timeline";
 import timelineUrl from "../data/timeline.json?url";
 import { panelContent } from "../panel/content";
-import { SHEET_HEIGHT_RATIO, SourcePanel } from "../panel/SourcePanel";
+import { SourcePanel } from "../panel/SourcePanel";
 import { isSelected, keepSelection, laneIdOf, type Selection, spanKey } from "../panel/selection";
+import { SHEET_HEIGHT_RATIO } from "../panel/sheet";
 import { type Orientation, timeRange } from "../timeline/layout";
 import { initialOrientation } from "../timeline/scroll";
 import type { Row, Span } from "../timeline/spans";
@@ -151,7 +152,7 @@ export function App() {
           onChange={setOrientation}
         />
       </header>
-      <main className="relative flex min-h-0 flex-1">
+      <main className="relative flex min-h-0 flex-1 overflow-clip">
         <div className="min-w-0 flex-1">
           {state.status === "loading" && <p className="p-md text-muted">{COPY.loading}</p>}
           {state.status === "error" && (
@@ -169,6 +170,7 @@ export function App() {
               onSelect={handleSelect}
               revealKey={selection ? `${selection.laneId}|${selection.key}` : null}
               visibleRatio={wide || !content ? 1 : expanded ? 0 : 1 - SHEET_HEIGHT_RATIO}
+              endSpaceRatio={wide || !content ? 0 : SHEET_HEIGHT_RATIO}
             />
           )}
         </div>

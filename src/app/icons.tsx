@@ -58,3 +58,20 @@ export function ExternalLinkIcon() {
     </svg>
   );
 }
+
+// 出典パネルの閉じるボタンの ×
+export function CloseIcon() {
+  return (
+    <svg
+      viewBox="0 0 14 14"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      aria-hidden="true"
+      className="size-3.5"
+    >
+      <path d="M2 2l10 10M12 2L2 12" />
+    </svg>
+  );
+}

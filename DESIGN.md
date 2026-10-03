@@ -44,6 +44,7 @@ typography:
 rounded:
   sm: 3px
   md: 8px
+  lg: 12px
 spacing:
   xs: 4px
   sm: 8px
@@ -102,6 +103,10 @@ components:
   source-note:
     textColor: "{colors.muted}"
     typography: "{typography.label}"
+  source-panel-close:
+    backgroundColor: "{colors.surface-subtle}"
+    textColor: "{colors.on-surface}"
+    size: 32px
   selected-bar:
     textColor: "{colors.primary}"
   error-message:
@@ -145,18 +150,22 @@ components:
 - 年表の縮尺と棒の寸法は、位置の計算に使うため `src/timeline/layout.ts` と `src/timeline/Timeline.tsx` の定数で持つ（1 年 = 2px、横向きの棒の太さ 36px）
 - 縦向きは、左端に年の目盛り（幅 48px）、上端に行の名前を貼り付け、行を列として等分に並べる（1 列の最小幅 120px）
 - 横向きは、上端に年の目盛り、各行の左上に行の名前を貼り付ける
-- 棒か棒の外のラベルを選ぶと出典パネルが開く。幅 768px 以上では年表の右に幅 360px で開き、年表はその分だけ狭くなる。768px 未満では画面の下から高さの約半分（56%）で開き、取っ手を上に引くと全画面に広がる。寸法は `src/panel/SourcePanel.tsx` の定数で持つ
-- 出典パネルと年表の区切りは `divider` の線で表す
+- 棒か棒の外のラベルを選ぶと出典パネルが開く。幅 768px 以上では年表の右に幅 360px で開き、年表はその分だけ狭くなる。768px 未満では画面の下から高さの約半分（56%）のシートで開き、シートのどこを引いても全画面に広げたり閉じたりできる。開く・閉じる・広げるときは 0.25 秒で滑らせる（視差効果を減らす設定では動かさない）。寸法は `src/panel/SourcePanel.tsx` と `src/panel/sheet.ts` の定数で持つ
+- シートが半分の高さで開いているあいだは、年表の下端にシートの高さぶんの余白を足し、下のほうの棒もシートより上までスクロールできるようにする
+- PC の出典パネルと年表の区切りは `divider` の線で表す
 
 ## Elevation & Depth
 
 影は使わない。見出しの区切りは `divider` の線だけで表す。
 
+例外として、年表の上に重なるスマホの出典シートだけは、上向きの柔らかい影（`0 -2px 12px` の on-surface 16%）を付ける。重なる面であることを、年表の目盛りの線と同じ系統の線に頼らずに示すため。値は `src/app/index.css` の `--shadow-sheet` で持つ（front matter に影のトークンがないため）。
+
 ## Shapes
 
 - 棒とエラーのメッセージは `sm`
 - 表示のセレクトと向きの切り替えボタンの枠は `md`
-- スマホの出典パネルの上の角は `md`
+- スマホの出典シートの上の角は `lg`
+- 出典パネルの閉じるボタンは丸（直径 32px、押せる範囲は 44px 角）
 
 ## Components
 
@@ -173,6 +182,7 @@ components:
 - `source-panel-heading`: 出典パネルの節の見出し（期間・在位・在任・出典）
 - `source-link`: 出典のリンク（新しいタブで開くアイコン付き）
 - `source-note`: 期間の下の注記（先頭に「※」）
+- `source-panel-close`: 出典パネルの閉じるボタン（薄い灰色の丸の中に × のアイコン）
 - `selected-bar`: 選んだ棒の枠
 
 ## Do's and Don'ts

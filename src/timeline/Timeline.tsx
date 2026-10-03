@@ -42,6 +42,8 @@ type Props = {
   revealKey: string | null;
   // 年表のうち見えている割合（上から）。スマホで下からパネルが開いているときは上側だけが見える
   visibleRatio: number;
+  // 年表の下端に足す余白（年表の高さに対する割合）。スマホのシートの下に隠れた棒も、シートより上まで持ち上げられるようにする
+  endSpaceRatio: number;
 };
 
 export function Timeline({
@@ -53,6 +55,7 @@ export function Timeline({
   onSelect,
   revealKey,
   visibleRatio,
+  endSpaceRatio,
 }: Props) {
   const scrollerRef = useRef<HTMLElement>(null);
   const probeRef = useRef<HTMLSpanElement>(null);
@@ -149,6 +152,9 @@ export function Timeline({
         ) : (
           <Vertical range={range} lanes={lanes} isSelected={isSelected} onSelect={onSelect} />
         ))}
+      {endSpaceRatio > 0 && (
+        <div aria-hidden="true" style={{ height: `${endSpaceRatio * 100}%` }} />
+      )}
     </section>
   );
 }
