@@ -234,17 +234,16 @@ export function SourcePanel({ content, layout, onClose, expanded, onExpandedChan
           <h3 className="mb-xs font-heading text-heading text-muted">
             {SECTION_LABELS[content.section]}
           </h3>
-          <ul>
+          {/* 期間を左の列、地位を右の列にし、期間の長さが違っても地位を縦にそろえる。行は線で区切らず間隔で分ける */}
+          <ul className="grid grid-cols-[max-content_1fr] gap-x-md gap-y-xs">
             {content.rows.map((row) => (
-              <li key={row.id} className="border-b border-grid py-sm last:border-b-0">
-                <div className="flex justify-between gap-sm tabular-nums">
-                  <span>{formatPeriod(row.start, row.end)}</span>
-                  {row.title !== null && <span className="text-muted">{row.title}</span>}
-                </div>
+              <li key={row.id} className="col-span-2 grid grid-cols-subgrid">
+                <span className="tabular-nums">{formatPeriod(row.start, row.end)}</span>
+                <span className="text-muted">{row.title}</span>
                 {row.notes.map((note) => (
                   <p
                     key={note}
-                    className="mt-xs grid grid-cols-[auto_1fr] font-label text-label text-muted"
+                    className="col-span-2 mt-xs mb-xs grid grid-cols-[auto_1fr] font-label text-label text-muted"
                   >
                     <span aria-hidden="true">{COPY.noteMark}</span>
                     <span>{note}</span>
