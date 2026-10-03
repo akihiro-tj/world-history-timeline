@@ -152,8 +152,12 @@
         "year": 751,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「メロヴィング朝」",
+          "url": "https://ja.wikipedia.org/wiki/メロヴィング朝"
+        }
+      ],
       "notes": []
     },
     {
@@ -168,8 +172,12 @@
         "year": 987,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「カロリング朝」",
+          "url": "https://ja.wikipedia.org/wiki/カロリング朝"
+        }
+      ],
       "notes": []
     },
     {
@@ -184,8 +192,12 @@
         "year": 1328,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「カペー朝」",
+          "url": "https://ja.wikipedia.org/wiki/カペー朝"
+        }
+      ],
       "notes": []
     },
     {
@@ -200,8 +212,12 @@
         "year": 1589,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「ヴァロワ朝」",
+          "url": "https://ja.wikipedia.org/wiki/ヴァロワ朝"
+        }
+      ],
       "notes": []
     },
     {
@@ -216,8 +232,12 @@
         "year": 1042,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「イングランド君主一覧」",
+          "url": "https://ja.wikipedia.org/wiki/イングランド君主一覧"
+        }
+      ],
       "notes": []
     },
     {
@@ -232,9 +252,15 @@
         "year": 1154,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
-      "notes": []
+      "sources": [
+        {
+          "label": "Wikipedia「ノルマン朝」",
+          "url": "https://ja.wikipedia.org/wiki/ノルマン朝"
+        }
+      ],
+      "notes": [
+        "ノルマン朝の終わりには、ヘンリー1世が亡くなった1135年とする考え方と、続くスティーブン（ブロワ朝）の治世も含める考え方があります。ここでは、スティーブンの治世も含めて、プランタジネット朝が始まる1154年までにしています。"
+      ]
     },
     {
       "id": "plantagenet",
@@ -248,8 +274,12 @@
         "year": 1399,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「プランタジネット朝」",
+          "url": "https://ja.wikipedia.org/wiki/プランタジネット朝"
+        }
+      ],
       "notes": []
     },
     {
@@ -264,8 +294,12 @@
         "year": 1461,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「ランカスター朝」",
+          "url": "https://ja.wikipedia.org/wiki/ランカスター朝"
+        }
+      ],
       "notes": []
     },
     {
@@ -280,8 +314,12 @@
         "year": 1485,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「ヨーク朝」",
+          "url": "https://ja.wikipedia.org/wiki/ヨーク朝"
+        }
+      ],
       "notes": []
     },
     {
@@ -296,8 +334,12 @@
         "year": 1603,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「テューダー朝」",
+          "url": "https://ja.wikipedia.org/wiki/テューダー朝"
+        }
+      ],
       "notes": []
     },
     {
@@ -312,8 +354,12 @@
         "year": 1649,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「ステュアート朝」",
+          "url": "https://ja.wikipedia.org/wiki/ステュアート朝"
+        }
+      ],
       "notes": []
     },
     {
@@ -328,8 +374,12 @@
         "year": 1660,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「イングランド共和国」",
+          "url": "https://ja.wikipedia.org/wiki/イングランド共和国"
+        }
+      ],
       "notes": []
     },
     {
@@ -344,8 +394,12 @@
         "year": 1714,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「ステュアート朝」",
+          "url": "https://ja.wikipedia.org/wiki/ステュアート朝"
+        }
+      ],
       "notes": []
     },
     {
@@ -360,8 +414,12 @@
         "year": 1901,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「ハノーヴァー朝」",
+          "url": "https://ja.wikipedia.org/wiki/ハノーヴァー朝"
+        }
+      ],
       "notes": []
     },
     {
@@ -373,8 +431,12 @@
         "circa": false
       },
       "end": null,
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「ウィンザー朝」",
+          "url": "https://ja.wikipedia.org/wiki/ウィンザー朝"
+        }
+      ],
       "notes": []
     },
     {
@@ -389,8 +451,12 @@
         "year": 1792,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「ブルボン朝」",
+          "url": "https://ja.wikipedia.org/wiki/ブルボン朝"
+        }
+      ],
       "notes": []
     },
     {
@@ -405,8 +471,16 @@
         "year": 1791,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「国民議会 (フランス革命)」",
+          "url": "https://ja.wikipedia.org/wiki/国民議会_(フランス革命)"
+        },
+        {
+          "label": "Wikipedia「憲法制定国民議会」",
+          "url": "https://ja.wikipedia.org/wiki/憲法制定国民議会"
+        }
+      ],
       "notes": []
     },
     {
@@ -421,8 +495,12 @@
         "year": 1792,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「立法議会」",
+          "url": "https://ja.wikipedia.org/wiki/立法議会"
+        }
+      ],
       "notes": []
     },
     {
@@ -437,8 +515,12 @@
         "year": 1795,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「国民公会」",
+          "url": "https://ja.wikipedia.org/wiki/国民公会"
+        }
+      ],
       "notes": []
     },
     {
@@ -453,8 +535,12 @@
         "year": 1804,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「フランス第一共和政」",
+          "url": "https://ja.wikipedia.org/wiki/フランス第一共和政"
+        }
+      ],
       "notes": []
     },
     {
@@ -469,8 +555,12 @@
         "year": 1799,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「総裁政府」",
+          "url": "https://ja.wikipedia.org/wiki/総裁政府"
+        }
+      ],
       "notes": []
     },
     {
@@ -485,8 +575,12 @@
         "year": 1804,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「統領政府」",
+          "url": "https://ja.wikipedia.org/wiki/統領政府"
+        }
+      ],
       "notes": []
     },
     {
@@ -501,8 +595,12 @@
         "year": 1814,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「フランス第一帝政」",
+          "url": "https://ja.wikipedia.org/wiki/フランス第一帝政"
+        }
+      ],
       "notes": []
     },
     {
@@ -517,8 +615,12 @@
         "year": 1830,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「フランス復古王政」",
+          "url": "https://ja.wikipedia.org/wiki/フランス復古王政"
+        }
+      ],
       "notes": []
     },
     {
@@ -533,8 +635,12 @@
         "year": 1848,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「7月王政」",
+          "url": "https://ja.wikipedia.org/wiki/7月王政"
+        }
+      ],
       "notes": []
     },
     {
@@ -549,8 +655,12 @@
         "year": 1848,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「1848年のフランス革命」",
+          "url": "https://ja.wikipedia.org/wiki/1848年のフランス革命"
+        }
+      ],
       "notes": []
     },
     {
@@ -565,8 +675,12 @@
         "year": 1852,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「フランス第二共和政」",
+          "url": "https://ja.wikipedia.org/wiki/フランス第二共和政"
+        }
+      ],
       "notes": []
     },
     {
@@ -581,8 +695,12 @@
         "year": 1870,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「フランス第二帝政」",
+          "url": "https://ja.wikipedia.org/wiki/フランス第二帝政"
+        }
+      ],
       "notes": []
     },
     {
@@ -597,8 +715,12 @@
         "year": 1871,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「国防政府」",
+          "url": "https://ja.wikipedia.org/wiki/国防政府"
+        }
+      ],
       "notes": []
     },
     {
@@ -613,8 +735,12 @@
         "year": 1871,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「アドルフ・ティエール」",
+          "url": "https://ja.wikipedia.org/wiki/アドルフ・ティエール"
+        }
+      ],
       "notes": []
     },
     {
@@ -629,8 +755,12 @@
         "year": 1871,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「パリ・コミューン」",
+          "url": "https://ja.wikipedia.org/wiki/パリ・コミューン"
+        }
+      ],
       "notes": []
     },
     {
@@ -638,15 +768,19 @@
       "name": "第三共和政",
       "kind": "regime",
       "start": {
-        "year": 1871,
+        "year": 1870,
         "circa": false
       },
       "end": {
         "year": 1940,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「フランス第三共和政」",
+          "url": "https://ja.wikipedia.org/wiki/フランス第三共和政"
+        }
+      ],
       "notes": []
     },
     {
@@ -661,8 +795,12 @@
         "year": 1944,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「ヴィシー政権」",
+          "url": "https://ja.wikipedia.org/wiki/ヴィシー政権"
+        }
+      ],
       "notes": []
     },
     {
@@ -677,8 +815,12 @@
         "year": 1944,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「自由フランス」",
+          "url": "https://ja.wikipedia.org/wiki/自由フランス"
+        }
+      ],
       "notes": []
     },
     {
@@ -693,8 +835,12 @@
         "year": 1958,
         "circa": false
       },
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「フランス第四共和政」",
+          "url": "https://ja.wikipedia.org/wiki/フランス第四共和政"
+        }
+      ],
       "notes": []
     },
     {
@@ -706,389 +852,267 @@
         "circa": false
       },
       "end": null,
-      "wikidata": null,
-      "wikidataLabel": null,
+      "sources": [
+        {
+          "label": "Wikipedia「フランス第五共和政」",
+          "url": "https://ja.wikipedia.org/wiki/フランス第五共和政"
+        }
+      ],
       "notes": []
     }
   ],
   "people": [
     {
       "id": "clovis",
-      "name": "クローヴィス",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "クローヴィス"
     },
     {
       "id": "charles-martel",
-      "name": "カール=マルテル",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "カール=マルテル"
     },
     {
       "id": "pippin",
-      "name": "ピピン",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ピピン"
     },
     {
       "id": "charlemagne",
-      "name": "カール大帝",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "カール大帝"
     },
     {
       "id": "louis-i",
-      "name": "ルートヴィヒ1世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ルートヴィヒ1世"
     },
     {
       "id": "hugues-capet",
-      "name": "ユーグ=カペー",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ユーグ=カペー"
     },
     {
       "id": "philippe-ii",
-      "name": "フィリップ2世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "フィリップ2世"
     },
     {
       "id": "louis-ix",
-      "name": "ルイ9世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ルイ9世"
     },
     {
       "id": "philippe-iv",
-      "name": "フィリップ4世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "フィリップ4世"
     },
     {
       "id": "charles-vii",
-      "name": "シャルル7世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "シャルル7世"
     },
     {
       "id": "egbert",
-      "name": "エグバート",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "エグバート"
     },
     {
       "id": "alfred",
-      "name": "アルフレッド大王",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "アルフレッド大王"
     },
     {
       "id": "cnut",
-      "name": "クヌート",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "クヌート"
     },
     {
       "id": "william-i",
-      "name": "ウィリアム1世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ウィリアム1世"
     },
     {
       "id": "henry-ii",
-      "name": "ヘンリ2世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ヘンリ2世"
     },
     {
       "id": "john",
-      "name": "ジョン王",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ジョン王"
     },
     {
       "id": "richard-i",
-      "name": "リチャード1世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "リチャード1世"
     },
     {
       "id": "henry-iii",
-      "name": "ヘンリ3世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ヘンリ3世"
     },
     {
       "id": "edward-i",
-      "name": "エドワード1世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "エドワード1世"
     },
     {
       "id": "edward-iii",
-      "name": "エドワード3世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "エドワード3世"
     },
     {
       "id": "henry-vii",
-      "name": "ヘンリ7世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ヘンリ7世"
     },
     {
       "id": "henry-viii",
-      "name": "ヘンリ8世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ヘンリ8世"
     },
     {
       "id": "mary-i",
-      "name": "メアリ1世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "メアリ1世"
     },
     {
       "id": "elizabeth-i",
-      "name": "エリザベス1世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "エリザベス1世"
     },
     {
       "id": "james-i",
-      "name": "ジェームズ1世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ジェームズ1世"
     },
     {
       "id": "charles-i",
-      "name": "チャールズ1世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "チャールズ1世"
     },
     {
       "id": "cromwell",
-      "name": "クロムウェル",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "クロムウェル"
     },
     {
       "id": "charles-ii",
-      "name": "チャールズ2世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "チャールズ2世"
     },
     {
       "id": "james-ii",
-      "name": "ジェームズ2世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ジェームズ2世"
     },
     {
       "id": "william-iii",
-      "name": "ウィリアム3世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ウィリアム3世"
     },
     {
       "id": "mary-ii",
-      "name": "メアリ2世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "メアリ2世"
     },
     {
       "id": "anne",
-      "name": "アン女王",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "アン女王"
     },
     {
       "id": "george-i",
-      "name": "ジョージ1世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ジョージ1世"
     },
     {
       "id": "walpole",
-      "name": "ウォルポール",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ウォルポール"
     },
     {
       "id": "pitt",
-      "name": "ピット",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ピット"
     },
     {
       "id": "victoria",
-      "name": "ヴィクトリア女王",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ヴィクトリア女王"
     },
     {
       "id": "disraeli",
-      "name": "ディズレーリ",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ディズレーリ"
     },
     {
       "id": "gladstone",
-      "name": "グラッドストン",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "グラッドストン"
     },
     {
       "id": "lloyd-george",
-      "name": "ロイド=ジョージ",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ロイド=ジョージ"
     },
     {
       "id": "macdonald",
-      "name": "マクドナルド",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "マクドナルド"
     },
     {
       "id": "neville-chamberlain",
-      "name": "ネヴィル=チェンバレン",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ネヴィル=チェンバレン"
     },
     {
       "id": "churchill",
-      "name": "チャーチル",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "チャーチル"
     },
     {
       "id": "attlee",
-      "name": "アトリー",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "アトリー"
     },
     {
       "id": "thatcher",
-      "name": "サッチャー",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "サッチャー"
     },
     {
       "id": "francois-i",
-      "name": "フランソワ1世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "フランソワ1世"
     },
     {
       "id": "henri-iv",
-      "name": "アンリ4世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "アンリ4世"
     },
     {
       "id": "louis-xiii",
-      "name": "ルイ13世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ルイ13世"
     },
     {
       "id": "louis-xiv",
-      "name": "ルイ14世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ルイ14世"
     },
     {
       "id": "louis-xvi",
-      "name": "ルイ16世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ルイ16世"
     },
     {
       "id": "napoleon-i",
-      "name": "ナポレオン1世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ナポレオン1世"
     },
     {
       "id": "louis-xviii",
-      "name": "ルイ18世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ルイ18世"
     },
     {
       "id": "charles-x",
-      "name": "シャルル10世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "シャルル10世"
     },
     {
       "id": "louis-philippe",
-      "name": "ルイ=フィリップ",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ルイ=フィリップ"
     },
     {
       "id": "napoleon-iii",
-      "name": "ナポレオン3世",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ナポレオン3世"
     },
     {
       "id": "thiers",
-      "name": "ティエール",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ティエール"
     },
     {
       "id": "clemenceau",
-      "name": "クレマンソー",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "クレマンソー"
     },
     {
       "id": "briand",
-      "name": "ブリアン",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ブリアン"
     },
     {
       "id": "poincare",
-      "name": "ポワンカレ",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ポワンカレ"
     },
     {
       "id": "petain",
-      "name": "ペタン",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ペタン"
     },
     {
       "id": "daladier",
-      "name": "ダラディエ",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ダラディエ"
     },
     {
       "id": "schuman",
-      "name": "シューマン",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "シューマン"
     },
     {
       "id": "de-gaulle",
-      "name": "ド=ゴール",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ド=ゴール"
     },
     {
       "id": "mitterrand",
-      "name": "ミッテラン",
-      "wikidata": null,
-      "wikidataLabel": null
+      "name": "ミッテラン"
     }
   ],
   "reigns": [
@@ -1106,6 +1130,12 @@
         "year": 511,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「クローヴィス1世 (フランク王)」",
+          "url": "https://ja.wikipedia.org/wiki/クローヴィス1世_(フランク王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1122,6 +1152,12 @@
         "year": 741,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「カール・マルテル」",
+          "url": "https://ja.wikipedia.org/wiki/カール・マルテル"
+        }
+      ],
       "notes": []
     },
     {
@@ -1138,6 +1174,12 @@
         "year": 751,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ピピン3世 (フランク王)」",
+          "url": "https://ja.wikipedia.org/wiki/ピピン3世_(フランク王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1154,6 +1196,12 @@
         "year": 768,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ピピン3世 (フランク王)」",
+          "url": "https://ja.wikipedia.org/wiki/ピピン3世_(フランク王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1170,6 +1218,12 @@
         "year": 814,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「カール大帝」",
+          "url": "https://ja.wikipedia.org/wiki/カール大帝"
+        }
+      ],
       "notes": []
     },
     {
@@ -1186,6 +1240,12 @@
         "year": 840,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ルートヴィヒ1世 (フランク王)」",
+          "url": "https://ja.wikipedia.org/wiki/ルートヴィヒ1世_(フランク王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1202,6 +1262,12 @@
         "year": 996,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ユーグ・カペー」",
+          "url": "https://ja.wikipedia.org/wiki/ユーグ・カペー"
+        }
+      ],
       "notes": []
     },
     {
@@ -1218,6 +1284,12 @@
         "year": 1223,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「フィリップ2世 (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/フィリップ2世_(フランス王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1234,6 +1306,12 @@
         "year": 1270,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ルイ9世 (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/ルイ9世_(フランス王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1250,6 +1328,12 @@
         "year": 1314,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「フィリップ4世 (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/フィリップ4世_(フランス王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1266,6 +1350,12 @@
         "year": 1461,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「シャルル7世 (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/シャルル7世_(フランス王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1282,6 +1372,12 @@
         "year": 839,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「エグバート (ウェセックス王)」",
+          "url": "https://ja.wikipedia.org/wiki/エグバート_(ウェセックス王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1298,6 +1394,12 @@
         "year": 899,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「アルフレッド大王」",
+          "url": "https://ja.wikipedia.org/wiki/アルフレッド大王"
+        }
+      ],
       "notes": []
     },
     {
@@ -1314,6 +1416,12 @@
         "year": 1035,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「クヌート1世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/クヌート1世_(イングランド王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1330,6 +1438,12 @@
         "year": 1087,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ウィリアム1世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/ウィリアム1世_(イングランド王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1346,6 +1460,12 @@
         "year": 1189,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ヘンリー2世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/ヘンリー2世_(イングランド王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1362,6 +1482,12 @@
         "year": 1199,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「リチャード1世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/リチャード1世_(イングランド王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1378,6 +1504,12 @@
         "year": 1216,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ジョン (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/ジョン_(イングランド王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1394,6 +1526,12 @@
         "year": 1272,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ヘンリー3世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/ヘンリー3世_(イングランド王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1410,6 +1548,12 @@
         "year": 1307,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「エドワード1世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/エドワード1世_(イングランド王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1426,6 +1570,12 @@
         "year": 1377,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「エドワード3世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/エドワード3世_(イングランド王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1442,6 +1592,12 @@
         "year": 1509,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ヘンリー7世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/ヘンリー7世_(イングランド王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1458,6 +1614,12 @@
         "year": 1547,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ヘンリー8世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/ヘンリー8世_(イングランド王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1474,6 +1636,12 @@
         "year": 1558,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「メアリー1世 (イングランド女王)」",
+          "url": "https://ja.wikipedia.org/wiki/メアリー1世_(イングランド女王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1490,6 +1658,12 @@
         "year": 1603,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「エリザベス1世 (イングランド女王)」",
+          "url": "https://ja.wikipedia.org/wiki/エリザベス1世_(イングランド女王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1506,6 +1680,12 @@
         "year": 1625,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ジェームズ1世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/ジェームズ1世_(イングランド王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1522,6 +1702,12 @@
         "year": 1649,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「チャールズ1世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/チャールズ1世_(イングランド王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1538,6 +1724,12 @@
         "year": 1658,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「オリバー・クロムウェル」",
+          "url": "https://ja.wikipedia.org/wiki/オリバー・クロムウェル"
+        }
+      ],
       "notes": []
     },
     {
@@ -1554,6 +1746,12 @@
         "year": 1685,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「チャールズ2世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/チャールズ2世_(イングランド王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1570,6 +1768,12 @@
         "year": 1688,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ジェームズ2世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/ジェームズ2世_(イングランド王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1586,6 +1790,12 @@
         "year": 1702,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ウィリアム3世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/ウィリアム3世_(イングランド王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1602,6 +1812,12 @@
         "year": 1694,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「メアリー2世 (イングランド女王)」",
+          "url": "https://ja.wikipedia.org/wiki/メアリー2世_(イングランド女王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1618,6 +1834,12 @@
         "year": 1714,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「アン (イギリス女王)」",
+          "url": "https://ja.wikipedia.org/wiki/アン_(イギリス女王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1634,6 +1856,12 @@
         "year": 1727,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ジョージ1世 (イギリス王)」",
+          "url": "https://ja.wikipedia.org/wiki/ジョージ1世_(イギリス王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1650,6 +1878,12 @@
         "year": 1742,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ロバート・ウォルポール」",
+          "url": "https://ja.wikipedia.org/wiki/ロバート・ウォルポール"
+        }
+      ],
       "notes": []
     },
     {
@@ -1666,6 +1900,12 @@
         "year": 1801,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ウィリアム・ピット (小ピット)」",
+          "url": "https://ja.wikipedia.org/wiki/ウィリアム・ピット_(小ピット)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1682,6 +1922,12 @@
         "year": 1806,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ウィリアム・ピット (小ピット)」",
+          "url": "https://ja.wikipedia.org/wiki/ウィリアム・ピット_(小ピット)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1698,6 +1944,12 @@
         "year": 1901,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ヴィクトリア (イギリス女王)」",
+          "url": "https://ja.wikipedia.org/wiki/ヴィクトリア_(イギリス女王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1714,6 +1966,12 @@
         "year": 1868,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ベンジャミン・ディズレーリ」",
+          "url": "https://ja.wikipedia.org/wiki/ベンジャミン・ディズレーリ"
+        }
+      ],
       "notes": []
     },
     {
@@ -1730,6 +1988,12 @@
         "year": 1880,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ベンジャミン・ディズレーリ」",
+          "url": "https://ja.wikipedia.org/wiki/ベンジャミン・ディズレーリ"
+        }
+      ],
       "notes": []
     },
     {
@@ -1746,6 +2010,12 @@
         "year": 1874,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ウィリアム・グラッドストン」",
+          "url": "https://ja.wikipedia.org/wiki/ウィリアム・グラッドストン"
+        }
+      ],
       "notes": []
     },
     {
@@ -1762,6 +2032,12 @@
         "year": 1885,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ウィリアム・グラッドストン」",
+          "url": "https://ja.wikipedia.org/wiki/ウィリアム・グラッドストン"
+        }
+      ],
       "notes": []
     },
     {
@@ -1778,6 +2054,12 @@
         "year": 1886,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ウィリアム・グラッドストン」",
+          "url": "https://ja.wikipedia.org/wiki/ウィリアム・グラッドストン"
+        }
+      ],
       "notes": []
     },
     {
@@ -1794,6 +2076,12 @@
         "year": 1894,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ウィリアム・グラッドストン」",
+          "url": "https://ja.wikipedia.org/wiki/ウィリアム・グラッドストン"
+        }
+      ],
       "notes": []
     },
     {
@@ -1810,6 +2098,12 @@
         "year": 1922,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「デビッド・ロイド・ジョージ」",
+          "url": "https://ja.wikipedia.org/wiki/デビッド・ロイド・ジョージ"
+        }
+      ],
       "notes": []
     },
     {
@@ -1826,6 +2120,12 @@
         "year": 1924,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ラムゼイ・マクドナルド」",
+          "url": "https://ja.wikipedia.org/wiki/ラムゼイ・マクドナルド"
+        }
+      ],
       "notes": []
     },
     {
@@ -1842,6 +2142,12 @@
         "year": 1935,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ラムゼイ・マクドナルド」",
+          "url": "https://ja.wikipedia.org/wiki/ラムゼイ・マクドナルド"
+        }
+      ],
       "notes": []
     },
     {
@@ -1858,6 +2164,12 @@
         "year": 1940,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ネヴィル・チェンバレン」",
+          "url": "https://ja.wikipedia.org/wiki/ネヴィル・チェンバレン"
+        }
+      ],
       "notes": []
     },
     {
@@ -1874,6 +2186,12 @@
         "year": 1945,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ウィンストン・チャーチル」",
+          "url": "https://ja.wikipedia.org/wiki/ウィンストン・チャーチル"
+        }
+      ],
       "notes": []
     },
     {
@@ -1890,6 +2208,12 @@
         "year": 1955,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ウィンストン・チャーチル」",
+          "url": "https://ja.wikipedia.org/wiki/ウィンストン・チャーチル"
+        }
+      ],
       "notes": []
     },
     {
@@ -1906,6 +2230,12 @@
         "year": 1951,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「クレメント・アトリー」",
+          "url": "https://ja.wikipedia.org/wiki/クレメント・アトリー"
+        }
+      ],
       "notes": []
     },
     {
@@ -1922,6 +2252,12 @@
         "year": 1990,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「マーガレット・サッチャー」",
+          "url": "https://ja.wikipedia.org/wiki/マーガレット・サッチャー"
+        }
+      ],
       "notes": []
     },
     {
@@ -1938,6 +2274,12 @@
         "year": 1547,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「フランソワ1世 (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/フランソワ1世_(フランス王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1954,6 +2296,12 @@
         "year": 1610,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「アンリ4世 (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/アンリ4世_(フランス王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1970,6 +2318,12 @@
         "year": 1643,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ルイ13世 (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/ルイ13世_(フランス王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -1986,6 +2340,12 @@
         "year": 1715,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ルイ14世 (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/ルイ14世_(フランス王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -2002,6 +2362,12 @@
         "year": 1792,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ルイ16世 (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/ルイ16世_(フランス王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -2018,6 +2384,12 @@
         "year": 1804,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ナポレオン・ボナパルト」",
+          "url": "https://ja.wikipedia.org/wiki/ナポレオン・ボナパルト"
+        }
+      ],
       "notes": []
     },
     {
@@ -2034,6 +2406,12 @@
         "year": 1814,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ナポレオン・ボナパルト」",
+          "url": "https://ja.wikipedia.org/wiki/ナポレオン・ボナパルト"
+        }
+      ],
       "notes": []
     },
     {
@@ -2050,6 +2428,12 @@
         "year": 1815,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ナポレオン・ボナパルト」",
+          "url": "https://ja.wikipedia.org/wiki/ナポレオン・ボナパルト"
+        }
+      ],
       "notes": []
     },
     {
@@ -2066,6 +2450,12 @@
         "year": 1824,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ルイ18世 (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/ルイ18世_(フランス王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -2082,6 +2472,12 @@
         "year": 1830,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「シャルル10世 (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/シャルル10世_(フランス王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -2098,6 +2494,12 @@
         "year": 1848,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ルイ・フィリップ (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/ルイ・フィリップ_(フランス王)"
+        }
+      ],
       "notes": []
     },
     {
@@ -2114,6 +2516,12 @@
         "year": 1852,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ナポレオン3世」",
+          "url": "https://ja.wikipedia.org/wiki/ナポレオン3世"
+        }
+      ],
       "notes": []
     },
     {
@@ -2130,6 +2538,12 @@
         "year": 1870,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ナポレオン3世」",
+          "url": "https://ja.wikipedia.org/wiki/ナポレオン3世"
+        }
+      ],
       "notes": []
     },
     {
@@ -2146,6 +2560,12 @@
         "year": 1873,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「アドルフ・ティエール」",
+          "url": "https://ja.wikipedia.org/wiki/アドルフ・ティエール"
+        }
+      ],
       "notes": []
     },
     {
@@ -2162,6 +2582,12 @@
         "year": 1909,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ジョルジュ・クレマンソー」",
+          "url": "https://ja.wikipedia.org/wiki/ジョルジュ・クレマンソー"
+        }
+      ],
       "notes": []
     },
     {
@@ -2178,6 +2604,12 @@
         "year": 1920,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ジョルジュ・クレマンソー」",
+          "url": "https://ja.wikipedia.org/wiki/ジョルジュ・クレマンソー"
+        }
+      ],
       "notes": []
     },
     {
@@ -2194,6 +2626,12 @@
         "year": 1911,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「アリスティード・ブリアン」",
+          "url": "https://ja.wikipedia.org/wiki/アリスティード・ブリアン"
+        }
+      ],
       "notes": []
     },
     {
@@ -2210,6 +2648,12 @@
         "year": 1913,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「アリスティード・ブリアン」",
+          "url": "https://ja.wikipedia.org/wiki/アリスティード・ブリアン"
+        }
+      ],
       "notes": []
     },
     {
@@ -2226,6 +2670,12 @@
         "year": 1917,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「アリスティード・ブリアン」",
+          "url": "https://ja.wikipedia.org/wiki/アリスティード・ブリアン"
+        }
+      ],
       "notes": []
     },
     {
@@ -2242,6 +2692,12 @@
         "year": 1922,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「アリスティード・ブリアン」",
+          "url": "https://ja.wikipedia.org/wiki/アリスティード・ブリアン"
+        }
+      ],
       "notes": []
     },
     {
@@ -2258,6 +2714,12 @@
         "year": 1926,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「アリスティード・ブリアン」",
+          "url": "https://ja.wikipedia.org/wiki/アリスティード・ブリアン"
+        }
+      ],
       "notes": []
     },
     {
@@ -2274,6 +2736,12 @@
         "year": 1929,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「アリスティード・ブリアン」",
+          "url": "https://ja.wikipedia.org/wiki/アリスティード・ブリアン"
+        }
+      ],
       "notes": []
     },
     {
@@ -2290,6 +2758,12 @@
         "year": 1913,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「レイモン・ポアンカレ」",
+          "url": "https://ja.wikipedia.org/wiki/レイモン・ポアンカレ"
+        }
+      ],
       "notes": []
     },
     {
@@ -2306,6 +2780,12 @@
         "year": 1920,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「レイモン・ポアンカレ」",
+          "url": "https://ja.wikipedia.org/wiki/レイモン・ポアンカレ"
+        }
+      ],
       "notes": []
     },
     {
@@ -2322,6 +2802,12 @@
         "year": 1924,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「レイモン・ポアンカレ」",
+          "url": "https://ja.wikipedia.org/wiki/レイモン・ポアンカレ"
+        }
+      ],
       "notes": []
     },
     {
@@ -2338,6 +2824,12 @@
         "year": 1929,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「レイモン・ポアンカレ」",
+          "url": "https://ja.wikipedia.org/wiki/レイモン・ポアンカレ"
+        }
+      ],
       "notes": []
     },
     {
@@ -2354,6 +2846,12 @@
         "year": 1933,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「エドゥアール・ダラディエ」",
+          "url": "https://ja.wikipedia.org/wiki/エドゥアール・ダラディエ"
+        }
+      ],
       "notes": []
     },
     {
@@ -2370,6 +2868,12 @@
         "year": 1934,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「エドゥアール・ダラディエ」",
+          "url": "https://ja.wikipedia.org/wiki/エドゥアール・ダラディエ"
+        }
+      ],
       "notes": []
     },
     {
@@ -2386,6 +2890,12 @@
         "year": 1940,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「エドゥアール・ダラディエ」",
+          "url": "https://ja.wikipedia.org/wiki/エドゥアール・ダラディエ"
+        }
+      ],
       "notes": []
     },
     {
@@ -2402,6 +2912,12 @@
         "year": 1944,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「フィリップ・ペタン」",
+          "url": "https://ja.wikipedia.org/wiki/フィリップ・ペタン"
+        }
+      ],
       "notes": []
     },
     {
@@ -2418,6 +2934,12 @@
         "year": 1946,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「シャルル・ド・ゴール」",
+          "url": "https://ja.wikipedia.org/wiki/シャルル・ド・ゴール"
+        }
+      ],
       "notes": []
     },
     {
@@ -2434,6 +2956,12 @@
         "year": 1948,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「ロベール・シューマン」",
+          "url": "https://ja.wikipedia.org/wiki/ロベール・シューマン"
+        }
+      ],
       "notes": []
     },
     {
@@ -2450,6 +2978,12 @@
         "year": 1969,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「シャルル・ド・ゴール」",
+          "url": "https://ja.wikipedia.org/wiki/シャルル・ド・ゴール"
+        }
+      ],
       "notes": []
     },
     {
@@ -2466,6 +3000,12 @@
         "year": 1995,
         "circa": false
       },
+      "sources": [
+        {
+          "label": "Wikipedia「フランソワ・ミッテラン」",
+          "url": "https://ja.wikipedia.org/wiki/フランソワ・ミッテラン"
+        }
+      ],
       "notes": []
     }
   ]
