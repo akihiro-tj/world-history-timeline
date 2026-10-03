@@ -11,21 +11,33 @@ function valid() {
         kind: "regime",
         start: { year: 1485, circa: false },
         end: { year: 1603, circa: false },
+        wikidata: "Q12345",
+        wikidataLabel: "テューダー朝",
+        notes: [],
       },
     ],
-    people: [{ id: "henry-vii", name: "ヘンリ7世" }],
+    people: [
+      { id: "henry-vii", name: "ヘンリ7世", wikidata: "Q130005", wikidataLabel: "ヘンリー7世" },
+    ],
     reigns: [
       {
         id: "henry-vii",
         personId: "henry-vii",
         name: null,
         role: "monarch",
+        title: "イングランド王",
         start: { year: 1485, circa: false },
         end: { year: 1509, circa: false },
+        notes: [],
       },
     ],
   };
 }
+
+const note = (url: string, label = "Wikipedia「x」") => ({
+  reason: "理由の文",
+  refs: [{ label, url }],
+});
 
 describe("parseTimeline", () => {
   it("正しいデータをそのまま返す", () => {
@@ -117,7 +129,12 @@ describe("parseTimeline", () => {
 
   it("id が重複していれば例外にする", () => {
     const data = valid();
-    data.people.push({ id: "henry-vii", name: "ヘンリ7世" });
+    data.people.push({
+      id: "henry-vii",
+      name: "ヘンリ7世",
+      wikidata: "Q130005",
+      wikidataLabel: "ヘンリー7世",
+    });
     expect(() => parseTimeline(data)).toThrow("id が重複しています: henry-vii");
   });
 
@@ -129,5 +146,69 @@ describe("parseTimeline", () => {
 
   it("配列でなければ例外にする", () => {
     expect(() => parseTimeline([])).toThrow("オブジェクトではありません");
+  });
+  it("Wikidata の項目と注記と地位を読める", () => {
+    const data = valid();
+    (data.dynasties[0] as { notes: unknown[] }).notes = [note("https://ja.wikipedia.org/wiki/x")];
+    const parsed = parseTimeline(data);
+    expect(parsed.dynasties[0]?.wikidata).toBe("Q12345");
+    expect(parsed.dynasties[0]?.notes).toEqual([note("https://ja.wikipedia.org/wiki/x")]);
+    expect(parsed.reigns[0]?.title).toBe("イングランド王");
+  });
+
+  it("Wikidata の項目がなければ ID もラベルも null", () => {
+    const data = valid();
+    Object.assign(data.people[0] ?? {}, { wikidata: "Q130005", wikidataLabel: "ヘンリー7世" });
+    expect(parseTimeline(data).people[0]?.wikidata).toBeNull();
+  });
+
+  it("Wikidata の ID が不正なら例外にする", () => {
+    const data = valid();
+    Object.assign(data.dynasties[0] ?? {}, { wikidata: "12345" });
+    expect(() => parseTimeline(data)).toThrow("Wikidata の ID が不正です");
+  });
+
+  it("Wikidata の項目がないのにラベルがあれば例外にする", () => {
+    const data = valid();
+    Object.assign(data.people[0] ?? {}, { wikidata: null });
+    expect(() => parseTimeline(data)).toThrow("Wikidata の項目がないのに wikidataLabel があります");
+  });
+
+  it("地位が空なら例外にする", () => {
+    const data = valid();
+    Object.assign(data.reigns[0] ?? {}, { title: "" });
+    expect(() => parseTimeline(data)).toThrow("文字列が空です");
+  });
+
+  it("注記の理由やリンクの名前が空なら例外にする", () => {
+    const empty = valid();
+    Object.assign(empty.reigns[0] ?? {}, {
+      notes: [{ ...note("https://ja.wikipedia.org/wiki/x"), reason: "" }],
+    });
+    expect(() => parseTimeline(empty)).toThrow("文字列が空です");
+    const label = valid();
+    Object.assign(label.reigns[0] ?? {}, { notes: [note("https://ja.wikipedia.org/wiki/x", "")] });
+    expect(() => parseTimeline(label)).toThrow("文字列が空です");
+  });
+
+  it("リンクは言語版つきの Wikipedia と Wikidata だけを許す", () => {
+    for (const url of [
+      "https://fr.wikipedia.org/wiki/Troisième_République",
+      "https://zh-yue.wikipedia.org/wiki/x",
+      "https://www.wikidata.org/wiki/Q1",
+    ]) {
+      const data = valid();
+      Object.assign(data.dynasties[0] ?? {}, { notes: [note(url)] });
+      expect(() => parseTimeline(data)).not.toThrow();
+    }
+    for (const url of [
+      "http://ja.wikipedia.org/wiki/x",
+      "https://example.com/",
+      "javascript:alert(1)",
+    ]) {
+      const data = valid();
+      Object.assign(data.dynasties[0] ?? {}, { notes: [note(url)] });
+      expect(() => parseTimeline(data)).toThrow("url は Wikipedia か Wikidata のページです");
+    }
   });
 });

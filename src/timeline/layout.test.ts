@@ -18,10 +18,30 @@ describe("timeRange", () => {
   it("王朝と在位のすべての年を含み、100 年の区切りにそろえる", () => {
     const data: TimelineData = {
       lanes: [],
-      dynasties: [{ id: "a", name: "A", kind: "regime", start: y(481), end: y(751) }],
-      people: [{ id: "p", name: "P" }],
+      dynasties: [
+        {
+          id: "a",
+          name: "A",
+          kind: "regime",
+          start: y(481),
+          end: y(751),
+          wikidata: null,
+          wikidataLabel: null,
+          notes: [],
+        },
+      ],
+      people: [{ id: "p", name: "P", wikidata: null, wikidataLabel: null }],
       reigns: [
-        { id: "r", personId: "p", name: null, role: "monarch", start: y(1485), end: y(1603) },
+        {
+          id: "r",
+          personId: "p",
+          name: null,
+          role: "monarch",
+          title: "地位",
+          notes: [],
+          start: y(1485),
+          end: y(1603),
+        },
       ],
     };
     expect(timeRange(data, 2026)).toEqual({ from: 400, to: 1700 });
@@ -30,7 +50,18 @@ describe("timeRange", () => {
   it("紀元前も区切りにそろえる", () => {
     const data: TimelineData = {
       lanes: [],
-      dynasties: [{ id: "a", name: "A", kind: "regime", start: y(-221), end: y(-206) }],
+      dynasties: [
+        {
+          id: "a",
+          name: "A",
+          kind: "regime",
+          start: y(-221),
+          end: y(-206),
+          wikidata: null,
+          wikidataLabel: null,
+          notes: [],
+        },
+      ],
       people: [],
       reigns: [],
     };
@@ -40,7 +71,18 @@ describe("timeRange", () => {
   it("区切りちょうどの 1 点だけでも幅を持たせる", () => {
     const data: TimelineData = {
       lanes: [],
-      dynasties: [{ id: "a", name: "A", kind: "regime", start: y(1500), end: y(1500) }],
+      dynasties: [
+        {
+          id: "a",
+          name: "A",
+          kind: "regime",
+          start: y(1500),
+          end: y(1500),
+          wikidata: null,
+          wikidataLabel: null,
+          notes: [],
+        },
+      ],
       people: [],
       reigns: [],
     };
@@ -50,7 +92,18 @@ describe("timeRange", () => {
   it("現在まで続く期間は現在の年までを含める", () => {
     const data: TimelineData = {
       lanes: [],
-      dynasties: [{ id: "a", name: "A", kind: "regime", start: y(1958), end: null }],
+      dynasties: [
+        {
+          id: "a",
+          name: "A",
+          kind: "regime",
+          start: y(1958),
+          end: null,
+          wikidata: null,
+          wikidataLabel: null,
+          notes: [],
+        },
+      ],
       people: [],
       reigns: [],
     };

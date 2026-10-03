@@ -151,7 +151,10 @@
       "end": {
         "year": 751,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "carolingian",
@@ -164,7 +167,10 @@
       "end": {
         "year": 987,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "capetian",
@@ -177,7 +183,10 @@
       "end": {
         "year": 1328,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "valois",
@@ -190,7 +199,10 @@
       "end": {
         "year": 1589,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "danish",
@@ -203,7 +215,10 @@
       "end": {
         "year": 1042,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "norman",
@@ -216,7 +231,10 @@
       "end": {
         "year": 1154,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "plantagenet",
@@ -229,7 +247,10 @@
       "end": {
         "year": 1399,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "lancaster",
@@ -242,7 +263,10 @@
       "end": {
         "year": 1461,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "york",
@@ -255,7 +279,10 @@
       "end": {
         "year": 1485,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "tudor",
@@ -268,7 +295,10 @@
       "end": {
         "year": 1603,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "stuart-1603",
@@ -281,7 +311,10 @@
       "end": {
         "year": 1649,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "commonwealth",
@@ -294,7 +327,10 @@
       "end": {
         "year": 1660,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "stuart-1660",
@@ -307,7 +343,10 @@
       "end": {
         "year": 1714,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "hanover",
@@ -320,7 +359,10 @@
       "end": {
         "year": 1901,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "windsor",
@@ -330,7 +372,10 @@
         "year": 1917,
         "circa": false
       },
-      "end": null
+      "end": null,
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "bourbon-1589",
@@ -343,7 +388,10 @@
       "end": {
         "year": 1792,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "national-assembly",
@@ -356,7 +404,10 @@
       "end": {
         "year": 1791,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "legislative-assembly",
@@ -369,7 +420,10 @@
       "end": {
         "year": 1792,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "national-convention",
@@ -382,7 +436,10 @@
       "end": {
         "year": 1795,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "first-republic",
@@ -395,7 +452,10 @@
       "end": {
         "year": 1804,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "directory",
@@ -408,7 +468,10 @@
       "end": {
         "year": 1799,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "consulate",
@@ -421,7 +484,10 @@
       "end": {
         "year": 1804,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "first-empire",
@@ -434,7 +500,10 @@
       "end": {
         "year": 1814,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "restoration",
@@ -447,7 +516,10 @@
       "end": {
         "year": 1830,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "july-monarchy",
@@ -460,7 +532,10 @@
       "end": {
         "year": 1848,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "provisional-government-1848",
@@ -473,7 +548,10 @@
       "end": {
         "year": 1848,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "second-republic",
@@ -486,7 +564,10 @@
       "end": {
         "year": 1852,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "second-empire",
@@ -499,7 +580,10 @@
       "end": {
         "year": 1870,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "national-defense",
@@ -512,7 +596,10 @@
       "end": {
         "year": 1871,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "provisional-government-1871",
@@ -525,7 +612,10 @@
       "end": {
         "year": 1871,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "paris-commune",
@@ -538,7 +628,10 @@
       "end": {
         "year": 1871,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "third-republic",
@@ -551,7 +644,10 @@
       "end": {
         "year": 1940,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "vichy",
@@ -564,7 +660,10 @@
       "end": {
         "year": 1944,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "free-france",
@@ -577,7 +676,10 @@
       "end": {
         "year": 1944,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "fourth-republic",
@@ -590,7 +692,10 @@
       "end": {
         "year": 1958,
         "circa": false
-      }
+      },
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     },
     {
       "id": "fifth-republic",
@@ -600,261 +705,390 @@
         "year": 1958,
         "circa": false
       },
-      "end": null
+      "end": null,
+      "wikidata": null,
+      "wikidataLabel": null,
+      "notes": []
     }
   ],
   "people": [
     {
       "id": "clovis",
-      "name": "クローヴィス"
+      "name": "クローヴィス",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "charles-martel",
-      "name": "カール=マルテル"
+      "name": "カール=マルテル",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "pippin",
-      "name": "ピピン"
+      "name": "ピピン",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "charlemagne",
-      "name": "カール大帝"
+      "name": "カール大帝",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "louis-i",
-      "name": "ルートヴィヒ1世"
+      "name": "ルートヴィヒ1世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "hugues-capet",
-      "name": "ユーグ=カペー"
+      "name": "ユーグ=カペー",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "philippe-ii",
-      "name": "フィリップ2世"
+      "name": "フィリップ2世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "louis-ix",
-      "name": "ルイ9世"
+      "name": "ルイ9世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "philippe-iv",
-      "name": "フィリップ4世"
+      "name": "フィリップ4世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "charles-vii",
-      "name": "シャルル7世"
+      "name": "シャルル7世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "egbert",
-      "name": "エグバート"
+      "name": "エグバート",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "alfred",
-      "name": "アルフレッド大王"
+      "name": "アルフレッド大王",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "cnut",
-      "name": "クヌート"
+      "name": "クヌート",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "william-i",
-      "name": "ウィリアム1世"
+      "name": "ウィリアム1世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "henry-ii",
-      "name": "ヘンリ2世"
+      "name": "ヘンリ2世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "john",
-      "name": "ジョン王"
+      "name": "ジョン王",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "richard-i",
-      "name": "リチャード1世"
+      "name": "リチャード1世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "henry-iii",
-      "name": "ヘンリ3世"
+      "name": "ヘンリ3世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "edward-i",
-      "name": "エドワード1世"
+      "name": "エドワード1世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "edward-iii",
-      "name": "エドワード3世"
+      "name": "エドワード3世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "henry-vii",
-      "name": "ヘンリ7世"
+      "name": "ヘンリ7世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "henry-viii",
-      "name": "ヘンリ8世"
+      "name": "ヘンリ8世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "mary-i",
-      "name": "メアリ1世"
+      "name": "メアリ1世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "elizabeth-i",
-      "name": "エリザベス1世"
+      "name": "エリザベス1世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "james-i",
-      "name": "ジェームズ1世"
+      "name": "ジェームズ1世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "charles-i",
-      "name": "チャールズ1世"
+      "name": "チャールズ1世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "cromwell",
-      "name": "クロムウェル"
+      "name": "クロムウェル",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "charles-ii",
-      "name": "チャールズ2世"
+      "name": "チャールズ2世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "james-ii",
-      "name": "ジェームズ2世"
+      "name": "ジェームズ2世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "william-iii",
-      "name": "ウィリアム3世"
+      "name": "ウィリアム3世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "mary-ii",
-      "name": "メアリ2世"
+      "name": "メアリ2世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "anne",
-      "name": "アン女王"
+      "name": "アン女王",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "george-i",
-      "name": "ジョージ1世"
+      "name": "ジョージ1世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "walpole",
-      "name": "ウォルポール"
+      "name": "ウォルポール",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "pitt",
-      "name": "ピット"
+      "name": "ピット",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "victoria",
-      "name": "ヴィクトリア女王"
+      "name": "ヴィクトリア女王",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "disraeli",
-      "name": "ディズレーリ"
+      "name": "ディズレーリ",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "gladstone",
-      "name": "グラッドストン"
+      "name": "グラッドストン",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "lloyd-george",
-      "name": "ロイド=ジョージ"
+      "name": "ロイド=ジョージ",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "macdonald",
-      "name": "マクドナルド"
+      "name": "マクドナルド",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "neville-chamberlain",
-      "name": "ネヴィル=チェンバレン"
+      "name": "ネヴィル=チェンバレン",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "churchill",
-      "name": "チャーチル"
+      "name": "チャーチル",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "attlee",
-      "name": "アトリー"
+      "name": "アトリー",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "thatcher",
-      "name": "サッチャー"
+      "name": "サッチャー",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "francois-i",
-      "name": "フランソワ1世"
+      "name": "フランソワ1世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "henri-iv",
-      "name": "アンリ4世"
+      "name": "アンリ4世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "louis-xiii",
-      "name": "ルイ13世"
+      "name": "ルイ13世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "louis-xiv",
-      "name": "ルイ14世"
+      "name": "ルイ14世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "louis-xvi",
-      "name": "ルイ16世"
+      "name": "ルイ16世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "napoleon-i",
-      "name": "ナポレオン1世"
+      "name": "ナポレオン1世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "louis-xviii",
-      "name": "ルイ18世"
+      "name": "ルイ18世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "charles-x",
-      "name": "シャルル10世"
+      "name": "シャルル10世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "louis-philippe",
-      "name": "ルイ=フィリップ"
+      "name": "ルイ=フィリップ",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "napoleon-iii",
-      "name": "ナポレオン3世"
+      "name": "ナポレオン3世",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "thiers",
-      "name": "ティエール"
+      "name": "ティエール",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "clemenceau",
-      "name": "クレマンソー"
+      "name": "クレマンソー",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "briand",
-      "name": "ブリアン"
+      "name": "ブリアン",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "poincare",
-      "name": "ポワンカレ"
+      "name": "ポワンカレ",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "petain",
-      "name": "ペタン"
+      "name": "ペタン",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "daladier",
-      "name": "ダラディエ"
+      "name": "ダラディエ",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "schuman",
-      "name": "シューマン"
+      "name": "シューマン",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "de-gaulle",
-      "name": "ド=ゴール"
+      "name": "ド=ゴール",
+      "wikidata": null,
+      "wikidataLabel": null
     },
     {
       "id": "mitterrand",
-      "name": "ミッテラン"
+      "name": "ミッテラン",
+      "wikidata": null,
+      "wikidataLabel": null
     }
   ],
   "reigns": [
@@ -863,6 +1097,7 @@
       "personId": "clovis",
       "name": null,
       "role": "monarch",
+      "title": "フランク王",
       "start": {
         "year": 481,
         "circa": false
@@ -870,13 +1105,15 @@
       "end": {
         "year": 511,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "charles-martel",
       "personId": "charles-martel",
       "name": null,
       "role": "leader",
+      "title": "宮宰",
       "start": {
         "year": 715,
         "circa": false
@@ -884,13 +1121,15 @@
       "end": {
         "year": 741,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "pippin-741",
       "personId": "pippin",
       "name": null,
       "role": "leader",
+      "title": "宮宰",
       "start": {
         "year": 741,
         "circa": false
@@ -898,13 +1137,15 @@
       "end": {
         "year": 751,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "pippin-751",
       "personId": "pippin",
       "name": null,
       "role": "monarch",
+      "title": "フランク王",
       "start": {
         "year": 751,
         "circa": false
@@ -912,13 +1153,15 @@
       "end": {
         "year": 768,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "charlemagne",
       "personId": "charlemagne",
       "name": null,
       "role": "monarch",
+      "title": "フランク王",
       "start": {
         "year": 768,
         "circa": false
@@ -926,13 +1169,15 @@
       "end": {
         "year": 814,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "louis-i",
       "personId": "louis-i",
       "name": null,
       "role": "monarch",
+      "title": "フランク王",
       "start": {
         "year": 814,
         "circa": false
@@ -940,13 +1185,15 @@
       "end": {
         "year": 840,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "hugues-capet",
       "personId": "hugues-capet",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 987,
         "circa": false
@@ -954,13 +1201,15 @@
       "end": {
         "year": 996,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "philippe-ii",
       "personId": "philippe-ii",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1180,
         "circa": false
@@ -968,13 +1217,15 @@
       "end": {
         "year": 1223,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "louis-ix",
       "personId": "louis-ix",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1226,
         "circa": false
@@ -982,13 +1233,15 @@
       "end": {
         "year": 1270,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "philippe-iv",
       "personId": "philippe-iv",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1285,
         "circa": false
@@ -996,13 +1249,15 @@
       "end": {
         "year": 1314,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "charles-vii",
       "personId": "charles-vii",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1422,
         "circa": false
@@ -1010,13 +1265,15 @@
       "end": {
         "year": 1461,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "egbert",
       "personId": "egbert",
       "name": null,
       "role": "monarch",
+      "title": "ウェセックス王",
       "start": {
         "year": 802,
         "circa": false
@@ -1024,13 +1281,15 @@
       "end": {
         "year": 839,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "alfred",
       "personId": "alfred",
       "name": null,
       "role": "monarch",
+      "title": "ウェセックス王",
       "start": {
         "year": 871,
         "circa": false
@@ -1038,13 +1297,15 @@
       "end": {
         "year": 899,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "cnut",
       "personId": "cnut",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1016,
         "circa": false
@@ -1052,13 +1313,15 @@
       "end": {
         "year": 1035,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "william-i",
       "personId": "william-i",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1066,
         "circa": false
@@ -1066,13 +1329,15 @@
       "end": {
         "year": 1087,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "henry-ii",
       "personId": "henry-ii",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1154,
         "circa": false
@@ -1080,13 +1345,15 @@
       "end": {
         "year": 1189,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "richard-i",
       "personId": "richard-i",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1189,
         "circa": false
@@ -1094,13 +1361,15 @@
       "end": {
         "year": 1199,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "john",
       "personId": "john",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1199,
         "circa": false
@@ -1108,13 +1377,15 @@
       "end": {
         "year": 1216,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "henry-iii",
       "personId": "henry-iii",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1216,
         "circa": false
@@ -1122,13 +1393,15 @@
       "end": {
         "year": 1272,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "edward-i",
       "personId": "edward-i",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1272,
         "circa": false
@@ -1136,13 +1409,15 @@
       "end": {
         "year": 1307,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "edward-iii",
       "personId": "edward-iii",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1327,
         "circa": false
@@ -1150,13 +1425,15 @@
       "end": {
         "year": 1377,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "henry-vii",
       "personId": "henry-vii",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1485,
         "circa": false
@@ -1164,13 +1441,15 @@
       "end": {
         "year": 1509,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "henry-viii",
       "personId": "henry-viii",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1509,
         "circa": false
@@ -1178,13 +1457,15 @@
       "end": {
         "year": 1547,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "mary-i",
       "personId": "mary-i",
       "name": null,
       "role": "monarch",
+      "title": "イングランド女王",
       "start": {
         "year": 1553,
         "circa": false
@@ -1192,13 +1473,15 @@
       "end": {
         "year": 1558,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "elizabeth-i",
       "personId": "elizabeth-i",
       "name": null,
       "role": "monarch",
+      "title": "イングランド女王",
       "start": {
         "year": 1558,
         "circa": false
@@ -1206,13 +1489,15 @@
       "end": {
         "year": 1603,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "james-i",
       "personId": "james-i",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1603,
         "circa": false
@@ -1220,13 +1505,15 @@
       "end": {
         "year": 1625,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "charles-i",
       "personId": "charles-i",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1625,
         "circa": false
@@ -1234,13 +1521,15 @@
       "end": {
         "year": 1649,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "cromwell",
       "personId": "cromwell",
       "name": null,
       "role": "leader",
+      "title": "護国卿",
       "start": {
         "year": 1653,
         "circa": false
@@ -1248,13 +1537,15 @@
       "end": {
         "year": 1658,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "charles-ii",
       "personId": "charles-ii",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1660,
         "circa": false
@@ -1262,13 +1553,15 @@
       "end": {
         "year": 1685,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "james-ii",
       "personId": "james-ii",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1685,
         "circa": false
@@ -1276,13 +1569,15 @@
       "end": {
         "year": 1688,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "william-iii",
       "personId": "william-iii",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1689,
         "circa": false
@@ -1290,13 +1585,15 @@
       "end": {
         "year": 1702,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "mary-ii",
       "personId": "mary-ii",
       "name": null,
       "role": "monarch",
+      "title": "イングランド女王",
       "start": {
         "year": 1689,
         "circa": false
@@ -1304,13 +1601,15 @@
       "end": {
         "year": 1694,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "anne",
       "personId": "anne",
       "name": null,
       "role": "monarch",
+      "title": "グレートブリテン女王",
       "start": {
         "year": 1702,
         "circa": false
@@ -1318,13 +1617,15 @@
       "end": {
         "year": 1714,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "george-i",
       "personId": "george-i",
       "name": null,
       "role": "monarch",
+      "title": "グレートブリテン王",
       "start": {
         "year": 1714,
         "circa": false
@@ -1332,13 +1633,15 @@
       "end": {
         "year": 1727,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "walpole",
       "personId": "walpole",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1721,
         "circa": false
@@ -1346,13 +1649,15 @@
       "end": {
         "year": 1742,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "pitt-1783",
       "personId": "pitt",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1783,
         "circa": false
@@ -1360,13 +1665,15 @@
       "end": {
         "year": 1801,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "pitt-1804",
       "personId": "pitt",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1804,
         "circa": false
@@ -1374,13 +1681,15 @@
       "end": {
         "year": 1806,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "victoria",
       "personId": "victoria",
       "name": null,
       "role": "monarch",
+      "title": "イギリス女王",
       "start": {
         "year": 1837,
         "circa": false
@@ -1388,13 +1697,15 @@
       "end": {
         "year": 1901,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "disraeli-1868",
       "personId": "disraeli",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1868,
         "circa": false
@@ -1402,13 +1713,15 @@
       "end": {
         "year": 1868,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "disraeli-1874",
       "personId": "disraeli",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1874,
         "circa": false
@@ -1416,13 +1729,15 @@
       "end": {
         "year": 1880,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "gladstone-1868",
       "personId": "gladstone",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1868,
         "circa": false
@@ -1430,13 +1745,15 @@
       "end": {
         "year": 1874,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "gladstone-1880",
       "personId": "gladstone",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1880,
         "circa": false
@@ -1444,13 +1761,15 @@
       "end": {
         "year": 1885,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "gladstone-1886",
       "personId": "gladstone",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1886,
         "circa": false
@@ -1458,13 +1777,15 @@
       "end": {
         "year": 1886,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "gladstone-1892",
       "personId": "gladstone",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1892,
         "circa": false
@@ -1472,13 +1793,15 @@
       "end": {
         "year": 1894,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "lloyd-george",
       "personId": "lloyd-george",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1916,
         "circa": false
@@ -1486,13 +1809,15 @@
       "end": {
         "year": 1922,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "macdonald-1924",
       "personId": "macdonald",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1924,
         "circa": false
@@ -1500,13 +1825,15 @@
       "end": {
         "year": 1924,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "macdonald-1929",
       "personId": "macdonald",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1929,
         "circa": false
@@ -1514,13 +1841,15 @@
       "end": {
         "year": 1935,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "neville-chamberlain",
       "personId": "neville-chamberlain",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1937,
         "circa": false
@@ -1528,13 +1857,15 @@
       "end": {
         "year": 1940,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "churchill-1940",
       "personId": "churchill",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1940,
         "circa": false
@@ -1542,13 +1873,15 @@
       "end": {
         "year": 1945,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "churchill-1951",
       "personId": "churchill",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1951,
         "circa": false
@@ -1556,13 +1889,15 @@
       "end": {
         "year": 1955,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "attlee",
       "personId": "attlee",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1945,
         "circa": false
@@ -1570,13 +1905,15 @@
       "end": {
         "year": 1951,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "thatcher",
       "personId": "thatcher",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1979,
         "circa": false
@@ -1584,13 +1921,15 @@
       "end": {
         "year": 1990,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "francois-i",
       "personId": "francois-i",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1515,
         "circa": false
@@ -1598,13 +1937,15 @@
       "end": {
         "year": 1547,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "henri-iv",
       "personId": "henri-iv",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1589,
         "circa": false
@@ -1612,13 +1953,15 @@
       "end": {
         "year": 1610,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "louis-xiii",
       "personId": "louis-xiii",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1610,
         "circa": false
@@ -1626,13 +1969,15 @@
       "end": {
         "year": 1643,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "louis-xiv",
       "personId": "louis-xiv",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1643,
         "circa": false
@@ -1640,13 +1985,15 @@
       "end": {
         "year": 1715,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "louis-xvi",
       "personId": "louis-xvi",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1774,
         "circa": false
@@ -1654,13 +2001,15 @@
       "end": {
         "year": 1792,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "napoleon-i-1799",
       "personId": "napoleon-i",
       "name": "ナポレオン=ボナパルト",
       "role": "leader",
+      "title": "第一統領",
       "start": {
         "year": 1799,
         "circa": false
@@ -1668,13 +2017,15 @@
       "end": {
         "year": 1804,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "napoleon-i-1804",
       "personId": "napoleon-i",
       "name": null,
       "role": "monarch",
+      "title": "フランス皇帝",
       "start": {
         "year": 1804,
         "circa": false
@@ -1682,13 +2033,15 @@
       "end": {
         "year": 1814,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "napoleon-i-1815",
       "personId": "napoleon-i",
       "name": null,
       "role": "monarch",
+      "title": "フランス皇帝",
       "start": {
         "year": 1815,
         "circa": false
@@ -1696,13 +2049,15 @@
       "end": {
         "year": 1815,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "louis-xviii",
       "personId": "louis-xviii",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1814,
         "circa": false
@@ -1710,13 +2065,15 @@
       "end": {
         "year": 1824,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "charles-x",
       "personId": "charles-x",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1824,
         "circa": false
@@ -1724,13 +2081,15 @@
       "end": {
         "year": 1830,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "louis-philippe",
       "personId": "louis-philippe",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1830,
         "circa": false
@@ -1738,13 +2097,15 @@
       "end": {
         "year": 1848,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "napoleon-iii-1848",
       "personId": "napoleon-iii",
       "name": "ルイ=ナポレオン",
       "role": "leader",
+      "title": "フランス大統領",
       "start": {
         "year": 1848,
         "circa": false
@@ -1752,13 +2113,15 @@
       "end": {
         "year": 1852,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "napoleon-iii-1852",
       "personId": "napoleon-iii",
       "name": null,
       "role": "monarch",
+      "title": "フランス皇帝",
       "start": {
         "year": 1852,
         "circa": false
@@ -1766,13 +2129,15 @@
       "end": {
         "year": 1870,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "thiers",
       "personId": "thiers",
       "name": null,
       "role": "leader",
+      "title": "フランス大統領",
       "start": {
         "year": 1871,
         "circa": false
@@ -1780,13 +2145,15 @@
       "end": {
         "year": 1873,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "clemenceau-1906",
       "personId": "clemenceau",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1906,
         "circa": false
@@ -1794,13 +2161,15 @@
       "end": {
         "year": 1909,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "clemenceau-1917",
       "personId": "clemenceau",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1917,
         "circa": false
@@ -1808,13 +2177,15 @@
       "end": {
         "year": 1920,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "briand-1909",
       "personId": "briand",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1909,
         "circa": false
@@ -1822,13 +2193,15 @@
       "end": {
         "year": 1911,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "briand-1913",
       "personId": "briand",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1913,
         "circa": false
@@ -1836,13 +2209,15 @@
       "end": {
         "year": 1913,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "briand-1915",
       "personId": "briand",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1915,
         "circa": false
@@ -1850,13 +2225,15 @@
       "end": {
         "year": 1917,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "briand-1921",
       "personId": "briand",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1921,
         "circa": false
@@ -1864,13 +2241,15 @@
       "end": {
         "year": 1922,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "briand-1925",
       "personId": "briand",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1925,
         "circa": false
@@ -1878,13 +2257,15 @@
       "end": {
         "year": 1926,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "briand-1929",
       "personId": "briand",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1929,
         "circa": false
@@ -1892,13 +2273,15 @@
       "end": {
         "year": 1929,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "poincare-1912",
       "personId": "poincare",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1912,
         "circa": false
@@ -1906,13 +2289,15 @@
       "end": {
         "year": 1913,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "poincare-1913",
       "personId": "poincare",
       "name": null,
       "role": "leader",
+      "title": "フランス大統領",
       "start": {
         "year": 1913,
         "circa": false
@@ -1920,13 +2305,15 @@
       "end": {
         "year": 1920,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "poincare-1922",
       "personId": "poincare",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1922,
         "circa": false
@@ -1934,13 +2321,15 @@
       "end": {
         "year": 1924,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "poincare-1926",
       "personId": "poincare",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1926,
         "circa": false
@@ -1948,13 +2337,15 @@
       "end": {
         "year": 1929,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "daladier-1933",
       "personId": "daladier",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1933,
         "circa": false
@@ -1962,13 +2353,15 @@
       "end": {
         "year": 1933,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "daladier-1934",
       "personId": "daladier",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1934,
         "circa": false
@@ -1976,13 +2369,15 @@
       "end": {
         "year": 1934,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "daladier-1938",
       "personId": "daladier",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1938,
         "circa": false
@@ -1990,13 +2385,15 @@
       "end": {
         "year": 1940,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "petain",
       "personId": "petain",
       "name": null,
       "role": "leader",
+      "title": "フランス国主席",
       "start": {
         "year": 1940,
         "circa": false
@@ -2004,13 +2401,15 @@
       "end": {
         "year": 1944,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "de-gaulle-1944",
       "personId": "de-gaulle",
       "name": null,
       "role": "leader",
+      "title": "フランス臨時政府主席",
       "start": {
         "year": 1944,
         "circa": false
@@ -2018,13 +2417,15 @@
       "end": {
         "year": 1946,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "schuman",
       "personId": "schuman",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1947,
         "circa": false
@@ -2032,13 +2433,15 @@
       "end": {
         "year": 1948,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "de-gaulle-1959",
       "personId": "de-gaulle",
       "name": null,
       "role": "leader",
+      "title": "フランス大統領",
       "start": {
         "year": 1959,
         "circa": false
@@ -2046,13 +2449,15 @@
       "end": {
         "year": 1969,
         "circa": false
-      }
+      },
+      "notes": []
     },
     {
       "id": "mitterrand",
       "personId": "mitterrand",
       "name": null,
       "role": "leader",
+      "title": "フランス大統領",
       "start": {
         "year": 1981,
         "circa": false
@@ -2060,7 +2465,8 @@
       "end": {
         "year": 1995,
         "circa": false
-      }
+      },
+      "notes": []
     }
   ]
 }
