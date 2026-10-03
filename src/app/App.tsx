@@ -170,7 +170,9 @@ export function App() {
               onSelect={handleSelect}
               revealKey={selection ? `${selection.laneId}|${selection.key}` : null}
               visibleRatio={wide || !content ? 1 : expanded ? 0 : 1 - SHEET_HEIGHT_RATIO}
-              endSpaceRatio={wide || !content ? 0 : SHEET_HEIGHT_RATIO}
+              // 年表のいちばん下の棒も、シートの上の見える範囲の真ん中まで持ち上げられるだけの余白
+              endSpaceRatio={wide || !content ? 0 : (1 + SHEET_HEIGHT_RATIO) / 2}
+              revealCentered={!wide}
             />
           )}
         </div>

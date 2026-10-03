@@ -27,3 +27,21 @@ export function unionBox(boxes: Box[]): Box | null {
     right: Math.max(...boxes.map((box) => box.right)),
   };
 }
+
+// 選んだ項目（itemStart〜itemEnd）を見える範囲（areaStart〜areaEnd）の真ん中に置くスクロール位置。
+// 位置はどれも画面上の座標で、current は今のスクロール位置、max はスクロールできる最大の位置。
+// 見える範囲より大きい項目は、始まりを範囲の始まりにそろえる
+export function centeredScroll(
+  itemStart: number,
+  itemEnd: number,
+  areaStart: number,
+  areaEnd: number,
+  current: number,
+  max: number,
+): number {
+  const delta =
+    itemEnd - itemStart > areaEnd - areaStart
+      ? itemStart - areaStart - REVEAL_MARGIN
+      : (itemStart + itemEnd) / 2 - (areaStart + areaEnd) / 2;
+  return Math.min(Math.max(current + delta, 0), max);
+}

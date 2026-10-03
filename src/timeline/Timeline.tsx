@@ -1,7 +1,7 @@
 // 年表の描画。layout.ts の結果（along / cross）を縦か横に当てはめる
 import { type CSSProperties, useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { COPY } from "../app/copy";
-import { revealDelta, unionBox } from "../panel/reveal";
+import { centeredScroll, revealDelta, unionBox } from "../panel/reveal";
 import { formatYear } from "./format";
 import {
   BAR_THICKNESS,
@@ -42,8 +42,10 @@ type Props = {
   revealKey: string | null;
   // 年表のうち見えている割合（上から）。スマホで下からパネルが開いているときは上側だけが見える
   visibleRatio: number;
-  // 年表の下端に足す余白（年表の高さに対する割合）。スマホのシートの下に隠れた棒も、シートより上まで持ち上げられるようにする
+  // 年表の下端に足す余白（年表の高さに対する割合）。スマホのシートの下に隠れる棒も、シートより上まで持ち上げられるようにする
   endSpaceRatio: number;
+  // 選んだ棒を、見える範囲の真ん中まで滑らかにスクロールするか（スマホのシート）。false なら見えるところまでだけ動かす
+  revealCentered: boolean;
 };
 
 export function Timeline({
@@ -56,6 +58,7 @@ export function Timeline({
   revealKey,
   visibleRatio,
   endSpaceRatio,
+  revealCentered,
 }: Props) {
   const scrollerRef = useRef<HTMLElement>(null);
   const probeRef = useRef<HTMLSpanElement>(null);
@@ -115,13 +118,37 @@ export function Timeline({
     const area = scroller.getBoundingClientRect();
     // 貼り付けた見出し（縦向きの行の見出し・横向きの年の目盛り）の下から測る
     const top = area.top + (orientation === "vertical" ? HEADER_HEIGHT : AXIS_HEIGHT);
-    const bottom = area.top + area.height * visibleRatio;
+    const bottom = area.top + scroller.clientHeight * visibleRatio;
     const left = area.left + (orientation === "vertical" ? AXIS_WIDTH : 0);
-    scroller.scrollBy({
-      top: revealDelta(item.top, item.bottom, top, bottom),
-      left: revealDelta(item.left, item.right, left, area.right),
+    if (!revealCentered) {
+      scroller.scrollBy({
+        top: revealDelta(item.top, item.bottom, top, bottom),
+        left: revealDelta(item.left, item.right, left, area.right),
+      });
+      return;
+    }
+    // 見える範囲はシートが収まる位置から計算してあるので、滑り上がる途中でも行き先は変わらない
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    scroller.scrollTo({
+      top: centeredScroll(
+        item.top,
+        item.bottom,
+        top,
+        bottom,
+        scroller.scrollTop,
+        scroller.scrollHeight - scroller.clientHeight,
+      ),
+      left: centeredScroll(
+        item.left,
+        item.right,
+        left,
+        area.right,
+        scroller.scrollLeft,
+        scroller.scrollWidth - scroller.clientWidth,
+      ),
+      behavior: reduceMotion ? "auto" : "smooth",
     });
-  }, [revealKey, visibleRatio, orientation]);
+  }, [revealKey, visibleRatio, orientation, revealCentered]);
 
   function handleScroll() {
     const scroller = scrollerRef.current;
