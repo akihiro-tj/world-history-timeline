@@ -1,6 +1,7 @@
 // 年表の描画。layout.ts の結果（along / cross）を縦か横に当てはめる
-import { type CSSProperties, useLayoutEffect, useMemo, useRef } from "react";
+import { type CSSProperties, useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { COPY } from "../app/copy";
+import { centeredScroll, revealDelta, unionBox } from "../panel/reveal";
 import { formatYear } from "./format";
 import {
   BAR_THICKNESS,
@@ -18,7 +19,7 @@ import {
   yearToOffset,
 } from "./layout";
 import { centerYear, scrollStartFor } from "./scroll";
-import type { Row } from "./spans";
+import type { Row, Span } from "./spans";
 import { useTextMeasure } from "./useTextMeasure";
 
 // 見出しの寸法（位置の計算に使う）
@@ -34,9 +35,31 @@ type Props = {
   orientation: Orientation;
   // 現在まで続く棒の終わりの年
   currentYear: number;
+  // 棒を選んでいるか、選んだときに呼ぶ関数（element は選んだボタン。閉じたときにフォーカスを戻す）
+  isSelected: (row: Row, span: Span) => boolean;
+  onSelect: (row: Row, span: Span, element: HTMLElement) => void;
+  // 選んだ項目が変わると変わる値。変わったら、選んだ棒を見える位置までスクロールする
+  revealKey: string | null;
+  // 年表のうち見えている割合（上から）。スマホで下からパネルが開いているときは上側だけが見える
+  visibleRatio: number;
+  // 年表の下端に足す余白（年表の高さに対する割合）。スマホのシートの下に隠れる棒も、シートより上まで持ち上げられるようにする
+  endSpaceRatio: number;
+  // 選んだ棒を、見える範囲の真ん中まで滑らかにスクロールするか（スマホのシート）。false なら見えるところまでだけ動かす
+  revealCentered: boolean;
 };
 
-export function Timeline({ rows, range, orientation, currentYear }: Props) {
+export function Timeline({
+  rows,
+  range,
+  orientation,
+  currentYear,
+  isSelected,
+  onSelect,
+  revealKey,
+  visibleRatio,
+  endSpaceRatio,
+  revealCentered,
+}: Props) {
   const scrollerRef = useRef<HTMLElement>(null);
   const probeRef = useRef<HTMLSpanElement>(null);
   const centerRef = useRef<number | null>(null);
@@ -80,6 +103,53 @@ export function Timeline({ rows, range, orientation, currentYear }: Props) {
     }
   }, [orientation, range, lanes, axisOffset]);
 
+  // 選んだ棒が見えていなければ、見える位置までスクロールする（パネルが開いた後の大きさで測る）
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    // 全画面に広げたパネルの下では年表が見えないので、スクロールしない
+    if (!scroller || revealKey === null || visibleRatio <= 0) return;
+    // 選んだ棒（再登板ならすべて）と棒の外のラベルをまとめた範囲を見せる
+    const item = unionBox(
+      [...scroller.querySelectorAll<HTMLElement>('[data-selected="true"]')].map((element) =>
+        element.getBoundingClientRect(),
+      ),
+    );
+    if (!item) return;
+    const area = scroller.getBoundingClientRect();
+    // 貼り付けた見出し（縦向きの行の見出し・横向きの年の目盛り）の下から測る
+    const top = area.top + (orientation === "vertical" ? HEADER_HEIGHT : AXIS_HEIGHT);
+    const bottom = area.top + scroller.clientHeight * visibleRatio;
+    const left = area.left + (orientation === "vertical" ? AXIS_WIDTH : 0);
+    if (!revealCentered) {
+      scroller.scrollBy({
+        top: revealDelta(item.top, item.bottom, top, bottom),
+        left: revealDelta(item.left, item.right, left, area.right),
+      });
+      return;
+    }
+    // 見える範囲はシートが収まる位置から計算してあるので、滑り上がる途中でも行き先は変わらない
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    scroller.scrollTo({
+      top: centeredScroll(
+        item.top,
+        item.bottom,
+        top,
+        bottom,
+        scroller.scrollTop,
+        scroller.scrollHeight - scroller.clientHeight,
+      ),
+      left: centeredScroll(
+        item.left,
+        item.right,
+        left,
+        area.right,
+        scroller.scrollLeft,
+        scroller.scrollWidth - scroller.clientWidth,
+      ),
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+  }, [revealKey, visibleRatio, orientation, revealCentered]);
+
   function handleScroll() {
     const scroller = scrollerRef.current;
     if (!scroller || !range) return;
@@ -105,10 +175,13 @@ export function Timeline({ rows, range, orientation, currentYear }: Props) {
       {range &&
         lanes &&
         (orientation === "horizontal" ? (
-          <Horizontal range={range} lanes={lanes} />
+          <Horizontal range={range} lanes={lanes} isSelected={isSelected} onSelect={onSelect} />
         ) : (
-          <Vertical range={range} lanes={lanes} />
+          <Vertical range={range} lanes={lanes} isSelected={isSelected} onSelect={onSelect} />
         ))}
+      {endSpaceRatio > 0 && (
+        <div aria-hidden="true" style={{ height: `${endSpaceRatio * 100}%` }} />
+      )}
     </section>
   );
 }
@@ -136,32 +209,56 @@ function barClass(index: number): string {
 
 const textStyle: CSSProperties = { lineHeight: `${LINE_HEIGHT}px` };
 
+// 選んだ棒の枠とキーボードのフォーカスの枠は primary の 2px（spec §4）
+// 選んだ棒とフォーカスがある棒は、枠が隣の棒に隠れないよう手前に描く（貼り付けた見出しの z-10 より奥）
+const selectableClass =
+  "cursor-pointer text-left data-[selected=true]:z-5 focus-visible:z-5 data-[selected=true]:outline-2 data-[selected=true]:outline-offset-1 data-[selected=true]:outline-primary focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-primary";
+
+type SelectProps = {
+  isSelected: (row: Row, span: Span) => boolean;
+  onSelect: (row: Row, span: Span, element: HTMLElement) => void;
+};
+
 // 棒の外に出すラベル。引き出し線（横向きは左、縦向きは上の罫線）で棒とつなぐ
 function OutsideLabel({
   bar,
   className,
   style,
+  selected,
+  onSelect,
 }: {
   bar: BarLayout;
   className: string;
   style: CSSProperties;
+  selected: boolean;
+  onSelect: (element: HTMLElement) => void;
 }) {
   return (
-    <div
-      className={`absolute whitespace-nowrap border-muted font-caption text-caption text-on-surface ${className}`}
+    // 同じ項目の棒がキーボードで選べるので、ラベルは Tab の順に入れない
+    <button
+      type="button"
+      tabIndex={-1}
+      data-selected={selected}
+      onClick={(event) => onSelect(event.currentTarget)}
+      className={`absolute whitespace-nowrap border-muted font-caption text-caption text-on-surface ${selectableClass} ${className}`}
       style={{ ...textStyle, ...style }}
     >
-      <div>{bar.span.name}</div>
+      <span className="block">{bar.span.name}</span>
       {bar.periodLines.map((line) => (
-        <div key={line} className="text-muted">
+        <span key={line} className="block text-muted">
           {line}
-        </div>
+        </span>
       ))}
-    </div>
+    </button>
   );
 }
 
-function Horizontal({ range, lanes }: { range: TimeRange; lanes: LaneEntry[] }) {
+function Horizontal({
+  range,
+  lanes,
+  isSelected,
+  onSelect,
+}: { range: TimeRange; lanes: LaneEntry[] } & SelectProps) {
   const length = contentLength(range, lanes);
   const years = ticks(range);
   return (
@@ -195,9 +292,14 @@ function Horizontal({ range, lanes }: { range: TimeRange; lanes: LaneEntry[] }) 
               {lane.name}
             </h2>
             {layout.bars.map((bar, i) => (
-              <div
+              <button
+                type="button"
                 key={bar.span.id}
-                className={`${barClass(i)} px-xs font-caption text-caption`}
+                data-selected={isSelected(lane, bar.span)}
+                aria-expanded={isSelected(lane, bar.span)}
+                aria-label={`${bar.span.name} ${bar.periodLines.join("")}`}
+                onClick={(event) => onSelect(lane, bar.span, event.currentTarget)}
+                className={`${barClass(i)} ${selectableClass} flex flex-col justify-start px-xs font-caption text-caption`}
                 style={{
                   ...textStyle,
                   left: bar.offset + 1,
@@ -209,11 +311,11 @@ function Horizontal({ range, lanes }: { range: TimeRange; lanes: LaneEntry[] }) 
               >
                 {bar.inside && (
                   <>
-                    <div className="truncate">{bar.span.name}</div>
-                    <div className="truncate">{bar.periodLines[0]}</div>
+                    <span className="block truncate">{bar.span.name}</span>
+                    <span className="block truncate">{bar.periodLines[0]}</span>
                   </>
                 )}
-              </div>
+              </button>
             ))}
             {layout.bars.map(
               (bar) =>
@@ -221,6 +323,8 @@ function Horizontal({ range, lanes }: { range: TimeRange; lanes: LaneEntry[] }) 
                   <OutsideLabel
                     key={bar.span.id}
                     bar={bar}
+                    selected={isSelected(lane, bar.span)}
+                    onSelect={(element) => onSelect(lane, bar.span, element)}
                     className="border-l"
                     style={{
                       left: bar.offset + 1,
@@ -237,7 +341,12 @@ function Horizontal({ range, lanes }: { range: TimeRange; lanes: LaneEntry[] }) 
   );
 }
 
-function Vertical({ range, lanes }: { range: TimeRange; lanes: LaneEntry[] }) {
+function Vertical({
+  range,
+  lanes,
+  isSelected,
+  onSelect,
+}: { range: TimeRange; lanes: LaneEntry[] } & SelectProps) {
   const length = contentLength(range, lanes);
   const years = ticks(range);
   return (
@@ -292,9 +401,14 @@ function Vertical({ range, lanes }: { range: TimeRange; lanes: LaneEntry[] }) {
               />
             ))}
             {layout.bars.map((bar, i) => (
-              <div
+              <button
+                type="button"
                 key={bar.span.id}
-                className={`${barClass(i)} truncate px-xs font-caption text-caption`}
+                data-selected={isSelected(lane, bar.span)}
+                aria-expanded={isSelected(lane, bar.span)}
+                aria-label={`${bar.span.name} ${bar.periodLines.join("")}`}
+                onClick={(event) => onSelect(lane, bar.span, event.currentTarget)}
+                className={`${barClass(i)} ${selectableClass} flex flex-col justify-start px-xs font-caption text-caption`}
                 style={{
                   ...textStyle,
                   top: bar.offset + 1,
@@ -305,22 +419,22 @@ function Vertical({ range, lanes }: { range: TimeRange; lanes: LaneEntry[] }) {
                 }}
               >
                 {bar.inside === "row" && (
-                  <>
+                  <span className="block truncate">
                     {bar.span.name}
                     <span className="ml-xs text-muted">{bar.periodLines[0]}</span>
-                  </>
+                  </span>
                 )}
                 {bar.inside === "stack" && (
                   <>
-                    <div>{bar.span.name}</div>
+                    <span className="block">{bar.span.name}</span>
                     {bar.periodLines.map((line) => (
-                      <div key={line} className="text-muted">
+                      <span key={line} className="block text-muted">
                         {line}
-                      </div>
+                      </span>
                     ))}
                   </>
                 )}
-              </div>
+              </button>
             ))}
             {layout.bars.map(
               (bar) =>
@@ -328,6 +442,8 @@ function Vertical({ range, lanes }: { range: TimeRange; lanes: LaneEntry[] }) {
                   <OutsideLabel
                     key={bar.span.id}
                     bar={bar}
+                    selected={isSelected(lane, bar.span)}
+                    onSelect={(element) => onSelect(lane, bar.span, element)}
                     className="border-t"
                     style={{
                       top: bar.offset + 1,

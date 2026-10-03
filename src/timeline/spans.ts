@@ -36,13 +36,13 @@ export function spansForLane(data: TimelineData, lane: Lane, subject: Subject): 
     .filter((reign) => reign.role === subject)
     .map((reign) => {
       const name = reign.name ?? lookup(data.people, reign.personId).name;
-      // 同じ人でも表示名が違う在位（第一統領期と皇帝期など）はまとめない
+      // 同じ人でも表示名や役割が違う在位（第一統領期と皇帝期、宮宰と王など）はまとめない
       return {
         id: reign.id,
         name,
         start: reign.start,
         end: reign.end,
-        group: `${reign.personId}/${name}`,
+        group: `${reign.role}/${reign.personId}/${name}`,
       };
     });
 }

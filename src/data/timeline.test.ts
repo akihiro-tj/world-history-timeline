@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { parseTimeline } from "./timeline";
 
+const wp = (title: string) => ({
+  label: `Wikipedia「${title}」`,
+  url: `https://ja.wikipedia.org/wiki/${title}`,
+});
+
 function valid() {
   return {
     lanes: [{ id: "england", name: "イングランド", dynasties: ["tudor"], reigns: ["henry-vii"] }],
@@ -11,6 +16,8 @@ function valid() {
         kind: "regime",
         start: { year: 1485, circa: false },
         end: { year: 1603, circa: false },
+        sources: [wp("テューダー朝")],
+        notes: [],
       },
     ],
     people: [{ id: "henry-vii", name: "ヘンリ7世" }],
@@ -20,8 +27,11 @@ function valid() {
         personId: "henry-vii",
         name: null,
         role: "monarch",
+        title: "イングランド王",
         start: { year: 1485, circa: false },
         end: { year: 1509, circa: false },
+        sources: [wp("ヘンリー7世 (イングランド王)")],
+        notes: [],
       },
     ],
   };
@@ -129,5 +139,67 @@ describe("parseTimeline", () => {
 
   it("配列でなければ例外にする", () => {
     expect(() => parseTimeline([])).toThrow("オブジェクトではありません");
+  });
+
+  it("出典と注記と地位を読める", () => {
+    const data = valid();
+    Object.assign(data.dynasties[0] ?? {}, { notes: ["注記の文"] });
+    const parsed = parseTimeline(data);
+    expect(parsed.dynasties[0]?.sources).toEqual([wp("テューダー朝")]);
+    expect(parsed.dynasties[0]?.notes).toEqual(["注記の文"]);
+    expect(parsed.reigns[0]?.title).toBe("イングランド王");
+  });
+
+  it("人物に知らないキーがあれば例外にする", () => {
+    const data = valid();
+    Object.assign(data.people[0] ?? {}, { wikidata: "Q1" });
+    expect(() => parseTimeline(data)).toThrow("知らないキー wikidata");
+  });
+
+  it("地位が空なら例外にする", () => {
+    const data = valid();
+    Object.assign(data.reigns[0] ?? {}, { title: "" });
+    expect(() => parseTimeline(data)).toThrow("文字列が空です");
+  });
+
+  it("出典がなければ例外にする", () => {
+    const dynasty = valid();
+    Object.assign(dynasty.dynasties[0] ?? {}, { sources: [] });
+    expect(() => parseTimeline(dynasty)).toThrow("出典がありません");
+    const reign = valid();
+    Object.assign(reign.reigns[0] ?? {}, { sources: [] });
+    expect(() => parseTimeline(reign)).toThrow("出典がありません");
+  });
+
+  it("注記の文や出典の名前が空なら例外にする", () => {
+    const note = valid();
+    Object.assign(note.reigns[0] ?? {}, { notes: [""] });
+    expect(() => parseTimeline(note)).toThrow("文字列が空です");
+    const label = valid();
+    Object.assign(label.reigns[0] ?? {}, {
+      sources: [{ label: "", url: "https://ja.wikipedia.org/wiki/x" }],
+    });
+    expect(() => parseTimeline(label)).toThrow("文字列が空です");
+  });
+
+  it("出典は言語版つきの Wikipedia だけを許す", () => {
+    for (const url of [
+      "https://fr.wikipedia.org/wiki/Troisième_République",
+      "https://zh-yue.wikipedia.org/wiki/x",
+    ]) {
+      const data = valid();
+      Object.assign(data.dynasties[0] ?? {}, { sources: [{ label: "x", url }] });
+      expect(() => parseTimeline(data)).not.toThrow();
+    }
+    for (const url of [
+      "http://ja.wikipedia.org/wiki/x",
+      "https://www.wikidata.org/wiki/Q1",
+      "https://example.com/",
+      "javascript:alert(1)",
+    ]) {
+      const data = valid();
+      Object.assign(data.dynasties[0] ?? {}, { sources: [{ label: "x", url }] });
+      expect(() => parseTimeline(data)).toThrow("出典の url は Wikipedia のページです");
+    }
   });
 });

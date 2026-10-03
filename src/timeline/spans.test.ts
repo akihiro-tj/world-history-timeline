@@ -3,6 +3,7 @@ import type { TimelineData } from "../data/timeline";
 import { rowsForView, spansForLane, valueToView, viewToValue } from "./spans";
 
 const y = (year: number) => ({ year, circa: false });
+const SOURCE = { label: "Wikipedia「x」", url: "https://ja.wikipedia.org/wiki/x" };
 
 const data: TimelineData = {
   lanes: [
@@ -15,9 +16,33 @@ const data: TimelineData = {
     { id: "empty", name: "空の行", dynasties: [], reigns: [] },
   ],
   dynasties: [
-    { id: "tudor", name: "テューダー朝", kind: "regime", start: y(1485), end: y(1603) },
-    { id: "york", name: "ヨーク家", kind: "regime", start: y(1461), end: y(1485) },
-    { id: "cabinet", name: "内閣", kind: "government", start: y(1500), end: y(1510) },
+    {
+      id: "tudor",
+      name: "テューダー朝",
+      kind: "regime",
+      start: y(1485),
+      end: y(1603),
+      sources: [SOURCE],
+      notes: [],
+    },
+    {
+      id: "york",
+      name: "ヨーク家",
+      kind: "regime",
+      start: y(1461),
+      end: y(1485),
+      sources: [SOURCE],
+      notes: [],
+    },
+    {
+      id: "cabinet",
+      name: "内閣",
+      kind: "government",
+      start: y(1500),
+      end: y(1510),
+      sources: [SOURCE],
+      notes: [],
+    },
   ],
   people: [
     { id: "henry", name: "ヘンリ7世" },
@@ -29,6 +54,9 @@ const data: TimelineData = {
       personId: "henry",
       name: null,
       role: "monarch",
+      title: "地位",
+      sources: [SOURCE],
+      notes: [],
       start: y(1485),
       end: y(1509),
     },
@@ -37,6 +65,9 @@ const data: TimelineData = {
       personId: "walpole",
       name: null,
       role: "leader",
+      title: "地位",
+      sources: [SOURCE],
+      notes: [],
       start: y(1721),
       end: y(1742),
     },
@@ -45,6 +76,9 @@ const data: TimelineData = {
       personId: "walpole",
       name: "ロバート=ウォルポール",
       role: "leader",
+      title: "地位",
+      sources: [SOURCE],
+      notes: [],
       start: y(1743),
       end: y(1744),
     },
@@ -73,7 +107,7 @@ describe("spansForLane", () => {
         name: "ヘンリ7世",
         start: y(1485),
         end: y(1509),
-        group: "henry/ヘンリ7世",
+        group: "monarch/henry/ヘンリ7世",
       },
     ]);
     expect(spansForLane(data, lane, "leader")).toEqual([
@@ -83,14 +117,14 @@ describe("spansForLane", () => {
         name: "ウォルポール",
         start: y(1721),
         end: y(1742),
-        group: "walpole/ウォルポール",
+        group: "leader/walpole/ウォルポール",
       },
       {
         id: "walpole-alias",
         name: "ロバート=ウォルポール",
         start: y(1743),
         end: y(1744),
-        group: "walpole/ロバート=ウォルポール",
+        group: "leader/walpole/ロバート=ウォルポール",
       },
     ]);
   });

@@ -5,26 +5,33 @@ export type Lane = { id: string; name: string; dynasties: string[]; reigns: stri
 // 種類: 国家・体制（王朝・共和政・帝政など）か、政権（体制の中の特定の政府・統治機関・内閣）か
 export const DYNASTY_KINDS = ["regime", "government"] as const;
 export type DynastyKind = (typeof DYNASTY_KINDS)[number];
-// 終わりが null なら現在まで続いている
+// 出典: 値を取った Wikipedia の記事。label は画面に出す名前
+export type Source = { label: string; url: string };
+// 終わりが null なら現在まで続いている。notes は利用者に見える注記の文
 export type Dynasty = {
   id: string;
   name: string;
   kind: DynastyKind;
   start: Year;
   end: Year | null;
+  sources: Source[];
+  notes: string[];
 };
 export type Person = { id: string; name: string };
 // 役割: 君主（王・女王・皇帝）か、首脳（首相・大統領など）か
 export const ROLES = ["monarch", "leader"] as const;
 export type Role = (typeof ROLES)[number];
-// name はその在位のあいだの表示名。null なら人物の名前を出す（即位で名前が変わる人のため）
+// name はその在位のあいだの表示名。null なら人物の名前を出す（即位で名前が変わる人のため）。title は地位
 export type Reign = {
   id: string;
   personId: string;
   name: string | null;
   role: Role;
+  title: string;
   start: Year;
   end: Year | null;
+  sources: Source[];
+  notes: string[];
 };
 export type TimelineData = {
   lanes: Lane[];
@@ -34,6 +41,7 @@ export type TimelineData = {
 };
 
 const ID_PATTERN = /^[a-z][a-z0-9-]*$/;
+const WIKIPEDIA_URL = /^https:\/\/[a-z][a-z-]*\.wikipedia\.org\//;
 
 function fail(where: string, reason: string): never {
   throw new Error(`年表データの ${where}: ${reason}`);
@@ -66,6 +74,29 @@ function id(value: unknown, where: string): string {
 function name(value: unknown, where: string): string {
   if (typeof value !== "string" || value.trim() === "") return fail(where, "名前が空です");
   return value;
+}
+
+function text(value: unknown, where: string): string {
+  if (typeof value !== "string" || value.trim() === "") return fail(where, "文字列が空です");
+  return value;
+}
+
+// 出典は 1 件以上の Wikipedia の記事
+function sources(value: unknown, where: string): Source[] {
+  const items = array(value, where);
+  if (items.length === 0) fail(where, "出典がありません");
+  return items.map((item, i) => {
+    const w = `${where}[${i}]`;
+    const r = record(item, ["label", "url"], w);
+    if (typeof r.url !== "string" || !WIKIPEDIA_URL.test(r.url)) {
+      return fail(w, "出典の url は Wikipedia のページです");
+    }
+    return { label: text(r.label, `${w}.label`), url: r.url };
+  });
+}
+
+function notes(value: unknown, where: string): string[] {
+  return array(value, where).map((item, i) => text(item, `${where}[${i}]`));
 }
 
 function year(value: unknown, where: string): Year {
@@ -120,12 +151,14 @@ export function parseTimeline(value: unknown): TimelineData {
 
   const dynasties = array(root.dynasties, "dynasties").map((item, i) => {
     const where = `dynasties[${i}]`;
-    const r = record(item, ["id", "name", "kind", "start", "end"], where);
+    const r = record(item, ["id", "name", "kind", "start", "end", "sources", "notes"], where);
     return {
       id: id(r.id, where),
       name: name(r.name, where),
       kind: dynastyKind(r.kind, where),
       ...period(r, where),
+      sources: sources(r.sources, `${where}.sources`),
+      notes: notes(r.notes, `${where}.notes`),
     };
   });
   const dynastyMap = unique(dynasties, "dynasties");
@@ -139,7 +172,11 @@ export function parseTimeline(value: unknown): TimelineData {
 
   const reigns = array(root.reigns, "reigns").map((item, i) => {
     const where = `reigns[${i}]`;
-    const r = record(item, ["id", "personId", "name", "role", "start", "end"], where);
+    const r = record(
+      item,
+      ["id", "personId", "name", "role", "title", "start", "end", "sources", "notes"],
+      where,
+    );
     const personId = id(r.personId, where);
     if (!personMap.has(personId)) fail(where, `存在しない人物を参照しています: ${personId}`);
     return {
@@ -147,7 +184,10 @@ export function parseTimeline(value: unknown): TimelineData {
       personId,
       name: r.name === null ? null : name(r.name, where),
       role: role(r.role, where),
+      title: text(r.title, `${where}.title`),
       ...period(r, where),
+      sources: sources(r.sources, `${where}.sources`),
+      notes: notes(r.notes, `${where}.notes`),
     };
   });
   const reignMap = unique(reigns, "reigns");

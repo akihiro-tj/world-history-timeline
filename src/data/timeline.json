@@ -151,7 +151,14 @@
       "end": {
         "year": 751,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「メロヴィング朝」",
+          "url": "https://ja.wikipedia.org/wiki/メロヴィング朝"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "carolingian",
@@ -164,7 +171,14 @@
       "end": {
         "year": 987,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「カロリング朝」",
+          "url": "https://ja.wikipedia.org/wiki/カロリング朝"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "capetian",
@@ -177,7 +191,14 @@
       "end": {
         "year": 1328,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「カペー朝」",
+          "url": "https://ja.wikipedia.org/wiki/カペー朝"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "valois",
@@ -190,7 +211,14 @@
       "end": {
         "year": 1589,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ヴァロワ朝」",
+          "url": "https://ja.wikipedia.org/wiki/ヴァロワ朝"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "danish",
@@ -203,7 +231,14 @@
       "end": {
         "year": 1042,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「イングランド君主一覧」",
+          "url": "https://ja.wikipedia.org/wiki/イングランド君主一覧"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "norman",
@@ -216,7 +251,16 @@
       "end": {
         "year": 1154,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ノルマン朝」",
+          "url": "https://ja.wikipedia.org/wiki/ノルマン朝"
+        }
+      ],
+      "notes": [
+        "ノルマン朝の終わりには、ヘンリー1世が亡くなった1135年とする考え方と、続くスティーブン（ブロワ朝）の治世も含める考え方があります。ここでは、スティーブンの治世も含めて、プランタジネット朝が始まる1154年までにしています。"
+      ]
     },
     {
       "id": "plantagenet",
@@ -229,7 +273,14 @@
       "end": {
         "year": 1399,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「プランタジネット朝」",
+          "url": "https://ja.wikipedia.org/wiki/プランタジネット朝"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "lancaster",
@@ -242,7 +293,14 @@
       "end": {
         "year": 1461,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ランカスター朝」",
+          "url": "https://ja.wikipedia.org/wiki/ランカスター朝"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "york",
@@ -255,7 +313,14 @@
       "end": {
         "year": 1485,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ヨーク朝」",
+          "url": "https://ja.wikipedia.org/wiki/ヨーク朝"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "tudor",
@@ -268,7 +333,14 @@
       "end": {
         "year": 1603,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「テューダー朝」",
+          "url": "https://ja.wikipedia.org/wiki/テューダー朝"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "stuart-1603",
@@ -281,7 +353,14 @@
       "end": {
         "year": 1649,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ステュアート朝」",
+          "url": "https://ja.wikipedia.org/wiki/ステュアート朝"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "commonwealth",
@@ -294,7 +373,14 @@
       "end": {
         "year": 1660,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「イングランド共和国」",
+          "url": "https://ja.wikipedia.org/wiki/イングランド共和国"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "stuart-1660",
@@ -307,7 +393,14 @@
       "end": {
         "year": 1714,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ステュアート朝」",
+          "url": "https://ja.wikipedia.org/wiki/ステュアート朝"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "hanover",
@@ -320,7 +413,14 @@
       "end": {
         "year": 1901,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ハノーヴァー朝」",
+          "url": "https://ja.wikipedia.org/wiki/ハノーヴァー朝"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "windsor",
@@ -330,7 +430,14 @@
         "year": 1917,
         "circa": false
       },
-      "end": null
+      "end": null,
+      "sources": [
+        {
+          "label": "Wikipedia「ウィンザー朝」",
+          "url": "https://ja.wikipedia.org/wiki/ウィンザー朝"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "bourbon-1589",
@@ -343,7 +450,14 @@
       "end": {
         "year": 1792,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ブルボン朝」",
+          "url": "https://ja.wikipedia.org/wiki/ブルボン朝"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "national-assembly",
@@ -356,7 +470,18 @@
       "end": {
         "year": 1791,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「国民議会 (フランス革命)」",
+          "url": "https://ja.wikipedia.org/wiki/国民議会_(フランス革命)"
+        },
+        {
+          "label": "Wikipedia「憲法制定国民議会」",
+          "url": "https://ja.wikipedia.org/wiki/憲法制定国民議会"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "legislative-assembly",
@@ -369,7 +494,14 @@
       "end": {
         "year": 1792,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「立法議会」",
+          "url": "https://ja.wikipedia.org/wiki/立法議会"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "national-convention",
@@ -382,7 +514,14 @@
       "end": {
         "year": 1795,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「国民公会」",
+          "url": "https://ja.wikipedia.org/wiki/国民公会"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "first-republic",
@@ -395,7 +534,14 @@
       "end": {
         "year": 1804,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「フランス第一共和政」",
+          "url": "https://ja.wikipedia.org/wiki/フランス第一共和政"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "directory",
@@ -408,7 +554,14 @@
       "end": {
         "year": 1799,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「総裁政府」",
+          "url": "https://ja.wikipedia.org/wiki/総裁政府"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "consulate",
@@ -421,7 +574,14 @@
       "end": {
         "year": 1804,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「統領政府」",
+          "url": "https://ja.wikipedia.org/wiki/統領政府"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "first-empire",
@@ -434,7 +594,14 @@
       "end": {
         "year": 1814,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「フランス第一帝政」",
+          "url": "https://ja.wikipedia.org/wiki/フランス第一帝政"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "restoration",
@@ -447,7 +614,14 @@
       "end": {
         "year": 1830,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「フランス復古王政」",
+          "url": "https://ja.wikipedia.org/wiki/フランス復古王政"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "july-monarchy",
@@ -460,7 +634,14 @@
       "end": {
         "year": 1848,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「7月王政」",
+          "url": "https://ja.wikipedia.org/wiki/7月王政"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "provisional-government-1848",
@@ -473,7 +654,14 @@
       "end": {
         "year": 1848,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「1848年のフランス革命」",
+          "url": "https://ja.wikipedia.org/wiki/1848年のフランス革命"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "second-republic",
@@ -486,7 +674,14 @@
       "end": {
         "year": 1852,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「フランス第二共和政」",
+          "url": "https://ja.wikipedia.org/wiki/フランス第二共和政"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "second-empire",
@@ -499,7 +694,14 @@
       "end": {
         "year": 1870,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「フランス第二帝政」",
+          "url": "https://ja.wikipedia.org/wiki/フランス第二帝政"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "national-defense",
@@ -512,7 +714,14 @@
       "end": {
         "year": 1871,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「国防政府」",
+          "url": "https://ja.wikipedia.org/wiki/国防政府"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "provisional-government-1871",
@@ -525,7 +734,14 @@
       "end": {
         "year": 1871,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「アドルフ・ティエール」",
+          "url": "https://ja.wikipedia.org/wiki/アドルフ・ティエール"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "paris-commune",
@@ -538,20 +754,34 @@
       "end": {
         "year": 1871,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「パリ・コミューン」",
+          "url": "https://ja.wikipedia.org/wiki/パリ・コミューン"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "third-republic",
       "name": "第三共和政",
       "kind": "regime",
       "start": {
-        "year": 1871,
+        "year": 1870,
         "circa": false
       },
       "end": {
         "year": 1940,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「フランス第三共和政」",
+          "url": "https://ja.wikipedia.org/wiki/フランス第三共和政"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "vichy",
@@ -564,7 +794,14 @@
       "end": {
         "year": 1944,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ヴィシー政権」",
+          "url": "https://ja.wikipedia.org/wiki/ヴィシー政権"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "free-france",
@@ -577,7 +814,14 @@
       "end": {
         "year": 1944,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「自由フランス」",
+          "url": "https://ja.wikipedia.org/wiki/自由フランス"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "fourth-republic",
@@ -590,7 +834,14 @@
       "end": {
         "year": 1958,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「フランス第四共和政」",
+          "url": "https://ja.wikipedia.org/wiki/フランス第四共和政"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "fifth-republic",
@@ -600,7 +851,14 @@
         "year": 1958,
         "circa": false
       },
-      "end": null
+      "end": null,
+      "sources": [
+        {
+          "label": "Wikipedia「フランス第五共和政」",
+          "url": "https://ja.wikipedia.org/wiki/フランス第五共和政"
+        }
+      ],
+      "notes": []
     }
   ],
   "people": [
@@ -863,6 +1121,7 @@
       "personId": "clovis",
       "name": null,
       "role": "monarch",
+      "title": "フランク王",
       "start": {
         "year": 481,
         "circa": false
@@ -870,13 +1129,21 @@
       "end": {
         "year": 511,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「クローヴィス1世 (フランク王)」",
+          "url": "https://ja.wikipedia.org/wiki/クローヴィス1世_(フランク王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "charles-martel",
       "personId": "charles-martel",
       "name": null,
       "role": "leader",
+      "title": "宮宰",
       "start": {
         "year": 715,
         "circa": false
@@ -884,13 +1151,21 @@
       "end": {
         "year": 741,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「カール・マルテル」",
+          "url": "https://ja.wikipedia.org/wiki/カール・マルテル"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "pippin-741",
       "personId": "pippin",
       "name": null,
       "role": "leader",
+      "title": "宮宰",
       "start": {
         "year": 741,
         "circa": false
@@ -898,13 +1173,21 @@
       "end": {
         "year": 751,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ピピン3世 (フランク王)」",
+          "url": "https://ja.wikipedia.org/wiki/ピピン3世_(フランク王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "pippin-751",
       "personId": "pippin",
       "name": null,
       "role": "monarch",
+      "title": "フランク王",
       "start": {
         "year": 751,
         "circa": false
@@ -912,13 +1195,21 @@
       "end": {
         "year": 768,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ピピン3世 (フランク王)」",
+          "url": "https://ja.wikipedia.org/wiki/ピピン3世_(フランク王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "charlemagne",
       "personId": "charlemagne",
       "name": null,
       "role": "monarch",
+      "title": "フランク王",
       "start": {
         "year": 768,
         "circa": false
@@ -926,13 +1217,21 @@
       "end": {
         "year": 814,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「カール大帝」",
+          "url": "https://ja.wikipedia.org/wiki/カール大帝"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "louis-i",
       "personId": "louis-i",
       "name": null,
       "role": "monarch",
+      "title": "フランク王",
       "start": {
         "year": 814,
         "circa": false
@@ -940,13 +1239,21 @@
       "end": {
         "year": 840,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ルートヴィヒ1世 (フランク王)」",
+          "url": "https://ja.wikipedia.org/wiki/ルートヴィヒ1世_(フランク王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "hugues-capet",
       "personId": "hugues-capet",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 987,
         "circa": false
@@ -954,13 +1261,21 @@
       "end": {
         "year": 996,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ユーグ・カペー」",
+          "url": "https://ja.wikipedia.org/wiki/ユーグ・カペー"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "philippe-ii",
       "personId": "philippe-ii",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1180,
         "circa": false
@@ -968,13 +1283,21 @@
       "end": {
         "year": 1223,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「フィリップ2世 (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/フィリップ2世_(フランス王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "louis-ix",
       "personId": "louis-ix",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1226,
         "circa": false
@@ -982,13 +1305,21 @@
       "end": {
         "year": 1270,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ルイ9世 (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/ルイ9世_(フランス王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "philippe-iv",
       "personId": "philippe-iv",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1285,
         "circa": false
@@ -996,13 +1327,21 @@
       "end": {
         "year": 1314,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「フィリップ4世 (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/フィリップ4世_(フランス王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "charles-vii",
       "personId": "charles-vii",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1422,
         "circa": false
@@ -1010,13 +1349,21 @@
       "end": {
         "year": 1461,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「シャルル7世 (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/シャルル7世_(フランス王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "egbert",
       "personId": "egbert",
       "name": null,
       "role": "monarch",
+      "title": "ウェセックス王",
       "start": {
         "year": 802,
         "circa": false
@@ -1024,13 +1371,21 @@
       "end": {
         "year": 839,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「エグバート (ウェセックス王)」",
+          "url": "https://ja.wikipedia.org/wiki/エグバート_(ウェセックス王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "alfred",
       "personId": "alfred",
       "name": null,
       "role": "monarch",
+      "title": "ウェセックス王",
       "start": {
         "year": 871,
         "circa": false
@@ -1038,13 +1393,21 @@
       "end": {
         "year": 899,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「アルフレッド大王」",
+          "url": "https://ja.wikipedia.org/wiki/アルフレッド大王"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "cnut",
       "personId": "cnut",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1016,
         "circa": false
@@ -1052,13 +1415,21 @@
       "end": {
         "year": 1035,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「クヌート1世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/クヌート1世_(イングランド王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "william-i",
       "personId": "william-i",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1066,
         "circa": false
@@ -1066,13 +1437,21 @@
       "end": {
         "year": 1087,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ウィリアム1世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/ウィリアム1世_(イングランド王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "henry-ii",
       "personId": "henry-ii",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1154,
         "circa": false
@@ -1080,13 +1459,21 @@
       "end": {
         "year": 1189,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ヘンリー2世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/ヘンリー2世_(イングランド王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "richard-i",
       "personId": "richard-i",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1189,
         "circa": false
@@ -1094,13 +1481,21 @@
       "end": {
         "year": 1199,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「リチャード1世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/リチャード1世_(イングランド王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "john",
       "personId": "john",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1199,
         "circa": false
@@ -1108,13 +1503,21 @@
       "end": {
         "year": 1216,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ジョン (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/ジョン_(イングランド王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "henry-iii",
       "personId": "henry-iii",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1216,
         "circa": false
@@ -1122,13 +1525,21 @@
       "end": {
         "year": 1272,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ヘンリー3世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/ヘンリー3世_(イングランド王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "edward-i",
       "personId": "edward-i",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1272,
         "circa": false
@@ -1136,13 +1547,21 @@
       "end": {
         "year": 1307,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「エドワード1世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/エドワード1世_(イングランド王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "edward-iii",
       "personId": "edward-iii",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1327,
         "circa": false
@@ -1150,13 +1569,21 @@
       "end": {
         "year": 1377,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「エドワード3世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/エドワード3世_(イングランド王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "henry-vii",
       "personId": "henry-vii",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1485,
         "circa": false
@@ -1164,13 +1591,21 @@
       "end": {
         "year": 1509,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ヘンリー7世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/ヘンリー7世_(イングランド王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "henry-viii",
       "personId": "henry-viii",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1509,
         "circa": false
@@ -1178,13 +1613,21 @@
       "end": {
         "year": 1547,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ヘンリー8世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/ヘンリー8世_(イングランド王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "mary-i",
       "personId": "mary-i",
       "name": null,
       "role": "monarch",
+      "title": "イングランド女王",
       "start": {
         "year": 1553,
         "circa": false
@@ -1192,13 +1635,21 @@
       "end": {
         "year": 1558,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「メアリー1世 (イングランド女王)」",
+          "url": "https://ja.wikipedia.org/wiki/メアリー1世_(イングランド女王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "elizabeth-i",
       "personId": "elizabeth-i",
       "name": null,
       "role": "monarch",
+      "title": "イングランド女王",
       "start": {
         "year": 1558,
         "circa": false
@@ -1206,13 +1657,21 @@
       "end": {
         "year": 1603,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「エリザベス1世 (イングランド女王)」",
+          "url": "https://ja.wikipedia.org/wiki/エリザベス1世_(イングランド女王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "james-i",
       "personId": "james-i",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1603,
         "circa": false
@@ -1220,13 +1679,21 @@
       "end": {
         "year": 1625,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ジェームズ1世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/ジェームズ1世_(イングランド王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "charles-i",
       "personId": "charles-i",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1625,
         "circa": false
@@ -1234,13 +1701,21 @@
       "end": {
         "year": 1649,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「チャールズ1世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/チャールズ1世_(イングランド王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "cromwell",
       "personId": "cromwell",
       "name": null,
       "role": "leader",
+      "title": "護国卿",
       "start": {
         "year": 1653,
         "circa": false
@@ -1248,13 +1723,21 @@
       "end": {
         "year": 1658,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「オリバー・クロムウェル」",
+          "url": "https://ja.wikipedia.org/wiki/オリバー・クロムウェル"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "charles-ii",
       "personId": "charles-ii",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1660,
         "circa": false
@@ -1262,13 +1745,21 @@
       "end": {
         "year": 1685,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「チャールズ2世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/チャールズ2世_(イングランド王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "james-ii",
       "personId": "james-ii",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1685,
         "circa": false
@@ -1276,13 +1767,21 @@
       "end": {
         "year": 1688,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ジェームズ2世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/ジェームズ2世_(イングランド王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "william-iii",
       "personId": "william-iii",
       "name": null,
       "role": "monarch",
+      "title": "イングランド王",
       "start": {
         "year": 1689,
         "circa": false
@@ -1290,13 +1789,21 @@
       "end": {
         "year": 1702,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ウィリアム3世 (イングランド王)」",
+          "url": "https://ja.wikipedia.org/wiki/ウィリアム3世_(イングランド王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "mary-ii",
       "personId": "mary-ii",
       "name": null,
       "role": "monarch",
+      "title": "イングランド女王",
       "start": {
         "year": 1689,
         "circa": false
@@ -1304,13 +1811,21 @@
       "end": {
         "year": 1694,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「メアリー2世 (イングランド女王)」",
+          "url": "https://ja.wikipedia.org/wiki/メアリー2世_(イングランド女王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "anne",
       "personId": "anne",
       "name": null,
       "role": "monarch",
+      "title": "グレートブリテン女王",
       "start": {
         "year": 1702,
         "circa": false
@@ -1318,13 +1833,21 @@
       "end": {
         "year": 1714,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「アン (イギリス女王)」",
+          "url": "https://ja.wikipedia.org/wiki/アン_(イギリス女王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "george-i",
       "personId": "george-i",
       "name": null,
       "role": "monarch",
+      "title": "グレートブリテン王",
       "start": {
         "year": 1714,
         "circa": false
@@ -1332,13 +1855,21 @@
       "end": {
         "year": 1727,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ジョージ1世 (イギリス王)」",
+          "url": "https://ja.wikipedia.org/wiki/ジョージ1世_(イギリス王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "walpole",
       "personId": "walpole",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1721,
         "circa": false
@@ -1346,13 +1877,21 @@
       "end": {
         "year": 1742,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ロバート・ウォルポール」",
+          "url": "https://ja.wikipedia.org/wiki/ロバート・ウォルポール"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "pitt-1783",
       "personId": "pitt",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1783,
         "circa": false
@@ -1360,13 +1899,21 @@
       "end": {
         "year": 1801,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ウィリアム・ピット (小ピット)」",
+          "url": "https://ja.wikipedia.org/wiki/ウィリアム・ピット_(小ピット)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "pitt-1804",
       "personId": "pitt",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1804,
         "circa": false
@@ -1374,13 +1921,21 @@
       "end": {
         "year": 1806,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ウィリアム・ピット (小ピット)」",
+          "url": "https://ja.wikipedia.org/wiki/ウィリアム・ピット_(小ピット)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "victoria",
       "personId": "victoria",
       "name": null,
       "role": "monarch",
+      "title": "イギリス女王",
       "start": {
         "year": 1837,
         "circa": false
@@ -1388,13 +1943,21 @@
       "end": {
         "year": 1901,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ヴィクトリア (イギリス女王)」",
+          "url": "https://ja.wikipedia.org/wiki/ヴィクトリア_(イギリス女王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "disraeli-1868",
       "personId": "disraeli",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1868,
         "circa": false
@@ -1402,13 +1965,21 @@
       "end": {
         "year": 1868,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ベンジャミン・ディズレーリ」",
+          "url": "https://ja.wikipedia.org/wiki/ベンジャミン・ディズレーリ"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "disraeli-1874",
       "personId": "disraeli",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1874,
         "circa": false
@@ -1416,13 +1987,21 @@
       "end": {
         "year": 1880,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ベンジャミン・ディズレーリ」",
+          "url": "https://ja.wikipedia.org/wiki/ベンジャミン・ディズレーリ"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "gladstone-1868",
       "personId": "gladstone",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1868,
         "circa": false
@@ -1430,13 +2009,21 @@
       "end": {
         "year": 1874,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ウィリアム・グラッドストン」",
+          "url": "https://ja.wikipedia.org/wiki/ウィリアム・グラッドストン"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "gladstone-1880",
       "personId": "gladstone",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1880,
         "circa": false
@@ -1444,13 +2031,21 @@
       "end": {
         "year": 1885,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ウィリアム・グラッドストン」",
+          "url": "https://ja.wikipedia.org/wiki/ウィリアム・グラッドストン"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "gladstone-1886",
       "personId": "gladstone",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1886,
         "circa": false
@@ -1458,13 +2053,21 @@
       "end": {
         "year": 1886,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ウィリアム・グラッドストン」",
+          "url": "https://ja.wikipedia.org/wiki/ウィリアム・グラッドストン"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "gladstone-1892",
       "personId": "gladstone",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1892,
         "circa": false
@@ -1472,13 +2075,21 @@
       "end": {
         "year": 1894,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ウィリアム・グラッドストン」",
+          "url": "https://ja.wikipedia.org/wiki/ウィリアム・グラッドストン"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "lloyd-george",
       "personId": "lloyd-george",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1916,
         "circa": false
@@ -1486,13 +2097,21 @@
       "end": {
         "year": 1922,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「デビッド・ロイド・ジョージ」",
+          "url": "https://ja.wikipedia.org/wiki/デビッド・ロイド・ジョージ"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "macdonald-1924",
       "personId": "macdonald",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1924,
         "circa": false
@@ -1500,13 +2119,21 @@
       "end": {
         "year": 1924,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ラムゼイ・マクドナルド」",
+          "url": "https://ja.wikipedia.org/wiki/ラムゼイ・マクドナルド"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "macdonald-1929",
       "personId": "macdonald",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1929,
         "circa": false
@@ -1514,13 +2141,21 @@
       "end": {
         "year": 1935,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ラムゼイ・マクドナルド」",
+          "url": "https://ja.wikipedia.org/wiki/ラムゼイ・マクドナルド"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "neville-chamberlain",
       "personId": "neville-chamberlain",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1937,
         "circa": false
@@ -1528,13 +2163,21 @@
       "end": {
         "year": 1940,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ネヴィル・チェンバレン」",
+          "url": "https://ja.wikipedia.org/wiki/ネヴィル・チェンバレン"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "churchill-1940",
       "personId": "churchill",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1940,
         "circa": false
@@ -1542,13 +2185,21 @@
       "end": {
         "year": 1945,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ウィンストン・チャーチル」",
+          "url": "https://ja.wikipedia.org/wiki/ウィンストン・チャーチル"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "churchill-1951",
       "personId": "churchill",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1951,
         "circa": false
@@ -1556,13 +2207,21 @@
       "end": {
         "year": 1955,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ウィンストン・チャーチル」",
+          "url": "https://ja.wikipedia.org/wiki/ウィンストン・チャーチル"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "attlee",
       "personId": "attlee",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1945,
         "circa": false
@@ -1570,13 +2229,21 @@
       "end": {
         "year": 1951,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「クレメント・アトリー」",
+          "url": "https://ja.wikipedia.org/wiki/クレメント・アトリー"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "thatcher",
       "personId": "thatcher",
       "name": null,
       "role": "leader",
+      "title": "イギリス首相",
       "start": {
         "year": 1979,
         "circa": false
@@ -1584,13 +2251,21 @@
       "end": {
         "year": 1990,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「マーガレット・サッチャー」",
+          "url": "https://ja.wikipedia.org/wiki/マーガレット・サッチャー"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "francois-i",
       "personId": "francois-i",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1515,
         "circa": false
@@ -1598,13 +2273,21 @@
       "end": {
         "year": 1547,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「フランソワ1世 (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/フランソワ1世_(フランス王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "henri-iv",
       "personId": "henri-iv",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1589,
         "circa": false
@@ -1612,13 +2295,21 @@
       "end": {
         "year": 1610,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「アンリ4世 (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/アンリ4世_(フランス王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "louis-xiii",
       "personId": "louis-xiii",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1610,
         "circa": false
@@ -1626,13 +2317,21 @@
       "end": {
         "year": 1643,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ルイ13世 (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/ルイ13世_(フランス王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "louis-xiv",
       "personId": "louis-xiv",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1643,
         "circa": false
@@ -1640,13 +2339,21 @@
       "end": {
         "year": 1715,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ルイ14世 (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/ルイ14世_(フランス王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "louis-xvi",
       "personId": "louis-xvi",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1774,
         "circa": false
@@ -1654,13 +2361,21 @@
       "end": {
         "year": 1792,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ルイ16世 (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/ルイ16世_(フランス王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "napoleon-i-1799",
       "personId": "napoleon-i",
       "name": "ナポレオン=ボナパルト",
       "role": "leader",
+      "title": "第一統領",
       "start": {
         "year": 1799,
         "circa": false
@@ -1668,13 +2383,21 @@
       "end": {
         "year": 1804,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ナポレオン・ボナパルト」",
+          "url": "https://ja.wikipedia.org/wiki/ナポレオン・ボナパルト"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "napoleon-i-1804",
       "personId": "napoleon-i",
       "name": null,
       "role": "monarch",
+      "title": "フランス皇帝",
       "start": {
         "year": 1804,
         "circa": false
@@ -1682,13 +2405,21 @@
       "end": {
         "year": 1814,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ナポレオン・ボナパルト」",
+          "url": "https://ja.wikipedia.org/wiki/ナポレオン・ボナパルト"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "napoleon-i-1815",
       "personId": "napoleon-i",
       "name": null,
       "role": "monarch",
+      "title": "フランス皇帝",
       "start": {
         "year": 1815,
         "circa": false
@@ -1696,13 +2427,21 @@
       "end": {
         "year": 1815,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ナポレオン・ボナパルト」",
+          "url": "https://ja.wikipedia.org/wiki/ナポレオン・ボナパルト"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "louis-xviii",
       "personId": "louis-xviii",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1814,
         "circa": false
@@ -1710,13 +2449,21 @@
       "end": {
         "year": 1824,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ルイ18世 (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/ルイ18世_(フランス王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "charles-x",
       "personId": "charles-x",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1824,
         "circa": false
@@ -1724,13 +2471,21 @@
       "end": {
         "year": 1830,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「シャルル10世 (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/シャルル10世_(フランス王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "louis-philippe",
       "personId": "louis-philippe",
       "name": null,
       "role": "monarch",
+      "title": "フランス王",
       "start": {
         "year": 1830,
         "circa": false
@@ -1738,13 +2493,21 @@
       "end": {
         "year": 1848,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ルイ・フィリップ (フランス王)」",
+          "url": "https://ja.wikipedia.org/wiki/ルイ・フィリップ_(フランス王)"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "napoleon-iii-1848",
       "personId": "napoleon-iii",
       "name": "ルイ=ナポレオン",
       "role": "leader",
+      "title": "フランス大統領",
       "start": {
         "year": 1848,
         "circa": false
@@ -1752,13 +2515,21 @@
       "end": {
         "year": 1852,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ナポレオン3世」",
+          "url": "https://ja.wikipedia.org/wiki/ナポレオン3世"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "napoleon-iii-1852",
       "personId": "napoleon-iii",
       "name": null,
       "role": "monarch",
+      "title": "フランス皇帝",
       "start": {
         "year": 1852,
         "circa": false
@@ -1766,13 +2537,21 @@
       "end": {
         "year": 1870,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ナポレオン3世」",
+          "url": "https://ja.wikipedia.org/wiki/ナポレオン3世"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "thiers",
       "personId": "thiers",
       "name": null,
       "role": "leader",
+      "title": "フランス大統領",
       "start": {
         "year": 1871,
         "circa": false
@@ -1780,13 +2559,21 @@
       "end": {
         "year": 1873,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「アドルフ・ティエール」",
+          "url": "https://ja.wikipedia.org/wiki/アドルフ・ティエール"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "clemenceau-1906",
       "personId": "clemenceau",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1906,
         "circa": false
@@ -1794,13 +2581,21 @@
       "end": {
         "year": 1909,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ジョルジュ・クレマンソー」",
+          "url": "https://ja.wikipedia.org/wiki/ジョルジュ・クレマンソー"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "clemenceau-1917",
       "personId": "clemenceau",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1917,
         "circa": false
@@ -1808,13 +2603,21 @@
       "end": {
         "year": 1920,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ジョルジュ・クレマンソー」",
+          "url": "https://ja.wikipedia.org/wiki/ジョルジュ・クレマンソー"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "briand-1909",
       "personId": "briand",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1909,
         "circa": false
@@ -1822,13 +2625,21 @@
       "end": {
         "year": 1911,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「アリスティード・ブリアン」",
+          "url": "https://ja.wikipedia.org/wiki/アリスティード・ブリアン"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "briand-1913",
       "personId": "briand",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1913,
         "circa": false
@@ -1836,13 +2647,21 @@
       "end": {
         "year": 1913,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「アリスティード・ブリアン」",
+          "url": "https://ja.wikipedia.org/wiki/アリスティード・ブリアン"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "briand-1915",
       "personId": "briand",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1915,
         "circa": false
@@ -1850,13 +2669,21 @@
       "end": {
         "year": 1917,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「アリスティード・ブリアン」",
+          "url": "https://ja.wikipedia.org/wiki/アリスティード・ブリアン"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "briand-1921",
       "personId": "briand",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1921,
         "circa": false
@@ -1864,13 +2691,21 @@
       "end": {
         "year": 1922,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「アリスティード・ブリアン」",
+          "url": "https://ja.wikipedia.org/wiki/アリスティード・ブリアン"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "briand-1925",
       "personId": "briand",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1925,
         "circa": false
@@ -1878,13 +2713,21 @@
       "end": {
         "year": 1926,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「アリスティード・ブリアン」",
+          "url": "https://ja.wikipedia.org/wiki/アリスティード・ブリアン"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "briand-1929",
       "personId": "briand",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1929,
         "circa": false
@@ -1892,13 +2735,21 @@
       "end": {
         "year": 1929,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「アリスティード・ブリアン」",
+          "url": "https://ja.wikipedia.org/wiki/アリスティード・ブリアン"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "poincare-1912",
       "personId": "poincare",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1912,
         "circa": false
@@ -1906,13 +2757,21 @@
       "end": {
         "year": 1913,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「レイモン・ポアンカレ」",
+          "url": "https://ja.wikipedia.org/wiki/レイモン・ポアンカレ"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "poincare-1913",
       "personId": "poincare",
       "name": null,
       "role": "leader",
+      "title": "フランス大統領",
       "start": {
         "year": 1913,
         "circa": false
@@ -1920,13 +2779,21 @@
       "end": {
         "year": 1920,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「レイモン・ポアンカレ」",
+          "url": "https://ja.wikipedia.org/wiki/レイモン・ポアンカレ"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "poincare-1922",
       "personId": "poincare",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1922,
         "circa": false
@@ -1934,13 +2801,21 @@
       "end": {
         "year": 1924,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「レイモン・ポアンカレ」",
+          "url": "https://ja.wikipedia.org/wiki/レイモン・ポアンカレ"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "poincare-1926",
       "personId": "poincare",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1926,
         "circa": false
@@ -1948,13 +2823,21 @@
       "end": {
         "year": 1929,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「レイモン・ポアンカレ」",
+          "url": "https://ja.wikipedia.org/wiki/レイモン・ポアンカレ"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "daladier-1933",
       "personId": "daladier",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1933,
         "circa": false
@@ -1962,13 +2845,21 @@
       "end": {
         "year": 1933,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「エドゥアール・ダラディエ」",
+          "url": "https://ja.wikipedia.org/wiki/エドゥアール・ダラディエ"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "daladier-1934",
       "personId": "daladier",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1934,
         "circa": false
@@ -1976,13 +2867,21 @@
       "end": {
         "year": 1934,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「エドゥアール・ダラディエ」",
+          "url": "https://ja.wikipedia.org/wiki/エドゥアール・ダラディエ"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "daladier-1938",
       "personId": "daladier",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1938,
         "circa": false
@@ -1990,13 +2889,21 @@
       "end": {
         "year": 1940,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「エドゥアール・ダラディエ」",
+          "url": "https://ja.wikipedia.org/wiki/エドゥアール・ダラディエ"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "petain",
       "personId": "petain",
       "name": null,
       "role": "leader",
+      "title": "フランス国主席",
       "start": {
         "year": 1940,
         "circa": false
@@ -2004,13 +2911,21 @@
       "end": {
         "year": 1944,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「フィリップ・ペタン」",
+          "url": "https://ja.wikipedia.org/wiki/フィリップ・ペタン"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "de-gaulle-1944",
       "personId": "de-gaulle",
       "name": null,
       "role": "leader",
+      "title": "フランス臨時政府主席",
       "start": {
         "year": 1944,
         "circa": false
@@ -2018,13 +2933,21 @@
       "end": {
         "year": 1946,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「シャルル・ド・ゴール」",
+          "url": "https://ja.wikipedia.org/wiki/シャルル・ド・ゴール"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "schuman",
       "personId": "schuman",
       "name": null,
       "role": "leader",
+      "title": "フランス首相",
       "start": {
         "year": 1947,
         "circa": false
@@ -2032,13 +2955,21 @@
       "end": {
         "year": 1948,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ロベール・シューマン」",
+          "url": "https://ja.wikipedia.org/wiki/ロベール・シューマン"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "de-gaulle-1959",
       "personId": "de-gaulle",
       "name": null,
       "role": "leader",
+      "title": "フランス大統領",
       "start": {
         "year": 1959,
         "circa": false
@@ -2046,13 +2977,21 @@
       "end": {
         "year": 1969,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「シャルル・ド・ゴール」",
+          "url": "https://ja.wikipedia.org/wiki/シャルル・ド・ゴール"
+        }
+      ],
+      "notes": []
     },
     {
       "id": "mitterrand",
       "personId": "mitterrand",
       "name": null,
       "role": "leader",
+      "title": "フランス大統領",
       "start": {
         "year": 1981,
         "circa": false
@@ -2060,7 +2999,14 @@
       "end": {
         "year": 1995,
         "circa": false
-      }
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「フランソワ・ミッテラン」",
+          "url": "https://ja.wikipedia.org/wiki/フランソワ・ミッテラン"
+        }
+      ],
+      "notes": []
     }
   ]
 }

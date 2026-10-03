@@ -16,6 +16,11 @@ colors:
   error-surface: "#fdecea"
   on-error-surface: "#8a1c12"
 typography:
+  title:
+    fontFamily: "system-ui, sans-serif"
+    fontSize: 18px
+    fontWeight: 600
+    lineHeight: 1.4
   body:
     fontFamily: "system-ui, sans-serif"
     fontSize: 16px
@@ -39,6 +44,7 @@ typography:
 rounded:
   sm: 3px
   md: 8px
+  lg: 12px
 spacing:
   xs: 4px
   sm: 8px
@@ -81,6 +87,28 @@ components:
     typography: "{typography.caption}"
   divider:
     backgroundColor: "{colors.border}"
+  source-panel:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.on-surface}"
+    typography: "{typography.body}"
+  source-panel-title:
+    textColor: "{colors.on-surface}"
+    typography: "{typography.title}"
+  source-panel-heading:
+    textColor: "{colors.muted}"
+    typography: "{typography.heading}"
+  source-link:
+    textColor: "{colors.primary}"
+    typography: "{typography.body}"
+  source-note:
+    textColor: "{colors.muted}"
+    typography: "{typography.label}"
+  source-panel-close:
+    backgroundColor: "{colors.surface-subtle}"
+    textColor: "{colors.on-surface}"
+    size: 32px
+  selected-bar:
+    textColor: "{colors.primary}"
   error-message:
     backgroundColor: "{colors.error-surface}"
     textColor: "{colors.on-error-surface}"
@@ -97,9 +125,9 @@ components:
 ## Colors
 
 - `surface`・`on-surface`: 画面の地と文字
-- `primary`: 向きの切り替えの選ばれている側のアイコンと下線、キーボードのフォーカスの枠
+- `primary`: 向きの切り替えの選ばれている側のアイコンと下線、キーボードのフォーカスの枠、選んだ棒の枠、出典のリンク
 - `surface-subtle`: 向きの切り替えの選ばれている側の地
-- `muted`: 年の目盛り、棒の中の期間、棒の外のラベルの引き出し線
+- `muted`: 年の目盛り、棒の中の期間、棒の外のラベルの引き出し線、出典パネルの節の見出し・地位・注記
 - `border`: 見出しと行の区切り線（`divider`）
 - `grid`: 100 年ごとの目盛りの線
 - `bar-a`・`bar-b`: 棒の地。同じ行で隣り合う棒を見分けるため、交互に使う
@@ -108,9 +136,10 @@ components:
 
 ## Typography
 
-- `body`: 読み込み中の表示とエラー
-- `label`: 表示のセレクト
-- `heading`: 行の名前（主題の表示では国・地域、国・地域の表示では王朝・王）
+- `title`: 出典パネルの名前
+- `body`: 読み込み中の表示とエラー、出典パネルの期間・地位・リンク
+- `label`: 表示のセレクト、出典パネルの注記
+- `heading`: 行の名前（主題の表示では国・地域、国・地域の表示では王朝・王）、出典パネルの節の見出し
 - `caption`: 棒の名前と期間、棒の外のラベル、年の目盛り。行の高さは `src/timeline/layout.ts` の `LINE_HEIGHT`（16px）で固定する
 
 ## Layout
@@ -121,15 +150,22 @@ components:
 - 年表の縮尺と棒の寸法は、位置の計算に使うため `src/timeline/layout.ts` と `src/timeline/Timeline.tsx` の定数で持つ（1 年 = 2px、横向きの棒の太さ 36px）
 - 縦向きは、左端に年の目盛り（幅 48px）、上端に行の名前を貼り付け、行を列として等分に並べる（1 列の最小幅 120px）
 - 横向きは、上端に年の目盛り、各行の左上に行の名前を貼り付ける
+- 棒か棒の外のラベルを選ぶと出典パネルが開く。幅 768px 以上では年表の右に幅 360px で開き、年表はその分だけ狭くなる。768px 未満では画面の下から高さの約半分（56%）のシートで開き、シートのどこを引いても全画面に広げたり閉じたりできる。開く・閉じる・広げるときは 0.25 秒で滑らせる（視差効果を減らす設定では動かさない）。寸法は `src/panel/SourcePanel.tsx` と `src/panel/sheet.ts` の定数で持つ
+- シートが開いているあいだは、選んだ棒を、年表の見えている範囲（年の目盛りとシートの上端のあいだ）の真ん中まで滑らかにスクロールする。年表の下端には、いちばん下の棒も真ん中まで持ち上げられるだけの余白を足す
+- PC の出典パネルと年表の区切りは `divider` の線で表す
 
 ## Elevation & Depth
 
 影は使わない。見出しの区切りは `divider` の線だけで表す。
 
+例外として、年表の上に重なるスマホの出典シートだけは、上向きの柔らかい影（`0 -2px 12px` の on-surface 16%）を付ける。重なる面であることを、年表の目盛りの線と同じ系統の線に頼らずに示すため。値は `src/app/index.css` の `--shadow-sheet` で持つ（front matter に影のトークンがないため）。
+
 ## Shapes
 
 - 棒とエラーのメッセージは `sm`
 - 表示のセレクトと向きの切り替えボタンの枠は `md`
+- スマホの出典シートの上の角は `lg`
+- 出典パネルの閉じるボタンは丸（直径 32px、押せる範囲は 44px 角）
 
 ## Components
 
@@ -141,6 +177,13 @@ components:
 - `outside-label`: 棒に収まらない名前を棒の外に出したラベル
 - `divider`: 見出しと行の区切り線
 - `error-message`: 読み込みに失敗したときのメッセージ
+- `source-panel`: 出典パネル
+- `source-panel-title`: 出典パネルの名前
+- `source-panel-heading`: 出典パネルの節の見出し（期間・在位・在任・出典）
+- `source-link`: 出典のリンク（新しいタブで開くアイコン付き）
+- `source-note`: 期間の下の注記（先頭に「※」）
+- `source-panel-close`: 出典パネルの閉じるボタン（薄い灰色の丸の中に × のアイコン）
+- `selected-bar`: 選んだ棒の枠
 
 ## Do's and Don'ts
 
