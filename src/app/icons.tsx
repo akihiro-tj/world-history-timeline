@@ -40,3 +40,21 @@ export function ChevronDownIcon() {
     </svg>
   );
 }
+
+// 外部リンク（新しいタブで開く）の印。四角から右上に矢印が出る形
+export function ExternalLinkIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className="ml-xs inline size-3.5 align-[-2px]"
+    >
+      <path d="M9 2.5h4.5V7M13.5 2.5 7.5 8.5M12 9.5V13a.5.5 0 0 1-.5.5h-8.5A.5.5 0 0 1 2.5 13V4.5A.5.5 0 0 1 3 4H6.5" />
+    </svg>
+  );
+}
