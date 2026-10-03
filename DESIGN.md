@@ -170,7 +170,7 @@ components:
 - `error-message`: 読み込みに失敗したときのメッセージ
 - `source-panel`: 出典パネル
 - `source-panel-title`: 出典パネルの名前
-- `source-panel-heading`: 出典パネルの節の見出し（出典・期間・在位・在任）
+- `source-panel-heading`: 出典パネルの節の見出し（期間・在位・在任・出典）
 - `source-link`: 出典のリンク（新しいタブで開くアイコン付き）
 - `source-note`: 期間の下の注記（先頭に「※」）
 - `selected-bar`: 選んだ棒の枠

@@ -97,27 +97,6 @@ export function SourcePanel({ content, layout, onClose, expanded, onExpandedChan
         </button>
       </div>
       <div className="grid min-h-0 flex-1 content-start gap-md overflow-y-auto px-md pt-xs pb-md">
-        {content.links.length > 0 && (
-          <section>
-            <h3 className="mb-xs font-heading text-heading text-muted">{COPY.sectionSources}</h3>
-            <ul className="grid gap-xs">
-              {content.links.map((link) => (
-                <li key={link.url}>
-                  <a
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary underline underline-offset-2 focus-visible:outline-2 focus-visible:outline-primary"
-                  >
-                    {link.label}
-                    <ExternalLinkIcon />
-                    <span className="sr-only">{COPY.newTab}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
         <section>
           <h3 className="mb-xs font-heading text-heading text-muted">
             {SECTION_LABELS[content.section]}
@@ -138,6 +117,25 @@ export function SourcePanel({ content, layout, onClose, expanded, onExpandedChan
                     <span>{note}</span>
                   </p>
                 ))}
+              </li>
+            ))}
+          </ul>
+        </section>
+        <section>
+          <h3 className="mb-xs font-heading text-heading text-muted">{COPY.sectionSources}</h3>
+          <ul className="grid gap-xs">
+            {content.links.map((link) => (
+              <li key={link.url}>
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary underline underline-offset-2 focus-visible:outline-2 focus-visible:outline-primary"
+                >
+                  {link.label}
+                  <ExternalLinkIcon />
+                  <span className="sr-only">{COPY.newTab}</span>
+                </a>
               </li>
             ))}
           </ul>
