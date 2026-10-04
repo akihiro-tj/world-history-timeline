@@ -198,4 +198,22 @@ describe("panelContent", () => {
     expect(panelContent(data, { laneId: "england", key: "dynasty:stuart-like" })).toBeNull();
     expect(panelContent(data, { laneId: "france", key: "reign:leader/nobody/x" })).toBeNull();
   });
+
+  it("同じ人の在位は世紀の幅で並べる", () => {
+    const reign = data.reigns[0];
+    if (!reign) throw new Error("テストデータがありません");
+    const later = { ...reign, id: "later", start: y(-1450), end: y(-1440) };
+    const earlier = {
+      ...reign,
+      id: "earlier",
+      start: { century: -15, part: null, circa: false },
+      end: y(-1460),
+    };
+    const lane = { id: "x", name: "x", dynasties: [], reigns: ["later", "earlier"] };
+    const content = panelContent(
+      { ...data, lanes: [lane], reigns: [later, earlier] },
+      { laneId: "x", key: "reign:leader/poincare/ポワンカレ" },
+    );
+    expect(content?.rows.map((r) => r.id)).toEqual(["earlier", "later"]);
+  });
 });

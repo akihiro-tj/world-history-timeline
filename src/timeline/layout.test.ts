@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { TimelineData } from "../data/timeline";
+import type { TimelineData, Year } from "../data/timeline";
 import { assignTracks, layoutLane, ticks, timeRange, yearToOffset } from "./layout";
 import type { Span } from "./spans";
 
@@ -12,6 +12,14 @@ const span = (
   end: number,
   group: string | null = null,
 ): Span => ({ id, name, start: y(start), end: y(end), group });
+const c = (century: number) => ({ century, part: null, circa: true });
+const rough = (id: string, name: string, start: Year, end: Year | null): Span => ({
+  id,
+  name,
+  start,
+  end,
+  group: null,
+});
 // 1 文字 10px として幅を測る
 const measure = (text: string) => text.length * 10;
 
@@ -110,6 +118,26 @@ describe("timeRange", () => {
 
   it("データが無ければ null", () => {
     expect(timeRange({ lanes: [], dynasties: [], people: [], reigns: [] }, 2026)).toBeNull();
+  });
+
+  it("世紀の年は外形（いちばん早い始まりからいちばん遅い終わり）で範囲をとる", () => {
+    const data: TimelineData = {
+      lanes: [],
+      dynasties: [
+        {
+          id: "a",
+          name: "A",
+          kind: "regime",
+          start: c(-27),
+          end: y(-2185),
+          sources: [SOURCE],
+          notes: [],
+        },
+      ],
+      people: [],
+      reigns: [],
+    };
+    expect(timeRange(data, 2026)).toEqual({ from: -2700, to: -2100 });
   });
 });
 
@@ -400,6 +428,100 @@ describe("layoutLane", () => {
       bars: [],
       crossExtent: 0,
       extent: 400,
+    });
+  });
+
+  describe("世紀の端", () => {
+    const old = { from: -3000, to: -2000 };
+
+    it("外形の端から確かな区間の端までをぼかす", () => {
+      const lane = layoutLane(
+        [rough("old", "古王国", c(-27), c(-22))],
+        old,
+        "horizontal",
+        measure,
+        2026,
+      );
+      expect(lane.bars[0]).toMatchObject({
+        offset: 600,
+        length: 1200,
+        fadeStart: 200,
+        fadeEnd: 200,
+      });
+    });
+
+    it("年の端はぼかさない", () => {
+      const lane = layoutLane(
+        [rough("mid", "中王国", y(-2040), c(-18))],
+        { from: -2100, to: -1700 },
+        "horizontal",
+        measure,
+        2026,
+      );
+      expect(lane.bars[0]).toMatchObject({ fadeStart: 0, fadeEnd: 200 });
+    });
+
+    it("確かな区間がなければ、中ほどをいちばん濃くして両側をぼかす", () => {
+      const lane = layoutLane(
+        [rough("khufu", "クフ王", c(-26), c(-26))],
+        old,
+        "horizontal",
+        measure,
+        2026,
+      );
+      expect(lane.bars[0]).toMatchObject({
+        offset: 800,
+        length: 200,
+        fadeStart: 100,
+        fadeEnd: 100,
+      });
+    });
+
+    it("現在まで続く棒の終わりはぼかさない", () => {
+      const lane = layoutLane(
+        [rough("now", "ア", c(20), null)],
+        { from: 1900, to: 2100 },
+        "horizontal",
+        measure,
+        2026,
+      );
+      expect(lane.bars[0]).toMatchObject({ fadeStart: 200, fadeEnd: 0 });
+    });
+
+    it("外形が長くても、確かな区間に収まらなければ棒の中に文字を入れない", () => {
+      // 外形は前27〜前26世紀の 400px、確かな区間は 0
+      const lane = layoutLane(
+        [rough("a", "古王国", c(-27), c(-26))],
+        old,
+        "horizontal",
+        measure,
+        2026,
+      );
+      expect(lane.bars[0]?.inside).toBeNull();
+      expect(lane.bars[0]?.labelCross).not.toBeNull();
+    });
+
+    it("確かな区間に収まれば棒の中に入れる", () => {
+      const lane = layoutLane(
+        [rough("old", "古王国", c(-27), c(-22))],
+        old,
+        "horizontal",
+        measure,
+        2026,
+      );
+      expect(lane.bars[0]?.inside).toBe("stack");
+    });
+
+    it("ぼかした部分どうしも重ならないように段を分ける", () => {
+      // 前 18 世紀頃に終わる棒と、前 1750 年に始まる棒は外形が重なる
+      const lane = layoutLane(
+        [rough("a", "ア", y(-2040), c(-18)), rough("b", "イ", y(-1750), y(-1600))],
+        { from: -2100, to: -1600 },
+        "horizontal",
+        measure,
+        2026,
+      );
+      expect(lane.bars.map((bar) => bar.track)).toEqual([0, 1]);
     });
   });
 });

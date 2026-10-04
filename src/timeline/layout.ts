@@ -1,6 +1,7 @@
 // 年表の位置の計算。向き（縦／横）に依存しない形で、時間軸方向（along）と
 // それに直交する方向（cross）の値を返す。描画側がこれを縦か横に当てはめる
 import type { TimelineData, Year } from "../data/timeline";
+import { bounds } from "../data/year";
 import { formatPeriod, formatPeriodLines } from "./format";
 import type { Span } from "./spans";
 
@@ -20,17 +21,28 @@ const INSIDE_PADDING = 12;
 
 export type TimeRange = { from: number; to: number };
 
-// 終わりの年。現在まで続く期間（end が null）は currentYear で終わる
-export function endYear(item: { end: Year | null }, currentYear: number): number {
-  return item.end?.year ?? currentYear;
+// 期間の外形（いちばん早い始まりからいちばん遅い終わりまで）と、確かな区間（濃く描く区間）。
+// 現在まで続く期間（end が null）は currentYear で終わる。確かな区間がない（開始の幅と終了の幅が
+// 重なる）ときは、外形の中ほどの 1 点にする
+export function extent(
+  item: { start: Year; end: Year | null },
+  currentYear: number,
+): { from: number; to: number; solidFrom: number; solidTo: number } {
+  const start = bounds(item.start);
+  const end = item.end ? bounds(item.end) : { from: currentYear, to: currentYear };
+  if (start.to <= end.from) {
+    return { from: start.from, to: end.to, solidFrom: start.to, solidTo: end.from };
+  }
+  const middle = (start.from + end.to) / 2;
+  return { from: start.from, to: end.to, solidFrom: middle, solidTo: middle };
 }
 
 // 王朝と在位のすべての年を含み、目盛りの区切りにそろえた範囲。データが無ければ null
 export function timeRange(data: TimelineData, currentYear: number): TimeRange | null {
-  const years = [...data.dynasties, ...data.reigns].flatMap((item) => [
-    item.start.year,
-    endYear(item, currentYear),
-  ]);
+  const years = [...data.dynasties, ...data.reigns].flatMap((item) => {
+    const e = extent(item, currentYear);
+    return [e.from, e.to];
+  });
   if (years.length === 0) return null;
   const from = Math.floor(Math.min(...years) / TICK_STEP) * TICK_STEP;
   const to = Math.ceil(Math.max(...years) / TICK_STEP) * TICK_STEP;
@@ -79,6 +91,9 @@ export type BarLayout = {
   periodLines: string[];
   offset: number; // 時間軸方向の開始位置（px）
   length: number; // 時間軸方向の長さ（px）
+  // 棒の始まり・終わりからぼかす長さ（px）。年の端なら 0（spec §4）
+  fadeStart: number;
+  fadeEnd: number;
   track: number;
   cross: number; // 段の開始位置（cross 方向の px）
   // 棒の中の文字の並べ方。棒の外に出すなら null
@@ -100,7 +115,8 @@ function labelRoles(spans: Span[]): LabelRole[] {
     const first = firstOfGroup.get(span.group);
     if (
       first === undefined ||
-      span.start.year < (spans[first]?.start.year ?? Number.POSITIVE_INFINITY)
+      bounds(span.start).from <
+        (spans[first] ? bounds(spans[first].start).from : Number.POSITIVE_INFINITY)
     ) {
       firstOfGroup.set(span.group, i);
     }
@@ -189,26 +205,40 @@ export function layoutLane(
 ): LaneLayout {
   // 開始と終了が同じ年の棒は、長さが 0 にならないよう、その 1 年分の長さを持たせる
   const periods = spans.map((span) => {
-    const start = span.start.year;
-    const end = Math.max(endYear(span, currentYear), start + 1);
-    return { start: yearToOffset(start, range), end: yearToOffset(end, range) };
+    const e = extent(span, currentYear);
+    const end = Math.max(e.to, e.from + 1);
+    return {
+      start: yearToOffset(e.from, range),
+      end: yearToOffset(end, range),
+      fadeStart: (e.solidFrom - e.from) * PX_PER_YEAR,
+      fadeEnd: (e.to - e.solidTo) * PX_PER_YEAR,
+    };
   });
   const tracks = assignTracks(periods);
 
   const size = trackSize(orientation);
   const roles = labelRoles(spans);
   const bars: BarLayout[] = spans.map((span, i) => {
-    const { start, end } = periods[i] ?? { start: 0, end: 0 };
+    const { start, end, fadeStart, fadeEnd } = periods[i] ?? {
+      start: 0,
+      end: 0,
+      fadeStart: 0,
+      fadeEnd: 0,
+    };
     const track = tracks[i] ?? 0;
     const group = spans.filter((other) => other.group !== null && other.group === span.group);
     return {
       span,
       periodLines:
         roles[i] === "primary"
-          ? formatPeriodLines([...group].sort((a, b) => a.start.year - b.start.year))
+          ? formatPeriodLines(
+              [...group].sort((a, b) => bounds(a.start).from - bounds(b.start).from),
+            )
           : [formatPeriod(span.start, span.end)],
       offset: start,
       length: end - start,
+      fadeStart,
+      fadeEnd,
       track,
       cross: track * (size + TRACK_GAP),
       inside: null,
@@ -222,7 +252,7 @@ export function layoutLane(
     cross: bar.cross,
     crossEnd: bar.cross + size,
   }));
-  let extent = rangeLength(range);
+  let alongExtent = rangeLength(range);
   let crossExtent = obstacles.reduce((max, rect) => Math.max(max, rect.crossEnd), 0);
   const byOffset = [...bars]
     .map((bar, i) => ({ bar, role: roles[i] ?? "solo" }))
@@ -233,7 +263,10 @@ export function layoutLane(
       periodWidth: Math.max(...bar.periodLines.map(measure)),
     };
     // 期間が 2 行以上のラベルは棒の中に入れない
-    bar.inside = bar.periodLines.length === 1 ? insideText(orientation, bar.length, text) : null;
+    bar.inside =
+      bar.periodLines.length === 1
+        ? insideText(orientation, bar.length - bar.fadeStart - bar.fadeEnd, text)
+        : null;
     if (bar.inside || role === "secondary") continue;
     const label = outsideLabelSize(orientation, text, bar.periodLines.length);
     const alongRange = { start: bar.offset, end: bar.offset + label.along };
@@ -245,9 +278,9 @@ export function layoutLane(
       crossEnd: cross + label.cross,
     });
     bar.labelCross = cross;
-    extent = Math.max(extent, alongRange.end);
+    alongExtent = Math.max(alongExtent, alongRange.end);
     crossExtent = Math.max(crossExtent, cross + label.cross);
   }
 
-  return { bars, crossExtent, extent };
+  return { bars, crossExtent, extent: alongExtent };
 }

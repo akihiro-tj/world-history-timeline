@@ -1,5 +1,6 @@
 // 出典パネルに出す中身（名前・期間の行・注記・出典のリンク）を作る（spec §5）
 import type { Source, TimelineData, Year } from "../data/timeline";
+import { bounds } from "../data/year";
 import type { Selection } from "./selection";
 
 // 節の見出し: 王朝は「期間」、君主は「在位」、首相・大統領などは「在任」
@@ -65,7 +66,7 @@ export function panelContent(data: TimelineData, selection: Selection): PanelCon
         `${reign.role}/${reign.personId}/${reign.name ?? person.name}` === group
       );
     })
-    .sort((a, b) => a.start.year - b.start.year);
+    .sort((a, b) => bounds(a.start).from - bounds(b.start).from);
   const first = reigns[0];
   const person = first && data.people.find((p) => p.id === first.personId);
   if (!first || !person) return null;
