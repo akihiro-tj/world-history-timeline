@@ -47,7 +47,6 @@ const ORIENTATIONS = [
 export function App() {
   const [state, setState] = useState<State>({ status: "loading" });
   const [view, setView] = useState<View>({ kind: "subject", subject: "regime" });
-  // 画面の幅や向きによらず横で開く。国・地域の行を同じ年で見比べられるように
   const [orientation, setOrientation] = useState<Orientation>("horizontal");
 
   useEffect(() => {
