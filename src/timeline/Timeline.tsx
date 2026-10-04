@@ -1,6 +1,15 @@
 // 年表の描画。layout.ts の結果（along / cross）を縦か横に当てはめる
-import { type CSSProperties, useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import {
+  type CSSProperties,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { COPY } from "../app/copy";
+import { ChevronIcon } from "../app/icons";
 import { centeredScroll, revealDelta, unionBox } from "../panel/reveal";
 import { formatYear } from "./format";
 import {
@@ -18,7 +27,8 @@ import {
   VERTICAL_TRACK_WIDTH,
   yearToOffset,
 } from "./layout";
-import { centerYear, scrollStartFor } from "./scroll";
+import { type Nearby, nearbyBars, visibleRange } from "./nearby";
+import { centerScroll, centerYear, scrollStartFor } from "./scroll";
 import type { Row, Span } from "./spans";
 import { useTextMeasure } from "./useTextMeasure";
 
@@ -103,6 +113,42 @@ export function Timeline({
     }
   }, [orientation, range, lanes, axisOffset]);
 
+  // 見えている範囲が空の行に出す「次の駅」の案内（spec §4）。どの配置（lanes）に対する案内かも持ち、
+  // 向きや表示を切り替えた直後に、古い配置の棒を指した案内を出さない
+  const [cues, setCues] = useState<Cues>({ lanes: null, rows: [], bottomInset: 0 });
+  const cueKeyRef = useRef("");
+
+  const updateCues = useCallback(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller || !lanes) return;
+    const range =
+      orientation === "vertical"
+        ? visibleRange(scroller.scrollTop, scroller.clientHeight, visibleRatio, HEADER_HEIGHT)
+        : visibleRange(scroller.scrollLeft, scroller.clientWidth, 1, 0);
+    const rows = lanes.map(({ layout }) => nearbyBars(layout.bars, range));
+    // 縦向きの下の案内は、スマホのシートに隠れない位置まで持ち上げる
+    const bottomInset = Math.round(scroller.clientHeight * (1 - visibleRatio));
+    // スクロールのたびに描き直さないよう、指す棒が変わったときだけ状態を変える
+    const key = `${rows
+      .map((row) => (row ? `${row.before?.span.id ?? ""}>${row.after?.span.id ?? ""}` : "-"))
+      .join("|")}#${bottomInset}`;
+    setCues((previous) => {
+      if (previous.lanes === lanes && cueKeyRef.current === key) return previous;
+      cueKeyRef.current = key;
+      return { lanes, rows, bottomInset };
+    });
+  }, [lanes, orientation, visibleRatio]);
+
+  // 配置や見えている割合が変わったとき（中央の年を合わせた後）と、年表の大きさが変わったときに計算し直す
+  useLayoutEffect(() => {
+    updateCues();
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    const observer = new ResizeObserver(updateCues);
+    observer.observe(scroller);
+    return () => observer.disconnect();
+  }, [updateCues]);
+
   // 選んだ棒が見えていなければ、見える位置までスクロールする（パネルが開いた後の大きさで測る）
   useEffect(() => {
     const scroller = scrollerRef.current;
@@ -154,7 +200,35 @@ export function Timeline({
     const scroller = scrollerRef.current;
     if (!scroller || !range) return;
     centerRef.current = currentCenter(scroller, orientation, axisOffset, range);
+    updateCues();
   }
+
+  // 案内の棒の端（position）を、見えている範囲の中ほどまで滑らかにスクロールする（spec §4）
+  function jumpTo(position: number) {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? "auto"
+      : "smooth";
+    if (orientation === "vertical") {
+      const { start, end } = visibleRange(0, scroller.clientHeight, visibleRatio, HEADER_HEIGHT);
+      scroller.scrollTo({
+        top: centerScroll(position, end - start, scroller.scrollHeight - scroller.clientHeight),
+        behavior,
+      });
+    } else {
+      scroller.scrollTo({
+        left: centerScroll(
+          position,
+          scroller.clientWidth,
+          scroller.scrollWidth - scroller.clientWidth,
+        ),
+        behavior,
+      });
+    }
+  }
+
+  const cueRows = cues.lanes === lanes ? cues.rows : [];
 
   return (
     <section
@@ -175,9 +249,24 @@ export function Timeline({
       {range &&
         lanes &&
         (orientation === "horizontal" ? (
-          <Horizontal range={range} lanes={lanes} isSelected={isSelected} onSelect={onSelect} />
+          <Horizontal
+            range={range}
+            lanes={lanes}
+            isSelected={isSelected}
+            onSelect={onSelect}
+            cues={cueRows}
+            onJump={jumpTo}
+          />
         ) : (
-          <Vertical range={range} lanes={lanes} isSelected={isSelected} onSelect={onSelect} />
+          <Vertical
+            range={range}
+            lanes={lanes}
+            isSelected={isSelected}
+            onSelect={onSelect}
+            cues={cueRows}
+            onJump={jumpTo}
+            bottomInset={cues.bottomInset}
+          />
         ))}
       {endSpaceRatio > 0 && (
         <div aria-hidden="true" style={{ height: `${endSpaceRatio * 100}%` }} />
@@ -198,6 +287,7 @@ function currentCenter(
 }
 
 type LaneEntry = { lane: Row; layout: LaneLayout };
+type Cues = { lanes: LaneEntry[] | null; rows: (Nearby | null)[]; bottomInset: number };
 
 function contentLength(range: TimeRange, lanes: LaneEntry[]): number {
   return Math.max(rangeLength(range), ...lanes.map(({ layout }) => layout.extent));
@@ -264,12 +354,66 @@ function OutsideLabel({
   );
 }
 
+type CueProps = {
+  cues: (Nearby | null)[];
+  onJump: (position: number) => void;
+};
+
+// 「次の駅」の案内。後ろの案内は棒の始まりへ、前の案内は棒の終わりへ飛ぶ
+function Cue({
+  bar,
+  side,
+  orientation,
+  className,
+  style,
+  onJump,
+}: {
+  bar: BarLayout;
+  side: "before" | "after";
+  orientation: Orientation;
+  className: string;
+  style: CSSProperties;
+  onJump: (position: number) => void;
+}) {
+  const horizontal = orientation === "horizontal";
+  const direction = horizontal
+    ? side === "before"
+      ? "left"
+      : "right"
+    : side === "before"
+      ? "up"
+      : "down";
+  const icon = <ChevronIcon direction={direction} />;
+  const trailing = horizontal && side === "after";
+  return (
+    // 着くと案内が消え、フォーカスの行き場がなくなるので、Tab の順に入れない
+    <button
+      type="button"
+      tabIndex={-1}
+      aria-label={`${bar.span.name}${COPY.cueSuffix}`}
+      onClick={() => onJump(side === "after" ? bar.offset : bar.offset + bar.length)}
+      className={`pointer-events-auto sticky flex max-w-full cursor-pointer items-center ${className}`}
+      style={{ height: BAR_THICKNESS, ...style }}
+    >
+      <span className="flex min-w-0 items-center gap-xs rounded-sm border border-border bg-surface px-sm font-caption text-caption text-on-surface">
+        {!trailing && icon}
+        <span className="truncate" style={textStyle}>
+          {bar.span.name}
+        </span>
+        {trailing && icon}
+      </span>
+    </button>
+  );
+}
+
 function Horizontal({
   range,
   lanes,
   isSelected,
   onSelect,
-}: { range: TimeRange; lanes: LaneEntry[] } & SelectProps) {
+  cues,
+  onJump,
+}: { range: TimeRange; lanes: LaneEntry[] } & SelectProps & CueProps) {
   const length = contentLength(range, lanes);
   const years = ticks(range);
   return (
@@ -288,8 +432,9 @@ function Horizontal({
           </span>
         ))}
       </div>
-      {lanes.map(({ lane, layout }) => {
+      {lanes.map(({ lane, layout }, index) => {
         const height = LANE_NAME_HEIGHT + layout.crossExtent + TRACK_GAP * 2;
+        const cue = cues[index] ?? null;
         return (
           <section key={lane.id} className="relative border-b border-border" style={{ height }}>
             {years.map((year) => (
@@ -348,6 +493,34 @@ function Horizontal({
                   />
                 ),
             )}
+            {cue && (
+              // 行の 1 段目の高さに年表の幅いっぱいの層を置き、案内を左右の端に貼り付ける
+              <div
+                className="pointer-events-none absolute left-0 z-10 flex"
+                style={{ top: LANE_NAME_HEIGHT, width: length }}
+              >
+                {cue.before && (
+                  <Cue
+                    bar={cue.before}
+                    side="before"
+                    orientation="horizontal"
+                    className="left-xs"
+                    style={{}}
+                    onJump={onJump}
+                  />
+                )}
+                {cue.after && (
+                  <Cue
+                    bar={cue.after}
+                    side="after"
+                    orientation="horizontal"
+                    className="right-xs ml-auto"
+                    style={{}}
+                    onJump={onJump}
+                  />
+                )}
+              </div>
+            )}
           </section>
         );
       })}
@@ -360,7 +533,10 @@ function Vertical({
   lanes,
   isSelected,
   onSelect,
-}: { range: TimeRange; lanes: LaneEntry[] } & SelectProps) {
+  cues,
+  onJump,
+  bottomInset,
+}: { range: TimeRange; lanes: LaneEntry[]; bottomInset: number } & SelectProps & CueProps) {
   const length = contentLength(range, lanes);
   const years = ticks(range);
   return (
@@ -396,7 +572,8 @@ function Vertical({
           </span>
         ))}
       </div>
-      {lanes.map(({ lane, layout }) => {
+      {lanes.map(({ lane, layout }, index) => {
+        const cue = cues[index] ?? null;
         return (
           <section
             key={lane.id}
@@ -472,6 +649,31 @@ function Vertical({
                     }}
                   />
                 ),
+            )}
+            {cue && (
+              // 列いっぱいの層を置き、上の案内は行の見出しの下、下の案内はシートの上端に貼り付ける
+              <div className="pointer-events-none absolute inset-0 z-10 flex flex-col px-xs">
+                {cue.before && (
+                  <Cue
+                    bar={cue.before}
+                    side="before"
+                    orientation="vertical"
+                    className=""
+                    style={{ top: HEADER_HEIGHT }}
+                    onJump={onJump}
+                  />
+                )}
+                {cue.after && (
+                  <Cue
+                    bar={cue.after}
+                    side="after"
+                    orientation="vertical"
+                    className="mt-auto"
+                    style={{ bottom: bottomInset }}
+                    onJump={onJump}
+                  />
+                )}
+              </div>
             )}
           </section>
         );
