@@ -38,6 +38,49 @@ function valid() {
 }
 
 describe("parseTimeline", () => {
+  it("世紀・千年紀の年を読める", () => {
+    const data = valid();
+    const start = { century: -27, part: null, circa: true };
+    const end = { millennium: -2, part: "second-half", circa: false };
+    Object.assign(data.dynasties[0] ?? {}, { start, end });
+    expect(parseTimeline(data).dynasties[0]).toMatchObject({ start, end });
+  });
+
+  it("0 の世紀は例外にする", () => {
+    const data = valid();
+    Object.assign(data.dynasties[0] ?? {}, { start: { century: 0, part: null, circa: false } });
+    expect(() => parseTimeline(data)).toThrow("century は 0 でない整数です");
+  });
+
+  it("知らない部分は例外にする", () => {
+    const data = valid();
+    Object.assign(data.dynasties[0] ?? {}, { start: { century: -5, part: "end", circa: false } });
+    expect(() => parseTimeline(data)).toThrow(
+      "part は early・middle・late・first-half・second-half か null です",
+    );
+  });
+
+  it("year と century の両方を持つ値は例外にする", () => {
+    const data = valid();
+    const start = { year: -500, century: -5, part: null, circa: false };
+    Object.assign(data.dynasties[0] ?? {}, { start });
+    expect(() => parseTimeline(data)).toThrow("知らないキー year");
+  });
+
+  it("開始と終了が同じ世紀でも読める", () => {
+    const data = valid();
+    const c = { century: -26, part: null, circa: true };
+    Object.assign(data.reigns[0] ?? {}, { start: c, end: c });
+    expect(() => parseTimeline(data)).not.toThrow();
+  });
+
+  it("世紀の幅で比べても開始が終了より後なら例外にする", () => {
+    const data = valid();
+    const start = { century: -5, part: null, circa: false };
+    Object.assign(data.reigns[0] ?? {}, { start, end: { year: -600, circa: false } });
+    expect(() => parseTimeline(data)).toThrow("開始が終了より後です");
+  });
+
   it("正しいデータをそのまま返す", () => {
     expect(parseTimeline(valid())).toEqual(valid());
   });
@@ -182,7 +225,7 @@ describe("parseTimeline", () => {
     expect(() => parseTimeline(label)).toThrow("文字列が空です");
   });
 
-  it("出典は言語版つきの Wikipedia だけを許す", () => {
+  it("最初の出典は言語版つきの Wikipedia だけを許す", () => {
     for (const url of [
       "https://fr.wikipedia.org/wiki/Troisième_République",
       "https://zh-yue.wikipedia.org/wiki/x",
@@ -196,10 +239,35 @@ describe("parseTimeline", () => {
       "https://www.wikidata.org/wiki/Q1",
       "https://example.com/",
       "javascript:alert(1)",
+      null,
     ]) {
       const data = valid();
       Object.assign(data.dynasties[0] ?? {}, { sources: [{ label: "x", url }] });
-      expect(() => parseTimeline(data)).toThrow("出典の url は Wikipedia のページです");
+      expect(() => parseTimeline(data)).toThrow("最初の出典の url は Wikipedia のページです");
+    }
+  });
+
+  it("2 つ目からの出典には Wikipedia 以外のページと URL のない資料を書ける", () => {
+    const sources = [
+      { label: "Wikipedia「x」", url: "https://ja.wikipedia.org/wiki/x" },
+      { label: "Britannica「Knossos」", url: "https://www.britannica.com/place/Knossos" },
+      { label: "著者『本』（2005年）", url: null },
+    ];
+    const data = valid();
+    Object.assign(data.dynasties[0] ?? {}, { sources });
+    expect(parseTimeline(data).dynasties[0]?.sources).toEqual(sources);
+  });
+
+  it("2 つ目からの出典の url が https でなければ例外にする", () => {
+    for (const url of ["http://example.com/", "javascript:alert(1)"]) {
+      const data = valid();
+      Object.assign(data.dynasties[0] ?? {}, {
+        sources: [
+          { label: "Wikipedia「x」", url: "https://ja.wikipedia.org/wiki/x" },
+          { label: "y", url },
+        ],
+      });
+      expect(() => parseTimeline(data)).toThrow("出典の url は https で始まる URL か null です");
     }
   });
 });

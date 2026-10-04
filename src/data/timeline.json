@@ -1,6 +1,91 @@
 {
   "lanes": [
     {
+      "id": "mesopotamia",
+      "name": "メソポタミア",
+      "dynasties": [
+        "akkad",
+        "babylon-1",
+        "kassite",
+        "mitanni",
+        "assyria",
+        "neo-babylonia"
+      ],
+      "reigns": [
+        "sargon",
+        "hammurabi",
+        "ashurbanipal",
+        "nebuchadnezzar-ii"
+      ]
+    },
+    {
+      "id": "egypt",
+      "name": "エジプト",
+      "dynasties": [
+        "old-kingdom",
+        "middle-kingdom",
+        "hyksos",
+        "new-kingdom",
+        "kush-egypt",
+        "assyria-egypt"
+      ],
+      "reigns": [
+        "khufu",
+        "amenhotep-iv",
+        "ramesses-ii"
+      ]
+    },
+    {
+      "id": "syria-palestine",
+      "name": "シリア・パレスチナ",
+      "dynasties": [
+        "israel",
+        "judah",
+        "assyria-syria",
+        "neo-babylonia-syria"
+      ],
+      "reigns": [
+        "david",
+        "solomon"
+      ]
+    },
+    {
+      "id": "africa",
+      "name": "アフリカ",
+      "dynasties": [
+        "kush"
+      ],
+      "reigns": []
+    },
+    {
+      "id": "iran",
+      "name": "イラン",
+      "dynasties": [
+        "media",
+        "assyria-iran"
+      ],
+      "reigns": []
+    },
+    {
+      "id": "greece",
+      "name": "ギリシア",
+      "dynasties": [
+        "minoan",
+        "mycenaean"
+      ],
+      "reigns": []
+    },
+    {
+      "id": "anatolia",
+      "name": "アナトリア",
+      "dynasties": [
+        "hittite",
+        "lydia",
+        "assyria-anatolia"
+      ],
+      "reigns": []
+    },
+    {
       "id": "france",
       "name": "フランク王国・フランス",
       "dynasties": [
@@ -141,6 +226,643 @@
   ],
   "dynasties": [
     {
+      "id": "minoan",
+      "name": "クレタ文明",
+      "kind": "regime",
+      "start": {
+        "year": -2000,
+        "circa": true
+      },
+      "end": {
+        "year": -1400,
+        "circa": true
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ミノア文明」",
+          "url": "https://ja.wikipedia.org/wiki/ミノア文明"
+        },
+        {
+          "label": "コトバンク「エーゲ文明」",
+          "url": "https://kotobank.jp/word/えーげ文明-3145839"
+        },
+        {
+          "label": "Britannica「Knossos」",
+          "url": "https://www.britannica.com/place/Knossos"
+        }
+      ],
+      "notes": [
+        "クレタ文明の終わりを前15世紀半ばとする見方もあります。ここでは、宮殿が壊されて文明が終わったとする広く使われている見方に従い、前1400年頃にしています。"
+      ]
+    },
+    {
+      "id": "mycenaean",
+      "name": "ミケーネ文明",
+      "kind": "regime",
+      "start": {
+        "year": -1600,
+        "circa": true
+      },
+      "end": {
+        "year": -1200,
+        "circa": true
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ミケーネ文明」",
+          "url": "https://ja.wikipedia.org/wiki/ミケーネ文明"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "old-kingdom",
+      "name": "古王国",
+      "kind": "regime",
+      "start": {
+        "year": -2686,
+        "circa": true
+      },
+      "end": {
+        "year": -2185,
+        "circa": true
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「エジプト古王国」",
+          "url": "https://ja.wikipedia.org/wiki/エジプト古王国"
+        }
+      ],
+      "notes": [
+        "古王国に第7・第8王朝を含めるかは、研究者によって分かれます。ここでは、通常古王国と呼ばれる第3〜第6王朝の時代にしています。"
+      ]
+    },
+    {
+      "id": "middle-kingdom",
+      "name": "中王国",
+      "kind": "regime",
+      "start": {
+        "year": -2040,
+        "circa": true
+      },
+      "end": {
+        "century": -18,
+        "part": null,
+        "circa": true
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「エジプト中王国」",
+          "url": "https://ja.wikipedia.org/wiki/エジプト中王国"
+        },
+        {
+          "label": "Britannica「Ancient Egypt」",
+          "url": "https://www.britannica.com/place/ancient-Egypt/The-Middle-Kingdom-and-the-Second-Intermediate-period"
+        },
+        {
+          "label": "コトバンク「エジプト史」",
+          "url": "https://kotobank.jp/word/えじぷと史-3144862"
+        }
+      ],
+      "notes": [
+        "中王国を第12王朝までとする説と、第13王朝の大部分まで含める説があり、どちらも広く使われています。ここでは第12王朝までにしています。"
+      ]
+    },
+    {
+      "id": "hyksos",
+      "name": "ヒクソス",
+      "kind": "regime",
+      "start": {
+        "year": -1663,
+        "circa": true
+      },
+      "end": {
+        "year": -1555,
+        "circa": true
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「エジプト第15王朝」",
+          "url": "https://ja.wikipedia.org/wiki/エジプト第15王朝"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "new-kingdom",
+      "name": "新王国",
+      "kind": "regime",
+      "start": {
+        "year": -1570,
+        "circa": true
+      },
+      "end": {
+        "year": -1070,
+        "circa": true
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「エジプト新王国」",
+          "url": "https://ja.wikipedia.org/wiki/エジプト新王国"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "kush-egypt",
+      "name": "クシュ王国",
+      "kind": "regime",
+      "start": {
+        "year": -747,
+        "circa": false
+      },
+      "end": {
+        "year": -656,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「エジプト第25王朝」",
+          "url": "https://ja.wikipedia.org/wiki/エジプト第25王朝"
+        },
+        {
+          "label": "Wikipedia「クシュ」",
+          "url": "https://ja.wikipedia.org/wiki/クシュ"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "assyria-egypt",
+      "name": "アッシリア王国",
+      "kind": "regime",
+      "start": {
+        "year": -671,
+        "circa": false
+      },
+      "end": {
+        "year": -653,
+        "circa": true
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「エサルハドン」",
+          "url": "https://ja.wikipedia.org/wiki/エサルハドン"
+        },
+        {
+          "label": "Wikipedia「エジプト第26王朝」",
+          "url": "https://ja.wikipedia.org/wiki/エジプト第26王朝"
+        }
+      ],
+      "notes": [
+        "アッシリアは前671年にエジプトを征服し、その後は従えたエジプトの王たちに治めさせました。ここでは、エジプトが離れた前653年頃までにしています。"
+      ]
+    },
+    {
+      "id": "kush",
+      "name": "クシュ王国",
+      "kind": "regime",
+      "start": {
+        "century": -11,
+        "part": null,
+        "circa": false
+      },
+      "end": {
+        "year": 350,
+        "circa": true
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「クシュ」",
+          "url": "https://ja.wikipedia.org/wiki/クシュ"
+        }
+      ],
+      "notes": [
+        "エジプトの支配がゆるみ、ナパタの王国が独立に動き出した前11世紀を、クシュ王国の始まりとしています。"
+      ]
+    },
+    {
+      "id": "israel",
+      "name": "イスラエル王国",
+      "kind": "regime",
+      "start": {
+        "year": -1021,
+        "circa": true
+      },
+      "end": {
+        "year": -722,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「イスラエル王国」",
+          "url": "https://ja.wikipedia.org/wiki/イスラエル王国"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "judah",
+      "name": "ユダ王国",
+      "kind": "regime",
+      "start": {
+        "year": -922,
+        "circa": true
+      },
+      "end": {
+        "year": -586,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ユダ王国」",
+          "url": "https://ja.wikipedia.org/wiki/ユダ王国"
+        }
+      ],
+      "notes": [
+        "イスラエル王国が南北に分かれてユダ王国ができた年には、前930年頃と前922年頃の説があります。ここでは、最も広く受け入れられている聖書考古学者オルブライトの説で前922年頃にしています。"
+      ]
+    },
+    {
+      "id": "assyria-syria",
+      "name": "アッシリア王国",
+      "kind": "regime",
+      "start": {
+        "year": -740,
+        "circa": false
+      },
+      "end": {
+        "century": -7,
+        "part": "second-half",
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ティグラト・ピレセル3世」",
+          "url": "https://ja.wikipedia.org/wiki/ティグラト・ピレセル3世"
+        },
+        {
+          "label": "Wikipedia「アッシリア」",
+          "url": "https://ja.wikipedia.org/wiki/アッシリア"
+        },
+        {
+          "label": "Britannica「Josiah」",
+          "url": "https://www.britannica.com/biography/Josiah"
+        },
+        {
+          "label": "Britannica「Necho II」",
+          "url": "https://www.britannica.com/biography/Necho-II"
+        }
+      ],
+      "notes": [
+        "アッシリアは前740年からシリアを属州にしました。前7世紀後半にはパレスチナから退き、代わってエジプトが治めました。退いた年ははっきりしないため、終わりは前7世紀後半としています。"
+      ]
+    },
+    {
+      "id": "neo-babylonia-syria",
+      "name": "新バビロニア",
+      "kind": "regime",
+      "start": {
+        "year": -605,
+        "circa": false
+      },
+      "end": {
+        "year": -539,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「新バビロニア」",
+          "url": "https://ja.wikipedia.org/wiki/新バビロニア"
+        },
+        {
+          "label": "Wikipedia「カルケミシュの戦い」",
+          "url": "https://ja.wikipedia.org/wiki/カルケミシュの戦い"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "hittite",
+      "name": "ヒッタイト",
+      "kind": "regime",
+      "start": {
+        "year": -1650,
+        "circa": true
+      },
+      "end": {
+        "year": -1180,
+        "circa": true
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ヒッタイト」",
+          "url": "https://ja.wikipedia.org/wiki/ヒッタイト"
+        },
+        {
+          "label": "Britannica「Anatolia」",
+          "url": "https://www.britannica.com/place/Anatolia/The-rise-and-fall-of-the-Hittites"
+        },
+        {
+          "label": "Britannica「Labarnas I」",
+          "url": "https://www.britannica.com/biography/Labarnas-I"
+        }
+      ],
+      "notes": [
+        "ヒッタイトの建国は、初代とされるラバルナ1世の即位（前1680年頃）とする見方と、ハットゥシリ1世の即位（前1650年頃）とする見方があります。ここでは、同時代の記録が残る最初の王であるハットゥシリ1世の即位にしています。"
+      ]
+    },
+    {
+      "id": "lydia",
+      "name": "リディア",
+      "kind": "regime",
+      "start": {
+        "century": -7,
+        "part": null,
+        "circa": false
+      },
+      "end": {
+        "year": -547,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「リュディア」",
+          "url": "https://ja.wikipedia.org/wiki/リュディア"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "assyria-anatolia",
+      "name": "アッシリア王国",
+      "kind": "regime",
+      "start": {
+        "century": -8,
+        "part": "late",
+        "circa": false
+      },
+      "end": {
+        "century": -7,
+        "part": "late",
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「サルゴン2世」",
+          "url": "https://ja.wikipedia.org/wiki/サルゴン2世"
+        },
+        {
+          "label": "Wikipedia「アッシリア」",
+          "url": "https://ja.wikipedia.org/wiki/アッシリア"
+        },
+        {
+          "label": "Britannica「Anatolia」",
+          "url": "https://www.britannica.com/place/Anatolia/The-neo-Hittite-states-from-c-1180-to-700-bce"
+        }
+      ],
+      "notes": [
+        "アッシリアは前8世紀末にアナトリア南東部を組み込みました。南のキリキアの平野は滅亡まで保ったため、終わりは前7世紀末としています。"
+      ]
+    },
+    {
+      "id": "assyria",
+      "name": "アッシリア王国",
+      "kind": "regime",
+      "start": {
+        "year": -2025,
+        "circa": true
+      },
+      "end": {
+        "year": -612,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「アッシリア」",
+          "url": "https://ja.wikipedia.org/wiki/アッシリア"
+        },
+        {
+          "label": "Wikipedia「古アッシリア時代」",
+          "url": "https://ja.wikipedia.org/wiki/古アッシリア時代"
+        },
+        {
+          "label": "Britannica「History of Mesopotamia」",
+          "url": "https://www.britannica.com/place/Mesopotamia-historical-region-Asia/Ashurbanipal-668-627-and-Shamash-shum-ukin-668-648"
+        },
+        {
+          "label": "Encyclopaedia Iranica「Assyria i」",
+          "url": "https://www.iranicaonline.org/articles/assyria-i/"
+        },
+        {
+          "label": "コトバンク「ナボポラッサル」",
+          "url": "https://kotobank.jp/word/なぼぽらっさる-3184156"
+        }
+      ],
+      "notes": [
+        "アッシリアの始まりには前1975年頃とする説もありますが、メソポタミア史で伝統的に使われる中年代説に合わせ、前2025年頃にしています。終わりは、首都ニネヴェが落ちて王も亡くなり、事実上滅びた前612年にしています。"
+      ]
+    },
+    {
+      "id": "akkad",
+      "name": "アッカド王国",
+      "kind": "regime",
+      "start": {
+        "year": -2334,
+        "circa": false
+      },
+      "end": {
+        "year": -2154,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「アッカド帝国」",
+          "url": "https://ja.wikipedia.org/wiki/アッカド帝国"
+        },
+        {
+          "label": "Wikipedia「古代オリエントの編年」",
+          "url": "https://ja.wikipedia.org/wiki/古代オリエントの編年"
+        }
+      ],
+      "notes": [
+        "古代メソポタミアの年代は、説によって数十年ずれます。ここでは、古代オリエント史の教科書などで一般的に使われている中年代説にしています。"
+      ]
+    },
+    {
+      "id": "babylon-1",
+      "name": "バビロン第1王朝",
+      "kind": "regime",
+      "start": {
+        "year": -1894,
+        "circa": true
+      },
+      "end": {
+        "year": -1595,
+        "circa": true
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「バビロニア」",
+          "url": "https://ja.wikipedia.org/wiki/バビロニア"
+        },
+        {
+          "label": "Wikipedia「バビロン第1王朝」",
+          "url": "https://ja.wikipedia.org/wiki/バビロン第1王朝"
+        },
+        {
+          "label": "Wikipedia「古代オリエントの編年」",
+          "url": "https://ja.wikipedia.org/wiki/古代オリエントの編年"
+        }
+      ],
+      "notes": [
+        "バビロン第1王朝の始まりには前1830年とする説もありますが、一般的に使われている中年代説に合わせて前1894年頃にしています。"
+      ]
+    },
+    {
+      "id": "kassite",
+      "name": "カッシート",
+      "kind": "regime",
+      "start": {
+        "century": -16,
+        "part": null,
+        "circa": false
+      },
+      "end": {
+        "year": -1155,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「カッシート人」",
+          "url": "https://ja.wikipedia.org/wiki/カッシート人"
+        },
+        {
+          "label": "Britannica「History of Mesopotamia」",
+          "url": "https://www.britannica.com/place/Mesopotamia-historical-region-Asia/Mesopotamia-to-the-end-of-the-Achaemenian-period"
+        },
+        {
+          "label": "コトバンク「カッシート」",
+          "url": "https://kotobank.jp/word/かっしーと-3209288"
+        }
+      ],
+      "notes": [
+        "カッシートがバビロニアを治め始めた年ははっきりしません。前1595年頃にバビロン第1王朝が倒れた後に王朝を開いたため、前16世紀からにしています。"
+      ]
+    },
+    {
+      "id": "mitanni",
+      "name": "ミタンニ",
+      "kind": "regime",
+      "start": {
+        "century": -16,
+        "part": null,
+        "circa": true
+      },
+      "end": {
+        "century": -13,
+        "part": null,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ミタンニ」",
+          "url": "https://ja.wikipedia.org/wiki/ミタンニ"
+        },
+        {
+          "label": "Wikipedia「シャットゥアラ2世」",
+          "url": "https://ja.wikipedia.org/wiki/シャットゥアラ2世"
+        }
+      ],
+      "notes": [
+        "最後の王シャットゥアラ2世がアッシリアに敗れ、ミタンニがアッシリアの支配下に入った前13世紀を終わりにしています。"
+      ]
+    },
+    {
+      "id": "neo-babylonia",
+      "name": "新バビロニア",
+      "kind": "regime",
+      "start": {
+        "year": -625,
+        "circa": false
+      },
+      "end": {
+        "year": -539,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「新バビロニア」",
+          "url": "https://ja.wikipedia.org/wiki/新バビロニア"
+        }
+      ],
+      "notes": [
+        "建国者ナボポラッサルがバビロンの王になった前626年を始まりとする見方もあります。ここでは、ナボポラッサルの在位の始まりに合わせて前625年にしています。"
+      ]
+    },
+    {
+      "id": "media",
+      "name": "メディア",
+      "kind": "regime",
+      "start": {
+        "year": -728,
+        "circa": true
+      },
+      "end": {
+        "year": -550,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「メディア王国」",
+          "url": "https://ja.wikipedia.org/wiki/メディア王国"
+        },
+        {
+          "label": "Wikipedia「デイオケス」",
+          "url": "https://ja.wikipedia.org/wiki/デイオケス"
+        }
+      ],
+      "notes": [
+        "古代ギリシアの歴史家ヘロドトスが初代の王とするデイオケスの即位（前728年頃と推定）を始まりにしています。ただし、在位の年には諸説あり、メディアが一つの王国だったかを疑う見方もあります。"
+      ]
+    },
+    {
+      "id": "assyria-iran",
+      "name": "アッシリア王国",
+      "kind": "regime",
+      "start": {
+        "century": -8,
+        "part": "middle",
+        "circa": false
+      },
+      "end": {
+        "century": -7,
+        "part": "second-half",
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ティグラト・ピレセル3世」",
+          "url": "https://ja.wikipedia.org/wiki/ティグラト・ピレセル3世"
+        },
+        {
+          "label": "Wikipedia「アッシリア」",
+          "url": "https://ja.wikipedia.org/wiki/アッシリア"
+        },
+        {
+          "label": "Encyclopaedia Iranica「Media」",
+          "url": "https://www.iranicaonline.org/articles/media/"
+        },
+        {
+          "label": "Encyclopaedia Iranica「Assyria i」",
+          "url": "https://www.iranicaonline.org/articles/assyria-i/"
+        }
+      ],
+      "notes": [
+        "アッシリアは前8世紀半ばにイラン西部に属州を置きました。前672年頃にメディアが自立した後も一部の属州を保ちましたが、その終わりははっきりしないため、前7世紀後半としています。"
+      ]
+    },
+    {
       "id": "merovingian",
       "name": "メロヴィング朝",
       "kind": "regime",
@@ -256,10 +978,18 @@
         {
           "label": "Wikipedia「ノルマン朝」",
           "url": "https://ja.wikipedia.org/wiki/ノルマン朝"
+        },
+        {
+          "label": "英国王室「The Normans」",
+          "url": "https://www.royal.uk/normans"
+        },
+        {
+          "label": "コトバンク「ノルマン朝」",
+          "url": "https://kotobank.jp/word/のるまん朝-3163065"
         }
       ],
       "notes": [
-        "ノルマン朝の終わりには、ヘンリー1世が亡くなった1135年とする考え方と、続くスティーブン（ブロワ朝）の治世も含める考え方があります。ここでは、スティーブンの治世も含めて、プランタジネット朝が始まる1154年までにしています。"
+        "ノルマン朝を、ヘンリー1世が亡くなった1135年までとする見方もあります。ここでは、ブロワ家のスティーブン王までを含める一般的な区切りに従い、1154年までにしています。"
       ]
     },
     {
@@ -863,6 +1593,42 @@
   ],
   "people": [
     {
+      "id": "khufu",
+      "name": "クフ王"
+    },
+    {
+      "id": "amenhotep-iv",
+      "name": "アメンヘテプ4世"
+    },
+    {
+      "id": "ramesses-ii",
+      "name": "ラメス2世"
+    },
+    {
+      "id": "david",
+      "name": "ダヴィデ王"
+    },
+    {
+      "id": "solomon",
+      "name": "ソロモン王"
+    },
+    {
+      "id": "sargon",
+      "name": "サルゴン1世"
+    },
+    {
+      "id": "hammurabi",
+      "name": "ハンムラビ王"
+    },
+    {
+      "id": "ashurbanipal",
+      "name": "アッシュルバニパル"
+    },
+    {
+      "id": "nebuchadnezzar-ii",
+      "name": "ネブカドネザル2世"
+    },
+    {
       "id": "clovis",
       "name": "クローヴィス"
     },
@@ -1116,6 +1882,238 @@
     }
   ],
   "reigns": [
+    {
+      "id": "khufu",
+      "personId": "khufu",
+      "name": null,
+      "role": "monarch",
+      "title": "エジプト王",
+      "start": {
+        "year": -2589,
+        "circa": false
+      },
+      "end": {
+        "year": -2566,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「クフ」",
+          "url": "https://ja.wikipedia.org/wiki/クフ"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "amenhotep-iv",
+      "personId": "amenhotep-iv",
+      "name": null,
+      "role": "monarch",
+      "title": "エジプト王",
+      "start": {
+        "year": -1353,
+        "circa": true
+      },
+      "end": {
+        "year": -1336,
+        "circa": true
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「アクエンアテン」",
+          "url": "https://ja.wikipedia.org/wiki/アクエンアテン"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "ramesses-ii",
+      "personId": "ramesses-ii",
+      "name": null,
+      "role": "monarch",
+      "title": "エジプト王",
+      "start": {
+        "year": -1279,
+        "circa": true
+      },
+      "end": {
+        "year": -1213,
+        "circa": true
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ラムセス2世」",
+          "url": "https://ja.wikipedia.org/wiki/ラムセス2世"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "david",
+      "personId": "david",
+      "name": null,
+      "role": "monarch",
+      "title": "イスラエル王",
+      "start": {
+        "year": -1000,
+        "circa": false
+      },
+      "end": {
+        "year": -962,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ダビデ」",
+          "url": "https://ja.wikipedia.org/wiki/ダビデ"
+        },
+        {
+          "label": "Wikipedia「イスラエル王国」",
+          "url": "https://ja.wikipedia.org/wiki/イスラエル王国"
+        },
+        {
+          "label": "Wikipedia「ユダ王国」",
+          "url": "https://ja.wikipedia.org/wiki/ユダ王国"
+        }
+      ],
+      "notes": [
+        "ダヴィデ王の在位の年には諸説あります。ここでは、最も広く受け入れられている聖書考古学者オルブライトの説にしています。"
+      ]
+    },
+    {
+      "id": "solomon",
+      "personId": "solomon",
+      "name": null,
+      "role": "monarch",
+      "title": "イスラエル王",
+      "start": {
+        "year": -962,
+        "circa": false
+      },
+      "end": {
+        "year": -922,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ソロモン」",
+          "url": "https://ja.wikipedia.org/wiki/ソロモン"
+        },
+        {
+          "label": "Wikipedia「イスラエル王国」",
+          "url": "https://ja.wikipedia.org/wiki/イスラエル王国"
+        },
+        {
+          "label": "Wikipedia「ユダ王国」",
+          "url": "https://ja.wikipedia.org/wiki/ユダ王国"
+        }
+      ],
+      "notes": [
+        "ソロモン王の在位の年には諸説あります。ここでは、最も広く受け入れられている聖書考古学者オルブライトの説にしています。"
+      ]
+    },
+    {
+      "id": "sargon",
+      "personId": "sargon",
+      "name": null,
+      "role": "monarch",
+      "title": "アッカド王",
+      "start": {
+        "year": -2334,
+        "circa": true
+      },
+      "end": {
+        "year": -2279,
+        "circa": true
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「サルゴン (アッカド王)」",
+          "url": "https://ja.wikipedia.org/wiki/サルゴン_(アッカド王)"
+        },
+        {
+          "label": "Wikipedia「古代オリエントの編年」",
+          "url": "https://ja.wikipedia.org/wiki/古代オリエントの編年"
+        }
+      ],
+      "notes": [
+        "古代メソポタミアの年代は、説によって数十年ずれます。ここでは、古代オリエント史の教科書などで一般的に使われている中年代説にしています。"
+      ]
+    },
+    {
+      "id": "hammurabi",
+      "personId": "hammurabi",
+      "name": null,
+      "role": "monarch",
+      "title": "バビロン王",
+      "start": {
+        "year": -1792,
+        "circa": true
+      },
+      "end": {
+        "year": -1750,
+        "circa": true
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ハンムラビ」",
+          "url": "https://ja.wikipedia.org/wiki/ハンムラビ"
+        },
+        {
+          "label": "Wikipedia「古代オリエントの編年」",
+          "url": "https://ja.wikipedia.org/wiki/古代オリエントの編年"
+        }
+      ],
+      "notes": [
+        "古代メソポタミアの年代は、説によって数十年ずれます。ここでは、古代オリエント史の教科書などで一般的に使われている中年代説にしています。"
+      ]
+    },
+    {
+      "id": "ashurbanipal",
+      "personId": "ashurbanipal",
+      "name": null,
+      "role": "monarch",
+      "title": "アッシリア王",
+      "start": {
+        "year": -668,
+        "circa": false
+      },
+      "end": {
+        "year": -631,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「アッシュルバニパル」",
+          "url": "https://ja.wikipedia.org/wiki/アッシュルバニパル"
+        }
+      ],
+      "notes": [
+        "在位の終わりを前627年とする見方もありますが、同じ時代の記録が前631年で途切れることから、一般的な前631年にしています。"
+      ]
+    },
+    {
+      "id": "nebuchadnezzar-ii",
+      "personId": "nebuchadnezzar-ii",
+      "name": null,
+      "role": "monarch",
+      "title": "新バビロニア王",
+      "start": {
+        "year": -605,
+        "circa": false
+      },
+      "end": {
+        "year": -562,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ネブカドネザル2世」",
+          "url": "https://ja.wikipedia.org/wiki/ネブカドネザル2世"
+        }
+      ],
+      "notes": []
+    },
     {
       "id": "clovis",
       "personId": "clovis",

@@ -1,7 +1,7 @@
 // 表示（主題／国・地域）に応じて、年表に並べる行と棒の元データを取り出す
 import type { DynastyKind, Lane, Role, TimelineData, Year } from "../data/timeline";
 
-// 王朝は種類（国家・体制／政権）ごとに、在位は役割（君主／首脳）ごとに別の主題にする
+// 王朝は種類（国家・体制など／政権）ごとに、在位は役割（君主／首脳）ごとに別の主題にする
 export type Subject = DynastyKind | Role;
 // 終わりが null なら現在まで続いている。group が同じ棒は同じ人の再登板で、ラベルを 1 つにまとめる
 export type Span = {
@@ -14,7 +14,7 @@ export type Span = {
 export type View = { kind: "subject"; subject: Subject } | { kind: "lane"; laneId: string };
 export type Row = { id: string; name: string; spans: Span[] };
 
-// 主題の並び（セレクトの選択肢と国・地域の表示の行の順）。国家・体制と君主を隣り合わせにし、
+// 主題の並び（セレクトの選択肢と国・地域の表示の行の順）。国家・体制などと君主を隣り合わせにし、
 // 多くの国・地域で空になる政権を最後に置く
 const SUBJECTS: readonly Subject[] = ["regime", "monarch", "leader", "government"];
 
@@ -64,7 +64,7 @@ export function valueToView(value: string, laneIds: readonly string[]): View | n
   return null;
 }
 
-// 主題の表示では行＝国・地域、国・地域の表示では行＝主題（国家・体制、君主、首相・大統領など、政権）。
+// 主題の表示では行＝国・地域、国・地域の表示では行＝主題（国家・体制など、君主、首相・大統領など、政権）。
 // 主題の行の名前は UI 文言なので、呼び出し側から受け取る
 export function rowsForView(data: TimelineData, view: View, names: Record<Subject, string>): Row[] {
   if (view.kind === "subject") {

@@ -1,12 +1,15 @@
-// 年表データ（data リポの成果物）の型と、JSON を読み込むときの厳密な検証
+// 年表データの型と、JSON を読み込むときの厳密な検証
 
-export type Year = { year: number; circa: boolean };
+import { bounds, PARTS, type Part, type Year } from "./year";
+
+export type { Year } from "./year";
 export type Lane = { id: string; name: string; dynasties: string[]; reigns: string[] };
-// 種類: 国家・体制（王朝・共和政・帝政など）か、政権（体制の中の特定の政府・統治機関・内閣）か
+// 種類: 国家・体制など（王朝・共和政・帝政・文明など）か、政権（体制の中の特定の政府・統治機関・内閣）か
 export const DYNASTY_KINDS = ["regime", "government"] as const;
 export type DynastyKind = (typeof DYNASTY_KINDS)[number];
-// 出典: 値を取った Wikipedia の記事。label は画面に出す名前
-export type Source = { label: string; url: string };
+// 出典: 最初は値を取った Wikipedia の記事。2 つ目からは値や注記の理由の根拠にした資料で、
+// URL のない本などは url が null。label は画面に出す名前
+export type Source = { label: string; url: string | null };
 // 終わりが null なら現在まで続いている。notes は利用者に見える注記の文
 export type Dynasty = {
   id: string;
@@ -81,15 +84,19 @@ function text(value: unknown, where: string): string {
   return value;
 }
 
-// 出典は 1 件以上の Wikipedia の記事
+// 出典は 1 件以上。最初は Wikipedia の記事、2 つ目からは https のページか URL なし
 function sources(value: unknown, where: string): Source[] {
   const items = array(value, where);
   if (items.length === 0) fail(where, "出典がありません");
   return items.map((item, i) => {
     const w = `${where}[${i}]`;
     const r = record(item, ["label", "url"], w);
-    if (typeof r.url !== "string" || !WIKIPEDIA_URL.test(r.url)) {
-      return fail(w, "出典の url は Wikipedia のページです");
+    if (i === 0) {
+      if (typeof r.url !== "string" || !WIKIPEDIA_URL.test(r.url)) {
+        return fail(w, "最初の出典の url は Wikipedia のページです");
+      }
+    } else if (r.url !== null && (typeof r.url !== "string" || !r.url.startsWith("https://"))) {
+      return fail(w, "出典の url は https で始まる URL か null です");
     }
     return { label: text(r.label, `${w}.label`), url: r.url };
   });
@@ -99,20 +106,55 @@ function notes(value: unknown, where: string): string[] {
   return array(value, where).map((item, i) => text(item, `${where}[${i}]`));
 }
 
+function circa(value: unknown, where: string): boolean {
+  if (typeof value !== "boolean") return fail(where, "circa は真偽値です");
+  return value;
+}
+
+function ordinal(value: unknown, key: string, where: string): number {
+  if (typeof value !== "number" || !Number.isInteger(value) || value === 0) {
+    return fail(where, `${key} は 0 でない整数です`);
+  }
+  return value;
+}
+
+function part(value: unknown, where: string): Part | null {
+  if (value === null) return null;
+  const found = PARTS.find((candidate) => candidate === value);
+  return found ?? fail(where, `part は ${PARTS.join("・")} か null です`);
+}
+
+// 年・世紀・千年紀のどれか。どの形かはキーで見分ける
 function year(value: unknown, where: string): Year {
+  const keys = typeof value === "object" && value !== null ? Object.keys(value) : [];
+  if (keys.includes("century")) {
+    const r = record(value, ["century", "part", "circa"], where);
+    return {
+      century: ordinal(r.century, "century", where),
+      part: part(r.part, where),
+      circa: circa(r.circa, where),
+    };
+  }
+  if (keys.includes("millennium")) {
+    const r = record(value, ["millennium", "part", "circa"], where);
+    return {
+      millennium: ordinal(r.millennium, "millennium", where),
+      part: part(r.part, where),
+      circa: circa(r.circa, where),
+    };
+  }
   const r = record(value, ["year", "circa"], where);
   if (typeof r.year !== "number" || !Number.isInteger(r.year)) {
     return fail(where, "year は整数です");
   }
-  if (typeof r.circa !== "boolean") return fail(where, "circa は真偽値です");
-  return { year: r.year, circa: r.circa };
+  return { year: r.year, circa: circa(r.circa, where) };
 }
 
 // 終わりが null の期間は現在まで続いている
 function period(r: Record<string, unknown>, where: string): { start: Year; end: Year | null } {
   const start = year(r.start, `${where}.start`);
   const end = r.end === null ? null : year(r.end, `${where}.end`);
-  if (end && start.year > end.year) fail(where, "開始が終了より後です");
+  if (end && bounds(start).from > bounds(end).to) fail(where, "開始が終了より後です");
   return { start, end };
 }
 

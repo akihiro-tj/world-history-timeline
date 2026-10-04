@@ -41,7 +41,14 @@ const data: TimelineData = {
       kind: "government",
       start: y(1871),
       end: y(1871),
-      sources: [wp("パリ・コミューン"), wp("パリ・コミューン"), wp("第三共和政")],
+      sources: [
+        wp("パリ・コミューン"),
+        wp("パリ・コミューン"),
+        wp("第三共和政"),
+        { label: "著者『本』", url: null },
+        { label: "著者『本』", url: null },
+        { label: "別の著者『本』", url: null },
+      ],
       notes: [],
     },
   ],
@@ -143,10 +150,12 @@ describe("panelContent", () => {
     });
   });
 
-  it("同じ URL の出典は 1 つにする", () => {
+  it("同じ URL の出典、URL のない同じ名前の出典は 1 つにする", () => {
     expect(panelContent(data, { laneId: "france", key: "dynasty:commune" })?.links).toEqual([
       wp("パリ・コミューン"),
       wp("第三共和政"),
+      { label: "著者『本』", url: null },
+      { label: "別の著者『本』", url: null },
     ]);
   });
 
@@ -197,5 +206,23 @@ describe("panelContent", () => {
     expect(panelContent(data, { laneId: "france", key: "dynasty:none" })).toBeNull();
     expect(panelContent(data, { laneId: "england", key: "dynasty:stuart-like" })).toBeNull();
     expect(panelContent(data, { laneId: "france", key: "reign:leader/nobody/x" })).toBeNull();
+  });
+
+  it("同じ人の在位は世紀の幅で並べる", () => {
+    const reign = data.reigns[0];
+    if (!reign) throw new Error("テストデータがありません");
+    const later = { ...reign, id: "later", start: y(-1450), end: y(-1440) };
+    const earlier = {
+      ...reign,
+      id: "earlier",
+      start: { century: -15, part: null, circa: false },
+      end: y(-1460),
+    };
+    const lane = { id: "x", name: "x", dynasties: [], reigns: ["later", "earlier"] };
+    const content = panelContent(
+      { ...data, lanes: [lane], reigns: [later, earlier] },
+      { laneId: "x", key: "reign:leader/poincare/ポワンカレ" },
+    );
+    expect(content?.rows.map((r) => r.id)).toEqual(["earlier", "later"]);
   });
 });
