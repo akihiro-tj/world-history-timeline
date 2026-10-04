@@ -30,8 +30,10 @@ export function extent(
 ): { from: number; to: number; solidFrom: number; solidTo: number } {
   const start = bounds(item.start);
   const end = item.end ? bounds(item.end) : { from: currentYear, to: currentYear };
-  if (start.to <= end.from) {
-    return { from: start.from, to: end.to, solidFrom: start.to, solidTo: end.from };
+  // 現在まで続くときは、開始の幅が現在の年を越えていても、確かな区間の始まりを現在の年までにとどめる
+  const solidStart = item.end ? start.to : Math.min(start.to, currentYear);
+  if (solidStart <= end.from) {
+    return { from: start.from, to: end.to, solidFrom: solidStart, solidTo: end.from };
   }
   const middle = (start.from + end.to) / 2;
   return { from: start.from, to: end.to, solidFrom: middle, solidTo: middle };

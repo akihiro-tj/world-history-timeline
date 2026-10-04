@@ -14,7 +14,7 @@ export type Span = {
 export type View = { kind: "subject"; subject: Subject } | { kind: "lane"; laneId: string };
 export type Row = { id: string; name: string; spans: Span[] };
 
-// 主題の並び（セレクトの選択肢と国・地域の表示の行の順）。国家・体制と君主を隣り合わせにし、
+// 主題の並び（セレクトの選択肢と国・地域の表示の行の順）。国家・体制などと君主を隣り合わせにし、
 // 多くの国・地域で空になる政権を最後に置く
 const SUBJECTS: readonly Subject[] = ["regime", "monarch", "leader", "government"];
 
@@ -64,7 +64,7 @@ export function valueToView(value: string, laneIds: readonly string[]): View | n
   return null;
 }
 
-// 主題の表示では行＝国・地域、国・地域の表示では行＝主題（国家・体制、君主、首相・大統領など、政権）。
+// 主題の表示では行＝国・地域、国・地域の表示では行＝主題（国家・体制など、君主、首相・大統領など、政権）。
 // 主題の行の名前は UI 文言なので、呼び出し側から受け取る
 export function rowsForView(data: TimelineData, view: View, names: Record<Subject, string>): Row[] {
   if (view.kind === "subject") {

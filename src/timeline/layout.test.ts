@@ -488,6 +488,17 @@ describe("layoutLane", () => {
       expect(lane.bars[0]).toMatchObject({ fadeStart: 200, fadeEnd: 0 });
     });
 
+    it("現在まで続く棒は、開始の幅が現在の年を越えても終わりをぼかさない", () => {
+      const lane = layoutLane(
+        [rough("now", "ア", { century: 21, part: null, circa: true }, null)],
+        { from: 2000, to: 2100 },
+        "horizontal",
+        measure,
+        2026,
+      );
+      expect(lane.bars[0]).toMatchObject({ fadeStart: 52, fadeEnd: 0 });
+    });
+
     it("外形が長くても、確かな区間に収まらなければ棒の中に文字を入れない", () => {
       // 外形は前27〜前26世紀の 400px、確かな区間は 0
       const lane = layoutLane(
