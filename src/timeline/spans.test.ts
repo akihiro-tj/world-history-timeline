@@ -137,7 +137,7 @@ describe("spansForLane", () => {
 });
 
 const names = {
-  regime: "国家・体制",
+  regime: "国家・体制など",
   government: "政権",
   monarch: "君主",
   leader: "首相・大統領など",
@@ -165,10 +165,10 @@ describe("rowsForView", () => {
     ]);
   });
 
-  it("国・地域の表示では、その行の国家・体制、君主、首相・大統領など、政権を 4 行で並べる", () => {
+  it("国・地域の表示では、その行の国家・体制など、君主、首相・大統領など、政権を 4 行で並べる", () => {
     const rows = rowsForView(data, { kind: "lane", laneId: "england" }, names);
     expect(rows.map((row) => [row.id, row.name, row.spans.map((span) => span.name)])).toEqual([
-      ["regime", "国家・体制", ["ヨーク家", "テューダー朝"]],
+      ["regime", "国家・体制など", ["ヨーク家", "テューダー朝"]],
       ["monarch", "君主", ["ヘンリ7世"]],
       ["leader", "首相・大統領など", ["ウォルポール", "ロバート=ウォルポール"]],
       ["government", "政権", ["内閣"]],
@@ -178,7 +178,7 @@ describe("rowsForView", () => {
   it("王朝も在位もない行を選んでも、空の 4 行を返す", () => {
     const rows = rowsForView(data, { kind: "lane", laneId: "empty" }, names);
     expect(rows).toEqual([
-      { id: "regime", name: "国家・体制", spans: [] },
+      { id: "regime", name: "国家・体制など", spans: [] },
       { id: "monarch", name: "君主", spans: [] },
       { id: "leader", name: "首相・大統領など", spans: [] },
       { id: "government", name: "政権", spans: [] },
