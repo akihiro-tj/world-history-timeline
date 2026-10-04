@@ -38,6 +38,49 @@ function valid() {
 }
 
 describe("parseTimeline", () => {
+  it("世紀・千年紀の年を読める", () => {
+    const data = valid();
+    const start = { century: -27, part: null, circa: true };
+    const end = { millennium: -2, part: "second-half", circa: false };
+    Object.assign(data.dynasties[0] ?? {}, { start, end });
+    expect(parseTimeline(data).dynasties[0]).toMatchObject({ start, end });
+  });
+
+  it("0 の世紀は例外にする", () => {
+    const data = valid();
+    Object.assign(data.dynasties[0] ?? {}, { start: { century: 0, part: null, circa: false } });
+    expect(() => parseTimeline(data)).toThrow("century は 0 でない整数です");
+  });
+
+  it("知らない部分は例外にする", () => {
+    const data = valid();
+    Object.assign(data.dynasties[0] ?? {}, { start: { century: -5, part: "end", circa: false } });
+    expect(() => parseTimeline(data)).toThrow(
+      "part は early・middle・late・first-half・second-half か null です",
+    );
+  });
+
+  it("year と century の両方を持つ値は例外にする", () => {
+    const data = valid();
+    const start = { year: -500, century: -5, part: null, circa: false };
+    Object.assign(data.dynasties[0] ?? {}, { start });
+    expect(() => parseTimeline(data)).toThrow("知らないキー year");
+  });
+
+  it("開始と終了が同じ世紀でも読める", () => {
+    const data = valid();
+    const c = { century: -26, part: null, circa: true };
+    Object.assign(data.reigns[0] ?? {}, { start: c, end: c });
+    expect(() => parseTimeline(data)).not.toThrow();
+  });
+
+  it("世紀の幅で比べても開始が終了より後なら例外にする", () => {
+    const data = valid();
+    const start = { century: -5, part: null, circa: false };
+    Object.assign(data.reigns[0] ?? {}, { start, end: { year: -600, circa: false } });
+    expect(() => parseTimeline(data)).toThrow("開始が終了より後です");
+  });
+
   it("正しいデータをそのまま返す", () => {
     expect(parseTimeline(valid())).toEqual(valid());
   });

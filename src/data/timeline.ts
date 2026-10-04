@@ -1,6 +1,8 @@
 // 年表データ（data リポの成果物）の型と、JSON を読み込むときの厳密な検証
 
-export type Year = { year: number; circa: boolean };
+import { bounds, PARTS, type Part, type Year } from "./year";
+
+export type { Year } from "./year";
 export type Lane = { id: string; name: string; dynasties: string[]; reigns: string[] };
 // 種類: 国家・体制（王朝・共和政・帝政など）か、政権（体制の中の特定の政府・統治機関・内閣）か
 export const DYNASTY_KINDS = ["regime", "government"] as const;
@@ -99,20 +101,55 @@ function notes(value: unknown, where: string): string[] {
   return array(value, where).map((item, i) => text(item, `${where}[${i}]`));
 }
 
+function circa(value: unknown, where: string): boolean {
+  if (typeof value !== "boolean") return fail(where, "circa は真偽値です");
+  return value;
+}
+
+function ordinal(value: unknown, key: string, where: string): number {
+  if (typeof value !== "number" || !Number.isInteger(value) || value === 0) {
+    return fail(where, `${key} は 0 でない整数です`);
+  }
+  return value;
+}
+
+function part(value: unknown, where: string): Part | null {
+  if (value === null) return null;
+  const found = PARTS.find((candidate) => candidate === value);
+  return found ?? fail(where, `part は ${PARTS.join("・")} か null です`);
+}
+
+// 年・世紀・千年紀のどれか。どの形かはキーで見分ける
 function year(value: unknown, where: string): Year {
+  const keys = typeof value === "object" && value !== null ? Object.keys(value) : [];
+  if (keys.includes("century")) {
+    const r = record(value, ["century", "part", "circa"], where);
+    return {
+      century: ordinal(r.century, "century", where),
+      part: part(r.part, where),
+      circa: circa(r.circa, where),
+    };
+  }
+  if (keys.includes("millennium")) {
+    const r = record(value, ["millennium", "part", "circa"], where);
+    return {
+      millennium: ordinal(r.millennium, "millennium", where),
+      part: part(r.part, where),
+      circa: circa(r.circa, where),
+    };
+  }
   const r = record(value, ["year", "circa"], where);
   if (typeof r.year !== "number" || !Number.isInteger(r.year)) {
     return fail(where, "year は整数です");
   }
-  if (typeof r.circa !== "boolean") return fail(where, "circa は真偽値です");
-  return { year: r.year, circa: r.circa };
+  return { year: r.year, circa: circa(r.circa, where) };
 }
 
 // 終わりが null の期間は現在まで続いている
 function period(r: Record<string, unknown>, where: string): { start: Year; end: Year | null } {
   const start = year(r.start, `${where}.start`);
   const end = r.end === null ? null : year(r.end, `${where}.end`);
-  if (end && start.year > end.year) fail(where, "開始が終了より後です");
+  if (end && bounds(start).from > bounds(end).to) fail(where, "開始が終了より後です");
   return { start, end };
 }
 
