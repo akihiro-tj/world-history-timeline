@@ -178,6 +178,20 @@ describe("assignTracks", () => {
 });
 
 describe("layoutLane", () => {
+  it("reach は棒の外のラベルを含めた時間軸方向の終わり", () => {
+    // 1 文字 10px。「長い名前の王朝」（70px）は 20 年（40px）の棒に入らず、外に出る
+    const { bars } = layoutLane(
+      [span("a", "長い名前の王朝", 1000, 1020), span("b", "B", 1100, 1300)],
+      { from: 1000, to: 1400 },
+      "horizontal",
+      measure,
+      2026,
+    );
+    expect(bars[0]?.labelCross).not.toBeNull();
+    expect(bars[0]?.reach).toBeGreaterThan(40);
+    expect(bars[1]?.reach).toBe(600);
+  });
+
   const range = { from: 900, to: 1100 };
 
   it("横向きで幅の足りない名前は棒の外に出す", () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { centerYear, scrollStartFor } from "./scroll";
+import { centerScroll, centerYear, scrollStartFor } from "./scroll";
 
 const range = { from: 400, to: 1700 };
 
@@ -29,5 +29,17 @@ describe("centerYear と scrollStartFor", () => {
 
   it("スクロールできない（内容が画面より短い）なら 0", () => {
     expect(scrollStartFor(1200, 600, 0, range, -10)).toBe(0);
+  });
+});
+
+describe("centerScroll", () => {
+  it("指定した位置を見えている範囲の中ほどに置く", () => {
+    expect(centerScroll(1000, 400, 5000)).toBe(800);
+  });
+
+  it("スクロールできる範囲を越えるときは端で止める", () => {
+    expect(centerScroll(100, 400, 5000)).toBe(0);
+    expect(centerScroll(4900, 400, 4500)).toBe(4500);
+    expect(centerScroll(100, 400, -10)).toBe(0);
   });
 });

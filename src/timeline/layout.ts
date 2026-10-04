@@ -102,6 +102,8 @@ export type BarLayout = {
   inside: "row" | "stack" | null;
   // 棒の外に出すラベルの cross 方向の開始位置（px）。棒の中に収まるか、ラベルを出さないなら null
   labelCross: number | null;
+  // 棒の外のラベルを含めた時間軸方向の終わりの位置（px）。ラベルがなければ棒の終わり
+  reach: number;
 };
 
 // 再登板のまとめ方。最初の在位（primary）にすべての期間のラベルを付け、2 回目以降（secondary）は
@@ -245,6 +247,7 @@ export function layoutLane(
       cross: track * (size + TRACK_GAP),
       inside: null,
       labelCross: null,
+      reach: end,
     };
   });
 
@@ -280,6 +283,7 @@ export function layoutLane(
       crossEnd: cross + label.cross,
     });
     bar.labelCross = cross;
+    bar.reach = Math.max(bar.reach, alongRange.end);
     alongExtent = Math.max(alongExtent, alongRange.end);
     crossExtent = Math.max(crossExtent, cross + label.cross);
   }
