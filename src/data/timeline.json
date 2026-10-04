@@ -1,13 +1,22 @@
 {
   "lanes": [
     {
-      "id": "greece",
-      "name": "ギリシア",
+      "id": "mesopotamia",
+      "name": "メソポタミア",
       "dynasties": [
-        "minoan",
-        "mycenaean"
+        "akkad",
+        "babylon-1",
+        "kassite",
+        "mitanni",
+        "assyria",
+        "neo-babylonia"
       ],
-      "reigns": []
+      "reigns": [
+        "sargon",
+        "hammurabi",
+        "ashurbanipal",
+        "nebuchadnezzar-ii"
+      ]
     },
     {
       "id": "egypt",
@@ -27,14 +36,6 @@
       ]
     },
     {
-      "id": "africa",
-      "name": "アフリカ",
-      "dynasties": [
-        "kush"
-      ],
-      "reigns": []
-    },
-    {
       "id": "syria-palestine",
       "name": "シリア・パレスチナ",
       "dynasties": [
@@ -49,32 +50,12 @@
       ]
     },
     {
-      "id": "anatolia",
-      "name": "アナトリア",
+      "id": "africa",
+      "name": "アフリカ",
       "dynasties": [
-        "hittite",
-        "lydia",
-        "assyria-anatolia"
+        "kush"
       ],
       "reigns": []
-    },
-    {
-      "id": "mesopotamia",
-      "name": "メソポタミア",
-      "dynasties": [
-        "akkad",
-        "babylon-1",
-        "kassite",
-        "mitanni",
-        "assyria",
-        "neo-babylonia"
-      ],
-      "reigns": [
-        "sargon",
-        "hammurabi",
-        "ashurbanipal",
-        "nebuchadnezzar-ii"
-      ]
     },
     {
       "id": "iran",
@@ -82,6 +63,25 @@
       "dynasties": [
         "media",
         "assyria-iran"
+      ],
+      "reigns": []
+    },
+    {
+      "id": "greece",
+      "name": "ギリシア",
+      "dynasties": [
+        "minoan",
+        "mycenaean"
+      ],
+      "reigns": []
+    },
+    {
+      "id": "anatolia",
+      "name": "アナトリア",
+      "dynasties": [
+        "hittite",
+        "lydia",
+        "assyria-anatolia"
       ],
       "reigns": []
     },
