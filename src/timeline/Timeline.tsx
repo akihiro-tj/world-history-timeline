@@ -203,8 +203,9 @@ function contentLength(range: TimeRange, lanes: LaneEntry[]): number {
   return Math.max(rangeLength(range), ...lanes.map(({ layout }) => layout.extent));
 }
 
+// 棒は overflow: clip にする（hidden だと棒がスクロールの入れ物になり、中の文字の sticky が年表のスクロールに効かない）
 function barClass(index: number): string {
-  return `absolute overflow-hidden rounded-sm text-on-bar ${index % 2 === 0 ? "bg-bar-a" : "bg-bar-b"}`;
+  return `absolute overflow-clip rounded-sm text-on-bar ${index % 2 === 0 ? "bg-bar-a" : "bg-bar-b"}`;
 }
 
 // 幅のある端は、外側で透明になり、確かな区間の端で棒の色になるグラデーションで描く（spec §4）。
@@ -322,10 +323,11 @@ function Horizontal({
                 }}
               >
                 {bar.inside && (
-                  <>
+                  // 棒の始まりが左に隠れても、棒が見えているあいだは名前と期間を左端に貼り付ける
+                  <span className="sticky left-xs block w-max max-w-full">
                     <span className="block truncate">{bar.span.name}</span>
                     <span className="block truncate">{bar.periodLines[0]}</span>
-                  </>
+                  </span>
                 )}
               </button>
             ))}
@@ -431,21 +433,26 @@ function Vertical({
                   ...fadeStyle(i, bar, "bottom"),
                 }}
               >
-                {bar.inside === "row" && (
-                  <span className="block truncate">
-                    {bar.span.name}
-                    <span className="ml-xs text-muted">{bar.periodLines[0]}</span>
-                  </span>
-                )}
-                {bar.inside === "stack" && (
-                  <>
-                    <span className="block">{bar.span.name}</span>
-                    {bar.periodLines.map((line) => (
-                      <span key={line} className="block text-muted">
-                        {line}
+                {bar.inside && (
+                  // 棒の始まりが行の見出しの下に隠れても、棒が見えているあいだは名前と期間を見出しの下に貼り付ける
+                  <span className="sticky block" style={{ top: HEADER_HEIGHT + 1 }}>
+                    {bar.inside === "row" && (
+                      <span className="block truncate">
+                        {bar.span.name}
+                        <span className="ml-xs text-muted">{bar.periodLines[0]}</span>
                       </span>
-                    ))}
-                  </>
+                    )}
+                    {bar.inside === "stack" && (
+                      <>
+                        <span className="block">{bar.span.name}</span>
+                        {bar.periodLines.map((line) => (
+                          <span key={line} className="block text-muted">
+                            {line}
+                          </span>
+                        ))}
+                      </>
+                    )}
+                  </span>
                 )}
               </button>
             ))}
