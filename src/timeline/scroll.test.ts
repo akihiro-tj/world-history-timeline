@@ -1,15 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { centerYear, initialOrientation, scrollStartFor } from "./scroll";
+import { centerYear, scrollStartFor } from "./scroll";
 
 const range = { from: 400, to: 1700 };
-
-describe("initialOrientation", () => {
-  it("横長なら横、縦長や正方形なら縦", () => {
-    expect(initialOrientation(1280, 800)).toBe("horizontal");
-    expect(initialOrientation(375, 667)).toBe("vertical");
-    expect(initialOrientation(600, 600)).toBe("vertical");
-  });
-});
 
 describe("centerYear と scrollStartFor", () => {
   it("中央の年を求め、同じ年が中央に来るスクロール量に戻せる", () => {

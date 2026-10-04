@@ -1,10 +1,5 @@
-// 向きの初期値と、切り替えの前後で画面中央の年を保つための計算
-import { type Orientation, PX_PER_YEAR, type TimeRange } from "./layout";
-
-// 開いたときの画面が横長なら横、そうでなければ縦（spec §3.2）
-export function initialOrientation(width: number, height: number): Orientation {
-  return width > height ? "horizontal" : "vertical";
-}
+// 向きの切り替えの前後で画面中央の年を保つための計算
+import { PX_PER_YEAR, type TimeRange } from "./layout";
 
 // scrollStart: 時間軸方向のスクロール量。viewport: 時間軸方向の表示領域の長さ。
 // axisOffset: 時間軸方向の先頭に貼り付いている見出しの長さ（縦向きの行の見出し）

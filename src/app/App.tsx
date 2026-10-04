@@ -7,7 +7,6 @@ import { SourcePanel } from "../panel/SourcePanel";
 import { isSelected, keepSelection, laneIdOf, type Selection, spanKey } from "../panel/selection";
 import { SHEET_HEIGHT_RATIO } from "../panel/sheet";
 import { type Orientation, timeRange } from "../timeline/layout";
-import { initialOrientation } from "../timeline/scroll";
 import type { Row, Span } from "../timeline/spans";
 import { rowsForView, type View, valueToView, viewToValue } from "../timeline/spans";
 import { Timeline } from "../timeline/Timeline";
@@ -48,9 +47,7 @@ const ORIENTATIONS = [
 export function App() {
   const [state, setState] = useState<State>({ status: "loading" });
   const [view, setView] = useState<View>({ kind: "subject", subject: "regime" });
-  const [orientation, setOrientation] = useState<Orientation>(() =>
-    initialOrientation(window.innerWidth, window.innerHeight),
-  );
+  const [orientation, setOrientation] = useState<Orientation>("horizontal");
 
   useEffect(() => {
     let active = true;
