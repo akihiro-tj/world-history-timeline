@@ -257,17 +257,21 @@ export function SourcePanel({ content, layout, onClose, expanded, onExpandedChan
           <h3 className="mb-xs font-heading text-heading text-muted">{COPY.sectionSources}</h3>
           <ul className="grid gap-xs">
             {content.links.map((link) => (
-              <li key={link.url}>
-                <a
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary underline underline-offset-2 focus-visible:outline-2 focus-visible:outline-primary"
-                >
-                  {link.label}
-                  <ExternalLinkIcon />
-                  <span className="sr-only">{COPY.newTab}</span>
-                </a>
+              <li key={link.url ?? link.label}>
+                {link.url === null ? (
+                  link.label
+                ) : (
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary underline underline-offset-2 focus-visible:outline-2 focus-visible:outline-primary"
+                  >
+                    {link.label}
+                    <ExternalLinkIcon />
+                    <span className="sr-only">{COPY.newTab}</span>
+                  </a>
+                )}
               </li>
             ))}
           </ul>

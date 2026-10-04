@@ -41,7 +41,14 @@ const data: TimelineData = {
       kind: "government",
       start: y(1871),
       end: y(1871),
-      sources: [wp("パリ・コミューン"), wp("パリ・コミューン"), wp("第三共和政")],
+      sources: [
+        wp("パリ・コミューン"),
+        wp("パリ・コミューン"),
+        wp("第三共和政"),
+        { label: "著者『本』", url: null },
+        { label: "著者『本』", url: null },
+        { label: "別の著者『本』", url: null },
+      ],
       notes: [],
     },
   ],
@@ -143,10 +150,12 @@ describe("panelContent", () => {
     });
   });
 
-  it("同じ URL の出典は 1 つにする", () => {
+  it("同じ URL の出典、URL のない同じ名前の出典は 1 つにする", () => {
     expect(panelContent(data, { laneId: "france", key: "dynasty:commune" })?.links).toEqual([
       wp("パリ・コミューン"),
       wp("第三共和政"),
+      { label: "著者『本』", url: null },
+      { label: "別の著者『本』", url: null },
     ]);
   });
 

@@ -225,7 +225,7 @@ describe("parseTimeline", () => {
     expect(() => parseTimeline(label)).toThrow("文字列が空です");
   });
 
-  it("出典は言語版つきの Wikipedia だけを許す", () => {
+  it("最初の出典は言語版つきの Wikipedia だけを許す", () => {
     for (const url of [
       "https://fr.wikipedia.org/wiki/Troisième_République",
       "https://zh-yue.wikipedia.org/wiki/x",
@@ -239,10 +239,35 @@ describe("parseTimeline", () => {
       "https://www.wikidata.org/wiki/Q1",
       "https://example.com/",
       "javascript:alert(1)",
+      null,
     ]) {
       const data = valid();
       Object.assign(data.dynasties[0] ?? {}, { sources: [{ label: "x", url }] });
-      expect(() => parseTimeline(data)).toThrow("出典の url は Wikipedia のページです");
+      expect(() => parseTimeline(data)).toThrow("最初の出典の url は Wikipedia のページです");
+    }
+  });
+
+  it("2 つ目からの出典には Wikipedia 以外のページと URL のない資料を書ける", () => {
+    const sources = [
+      { label: "Wikipedia「x」", url: "https://ja.wikipedia.org/wiki/x" },
+      { label: "Britannica「Knossos」", url: "https://www.britannica.com/place/Knossos" },
+      { label: "著者『本』（2005年）", url: null },
+    ];
+    const data = valid();
+    Object.assign(data.dynasties[0] ?? {}, { sources });
+    expect(parseTimeline(data).dynasties[0]?.sources).toEqual(sources);
+  });
+
+  it("2 つ目からの出典の url が https でなければ例外にする", () => {
+    for (const url of ["http://example.com/", "javascript:alert(1)"]) {
+      const data = valid();
+      Object.assign(data.dynasties[0] ?? {}, {
+        sources: [
+          { label: "Wikipedia「x」", url: "https://ja.wikipedia.org/wiki/x" },
+          { label: "y", url },
+        ],
+      });
+      expect(() => parseTimeline(data)).toThrow("出典の url は https で始まる URL か null です");
     }
   });
 });

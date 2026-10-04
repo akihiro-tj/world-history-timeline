@@ -5,7 +5,7 @@ import type { Selection } from "./selection";
 
 // 節の見出し: 王朝は「期間」、君主は「在位」、首相・大統領などは「在任」
 export type PanelSection = "period" | "monarch" | "leader";
-export type PanelLink = { label: string; url: string };
+export type PanelLink = { label: string; url: string | null };
 export type PanelRow = {
   id: string;
   start: Year;
@@ -20,11 +20,13 @@ export type PanelContent = {
   rows: PanelRow[];
 };
 
-// 出典を並びの順に集め、同じ URL は 1 つにする
+// 出典を並びの順に集め、同じ URL は 1 つにする。URL のない出典は名前が同じものを 1 つにする
 function links(sources: Source[]): PanelLink[] {
   const result: PanelLink[] = [];
+  const same = (a: PanelLink, b: Source) =>
+    a.url === null ? b.url === null && a.label === b.label : a.url === b.url;
   for (const source of sources) {
-    if (!result.some((link) => link.url === source.url)) result.push(source);
+    if (!result.some((link) => same(link, source))) result.push(source);
   }
   return result;
 }

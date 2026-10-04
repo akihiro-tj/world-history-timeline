@@ -241,10 +241,18 @@
         {
           "label": "Wikipedia「ミノア文明」",
           "url": "https://ja.wikipedia.org/wiki/ミノア文明"
+        },
+        {
+          "label": "コトバンク「エーゲ文明」",
+          "url": "https://kotobank.jp/word/えーげ文明-3145839"
+        },
+        {
+          "label": "Britannica「Knossos」",
+          "url": "https://www.britannica.com/place/Knossos"
         }
       ],
       "notes": [
-        "クレタ文明が崩れた時期は、前15世紀半ばとする説もあります。ここでは、ミケーネのアカイア人が島に攻め入ったとされる前1400年頃までにしています。"
+        "クレタ文明の終わりを、ミケーネ文明の人々がクノッソスを支配するようになった前15世紀半ばとする見方もあります。ここでは、クノッソスなどの宮殿が壊されて文明が終わったとする、広く使われている見方に従い、前1400年頃までにしています。"
       ]
     },
     {
@@ -306,10 +314,18 @@
         {
           "label": "Wikipedia「エジプト中王国」",
           "url": "https://ja.wikipedia.org/wiki/エジプト中王国"
+        },
+        {
+          "label": "Britannica「Ancient Egypt」",
+          "url": "https://www.britannica.com/place/ancient-Egypt/The-Middle-Kingdom-and-the-Second-Intermediate-period"
+        },
+        {
+          "label": "コトバンク「エジプト史」",
+          "url": "https://kotobank.jp/word/えじぷと史-3144862"
         }
       ],
       "notes": [
-        "中王国の終わりは、第12王朝までとする説と第13王朝までとする説に分かれます。ここでは、第12王朝が終わった前18世紀頃までにしています。"
+        "中王国の終わりは、第12王朝までとする説と、第13王朝の大部分まで含める説に分かれ、どちらも広く使われています。ここでは、第12王朝が終わった前18世紀頃までにしています。"
       ]
     },
     {
@@ -477,7 +493,7 @@
       },
       "end": {
         "century": -7,
-        "part": "late",
+        "part": "second-half",
         "circa": false
       },
       "sources": [
@@ -488,10 +504,18 @@
         {
           "label": "Wikipedia「アッシリア」",
           "url": "https://ja.wikipedia.org/wiki/アッシリア"
+        },
+        {
+          "label": "Britannica「Josiah」",
+          "url": "https://www.britannica.com/biography/Josiah"
+        },
+        {
+          "label": "Britannica「Necho II」",
+          "url": "https://www.britannica.com/biography/Necho-II"
         }
       ],
       "notes": [
-        "アッシリアは前740年からシリアを属州にしていきました。シリア・パレスチナの支配がいつ終わったかははっきりしないため、終わりは、アッシリアが滅んだ前612年を含む前7世紀末としています。"
+        "アッシリアは前740年からシリアを属州にしていきました。前7世紀後半には南のパレスチナから退き、代わってエジプトがこの地域を治めるようになりました。支配が終わった年ははっきりしないため、終わりは前7世紀後半としています。"
       ]
     },
     {
@@ -523,7 +547,7 @@
       "name": "ヒッタイト",
       "kind": "regime",
       "start": {
-        "year": -1680,
+        "year": -1650,
         "circa": true
       },
       "end": {
@@ -534,10 +558,18 @@
         {
           "label": "Wikipedia「ヒッタイト」",
           "url": "https://ja.wikipedia.org/wiki/ヒッタイト"
+        },
+        {
+          "label": "Britannica「Anatolia」",
+          "url": "https://www.britannica.com/place/Anatolia/The-rise-and-fall-of-the-Hittites"
+        },
+        {
+          "label": "Britannica「Labarnas I」",
+          "url": "https://www.britannica.com/biography/Labarnas-I"
         }
       ],
       "notes": [
-        "ヒッタイトの建国の年は、前1680年頃、前1600年頃などと説が分かれます。ここでは、ハットゥシャの周辺に古王国を建てたとされる前1680年頃にしています。"
+        "ヒッタイトの建国の年は、伝承で初代の王とされるラバルナ1世の即位（前1680年頃）とする見方と、ハットゥシリ1世の即位（前1650年頃）とする見方があります。ラバルナ1世については、ほとんど何もわかっていません。ここでは、同時代の記録が残る最初の王であるハットゥシリ1世が即位した前1650年頃にしています。"
       ]
     },
     {
@@ -583,10 +615,14 @@
         {
           "label": "Wikipedia「アッシリア」",
           "url": "https://ja.wikipedia.org/wiki/アッシリア"
+        },
+        {
+          "label": "Britannica「Anatolia」",
+          "url": "https://www.britannica.com/place/Anatolia/The-neo-Hittite-states-from-c-1180-to-700-bce"
         }
       ],
       "notes": [
-        "アッシリアは前8世紀末にアナトリア南東部の国々を組み込みました。支配がいつ終わったかははっきりしないため、終わりは、アッシリアが滅んだ前612年を含む前7世紀末としています。"
+        "アッシリアは前8世紀末にアナトリア南東部の国々を組み込みました。北のタバルなどは前7世紀の初めに離れましたが、南のクエ（キリキアの平野）は、アッシリアが滅んだ前612年の後に新バビロニアのものになりました。ここでは、終わりを前7世紀末としています。"
       ]
     },
     {
@@ -609,10 +645,14 @@
         {
           "label": "Wikipedia「古アッシリア時代」",
           "url": "https://ja.wikipedia.org/wiki/古アッシリア時代"
+        },
+        {
+          "label": "K. Radner「Last Emperor or Crown Prince Forever?」（2018年）",
+          "url": "https://epub.ub.uni-muenchen.de/62014/"
         }
       ],
       "notes": [
-        "アッシリアの始まりには、前1975年頃とする説と前2025年頃とする説があります。ここでは、メソポタミアの歴史で伝統的に使われている中年代説に合わせて、前2025年頃にしています。終わりは、首都ニネヴェが新バビロニアとメディアに攻め落とされた前612年にしています。ハランに逃れた政権が前609年まで残りましたが、ここでは首都が落ちた年を滅亡の年としています。"
+        "アッシリアの始まりには、前1975年頃とする説と前2025年頃とする説があります。ここでは、メソポタミアの歴史で伝統的に使われている中年代説に合わせて、前2025年頃にしています。終わりは、首都ニネヴェが新バビロニアとメディアに攻め落とされた前612年にしています。この年には、正式に即位した最後の王も亡くなりました。その後もハランに逃れた王が前609年まで抵抗を続けましたが、正式な王として即位することはできませんでした。"
       ]
     },
     {
@@ -688,10 +728,18 @@
         {
           "label": "Wikipedia「カッシート人」",
           "url": "https://ja.wikipedia.org/wiki/カッシート人"
+        },
+        {
+          "label": "Britannica「History of Mesopotamia」",
+          "url": "https://www.britannica.com/place/Mesopotamia-historical-region-Asia/Mesopotamia-to-the-end-of-the-Achaemenian-period"
+        },
+        {
+          "label": "コトバンク「カッシート」",
+          "url": "https://kotobank.jp/word/かっしーと-3209288"
         }
       ],
       "notes": [
-        "カッシートがバビロニアを治め始めた時期ははっきりしません。ここでは、勢力を広げ始めた前16世紀からにしています。"
+        "カッシートがバビロニアを治め始めた年ははっきりしません。前1595年頃にバビロン第1王朝が倒れた後、カッシートがバビロンに王朝を開き、その後に南部も従えました。ここでは、前16世紀からにしています。"
       ]
     },
     {
@@ -781,7 +829,7 @@
       },
       "end": {
         "century": -7,
-        "part": "late",
+        "part": "second-half",
         "circa": false
       },
       "sources": [
@@ -792,10 +840,18 @@
         {
           "label": "Wikipedia「アッシリア」",
           "url": "https://ja.wikipedia.org/wiki/アッシリア"
+        },
+        {
+          "label": "Encyclopaedia Iranica「Media」",
+          "url": "https://www.iranicaonline.org/articles/media/"
+        },
+        {
+          "label": "Encyclopaedia Iranica「Assyria i」",
+          "url": "https://www.iranicaonline.org/articles/assyria-i/"
         }
       ],
       "notes": [
-        "アッシリアは前8世紀半ばにイラン西部を従え、属州を置きました。支配がいつ終わったかははっきりしないため、終わりは、アッシリアが滅んだ前612年を含む前7世紀末としています。"
+        "アッシリアは前8世紀半ばにイラン西部を従え、属州を置きました。前672年頃にメディアが背いて自立した後も、いくつかの属州はしばらく保ちました。いつまで保ったかははっきりしないため、終わりは前7世紀後半としています。"
       ]
     },
     {
@@ -914,10 +970,18 @@
         {
           "label": "Wikipedia「ノルマン朝」",
           "url": "https://ja.wikipedia.org/wiki/ノルマン朝"
+        },
+        {
+          "label": "英国王室「The Normans」",
+          "url": "https://www.royal.uk/normans"
+        },
+        {
+          "label": "コトバンク「ノルマン朝」",
+          "url": "https://kotobank.jp/word/のるまん朝-3163065"
         }
       ],
       "notes": [
-        "ノルマン朝の終わりには、ヘンリー1世が亡くなった1135年とする考え方と、続くスティーブン（ブロワ朝）の治世も含める考え方があります。ここでは、スティーブンの治世も含めて、プランタジネット朝が始まる1154年までにしています。"
+        "ノルマン朝の終わりを、ヘンリー1世が亡くなった1135年とする見方もあります。続くスティーブン王がブロワ家の出身だからです。ここでは、スティーブン王までをノルマン朝に含める一般的な区切りに従い、ヘンリー2世がプランタジネット朝を開く1154年までにしています。"
       ]
     },
     {
