@@ -1,10 +1,19 @@
 // 年の表示形式（spec §6）
 import { COPY } from "../app/copy";
 import type { Year } from "../data/timeline";
+import { sameYear } from "../data/year";
 
-export function formatYear({ year, circa }: Year): string {
-  const text = year < 0 ? `前${-year}` : String(year);
-  return circa ? `${text}頃` : text;
+function signed(n: number): string {
+  return n < 0 ? `${COPY.before}${-n}` : String(n);
+}
+
+export function formatYear(value: Year): string {
+  const circa = value.circa ? COPY.circa : "";
+  if ("year" in value) return `${signed(value.year)}${circa}`;
+  const [n, unit] =
+    "century" in value ? [value.century, COPY.century] : [value.millennium, COPY.millennium];
+  const part = value.part ? COPY.parts[value.part] : "";
+  return `${signed(n)}${unit}${part}${circa}`;
 }
 
 // 期間をいくつか並べるときは「、」で区切り、2 つずつ改行する（行の終わりにも「、」を付ける）
@@ -23,6 +32,6 @@ export function formatPeriodLines(periods: { start: Year; end: Year | null }[]):
 // 終わりが null なら現在まで。開始と終了が同じ年なら 1 つだけ出す
 export function formatPeriod(start: Year, end: Year | null): string {
   if (end === null) return `${formatYear(start)}–${COPY.present}`;
-  if (start.year === end.year && start.circa === end.circa) return formatYear(start);
+  if (sameYear(start, end)) return formatYear(start);
   return `${formatYear(start)}–${formatYear(end)}`;
 }
