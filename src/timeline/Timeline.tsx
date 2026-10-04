@@ -207,6 +207,16 @@ function barClass(index: number): string {
   return `absolute overflow-hidden rounded-sm text-on-bar ${index % 2 === 0 ? "bg-bar-a" : "bg-bar-b"}`;
 }
 
+// 幅のある端は、外側で透明になり、確かな区間の端で棒の色になるグラデーションで描く（spec §4）。
+// 棒の色の class（bg-bar-a・bg-bar-b）より、ここで指定した背景が優先される
+function fadeStyle(index: number, bar: BarLayout, direction: "right" | "bottom"): CSSProperties {
+  if (bar.fadeStart === 0 && bar.fadeEnd === 0) return {};
+  const color = `var(--color-bar-${index % 2 === 0 ? "a" : "b"})`;
+  return {
+    background: `linear-gradient(to ${direction}, transparent 0px, ${color} ${bar.fadeStart}px, ${color} calc(100% - ${bar.fadeEnd}px), transparent 100%)`,
+  };
+}
+
 const textStyle: CSSProperties = { lineHeight: `${LINE_HEIGHT}px` };
 
 // 選んだ棒の枠とキーボードのフォーカスの枠は primary の 2px（spec §4）
@@ -307,6 +317,8 @@ function Horizontal({
                   top: LANE_NAME_HEIGHT + bar.cross,
                   height: BAR_THICKNESS,
                   paddingTop: (BAR_THICKNESS - LINE_HEIGHT * 2) / 2,
+                  paddingLeft: `calc(${bar.fadeStart}px + var(--spacing-xs))`,
+                  ...fadeStyle(i, bar, "right"),
                 }}
               >
                 {bar.inside && (
@@ -415,7 +427,8 @@ function Vertical({
                   height: Math.max(bar.length - 2, 1),
                   left: bar.cross + TRACK_GAP,
                   width: VERTICAL_TRACK_WIDTH,
-                  paddingTop: 1,
+                  paddingTop: 1 + bar.fadeStart,
+                  ...fadeStyle(i, bar, "bottom"),
                 }}
               >
                 {bar.inside === "row" && (

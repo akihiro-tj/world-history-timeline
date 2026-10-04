@@ -3,7 +3,7 @@ export const COPY = {
   viewLabel: "表示",
   groupSubject: "主題",
   groupLane: "国・地域",
-  subjectRegime: "国家・体制",
+  subjectRegime: "国家・体制など",
   subjectGovernment: "政権",
   subjectMonarch: "君主",
   subjectLeader: "首相・大統領など",

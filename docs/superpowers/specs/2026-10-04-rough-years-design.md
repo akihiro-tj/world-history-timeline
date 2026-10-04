@@ -1,7 +1,7 @@
 # 世紀単位の年と主題「国家・体制など」 設計書
 
 - 作成日: 2026-10-04
-- 状態: レビュー待ち
+- 状態: 承認済み
 - 前提: [2026-09-29-subjects-and-periods-design.md](./2026-09-29-subjects-and-periods-design.md)（以下「主題の spec」）、[2026-10-03-source-panel-design.md](./2026-10-03-source-panel-design.md)（以下「出典パネルの spec」）、data リポの spec `2026-10-04-ancient-orient-scope-design.md`（以下「data リポの spec」）
 
 ## 1. 目的
