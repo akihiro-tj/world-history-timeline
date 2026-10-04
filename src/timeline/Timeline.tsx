@@ -363,7 +363,9 @@ function Vertical({
   const years = ticks(range);
   return (
     <div
-      className="grid"
+      // 幅を列の合計（画面より狭ければ画面の幅）にする。画面の幅のままだと、横にスクロールしたとき
+      // 左端に貼り付けた年の目盛りが、グリッドの右端に押されて流れていく
+      className="grid w-fit min-w-full"
       style={{
         // 列の最小幅は、見出しの幅と、各列の section の min-width（棒とラベルを並べた幅）の大きいほう。
         // 見出しを切らず、棒とラベルが隣の列にはみ出さない
