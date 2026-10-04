@@ -4,7 +4,7 @@ import { bounds, PARTS, type Part, type Year } from "./year";
 
 export type { Year } from "./year";
 export type Lane = { id: string; name: string; dynasties: string[]; reigns: string[] };
-// 種類: 国家・体制（王朝・共和政・帝政など）か、政権（体制の中の特定の政府・統治機関・内閣）か
+// 種類: 国家・体制など（王朝・共和政・帝政・文明など）か、政権（体制の中の特定の政府・統治機関・内閣）か
 export const DYNASTY_KINDS = ["regime", "government"] as const;
 export type DynastyKind = (typeof DYNASTY_KINDS)[number];
 // 出典: 値を取った Wikipedia の記事。label は画面に出す名前

@@ -1,7 +1,7 @@
 // 表示（主題／国・地域）に応じて、年表に並べる行と棒の元データを取り出す
 import type { DynastyKind, Lane, Role, TimelineData, Year } from "../data/timeline";
 
-// 王朝は種類（国家・体制／政権）ごとに、在位は役割（君主／首脳）ごとに別の主題にする
+// 王朝は種類（国家・体制など／政権）ごとに、在位は役割（君主／首脳）ごとに別の主題にする
 export type Subject = DynastyKind | Role;
 // 終わりが null なら現在まで続いている。group が同じ棒は同じ人の再登板で、ラベルを 1 つにまとめる
 export type Span = {
