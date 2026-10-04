@@ -1,4 +1,4 @@
-// 年表データ（data リポの成果物）の型と、JSON を読み込むときの厳密な検証
+// 年表データの型と、JSON を読み込むときの厳密な検証
 
 import { bounds, PARTS, type Part, type Year } from "./year";
 

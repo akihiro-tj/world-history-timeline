@@ -1,4 +1,4 @@
-// 年の値と、時間軸上の幅。年・世紀・千年紀のどれか。紀元前は負の数（data リポの spec §5）
+// 年の値と、時間軸上の幅。年・世紀・千年紀のどれか。紀元前は負の数
 
 // 世紀・千年紀の部分: 初め／半ば／末（3 等分）、前半／後半（2 等分）
 export const PARTS = ["early", "middle", "late", "first-half", "second-half"] as const;

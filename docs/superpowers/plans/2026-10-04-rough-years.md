@@ -8,15 +8,15 @@
 
 **Tech Stack:** React 19、TypeScript、Vite、Tailwind CSS 4、Vitest（node 環境）、Biome、pnpm
 
-**Spec:** `docs/superpowers/specs/2026-10-04-rough-years-design.md`。データの形は data リポの `docs/superpowers/specs/2026-10-04-ancient-orient-scope-design.md` §5
+**Spec:** `docs/superpowers/specs/2026-10-04-rough-years-design.md`
 
 ## Global Constraints
 
 - コミットメッセージは英語。コード内コメント・テスト名・ドキュメントは日本語
 - ブランチ `claude/ancient-orient-design` で作業する。main に直接コミットしない
 - UI 文言は spec §5・§6 のものだけ。主題の名前は「国家・体制など」。部分の文字は 初め・半ば・末・前半・後半、単位は 世紀・千年紀、「頃」は部分の後
-- `Year` の形・幅の決め方は data リポの spec §5 と同じ（紀元前 n 世紀は `[-100n, -100n + 100]`、紀元後 n 世紀は `[100(n − 1), 100n]`、千年紀は 1000 年単位、3 等分・2 等分、端数は `Math.round`）
-- `src/data/timeline.json` は変えない（古代オリエントのデータは、この計画のマージ後に data リポから入れる）
+- `Year` の幅の決め方（紀元前 n 世紀は `[-100n, -100n + 100]`、紀元後 n 世紀は `[100(n − 1), 100n]`、千年紀は 1000 年単位、3 等分・2 等分、端数は `Math.round`）
+- `src/data/timeline.json` は変えない
 - 各タスクの終わりに `pnpm exec biome ci .`・`pnpm typecheck`・`pnpm test`・`pnpm build` がすべて通る
 - テストの期待値を観測値に合わせて書き換えない。計画と食い違ったらブロックとして報告する
 
@@ -139,7 +139,7 @@ describe("sameYear", () => {
 - [ ] **Step 3: `src/data/year.ts` を書く**
 
 ```ts
-// 年の値と、時間軸上の幅。年・世紀・千年紀のどれか。紀元前は負の数（data リポの spec §5）
+// 年の値と、時間軸上の幅。年・世紀・千年紀のどれか。紀元前は負の数
 
 // 世紀・千年紀の部分: 初め／半ば／末（3 等分）、前半／後半（2 等分）
 export const PARTS = ["early", "middle", "late", "first-half", "second-half"] as const;
