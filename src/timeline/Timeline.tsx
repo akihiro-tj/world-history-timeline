@@ -363,7 +363,10 @@ function Vertical({
   const years = ticks(range);
   return (
     <div
-      className="grid"
+      // 幅を列の合計（画面より狭ければ画面の幅）にする。画面の幅のままだと、横にスクロールしたとき
+      // 左端に貼り付けた年の目盛りが、グリッドの右端に押されて流れていく
+      // 年の目盛りの右に区切り線を引くので、最初の列（見出しと本体）には左の線を引かない（2 本重ねない）
+      className="grid w-fit min-w-full [&>h2:first-of-type]:border-l-0 [&>section:first-of-type]:border-l-0"
       style={{
         // 列の最小幅は、見出しの幅と、各列の section の min-width（棒とラベルを並べた幅）の大きいほう。
         // 見出しを切らず、棒とラベルが隣の列にはみ出さない
@@ -371,7 +374,7 @@ function Vertical({
       }}
     >
       <div
-        className="sticky top-0 left-0 z-30 border-b border-border bg-surface"
+        className="sticky top-0 left-0 z-30 border-r border-b border-border bg-surface"
         style={{ height: HEADER_HEIGHT }}
       />
       {lanes.map(({ lane }) => (
@@ -383,7 +386,11 @@ function Vertical({
           <span className="whitespace-nowrap">{lane.name}</span>
         </h2>
       ))}
-      <div className="sticky left-0 z-10 bg-surface" style={{ height: length }}>
+      {/* 年の目盛りの右の区切り線。横向きの目盛りの下の線と同じく、横にスクロールしても残る */}
+      <div
+        className="sticky left-0 z-10 border-r border-border bg-surface"
+        style={{ height: length }}
+      >
         {years.map((year) => (
           <span
             key={year}
