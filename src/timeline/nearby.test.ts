@@ -1,10 +1,18 @@
 import { describe, expect, it } from "vitest";
 import type { BarLayout } from "./layout";
-import { nearbyBars, visibleRange } from "./nearby";
+import { cueTarget, nearbyBars, visibleRange } from "./nearby";
 
 // テストに要る項目だけを持つ棒
 const bar = (id: string, offset: number, length: number, track = 0, reach = offset + length) =>
-  ({ span: { id }, offset, length, track, reach }) as unknown as BarLayout;
+  ({
+    span: { id },
+    offset,
+    length,
+    track,
+    reach,
+    fadeStart: 0,
+    fadeEnd: 0,
+  }) as unknown as BarLayout;
 const ids = (result: ReturnType<typeof nearbyBars>) =>
   result && { before: result.before?.span.id ?? null, after: result.after?.span.id ?? null };
 
@@ -57,5 +65,18 @@ describe("nearbyBars", () => {
   it("棒が 1 本もない行や、見えている範囲の長さがないときは null", () => {
     expect(nearbyBars([], { start: 0, end: 300 })).toBeNull();
     expect(nearbyBars(bars, { start: 650, end: 640 })).toBeNull();
+  });
+});
+
+describe("cueTarget", () => {
+  it("後ろの案内は棒の始まり、前の案内は棒の終わり", () => {
+    expect(cueTarget(bar("a", 500, 100), "after")).toBe(500);
+    expect(cueTarget(bar("a", 500, 100), "before")).toBe(600);
+  });
+
+  it("端をぼかした棒は、ぼかしの内側（確かな区間の端）", () => {
+    const rough = { ...bar("a", 500, 400), fadeStart: 100, fadeEnd: 200 } as BarLayout;
+    expect(cueTarget(rough, "after")).toBe(600);
+    expect(cueTarget(rough, "before")).toBe(700);
   });
 });

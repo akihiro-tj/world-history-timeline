@@ -27,7 +27,7 @@ import {
   VERTICAL_TRACK_WIDTH,
   yearToOffset,
 } from "./layout";
-import { type Nearby, nearbyBars, visibleRange } from "./nearby";
+import { cueTarget, type Nearby, nearbyBars, visibleRange } from "./nearby";
 import { centerScroll, centerYear, scrollStartFor } from "./scroll";
 import type { Row, Span } from "./spans";
 import { useTextMeasure } from "./useTextMeasure";
@@ -318,37 +318,42 @@ type SelectProps = {
   onSelect: (row: Row, span: Span, element: HTMLElement) => void;
 };
 
-// 棒の外に出すラベル。引き出し線（横向きは左、縦向きは上の罫線）で棒とつなぐ
+// 棒の外に出すラベル。引き出し線（横向きは左、縦向きは上の罫線）で棒とつなぐ。
+// 棒と同じ長さの層（pathStyle）の中で貼り付け（labelStyle）、棒が画面にかかっているあいだ年表の端に残す
 function OutsideLabel({
   bar,
   className,
-  style,
+  pathStyle,
+  labelStyle,
   selected,
   onSelect,
 }: {
   bar: BarLayout;
   className: string;
-  style: CSSProperties;
+  pathStyle: CSSProperties;
+  labelStyle: CSSProperties;
   selected: boolean;
   onSelect: (element: HTMLElement) => void;
 }) {
   return (
-    // 同じ項目の棒がキーボードで選べるので、ラベルは Tab の順に入れない
-    <button
-      type="button"
-      tabIndex={-1}
-      data-selected={selected}
-      onClick={(event) => onSelect(event.currentTarget)}
-      className={`absolute whitespace-nowrap border-muted font-caption text-caption text-on-surface ${selectableClass} ${className}`}
-      style={{ ...textStyle, ...style }}
-    >
-      <span className="block">{bar.span.name}</span>
-      {bar.periodLines.map((line) => (
-        <span key={line} className="block text-muted">
-          {line}
-        </span>
-      ))}
-    </button>
+    <div className="pointer-events-none absolute" style={pathStyle}>
+      {/* 同じ項目の棒がキーボードで選べるので、ラベルは Tab の順に入れない */}
+      <button
+        type="button"
+        tabIndex={-1}
+        data-selected={selected}
+        onClick={(event) => onSelect(event.currentTarget)}
+        className={`pointer-events-auto sticky block w-max whitespace-nowrap border-muted font-caption text-caption text-on-surface ${selectableClass} ${className}`}
+        style={{ ...textStyle, ...labelStyle }}
+      >
+        <span className="block">{bar.span.name}</span>
+        {bar.periodLines.map((line) => (
+          <span key={line} className="block text-muted">
+            {line}
+          </span>
+        ))}
+      </button>
+    </div>
   );
 }
 
@@ -357,7 +362,7 @@ type CueProps = {
   onJump: (position: number) => void;
 };
 
-// いちばん近い棒の案内。後ろの案内は棒の始まりへ、前の案内は棒の終わりへ飛ぶ
+// いちばん近い棒の案内。後ろの案内は棒の始まりへ、前の案内は棒の終わりへ飛ぶ（cueTarget）
 function Cue({
   bar,
   side,
@@ -389,7 +394,7 @@ function Cue({
       type="button"
       tabIndex={-1}
       aria-label={`${bar.span.name}${COPY.cueSuffix}`}
-      onClick={() => onJump(side === "after" ? bar.offset : bar.offset + bar.length)}
+      onClick={() => onJump(cueTarget(bar, side))}
       className={`pointer-events-auto sticky flex max-w-full cursor-pointer items-center ${className}`}
       style={{ height: BAR_THICKNESS, ...style }}
     >
@@ -483,11 +488,12 @@ function Horizontal({
                     selected={isSelected(lane, bar.span)}
                     onSelect={(element) => onSelect(lane, bar.span, element)}
                     className="border-l"
-                    style={{
+                    pathStyle={{
                       left: bar.offset + 1,
                       top: LANE_NAME_HEIGHT + bar.labelCross,
-                      paddingLeft: LABEL_GAP / 2,
+                      width: Math.max(bar.length - 2, 1),
                     }}
+                    labelStyle={{ left: 0, paddingLeft: LABEL_GAP / 2 }}
                   />
                 ),
             )}
@@ -640,11 +646,12 @@ function Vertical({
                     selected={isSelected(lane, bar.span)}
                     onSelect={(element) => onSelect(lane, bar.span, element)}
                     className="border-t"
-                    style={{
+                    pathStyle={{
                       top: bar.offset + 1,
                       left: bar.labelCross + TRACK_GAP,
-                      paddingTop: LABEL_GAP / 2,
+                      height: Math.max(bar.length - 2, 1),
                     }}
+                    labelStyle={{ top: HEADER_HEIGHT + 1, paddingTop: LABEL_GAP / 2 }}
                   />
                 ),
             )}

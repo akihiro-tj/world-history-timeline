@@ -275,10 +275,13 @@ export function layoutLane(
     if (bar.inside || role === "secondary") continue;
     const label = outsideLabelSize(orientation, text, bar.periodLines.length);
     const alongRange = { start: bar.offset, end: bar.offset + label.along };
-    const cross = placeLabel(bar.cross + size + TRACK_GAP, alongRange, label.cross, obstacles);
+    // ラベルは棒が画面にかかっているあいだ年表の端に貼り付いて、棒の終わりまで動くので、
+    // 棒の始まりから終わりまで（ラベルが棒より長ければラベルの終わりまで）を空けて置く
+    const path = { start: bar.offset, end: Math.max(alongRange.end, bar.offset + bar.length) };
+    const cross = placeLabel(bar.cross + size + TRACK_GAP, path, label.cross, obstacles);
     obstacles.push({
-      along: alongRange.start,
-      alongEnd: alongRange.end,
+      along: path.start,
+      alongEnd: path.end,
       cross,
       crossEnd: cross + label.cross,
     });

@@ -178,6 +178,50 @@ describe("assignTracks", () => {
 });
 
 describe("layoutLane", () => {
+  it("棒の外のラベルは、貼り付いて動く棒の始まりから終わりまでを空けて置く", () => {
+    // 1 文字 10px。縦向きで a の名前（11 文字）は棒の幅に入らず、外に出る。b は a と重なるので 2 段目
+    const { bars } = layoutLane(
+      [span("a", "長い名前の王朝ですよね", 1000, 1300), span("b", "B", 1200, 1210)],
+      { from: 1000, to: 1400 },
+      "vertical",
+      measure,
+      2026,
+    );
+    const [a, b] = bars;
+    if (!a || !b || a.labelCross === null || b.labelCross === null) {
+      throw new Error("a と b のラベルが棒の外に出ていない");
+    }
+    // a のラベルが動く範囲（棒の始まりから終わりまで、ラベルの幅 116px）
+    const path = {
+      along: a.offset,
+      alongEnd: a.offset + a.length,
+      cross: a.labelCross,
+      crossEnd: a.labelCross + 116,
+    };
+    const hits = (rect: { along: number; alongEnd: number; cross: number; crossEnd: number }) =>
+      rect.along < path.alongEnd &&
+      path.along < rect.alongEnd &&
+      rect.cross < path.crossEnd &&
+      path.cross < rect.crossEnd;
+    // b の棒と b のラベル（幅 96px、高さ 38px）に重ならない
+    expect(
+      hits({
+        along: b.offset,
+        alongEnd: b.offset + b.length,
+        cross: b.cross,
+        crossEnd: b.cross + 112,
+      }),
+    ).toBe(false);
+    expect(
+      hits({
+        along: b.offset,
+        alongEnd: b.offset + 38,
+        cross: b.labelCross,
+        crossEnd: b.labelCross + 96,
+      }),
+    ).toBe(false);
+  });
+
   it("reach は棒の外のラベルを含めた時間軸方向の終わり", () => {
     // 1 文字 10px。「長い名前の王朝」（70px）は 20 年（40px）の棒に入らず、外に出る
     const { bars } = layoutLane(
