@@ -23,3 +23,9 @@ export function scrollStartFor(
   const start = (year - range.from) * PX_PER_YEAR - (viewport - axisOffset) / 2;
   return Math.min(Math.max(start, 0), Math.max(maxScroll, 0));
 }
+
+// position（時間軸方向の px）が見えている範囲（長さ visibleLength）の中ほどに来るスクロール量。
+// スクロールできる範囲 [0, maxScroll] に収める
+export function centerScroll(position: number, visibleLength: number, maxScroll: number): number {
+  return Math.min(Math.max(position - visibleLength / 2, 0), Math.max(maxScroll, 0));
+}

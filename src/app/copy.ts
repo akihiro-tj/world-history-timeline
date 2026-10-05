@@ -28,4 +28,6 @@ export const COPY = {
   noteMark: "※",
   close: "閉じる",
   newTab: "（新しいタブで開きます）",
+  // いちばん近い棒の案内の読み上げ。棒の名前の後ろに付ける
+  cueSuffix: "へ移動",
 } as const;

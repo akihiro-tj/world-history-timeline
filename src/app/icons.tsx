@@ -75,3 +75,28 @@ export function CloseIcon() {
     </svg>
   );
 }
+
+// いちばん近い棒の案内の向きを示すシェブロン（文字の矢印は OS やフォントで見え方が変わるため）
+const CHEVRON_PATHS = {
+  left: "M10 3 5 8l5 5",
+  right: "M6 3l5 5-5 5",
+  up: "M3 10l5-5 5 5",
+  down: "M3 6l5 5 5-5",
+} as const;
+
+export function ChevronIcon({ direction }: { direction: keyof typeof CHEVRON_PATHS }) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className="size-3 shrink-0 text-muted"
+    >
+      <path d={CHEVRON_PATHS[direction]} />
+    </svg>
+  );
+}

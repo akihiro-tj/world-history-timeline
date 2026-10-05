@@ -1,6 +1,15 @@
 // 年表の描画。layout.ts の結果（along / cross）を縦か横に当てはめる
-import { type CSSProperties, useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import {
+  type CSSProperties,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { COPY } from "../app/copy";
+import { ChevronIcon } from "../app/icons";
 import { centeredScroll, revealDelta, unionBox } from "../panel/reveal";
 import { formatYear } from "./format";
 import {
@@ -18,7 +27,8 @@ import {
   VERTICAL_TRACK_WIDTH,
   yearToOffset,
 } from "./layout";
-import { centerYear, scrollStartFor } from "./scroll";
+import { cueTarget, type Nearby, nearbyBars, visibleRange } from "./nearby";
+import { centerScroll, centerYear, scrollStartFor } from "./scroll";
 import type { Row, Span } from "./spans";
 import { useTextMeasure } from "./useTextMeasure";
 
@@ -103,6 +113,40 @@ export function Timeline({
     }
   }, [orientation, range, lanes, axisOffset]);
 
+  // 見えている範囲が空の行に出す、いちばん近い棒の案内（spec §4）。どの配置（lanes）に対する案内かも持ち、
+  // 向きや表示を切り替えた直後に、古い配置の棒を指した案内を出さない
+  const [cues, setCues] = useState<Cues>({ lanes: null, rows: [], bottomInset: 0 });
+  const lastCueRef = useRef<{ lanes: LaneEntry[] | null; key: string }>({ lanes: null, key: "" });
+
+  const updateCues = useCallback(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller || !lanes) return;
+    const range =
+      orientation === "vertical"
+        ? visibleRange(scroller.scrollTop, scroller.clientHeight, visibleRatio, HEADER_HEIGHT)
+        : visibleRange(scroller.scrollLeft, scroller.clientWidth, 1, 0);
+    const rows = lanes.map(({ layout }) => nearbyBars(layout.bars, range));
+    // 縦向きの下の案内は、スマホのシートに隠れない位置まで持ち上げる
+    const bottomInset = Math.round(scroller.clientHeight * (1 - visibleRatio));
+    // スクロールのたびに描き直さないよう、指す棒が変わったときだけ状態を変える
+    const key = `${rows
+      .map((row) => (row ? `${row.before?.span.id ?? ""}>${row.after?.span.id ?? ""}` : "-"))
+      .join("|")}#${bottomInset}`;
+    if (lastCueRef.current.lanes === lanes && lastCueRef.current.key === key) return;
+    lastCueRef.current = { lanes, key };
+    setCues({ lanes, rows, bottomInset });
+  }, [lanes, orientation, visibleRatio]);
+
+  // 配置や見えている割合が変わったとき（中央の年を合わせた後）と、年表の大きさが変わったときに計算し直す
+  useLayoutEffect(() => {
+    updateCues();
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    const observer = new ResizeObserver(updateCues);
+    observer.observe(scroller);
+    return () => observer.disconnect();
+  }, [updateCues]);
+
   // 選んだ棒が見えていなければ、見える位置までスクロールする（パネルが開いた後の大きさで測る）
   useEffect(() => {
     const scroller = scrollerRef.current;
@@ -154,7 +198,35 @@ export function Timeline({
     const scroller = scrollerRef.current;
     if (!scroller || !range) return;
     centerRef.current = currentCenter(scroller, orientation, axisOffset, range);
+    updateCues();
   }
+
+  // 案内の棒の端（position）を、見えている範囲の中ほどまで滑らかにスクロールする（spec §4）
+  function jumpTo(position: number) {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? "auto"
+      : "smooth";
+    if (orientation === "vertical") {
+      const { start, end } = visibleRange(0, scroller.clientHeight, visibleRatio, HEADER_HEIGHT);
+      scroller.scrollTo({
+        top: centerScroll(position, end - start, scroller.scrollHeight - scroller.clientHeight),
+        behavior,
+      });
+    } else {
+      scroller.scrollTo({
+        left: centerScroll(
+          position,
+          scroller.clientWidth,
+          scroller.scrollWidth - scroller.clientWidth,
+        ),
+        behavior,
+      });
+    }
+  }
+
+  const cueRows = cues.lanes === lanes ? cues.rows : [];
 
   return (
     <section
@@ -175,9 +247,24 @@ export function Timeline({
       {range &&
         lanes &&
         (orientation === "horizontal" ? (
-          <Horizontal range={range} lanes={lanes} isSelected={isSelected} onSelect={onSelect} />
+          <Horizontal
+            range={range}
+            lanes={lanes}
+            isSelected={isSelected}
+            onSelect={onSelect}
+            cues={cueRows}
+            onJump={jumpTo}
+          />
         ) : (
-          <Vertical range={range} lanes={lanes} isSelected={isSelected} onSelect={onSelect} />
+          <Vertical
+            range={range}
+            lanes={lanes}
+            isSelected={isSelected}
+            onSelect={onSelect}
+            cues={cueRows}
+            onJump={jumpTo}
+            bottomInset={cues.bottomInset}
+          />
         ))}
       {endSpaceRatio > 0 && (
         <div aria-hidden="true" style={{ height: `${endSpaceRatio * 100}%` }} />
@@ -198,13 +285,15 @@ function currentCenter(
 }
 
 type LaneEntry = { lane: Row; layout: LaneLayout };
+type Cues = { lanes: LaneEntry[] | null; rows: (Nearby | null)[]; bottomInset: number };
 
 function contentLength(range: TimeRange, lanes: LaneEntry[]): number {
   return Math.max(rangeLength(range), ...lanes.map(({ layout }) => layout.extent));
 }
 
+// 棒は overflow: clip にする（hidden だと棒がスクロールの入れ物になり、中の文字の sticky が年表のスクロールに効かない）
 function barClass(index: number): string {
-  return `absolute overflow-hidden rounded-sm text-on-bar ${index % 2 === 0 ? "bg-bar-a" : "bg-bar-b"}`;
+  return `absolute overflow-clip rounded-sm text-on-bar ${index % 2 === 0 ? "bg-bar-a" : "bg-bar-b"}`;
 }
 
 // 幅のある端は、外側で透明になり、確かな区間の端で棒の色になるグラデーションで描く（spec §4）。
@@ -229,36 +318,93 @@ type SelectProps = {
   onSelect: (row: Row, span: Span, element: HTMLElement) => void;
 };
 
-// 棒の外に出すラベル。引き出し線（横向きは左、縦向きは上の罫線）で棒とつなぐ
+// 棒の外に出すラベル。引き出し線（横向きは左、縦向きは上の罫線）で棒とつなぐ。
+// 棒と同じ長さの層（pathStyle）の中で貼り付け（labelStyle）、棒が画面にかかっているあいだ年表の端に残す
 function OutsideLabel({
   bar,
   className,
-  style,
+  pathStyle,
+  labelStyle,
   selected,
   onSelect,
 }: {
   bar: BarLayout;
   className: string;
-  style: CSSProperties;
+  pathStyle: CSSProperties;
+  labelStyle: CSSProperties;
   selected: boolean;
   onSelect: (element: HTMLElement) => void;
 }) {
   return (
-    // 同じ項目の棒がキーボードで選べるので、ラベルは Tab の順に入れない
+    <div className="pointer-events-none absolute" style={pathStyle}>
+      {/* 同じ項目の棒がキーボードで選べるので、ラベルは Tab の順に入れない */}
+      <button
+        type="button"
+        tabIndex={-1}
+        data-selected={selected}
+        onClick={(event) => onSelect(event.currentTarget)}
+        className={`pointer-events-auto sticky block w-max whitespace-nowrap border-muted font-caption text-caption text-on-surface ${selectableClass} ${className}`}
+        style={{ ...textStyle, ...labelStyle }}
+      >
+        <span className="block">{bar.span.name}</span>
+        {bar.periodLines.map((line) => (
+          <span key={line} className="block text-muted">
+            {line}
+          </span>
+        ))}
+      </button>
+    </div>
+  );
+}
+
+type CueProps = {
+  cues: (Nearby | null)[];
+  onJump: (position: number) => void;
+};
+
+// いちばん近い棒の案内。前の案内でも後ろの案内でも、棒の始まりへ飛ぶ（cueTarget）
+function Cue({
+  bar,
+  side,
+  orientation,
+  className,
+  style,
+  onJump,
+}: {
+  bar: BarLayout;
+  side: "before" | "after";
+  orientation: Orientation;
+  className: string;
+  style: CSSProperties;
+  onJump: (position: number) => void;
+}) {
+  const horizontal = orientation === "horizontal";
+  const direction = horizontal
+    ? side === "before"
+      ? "left"
+      : "right"
+    : side === "before"
+      ? "up"
+      : "down";
+  const icon = <ChevronIcon direction={direction} />;
+  const trailing = horizontal && side === "after";
+  return (
+    // 着くと案内が消え、フォーカスの行き場がなくなるので、Tab の順に入れない
     <button
       type="button"
       tabIndex={-1}
-      data-selected={selected}
-      onClick={(event) => onSelect(event.currentTarget)}
-      className={`absolute whitespace-nowrap border-muted font-caption text-caption text-on-surface ${selectableClass} ${className}`}
-      style={{ ...textStyle, ...style }}
+      aria-label={`${bar.span.name}${COPY.cueSuffix}`}
+      onClick={() => onJump(cueTarget(bar))}
+      className={`pointer-events-auto sticky flex max-w-full cursor-pointer items-center ${className}`}
+      style={{ height: BAR_THICKNESS, ...style }}
     >
-      <span className="block">{bar.span.name}</span>
-      {bar.periodLines.map((line) => (
-        <span key={line} className="block text-muted">
-          {line}
+      <span className="flex min-w-0 items-center gap-xs rounded-sm border border-border bg-surface px-sm font-caption text-caption text-on-surface">
+        {!trailing && icon}
+        <span className="truncate" style={textStyle}>
+          {bar.span.name}
         </span>
-      ))}
+        {trailing && icon}
+      </span>
     </button>
   );
 }
@@ -268,7 +414,9 @@ function Horizontal({
   lanes,
   isSelected,
   onSelect,
-}: { range: TimeRange; lanes: LaneEntry[] } & SelectProps) {
+  cues,
+  onJump,
+}: { range: TimeRange; lanes: LaneEntry[] } & SelectProps & CueProps) {
   const length = contentLength(range, lanes);
   const years = ticks(range);
   return (
@@ -287,8 +435,9 @@ function Horizontal({
           </span>
         ))}
       </div>
-      {lanes.map(({ lane, layout }) => {
+      {lanes.map(({ lane, layout }, index) => {
         const height = LANE_NAME_HEIGHT + layout.crossExtent + TRACK_GAP * 2;
+        const cue = cues[index] ?? null;
         return (
           <section key={lane.id} className="relative border-b border-border" style={{ height }}>
             {years.map((year) => (
@@ -322,10 +471,11 @@ function Horizontal({
                 }}
               >
                 {bar.inside && (
-                  <>
+                  // 棒の始まりが左に隠れても、棒が見えているあいだは名前と期間を左端に貼り付ける
+                  <span className="sticky left-xs block w-max max-w-full">
                     <span className="block truncate">{bar.span.name}</span>
                     <span className="block truncate">{bar.periodLines[0]}</span>
-                  </>
+                  </span>
                 )}
               </button>
             ))}
@@ -338,13 +488,42 @@ function Horizontal({
                     selected={isSelected(lane, bar.span)}
                     onSelect={(element) => onSelect(lane, bar.span, element)}
                     className="border-l"
-                    style={{
+                    pathStyle={{
                       left: bar.offset + 1,
                       top: LANE_NAME_HEIGHT + bar.labelCross,
-                      paddingLeft: LABEL_GAP / 2,
+                      width: Math.max(bar.length - 2, 1),
                     }}
+                    labelStyle={{ left: 0, paddingLeft: LABEL_GAP / 2 }}
                   />
                 ),
+            )}
+            {cue && (
+              // 行の 1 段目の高さに年表の幅いっぱいの層を置き、案内を左右の端に貼り付ける
+              <div
+                className="pointer-events-none absolute left-0 z-10 flex"
+                style={{ top: LANE_NAME_HEIGHT, width: length }}
+              >
+                {cue.before && (
+                  <Cue
+                    bar={cue.before}
+                    side="before"
+                    orientation="horizontal"
+                    className="left-xs"
+                    style={{}}
+                    onJump={onJump}
+                  />
+                )}
+                {cue.after && (
+                  <Cue
+                    bar={cue.after}
+                    side="after"
+                    orientation="horizontal"
+                    className="right-xs ml-auto"
+                    style={{}}
+                    onJump={onJump}
+                  />
+                )}
+              </div>
             )}
           </section>
         );
@@ -358,7 +537,10 @@ function Vertical({
   lanes,
   isSelected,
   onSelect,
-}: { range: TimeRange; lanes: LaneEntry[] } & SelectProps) {
+  cues,
+  onJump,
+  bottomInset,
+}: { range: TimeRange; lanes: LaneEntry[]; bottomInset: number } & SelectProps & CueProps) {
   const length = contentLength(range, lanes);
   const years = ticks(range);
   return (
@@ -401,7 +583,8 @@ function Vertical({
           </span>
         ))}
       </div>
-      {lanes.map(({ lane, layout }) => {
+      {lanes.map(({ lane, layout }, index) => {
+        const cue = cues[index] ?? null;
         return (
           <section
             key={lane.id}
@@ -438,21 +621,26 @@ function Vertical({
                   ...fadeStyle(i, bar, "bottom"),
                 }}
               >
-                {bar.inside === "row" && (
-                  <span className="block truncate">
-                    {bar.span.name}
-                    <span className="ml-xs text-muted">{bar.periodLines[0]}</span>
-                  </span>
-                )}
-                {bar.inside === "stack" && (
-                  <>
-                    <span className="block">{bar.span.name}</span>
-                    {bar.periodLines.map((line) => (
-                      <span key={line} className="block text-muted">
-                        {line}
+                {bar.inside && (
+                  // 棒の始まりが行の見出しの下に隠れても、棒が見えているあいだは名前と期間を見出しの下に貼り付ける
+                  <span className="sticky block" style={{ top: HEADER_HEIGHT + 1 }}>
+                    {bar.inside === "row" && (
+                      <span className="block truncate">
+                        {bar.span.name}
+                        <span className="ml-xs text-muted">{bar.periodLines[0]}</span>
                       </span>
-                    ))}
-                  </>
+                    )}
+                    {bar.inside === "stack" && (
+                      <>
+                        <span className="block">{bar.span.name}</span>
+                        {bar.periodLines.map((line) => (
+                          <span key={line} className="block text-muted">
+                            {line}
+                          </span>
+                        ))}
+                      </>
+                    )}
+                  </span>
                 )}
               </button>
             ))}
@@ -465,13 +653,39 @@ function Vertical({
                     selected={isSelected(lane, bar.span)}
                     onSelect={(element) => onSelect(lane, bar.span, element)}
                     className="border-t"
-                    style={{
+                    pathStyle={{
                       top: bar.offset + 1,
                       left: bar.labelCross + TRACK_GAP,
-                      paddingTop: LABEL_GAP / 2,
+                      height: Math.max(bar.length - 2, 1),
                     }}
+                    labelStyle={{ top: HEADER_HEIGHT + 1, paddingTop: LABEL_GAP / 2 }}
                   />
                 ),
+            )}
+            {cue && (
+              // 列いっぱいの層を置き、上の案内は行の見出しの下、下の案内はシートの上端に貼り付ける
+              <div className="pointer-events-none absolute inset-0 z-10 flex flex-col px-xs">
+                {cue.before && (
+                  <Cue
+                    bar={cue.before}
+                    side="before"
+                    orientation="vertical"
+                    className=""
+                    style={{ top: HEADER_HEIGHT }}
+                    onJump={onJump}
+                  />
+                )}
+                {cue.after && (
+                  <Cue
+                    bar={cue.after}
+                    side="after"
+                    orientation="vertical"
+                    className="mt-auto"
+                    style={{ bottom: bottomInset }}
+                    onJump={onJump}
+                  />
+                )}
+              </div>
             )}
           </section>
         );
