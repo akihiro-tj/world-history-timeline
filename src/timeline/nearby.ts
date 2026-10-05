@@ -1,4 +1,4 @@
-// 見えている範囲が空の行に出す「次の駅」の案内（spec §4）
+// 見えている範囲が空の行に出す、いちばん近い棒の案内（spec §4）
 import type { BarLayout } from "./layout";
 
 export type Nearby = { before: BarLayout | null; after: BarLayout | null };

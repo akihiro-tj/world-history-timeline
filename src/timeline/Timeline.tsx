@@ -113,7 +113,7 @@ export function Timeline({
     }
   }, [orientation, range, lanes, axisOffset]);
 
-  // 見えている範囲が空の行に出す「次の駅」の案内（spec §4）。どの配置（lanes）に対する案内かも持ち、
+  // 見えている範囲が空の行に出す、いちばん近い棒の案内（spec §4）。どの配置（lanes）に対する案内かも持ち、
   // 向きや表示を切り替えた直後に、古い配置の棒を指した案内を出さない
   const [cues, setCues] = useState<Cues>({ lanes: null, rows: [], bottomInset: 0 });
   const lastCueRef = useRef<{ lanes: LaneEntry[] | null; key: string }>({ lanes: null, key: "" });
@@ -357,7 +357,7 @@ type CueProps = {
   onJump: (position: number) => void;
 };
 
-// 「次の駅」の案内。後ろの案内は棒の始まりへ、前の案内は棒の終わりへ飛ぶ
+// いちばん近い棒の案内。後ろの案内は棒の始まりへ、前の案内は棒の終わりへ飛ぶ
 function Cue({
   bar,
   side,

@@ -1,4 +1,4 @@
-# 棒の名前の貼り付けと「次の駅」の案内 実装計画
+# 棒の名前の貼り付けと、いちばん近い棒の案内 実装計画
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -165,7 +165,7 @@ Expected: `nearby.ts` が無い、`centerScroll` が無い、`reach` が `undefi
 `src/timeline/nearby.ts`:
 
 ```ts
-// 見えている範囲が空の行に出す「次の駅」の案内（spec §4）
+// 見えている範囲が空の行に出す、いちばん近い棒の案内（spec §4）
 import type { BarLayout } from "./layout";
 
 export type Nearby = { before: BarLayout | null; after: BarLayout | null };
@@ -256,7 +256,7 @@ git commit -m "Keep the names of long bars visible while scrolling"
 
 ---
 
-### Task 3: 「次の駅」の案内
+### Task 3: いちばん近い棒の案内
 
 **Files:**
 - Modify: `src/timeline/Timeline.tsx`, `src/app/icons.tsx`, `src/app/copy.ts`, `DESIGN.md`
@@ -267,14 +267,14 @@ git commit -m "Keep the names of long bars visible while scrolling"
 - [ ] **Step 1:** `src/app/copy.ts` に足す（spec §5）:
 
 ```ts
-  // 「次の駅」の案内の読み上げ。棒の名前の後ろに付ける
+  // いちばん近い棒の案内の読み上げ。棒の名前の後ろに付ける
   cueSuffix: "へ移動",
 ```
 
 - [ ] **Step 2:** `src/app/icons.tsx` に足す:
 
 ```tsx
-// 「次の駅」の案内の向きを示すシェブロン（文字の矢印は OS やフォントで見え方が変わるため）
+// いちばん近い棒の案内の向きを示すシェブロン（文字の矢印は OS やフォントで見え方が変わるため）
 const CHEVRON_PATHS = {
   left: "M10 3 5 8l5 5",
   right: "M6 3l5 5-5 5",
@@ -460,9 +460,9 @@ function Cue({
     rounded: "{rounded.sm}"
 ```
 
-  - Colors の `muted` に「『次の駅』の案内のシェブロン」、`border` に「『次の駅』の案内の枠」を足す
-  - Layout に「長い棒の中の名前と期間は、棒が画面にかかっているあいだ年表の端（横向きは左端、縦向きは行の見出しの下）に貼り付ける」「見えている範囲に棒が 1 つもない行には、前後のいちばん近い棒の名前を、行の端に『次の駅』の案内として貼り付ける。タップすると、その棒の端を見えている範囲の中ほどまでスクロールする」を足す
-  - Components に「`offscreen-cue`: 見えている範囲が空の行に出す『次の駅』の案内（シェブロンと棒の名前）」を足す
+  - Colors の `muted` に「いちばん近い棒の案内のシェブロン」、`border` に「いちばん近い棒の案内の枠」を足す
+  - Layout に「長い棒の中の名前と期間は、棒が画面にかかっているあいだ年表の端（横向きは左端、縦向きは行の見出しの下）に貼り付ける」「見えている範囲に棒が 1 つもない行には、前後のいちばん近い棒の名前を、行の端に案内として貼り付ける。タップすると、その棒の端を見えている範囲の中ほどまでスクロールする」を足す
+  - Components に「`offscreen-cue`: 見えている範囲が空の行に出す、いちばん近い棒の案内（シェブロンと棒の名前）」を足す
   - `pnpm tokens` を実行し、`git diff --exit-code src/app/theme.css` で差分がないことを確かめる（部品はトークンを増やさない）。`pnpm exec design.md lint DESIGN.md` が通ることを確かめる
 
 - [ ] **Step 8:** `pnpm exec biome ci . && pnpm typecheck && pnpm test && pnpm build` が通るのを確かめる
