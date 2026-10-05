@@ -69,14 +69,12 @@ describe("nearbyBars", () => {
 });
 
 describe("cueTarget", () => {
-  it("後ろの案内は棒の始まり、前の案内は棒の終わり", () => {
-    expect(cueTarget(bar("a", 500, 100), "after")).toBe(500);
-    expect(cueTarget(bar("a", 500, 100), "before")).toBe(600);
+  it("前の案内でも後ろの案内でも、棒の始まり", () => {
+    expect(cueTarget(bar("a", 500, 100))).toBe(500);
   });
 
-  it("端をぼかした棒は、ぼかしの内側（確かな区間の端）", () => {
+  it("始まりをぼかした棒は、ぼかしの内側（確かな区間の始まり）", () => {
     const rough = { ...bar("a", 500, 400), fadeStart: 100, fadeEnd: 200 } as BarLayout;
-    expect(cueTarget(rough, "after")).toBe(600);
-    expect(cueTarget(rough, "before")).toBe(700);
+    expect(cueTarget(rough)).toBe(600);
   });
 });

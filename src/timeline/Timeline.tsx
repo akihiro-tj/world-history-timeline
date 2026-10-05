@@ -362,7 +362,7 @@ type CueProps = {
   onJump: (position: number) => void;
 };
 
-// いちばん近い棒の案内。後ろの案内は棒の始まりへ、前の案内は棒の終わりへ飛ぶ（cueTarget）
+// いちばん近い棒の案内。前の案内でも後ろの案内でも、棒の始まりへ飛ぶ（cueTarget）
 function Cue({
   bar,
   side,
@@ -394,7 +394,7 @@ function Cue({
       type="button"
       tabIndex={-1}
       aria-label={`${bar.span.name}${COPY.cueSuffix}`}
-      onClick={() => onJump(cueTarget(bar, side))}
+      onClick={() => onJump(cueTarget(bar))}
       className={`pointer-events-auto sticky flex max-w-full cursor-pointer items-center ${className}`}
       style={{ height: BAR_THICKNESS, ...style }}
     >

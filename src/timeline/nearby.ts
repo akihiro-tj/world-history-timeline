@@ -45,8 +45,9 @@ export function nearbyBars(
   return { before, after };
 }
 
-// 案内をタップしたときに見えている範囲の中ほどに置く位置（px）。後ろの案内は棒の始まり、前の案内は棒の終わり。
-// 端をぼかした棒は、ぼかしの内側（確かな区間の端）にする。外側の端は透明で、着いた位置が棒ごとにずれて見えるため
-export function cueTarget(bar: BarLayout, side: "before" | "after"): number {
-  return side === "after" ? bar.offset + bar.fadeStart : bar.offset + bar.length - bar.fadeEnd;
+// 案内をタップしたときに見えている範囲の中ほどに置く位置（px）。前の案内でも後ろの案内でも棒の始まりにし、
+// 名前と期間を真ん中に出して、そこから棒が続くように見せる。始まりをぼかした棒は、ぼかしの内側（確かな区間の始まり）
+// にする。外側の端は透明で、着いた位置が棒ごとにずれて見えるため
+export function cueTarget(bar: BarLayout): number {
+  return bar.offset + bar.fadeStart;
 }
