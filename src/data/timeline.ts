@@ -7,8 +7,8 @@ export type Lane = { id: string; name: string; dynasties: string[]; reigns: stri
 // 種類: 国家・体制など（王朝・共和政・帝政・文明など）か、政権（体制の中の特定の政府・統治機関・内閣）か
 export const DYNASTY_KINDS = ["regime", "government"] as const;
 export type DynastyKind = (typeof DYNASTY_KINDS)[number];
-// 出典: 最初は値を取った Wikipedia の記事。2 つ目からは値や注記の理由の根拠にした資料で、
-// URL のない本などは url が null。label は画面に出す名前
+// 出典: 最初は値を取った資料（百科事典・辞典か Wikipedia）。2 つ目からは値や注記の理由の
+// 根拠にした資料で、URL のない資料は url が null。label は画面に出す名前
 export type Source = { label: string; url: string | null };
 // 終わりが null なら現在まで続いている。notes は利用者に見える注記の文
 export type Dynasty = {
@@ -44,7 +44,6 @@ export type TimelineData = {
 };
 
 const ID_PATTERN = /^[a-z][a-z0-9-]*$/;
-const WIKIPEDIA_URL = /^https:\/\/[a-z][a-z-]*\.wikipedia\.org\//;
 
 function fail(where: string, reason: string): never {
   throw new Error(`年表データの ${where}: ${reason}`);
@@ -84,7 +83,7 @@ function text(value: unknown, where: string): string {
   return value;
 }
 
-// 出典は 1 件以上。最初は Wikipedia の記事、2 つ目からは https のページか URL なし
+// 出典は 1 件以上。最初は https のページ、2 つ目からは https のページか URL なし
 function sources(value: unknown, where: string): Source[] {
   const items = array(value, where);
   if (items.length === 0) fail(where, "出典がありません");
@@ -92,8 +91,8 @@ function sources(value: unknown, where: string): Source[] {
     const w = `${where}[${i}]`;
     const r = record(item, ["label", "url"], w);
     if (i === 0) {
-      if (typeof r.url !== "string" || !WIKIPEDIA_URL.test(r.url)) {
-        return fail(w, "最初の出典の url は Wikipedia のページです");
+      if (typeof r.url !== "string" || !r.url.startsWith("https://")) {
+        return fail(w, "最初の出典の url は https で始まる URL です");
       }
     } else if (r.url !== null && (typeof r.url !== "string" || !r.url.startsWith("https://"))) {
       return fail(w, "出典の url は https で始まる URL か null です");

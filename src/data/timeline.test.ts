@@ -225,25 +225,23 @@ describe("parseTimeline", () => {
     expect(() => parseTimeline(label)).toThrow("文字列が空です");
   });
 
-  it("最初の出典は言語版つきの Wikipedia だけを許す", () => {
+  it("最初の出典には Wikipedia と公的機関などの https のページを書ける", () => {
     for (const url of [
-      "https://fr.wikipedia.org/wiki/Troisième_République",
-      "https://zh-yue.wikipedia.org/wiki/x",
+      "https://ja.wikipedia.org/w/index.php?title=x&oldid=1",
+      "https://www.royal.uk/henry-vii",
+      "https://www.gov.uk/government/history/past-prime-ministers/robert-walpole",
     ]) {
       const data = valid();
       Object.assign(data.dynasties[0] ?? {}, { sources: [{ label: "x", url }] });
       expect(() => parseTimeline(data)).not.toThrow();
     }
-    for (const url of [
-      "http://ja.wikipedia.org/wiki/x",
-      "https://www.wikidata.org/wiki/Q1",
-      "https://example.com/",
-      "javascript:alert(1)",
-      null,
-    ]) {
+  });
+
+  it("最初の出典の url が https でない、または null なら例外にする", () => {
+    for (const url of ["http://ja.wikipedia.org/wiki/x", "javascript:alert(1)", null]) {
       const data = valid();
       Object.assign(data.dynasties[0] ?? {}, { sources: [{ label: "x", url }] });
-      expect(() => parseTimeline(data)).toThrow("最初の出典の url は Wikipedia のページです");
+      expect(() => parseTimeline(data)).toThrow("最初の出典の url は https で始まる URL です");
     }
   });
 
