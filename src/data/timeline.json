@@ -4,7 +4,11 @@
       "id": "mesopotamia",
       "name": "メソポタミア",
       "dynasties": [
+        "uruk",
+        "ur",
+        "lagash",
         "akkad",
+        "ur-iii",
         "babylon-1",
         "kassite",
         "mitanni",
@@ -27,7 +31,8 @@
         "hyksos",
         "new-kingdom",
         "kush-egypt",
-        "assyria-egypt"
+        "assyria-egypt",
+        "egypt-26"
       ],
       "reigns": [
         "khufu",
@@ -39,6 +44,9 @@
       "id": "syria-palestine",
       "name": "シリア・パレスチナ",
       "dynasties": [
+        "sidon",
+        "tyre",
+        "damascus",
         "israel",
         "judah",
         "assyria-syria",
@@ -53,7 +61,8 @@
       "id": "africa",
       "name": "アフリカ",
       "dynasties": [
-        "kush"
+        "kush",
+        "carthage"
       ],
       "reigns": []
     },
@@ -1550,6 +1559,221 @@
         {
           "label": "Wikipedia「フランス第五共和政」",
           "url": "https://ja.wikipedia.org/w/index.php?title=フランス第五共和政&oldid=111195539"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "ur",
+      "name": "ウル",
+      "kind": "regime",
+      "start": {
+        "century": -26,
+        "part": null,
+        "circa": true
+      },
+      "end": {
+        "century": -24,
+        "part": null,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ウル」",
+          "url": "https://ja.wikipedia.org/w/index.php?title=ウル&oldid=111019409"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "uruk",
+      "name": "ウルク",
+      "kind": "regime",
+      "start": {
+        "year": -2900,
+        "circa": true
+      },
+      "end": {
+        "century": -24,
+        "part": null,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ウルク (メソポタミア)」",
+          "url": "https://ja.wikipedia.org/w/index.php?title=ウルク_(メソポタミア)&oldid=111081100"
+        }
+      ],
+      "notes": [
+        "ウルクは前4千年紀から都市国家だったとする見方もあります。ここでは、シュメール人の都市国家が並び立った初期王朝時代の始まりの前2900年頃にしています。"
+      ]
+    },
+    {
+      "id": "lagash",
+      "name": "ラガシュ",
+      "kind": "regime",
+      "start": {
+        "century": -26,
+        "part": null,
+        "circa": true
+      },
+      "end": {
+        "century": -24,
+        "part": null,
+        "circa": true
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ラガシュ」",
+          "url": "https://ja.wikipedia.org/w/index.php?title=ラガシュ&oldid=110216383"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "ur-iii",
+      "name": "ウル第3王朝",
+      "kind": "regime",
+      "start": {
+        "century": -22,
+        "part": "late",
+        "circa": false
+      },
+      "end": {
+        "year": -2004,
+        "circa": true
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ウル第3王朝」",
+          "url": "https://ja.wikipedia.org/w/index.php?title=ウル第3王朝&oldid=110966640"
+        },
+        {
+          "label": "Wikipedia 英語版「Third Dynasty of Ur」",
+          "url": "https://en.wikipedia.org/w/index.php?title=Third_Dynasty_of_Ur&oldid=1376273685"
+        }
+      ],
+      "notes": [
+        "滅亡を前1940年頃とする見方もあります。ここでは、古代オリエント史で主流の中年代説に従い、前2004年頃にしています。"
+      ]
+    },
+    {
+      "id": "damascus",
+      "name": "ダマスクス",
+      "kind": "regime",
+      "start": {
+        "century": -10,
+        "part": null,
+        "circa": true
+      },
+      "end": {
+        "year": -732,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ダマスカス」",
+          "url": "https://ja.wikipedia.org/w/index.php?title=ダマスカス&oldid=110799899"
+        },
+        {
+          "label": "Wikipedia 英語版「Aram-Damascus」",
+          "url": "https://en.wikipedia.org/w/index.php?title=Aram-Damascus&oldid=1366520884"
+        }
+      ],
+      "notes": [
+        "アラム人の国家ができたのは前1100年頃とする見方もあります。ここでは、王の名が伝わる前10世紀頃を始まりにしています。"
+      ]
+    },
+    {
+      "id": "sidon",
+      "name": "シドン",
+      "kind": "regime",
+      "start": {
+        "century": -12,
+        "part": null,
+        "circa": true
+      },
+      "end": {
+        "year": -677,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「エサルハドン」",
+          "url": "https://ja.wikipedia.org/w/index.php?title=エサルハドン&oldid=109686388"
+        },
+        {
+          "label": "Wikipedia 英語版「Phoenicia」",
+          "url": "https://en.wikipedia.org/w/index.php?title=Phoenicia&oldid=1378808598"
+        }
+      ],
+      "notes": [
+        "シドンは前677年にアッシリアに攻め落とされ、属州になりました。のちに再び王が立ちましたが、ここでは属州になるまでを期間にしています。"
+      ]
+    },
+    {
+      "id": "tyre",
+      "name": "ティルス",
+      "kind": "regime",
+      "start": {
+        "century": -12,
+        "part": null,
+        "circa": true
+      },
+      "end": {
+        "year": -332,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「ティルス」",
+          "url": "https://ja.wikipedia.org/w/index.php?title=ティルス&oldid=110668186"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "carthage",
+      "name": "カルタゴ",
+      "kind": "regime",
+      "start": {
+        "year": -814,
+        "circa": true
+      },
+      "end": {
+        "year": -146,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「カルタゴ」",
+          "url": "https://ja.wikipedia.org/w/index.php?title=カルタゴ&oldid=110739781"
+        },
+        {
+          "label": "Wikipedia 英語版「History of Carthage」",
+          "url": "https://en.wikipedia.org/w/index.php?title=History_of_Carthage&oldid=1360034658"
+        }
+      ],
+      "notes": [
+        "カルタゴの建国の年は古代の歴史家が伝える伝承によるもので、確かな裏付けはありません。ここでは、現代の歴史家に広く受け入れられている前814年頃にしています。"
+      ]
+    },
+    {
+      "id": "egypt-26",
+      "name": "エジプト第26王朝",
+      "kind": "regime",
+      "start": {
+        "year": -664,
+        "circa": false
+      },
+      "end": {
+        "year": -525,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「エジプト第26王朝」",
+          "url": "https://ja.wikipedia.org/w/index.php?title=エジプト第26王朝&oldid=104935452"
         }
       ],
       "notes": []
