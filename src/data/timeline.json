@@ -176,6 +176,8 @@
       "id": "england",
       "name": "イングランド・イギリス",
       "dynasties": [
+        "heptarchy",
+        "wessex",
         "danish",
         "norman",
         "plantagenet",
@@ -914,6 +916,64 @@
         }
       ],
       "notes": []
+    },
+    {
+      "id": "heptarchy",
+      "name": "アングロ＝サクソン七王国",
+      "kind": "regime",
+      "start": {
+        "century": 5,
+        "part": null,
+        "circa": false
+      },
+      "end": {
+        "year": 829,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「七王国」",
+          "url": "https://ja.wikipedia.org/w/index.php?title=七王国&oldid=108108216"
+        },
+        {
+          "label": "Wikipedia 英語版「Ecgberht, King of Wessex」",
+          "url": "https://en.wikipedia.org/w/index.php?title=Ecgberht,_King_of_Wessex&oldid=1367669393"
+        },
+        {
+          "label": "Wikipedia 英語版「Wiglaf of Mercia」",
+          "url": "https://en.wikipedia.org/w/index.php?title=Wiglaf_of_Mercia&oldid=1359062148"
+        }
+      ],
+      "notes": [
+        "七王国の時代を、ローマがブリテン島の支配を手放した5世紀からとする見方に従っています。6世紀からとする見方もあります。",
+        "七王国の終わりは、エグバートがマーシアを破った829年にしています。『アングロ＝サクソン年代記』はこの時期の年が2年ずれていて、記載どおりに読むと827年になります。827年や825年とする見方もあります。"
+      ]
+    },
+    {
+      "id": "wessex",
+      "name": "ウェセックス王国",
+      "kind": "regime",
+      "start": {
+        "year": 829,
+        "circa": false
+      },
+      "end": {
+        "year": 927,
+        "circa": false
+      },
+      "sources": [
+        {
+          "label": "Wikipedia「イングランド王国」",
+          "url": "https://ja.wikipedia.org/w/index.php?title=イングランド王国&oldid=110240372"
+        },
+        {
+          "label": "Wikipedia 英語版「Ecgberht, King of Wessex」",
+          "url": "https://en.wikipedia.org/w/index.php?title=Ecgberht,_King_of_Wessex&oldid=1367669393"
+        }
+      ],
+      "notes": [
+        "ウェセックス王国は、エグバートが七王国を統一した829年から置き、それより前は七王国に含めています。終わりは、アゼルスタンがイングランド全土を治めた927年にしています。"
+      ]
     },
     {
       "id": "danish",
